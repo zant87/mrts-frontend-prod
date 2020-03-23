@@ -59,7 +59,11 @@ const config = {
         open: true,
         compress: true,
         port: 3000,
-        hot: true
+        hot: true,
+        proxy: {
+            '/api': 'http://localhost:8080'
+        }
+
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -70,7 +74,6 @@ const config = {
         // глобальный конфиг
         config: JSON.stringify({
             apiUrl: 'http://localhost:4000',
-            backUrl: 'http://localhost:8080'
         })
     }
 };

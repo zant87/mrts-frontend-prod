@@ -46,7 +46,7 @@ class LoginPage extends React.Component {
 
     render() {
         return (
-                <MDBCol md='6' className='mx-auto'>
+                <MDBCol md='4' className='mx-auto'>
                     <MDBCard>
                         <MDBCardBody>
                             <div className='form-header indigo'>
