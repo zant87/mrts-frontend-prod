@@ -6,7 +6,7 @@
 #EXPOSE 80
 
 # этап сборки (build stage)
-FROM node:lts-alpine as build-stage
+FROM node as build-stage
 MAINTAINER geogracom.com
 WORKDIR /app
 COPY package*.json ./
@@ -15,7 +15,7 @@ COPY . .
 RUN npm run build
 
 # этап production (production-stage)
-FROM nginx:stable-alpine as production-stage
+FROM nginx as production-stage
 MAINTAINER geogracom.com
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 EXPOSE 80
