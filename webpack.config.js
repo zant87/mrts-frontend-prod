@@ -1,6 +1,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+const ASSET_PATH = process.env.ASSET_PATH || '/';
+
 const config = {
     mode: 'development',
     entry: './src/index.js',
@@ -9,6 +11,9 @@ const config = {
         alias: {
             '@': path.resolve(__dirname, 'src/'),
         }
+    },
+    output: {
+        publicPath: ASSET_PATH,
     },
     module: {
         rules:
@@ -63,6 +68,7 @@ const config = {
         proxy: {
             '/api': 'http://localhost:8080'
         }
+
     },
     plugins: [
         new HtmlWebpackPlugin({

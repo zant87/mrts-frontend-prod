@@ -1,6 +1,6 @@
 import React, {Fragment} from "react";
 import {PrivateRoute} from "@/_components";
-import {HomePage} from "@/Common/HomePage";
+import HomePage from "@/Common/HomePage";
 import {Role} from "@/_helpers";
 import AdminStructureNavigation from "@/Admin/Structure/Navigation";
 import AdminGoalsPage from "@/Admin/Structure/Goals";
@@ -51,6 +51,7 @@ import OperatorReportFinancingPage from "@/Operator/Report/Financing";
 import OperatorReportAppropriationsPage from "@/Operator/Report/Appropriations";
 import OperatorReportExtraBudgetPage from "@/Operator/Report/ExtraBudget";
 import OperatorReportSourcesPage from "@/Operator/Report/Sources";
+import SwaggerPage from "@/Common/Swagger";
 
 export const AppRoutes = () => {
         return (
@@ -122,6 +123,7 @@ export const AppRoutes = () => {
 
                     {/*Обшщие страницы*/}
                     <PrivateRoute exact path="/" component={HomePage}/>
+                <PrivateRoute exact path="/swagger" component={SwaggerPage}/>
                     <Route path="/login" component={LoginPage}/>
             </Fragment>
         )

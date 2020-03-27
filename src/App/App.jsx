@@ -61,8 +61,8 @@ class App extends React.Component {
         return (
             <Provider store={store}>
                 <Router history={history}>
-                    <MDBContainer>
-                        <MDBRow>
+                    <MDBContainer fluid>
+                        <MDBRow className='mrts-nav'>
                             {currentUser &&
                             <MDBNavbar color='indigo' dark expand='md' fixed='top' scrolling>
                                 <MDBNavbarBrand className='py-0 font-weight-bold'>
@@ -179,6 +179,13 @@ class App extends React.Component {
                                             </MDBNavLink>
                                         </MDBNavItem>
                                         }
+                                        <MDBNavItem>
+                                            <MDBNavLink
+                                                onClick={this.closeCollapse('navbarCollapse')}
+                                                to='/swagger'>
+                                                <strong>Swagger</strong>
+                                            </MDBNavLink>
+                                        </MDBNavItem>
                                         <MDBNavItem>
                                             <a className='nav-link' onClick={this.logout}><strong>Выход</strong></a>
                                         </MDBNavItem>
