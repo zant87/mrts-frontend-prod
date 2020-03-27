@@ -30,16 +30,22 @@ export default class OperatorPlanIndicatorsPage extends React.Component {
     render() {
 
         const columns = [
-            {name: 'id', label: '#'},
-            {name: 'transportStrategyCode', label: 'Обозначение мероприятия'},
-            {name: 'transportStrategyName', label: 'Редакция ТС'},
-            {name: 'activityCode', label: 'Редакция ТС'},
-            {name: 'activityDescription', label: 'Содержание мероприятия'},
-            {name: 'documentType', label: 'Вид документа'},
-            {name: 'yearBegin', label: 'Начало реализации'},
-            {name: 'yearEnd', label: 'Конец реализации'},
-            {name: 'activityId', label: 'Редакция ТС', display: 'excluded'},
-            {name: 'transportStrategyVersionId', label: 'Редакция ТС', display: 'excluded'},
+            { name: 'id', label: '#'},
+            { name: 'transportStrategyCode', label: 'Код ТС', options:
+                    { display: 'excluded'},
+            },
+            { name: 'transportStrategyName', label: 'Редакция ТС'},
+            { name: 'activityCode', label: 'Обозначение мероприятия'},
+            { name: 'activityDescription', label: 'Содержание мероприятия'},
+            { name: 'documentType', label: 'Вид документа'},
+            { name: 'yearBegin', label: 'Начало реализации'},
+            { name: 'yearEnd', label: 'Конец реализации'},
+            { name: 'activityId', label: 'ИД Мероприятия', options:
+                    { display: 'excluded'},
+            },
+            { name: 'transportStrategyVersionId', label: 'ИД ТС', options:
+                    { display: 'excluded'},
+            },
         ];
 
         const { data, page, count, isLoading } = this.state;
