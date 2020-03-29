@@ -1,4 +1,4 @@
-FROM nginx
+FROM nginx:alpine
 MAINTAINER geogracom.com
 
 ADD dist /usr/share/nginx/html
