@@ -15,6 +15,11 @@ const config = {
     output: {
         publicPath: ASSET_PATH,
     },
+       optimization: {
+         splitChunks: {
+               chunks: 'all',
+                 },
+       },
     module: {
         rules:
             [
@@ -67,8 +72,7 @@ const config = {
         hot: true,
         proxy: {
             '/api': 'http://localhost:8080'
-        }
-
+        },
     },
     plugins: [
         new HtmlWebpackPlugin({

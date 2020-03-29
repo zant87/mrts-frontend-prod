@@ -25,8 +25,6 @@ export default class OperatorPlanProjectsPage extends React.Component {
             })
     };
 
-
-
     render() {
 
         const columns = [
