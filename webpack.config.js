@@ -5,7 +5,7 @@ const ASSET_PATH = process.env.ASSET_PATH || '/';
 
 const config = {
     mode: 'development',
-    entry: './src/index.js',
+    entry: './src/index.jsx',
     resolve: {
         extensions: ['.js', '.jsx'],
         alias: {

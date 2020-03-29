@@ -30,21 +30,37 @@ export default class OperatorPlanIndicatorsPage extends React.Component {
     render() {
 
         const columns = [
-            { name: 'id', label: '#'},
+            { name: 'id', label: '#', options:
+                    {
+                        filter: false
+                    }
+            },
             { name: 'transportStrategyCode', label: 'Код ТС', options:
-                    { display: 'excluded'},
+                    {
+                        display: 'excluded',
+                        filter: false,
+                    },
             },
             { name: 'transportStrategyName', label: 'Редакция ТС'},
             { name: 'activityCode', label: 'Обозначение мероприятия'},
-            { name: 'activityDescription', label: 'Содержание мероприятия'},
+            { name: 'activityDescription', label: 'Содержание мероприятия', options:
+                    {
+                        filter: false,
+                    }},
             { name: 'documentType', label: 'Вид документа'},
             { name: 'yearBegin', label: 'Начало реализации'},
             { name: 'yearEnd', label: 'Конец реализации'},
             { name: 'activityId', label: 'ИД Мероприятия', options:
-                    { display: 'excluded'},
+                    {
+                        display: 'excluded',
+                        filter: false,
+                    },
             },
             { name: 'transportStrategyVersionId', label: 'ИД ТС', options:
-                    { display: 'excluded'},
+                    {
+                        display: 'excluded',
+                        filter: false,
+                    },
             },
         ];
 
