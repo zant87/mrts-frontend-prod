@@ -1,10 +1,12 @@
+const webpack = require('webpack');
 const path = require('path');
+const TerserPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const ASSET_PATH = process.env.ASSET_PATH || '/';
 
 const config = {
-    mode: 'development',
+    mode: 'production',
     entry: './src/index.jsx',
     resolve: {
         extensions: ['.js', '.jsx'],
@@ -12,14 +14,12 @@ const config = {
             '@': path.resolve(__dirname, 'src/'),
         }
     },
+    performance: {
+        hints: 'warning'
+    },
     output: {
         publicPath: ASSET_PATH,
     },
-       optimization: {
-         splitChunks: {
-               chunks: 'all',
-                 },
-       },
     module: {
         rules:
             [
@@ -64,23 +64,52 @@ const config = {
                 }
             ]
     },
-    devServer: {
-        historyApiFallback: true,
-        open: true,
-        compress: true,
-        port: 3000,
-        hot: true,
-        proxy: {
-            '/api': 'http://localhost:8080'
-        },
+    optimization: {
+        runtimeChunk: false,
+        minimizer: [
+            new TerserPlugin({
+                cache: true,
+                parallel: true,
+                sourceMap: true,
+                terserOptions: {
+                    ecma: 6,
+                    toplevel: true,
+                    module: true,
+                    beautify: false,
+                    comments: false,
+                    compress: {
+                        warnings: false,
+                        ecma: 6,
+                        module: true,
+                        toplevel: true
+                    },
+                    output: {
+                        comments: false,
+                        beautify: false,
+                        indent_level: 2,
+                        ecma: 6
+                    },
+                    mangle: {
+                        keep_fnames: true,
+                        module: true,
+                        toplevel: true
+                    }
+                }
+            })
+        ]
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './src/index.html'
-        })
+            template: './src/index.html',
+            chunksSortMode: 'dependency',
+            inject: 'body'
+        }),
+        new TerserPlugin(),
+        new webpack.DefinePlugin({ "process.env.NODE_ENV": JSON.stringify("production") }),
+        new webpack.optimize.ModuleConcatenationPlugin(),
+        new webpack.NoEmitOnErrorsPlugin()
     ],
     externals: {
-        // глобальный конфиг
         config: JSON.stringify({
             apiUrl: 'http://localhost:4000',
         })
