@@ -1,5 +1,5 @@
 import React from 'react';
-import {MDBBreadcrumb, MDBBreadcrumbItem, MDBCol, MDBContainer, MDBRow} from "mdbreact";
+import { MDBCol, MDBContainer, MDBRow } from "mdbreact";
 import MUIDataTable from "mui-datatables";
 import axios from 'axios';
 
@@ -24,8 +24,6 @@ export default class OperatorPlanIndicatorsPage extends React.Component {
                 this.setState({ data});
             })
     };
-
-
 
     render() {
 

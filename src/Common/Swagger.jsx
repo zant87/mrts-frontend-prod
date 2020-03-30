@@ -1,5 +1,5 @@
 import React from 'react';
-import {MDBContainer, MDBIframe} from 'mdbreact';
+import { MDBContainer, MDBIframe } from 'mdbreact';
 
 class SwaggerPage extends React.Component {
 
