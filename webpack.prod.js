@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const ASSET_PATH = process.env.ASSET_PATH || '/';
 
@@ -19,6 +20,8 @@ const config = {
     },
     output: {
         publicPath: ASSET_PATH,
+        filename: '[name].[hash].bundle.js',
+        chunkFilename: '[name].[hash].chunk.js',
     },
     module: {
         rules:
@@ -37,22 +40,17 @@ const config = {
                     test: /\.css$/,
                     loader: 'style-loader!css-loader'
                 },
-                {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file-loader'},
+                {
+                    test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+                    loader: 'url-loader'
+                },
+                {
+                    test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file-loader'
+                },
                 {test: /\.(woff|woff2)$/, loader: 'url-loader?prefix=font/&limit=5000'},
                 {
                     test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
                     loader: 'url-loader?limit=10000&mimetype=application/octet-stream'
-                },
-                {
-                    test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-                    issuer: {
-                        test: /\.jsx?$/
-                    },
-                    use: ['babel-loader', '@svgr/webpack', 'url-loader']
-                },
-                {
-                    test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-                    loader: 'url-loader'
                 },
                 {
                     test: /\.png(\?v=\d+\.\d+\.\d+)?$/,
@@ -107,7 +105,11 @@ const config = {
         new TerserPlugin(),
         new webpack.DefinePlugin({ "process.env.NODE_ENV": JSON.stringify("production") }),
         new webpack.optimize.ModuleConcatenationPlugin(),
-        new webpack.NoEmitOnErrorsPlugin()
+        new webpack.NoEmitOnErrorsPlugin(),
+        new MiniCssExtractPlugin({
+            filename: '[name].[hash].css',
+            chunkFilename: '[name].[hash].css'
+        }),
     ],
     externals: {
         config: JSON.stringify({
