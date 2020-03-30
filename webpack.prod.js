@@ -41,10 +41,6 @@ const config = {
                     loader: 'style-loader!css-loader'
                 },
                 {
-                    test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-                    loader: 'url-loader'
-                },
-                {
                     test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file-loader'
                 },
                 {
@@ -53,6 +49,17 @@ const config = {
                 {
                     test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
                     loader: 'url-loader?limit=10000&mimetype=application/octet-stream'
+                },
+                {
+                    test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+                    issuer: {
+                        test: /\.jsx?$/
+                    },
+                    use: ['babel-loader', '@svgr/webpack', 'url-loader']
+                },
+                {
+                    test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+                    loader: 'url-loader'
                 },
                 {
                     test: /\.png(\?v=\d+\.\d+\.\d+)?$/,
@@ -70,7 +77,6 @@ const config = {
             new TerserPlugin({
                 cache: true,
                 parallel: true,
-                sourceMap: true,
                 terserOptions: {
                     ecma: 6,
                     toplevel: true,
