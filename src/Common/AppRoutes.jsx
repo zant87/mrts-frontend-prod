@@ -99,7 +99,7 @@ export const AppRoutes = () => {
                     {/*Plan - Плановые показатели */}
                     <PrivateRoute exact path='/operator/plan' roles={Role.Operator} component={OperatorPlanNavigation} />
                     <PrivateRoute exact path='/operator/plan/activities' roles={Role.Operator} component={OperatorPlanActivitiesPage} />
-                    <PrivateRoute exact path='/operator/plan/projects' roles={Role.Operator} vcomponent={OperatorPlanProjectsPage} />
+                    <PrivateRoute exact path='/operator/plan/projects' roles={Role.Operator} component={OperatorPlanProjectsPage} />
                     <PrivateRoute exact path='/operator/plan/indicators' roles={Role.Operator} component={OperatorPlanIndicatorsPage} />
                     <PrivateRoute exact path='/operator/plan/resources' roles={Role.Operator} component={OperatorPlanResourcesPage} />
 

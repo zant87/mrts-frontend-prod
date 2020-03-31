@@ -1,8 +1,7 @@
 import React from 'react';
-import {MDBBreadcrumb, MDBBreadcrumbItem, MDBCol, MDBContainer, MDBRow} from "mdbreact";
+import { MDBCol, MDBContainer, MDBRow } from "mdbreact";
 import MUIDataTable from "mui-datatables";
 import axios from 'axios';
-
 
 export default class OperatorPlanProjectsPage extends React.Component {
 
@@ -34,7 +33,7 @@ export default class OperatorPlanProjectsPage extends React.Component {
             { name: 'projectName', label: 'Проект'},
             { name: 'scenarioName', label: 'Вариант реализации стратегии'},
             { name: 'cost', label: 'Общие затраты млрд. руб'},
-            { name: 'yearEnd', label: 'Стадия работ'},
+            { name: 'workStage', label: 'Стадия работ'},
             { name: 'geolink', label: 'Географическая привязка' },
         ];
 
