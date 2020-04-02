@@ -66,141 +66,143 @@ class App extends React.Component {
     return (
       <Provider store={store}>
         <Router history={history}>
-          <MDBContainer fluid>
-            <MDBRow className="mrts-nav">
-              <MDBCol md="12">
-                {currentUser && (
-                  <MDBNavbar
-                    // color='indigo'
-                    color="special-color"
-                    dark
-                    expand="md"
-                    fixed="top"
-                    scrolling
-                  >
-                    <MDBNavbarBrand className="py-0 font-weight-bold">
-                      {/* <Logo className="logo" /> */}
-                      <img src={MRTSLogo} style={{ width: "30px", marginRight: "10px" }} alt="" />
-                      <strong className="white-text">
-                        МР<span style={{ color: "#f28d37" }}>ТС</span>
-                      </strong>
-                    </MDBNavbarBrand>
-                    <MDBNavbarToggler onClick={this.toggleCollapse("navbarCollapse")} />
-                    <MDBCollapse id="navbarCollapse" isOpen={collapseID} navbar>
-                      <MDBNavbarNav right>
-                        <MDBNavItem active>
-                          <MDBNavLink exact to="/" onClick={this.closeCollapse("navbarCollapse")}>
-                            <strong>Главная</strong>
-                          </MDBNavLink>
-                        </MDBNavItem>
-                        {isAdmin && (
-                          <MDBNavItem>
-                            <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/admin/structure">
-                              <strong>Структура</strong>
+          <div>
+            <MDBContainer fluid className="app">
+              <MDBRow className="mrts-nav">
+                <MDBCol md="12">
+                  {currentUser && (
+                    <MDBNavbar
+                      // color='indigo'
+                      color="special-color"
+                      dark
+                      expand="md"
+                      fixed="top"
+                      scrolling
+                    >
+                      <MDBNavbarBrand className="py-0 font-weight-bold">
+                        {/* <Logo className="logo" /> */}
+                        <img src={MRTSLogo} style={{ width: "30px", marginRight: "10px" }} alt="" />
+                        <strong className="white-text">
+                          МР<span style={{ color: "#f28d37" }}>ТС</span>
+                        </strong>
+                      </MDBNavbarBrand>
+                      <MDBNavbarToggler onClick={this.toggleCollapse("navbarCollapse")} />
+                      <MDBCollapse id="navbarCollapse" isOpen={collapseID} navbar>
+                        <MDBNavbarNav right>
+                          <MDBNavItem active>
+                            <MDBNavLink exact to="/" onClick={this.closeCollapse("navbarCollapse")}>
+                              <strong>Главная</strong>
                             </MDBNavLink>
                           </MDBNavItem>
-                        )}
-                        {isAdmin && (
+                          {isAdmin && (
+                            <MDBNavItem>
+                              <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/admin/structure">
+                                <strong>Структура</strong>
+                              </MDBNavLink>
+                            </MDBNavItem>
+                          )}
+                          {isAdmin && (
+                            <MDBNavItem>
+                              <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/admin/control">
+                                <strong>Контроль</strong>
+                              </MDBNavLink>
+                            </MDBNavItem>
+                          )}
+                          {isAdmin && (
+                            <MDBNavItem>
+                              <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/admin/loading">
+                                <strong>Загрузка</strong>
+                              </MDBNavLink>
+                            </MDBNavItem>
+                          )}
+                          {isAdmin && (
+                            <MDBNavItem>
+                              <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/admin/archive">
+                                <strong>Архив</strong>
+                              </MDBNavLink>
+                            </MDBNavItem>
+                          )}
+                          {isAnalyst && (
+                            <MDBNavItem>
+                              <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/analyst/indicators">
+                                <strong>Индикаторы</strong>
+                              </MDBNavLink>
+                            </MDBNavItem>
+                          )}
+                          {isAnalyst && (
+                            <MDBNavItem>
+                              <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/analyst/levels">
+                                <strong>Уровни достижения</strong>
+                              </MDBNavLink>
+                            </MDBNavItem>
+                          )}
+                          {isAnalyst && (
+                            <MDBNavItem>
+                              <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/analyst/dynamics">
+                                <strong>Динамика уровней достижения</strong>
+                              </MDBNavLink>
+                            </MDBNavItem>
+                          )}
+                          {isAnalyst && (
+                            <MDBNavItem>
+                              <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/analyst/report">
+                                <strong>Отчет перед правительством</strong>
+                              </MDBNavLink>
+                            </MDBNavItem>
+                          )}
+                          {isAnalyst && (
+                            <MDBNavItem>
+                              <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/analyst/map">
+                                <strong>Карта мероприятий</strong>
+                              </MDBNavLink>
+                            </MDBNavItem>
+                          )}
+                          {isOperator && (
+                            <MDBNavItem>
+                              <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/operator/plan">
+                                <strong>Плановые показатели</strong>
+                              </MDBNavLink>
+                            </MDBNavItem>
+                          )}
+                          {isOperator && (
+                            <MDBNavItem>
+                              <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/operator/control">
+                                <strong>Контроль</strong>
+                              </MDBNavLink>
+                            </MDBNavItem>
+                          )}
+                          {isOperator && (
+                            <MDBNavItem>
+                              <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/operator/report">
+                                <strong>Отчетные показатели</strong>
+                              </MDBNavLink>
+                            </MDBNavItem>
+                          )}
                           <MDBNavItem>
-                            <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/admin/control">
-                              <strong>Контроль</strong>
+                            <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/swagger">
+                              <strong>Swagger</strong>
                             </MDBNavLink>
                           </MDBNavItem>
-                        )}
-                        {isAdmin && (
                           <MDBNavItem>
-                            <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/admin/loading">
-                              <strong>Загрузка</strong>
-                            </MDBNavLink>
+                            <a className="nav-link" onClick={this.logout}>
+                              <strong>Выход</strong>
+                            </a>
                           </MDBNavItem>
-                        )}
-                        {isAdmin && (
-                          <MDBNavItem>
-                            <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/admin/archive">
-                              <strong>Архив</strong>
-                            </MDBNavLink>
-                          </MDBNavItem>
-                        )}
-                        {isAnalyst && (
-                          <MDBNavItem>
-                            <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/analyst/indicators">
-                              <strong>Индикаторы</strong>
-                            </MDBNavLink>
-                          </MDBNavItem>
-                        )}
-                        {isAnalyst && (
-                          <MDBNavItem>
-                            <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/analyst/levels">
-                              <strong>Уровни достижения</strong>
-                            </MDBNavLink>
-                          </MDBNavItem>
-                        )}
-                        {isAnalyst && (
-                          <MDBNavItem>
-                            <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/analyst/dynamics">
-                              <strong>Динамика уровней достижения</strong>
-                            </MDBNavLink>
-                          </MDBNavItem>
-                        )}
-                        {isAnalyst && (
-                          <MDBNavItem>
-                            <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/analyst/report">
-                              <strong>Отчет перед правительством</strong>
-                            </MDBNavLink>
-                          </MDBNavItem>
-                        )}
-                        {isAnalyst && (
-                          <MDBNavItem>
-                            <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/analyst/map">
-                              <strong>Карта мероприятий</strong>
-                            </MDBNavLink>
-                          </MDBNavItem>
-                        )}
-                        {isOperator && (
-                          <MDBNavItem>
-                            <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/operator/plan">
-                              <strong>Плановые показатели</strong>
-                            </MDBNavLink>
-                          </MDBNavItem>
-                        )}
-                        {isOperator && (
-                          <MDBNavItem>
-                            <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/operator/control">
-                              <strong>Контроль</strong>
-                            </MDBNavLink>
-                          </MDBNavItem>
-                        )}
-                        {isOperator && (
-                          <MDBNavItem>
-                            <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/operator/report">
-                              <strong>Отчетные показатели</strong>
-                            </MDBNavLink>
-                          </MDBNavItem>
-                        )}
-                        <MDBNavItem>
-                          <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/swagger">
-                            <strong>Swagger</strong>
-                          </MDBNavLink>
-                        </MDBNavItem>
-                        <MDBNavItem>
-                          <a className="nav-link" onClick={this.logout}>
-                            <strong>Выход</strong>
-                          </a>
-                        </MDBNavItem>
-                      </MDBNavbarNav>
-                    </MDBCollapse>
-                  </MDBNavbar>
-                )}
-              </MDBCol>
-            </MDBRow>
-            <MDBRow
-              className="mt-5"
-              //center
-            >
+                        </MDBNavbarNav>
+                      </MDBCollapse>
+                    </MDBNavbar>
+                  )}
+                </MDBCol>
+              </MDBRow>
+              {/* <MDBRow
+                className="mt-5"
+                //center
+              > */}
               <AppRoutes />
-            </MDBRow>
-            {currentUser && <Footer />}
-          </MDBContainer>
+              {/* </MDBRow> */}
+              {currentUser && <Footer />}
+            </MDBContainer>
+          </div>
         </Router>
       </Provider>
     );

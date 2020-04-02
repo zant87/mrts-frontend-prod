@@ -17,7 +17,7 @@ import {
 } from "mdbreact";
 import { NavLink } from "react-router-dom";
 // import indsstyle from "./../Indicators.module.css";
-import "./../Indicators.module.css";
+import indsstyle from "./../Indicators.module.css";
 import IndsSettings from "../IndsSettings/IndsSettings";
 import Preloader from "@/Common/Preloader/Preloader";
 import { render } from "react-dom";
@@ -55,6 +55,7 @@ class IndsList extends React.Component {
   };
 
   render() {
+    console.log(indsstyle);
     let inds = null;
 
     inds = this.props.inds.sort((a, b) => (a.code > b.code ? 1 : -1));
@@ -117,17 +118,7 @@ class IndsList extends React.Component {
                   id="yearStart"
                   className="browser-default custom-select custom-select-sm"
                 >
-                  {this.props.frequencies
-                    ? this.props.frequencies.map(item =>
-                        this.props.frequencyId == item.id ? (
-                          <option value={item.id} selected>
-                            {item.name}
-                          </option>
-                        ) : (
-                          <option value={item.id}>{item.name}</option>
-                        )
-                      )
-                    : null}
+                  <option value="2010">2010</option>
                 </select>
                 <br></br>
                 <label htmlFor="freqform">
@@ -139,17 +130,7 @@ class IndsList extends React.Component {
                   id="yearEnd"
                   className="browser-default custom-select custom-select-sm"
                 >
-                  {this.props.frequencies
-                    ? this.props.frequencies.map(item =>
-                        this.props.frequencyId == item.id ? (
-                          <option value={item.id} selected>
-                            {item.name}
-                          </option>
-                        ) : (
-                          <option value={item.id}>{item.name}</option>
-                        )
-                      )
-                    : null}
+                  <option value="2010">2010</option>
                 </select>
               </div>
             </MDBContainer>
@@ -192,8 +173,7 @@ class IndsList extends React.Component {
               {this.props.isFetchingInds ? (
                 <Preloader />
               ) : (
-                // <div className={indsstyle.indslist}>
-                <div className="indslist">
+                <div className={indsstyle.indsliste}>
                   <div className="list-group">
                     {inds.map(ind => (
                       <NavLink

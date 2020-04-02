@@ -75,9 +75,9 @@ let IndsChart = props => {
 
     //------------Объект options для echarts--------------
     return {
-      //color: ["#003366", "#006699", "#4cabce"],
+      color: ["#003366", "#006699", "#4cabce"],
       //color: ["#62ab1b", "#e37600", "#0091e4"],
-      color: ["#003366", "#006699", "#ec7e13"],
+      //color: ["#003366", "#006699", "#ec7e13"],
       title: {
         //text: indsval[0].indicatorName,
         textStyle: {
