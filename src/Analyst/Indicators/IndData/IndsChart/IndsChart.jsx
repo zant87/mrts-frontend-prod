@@ -4,7 +4,7 @@ import ReactEcharts from "echarts-for-react";
 import s from "./indsChart.module.css";
 import Preloader from "@/Common/Preloader/Preloader";
 
-let IndsChart = props => {
+let IndsChart = (props) => {
   let indsval = null;
   let chartindsvals = null;
 
@@ -16,25 +16,25 @@ let IndsChart = props => {
     if (props.indVals) {
       indsval = props.indVals.sort((a, b) => (a.indicatorDate > b.indicatorDate ? 1 : -1));
 
-      indsval.forEach(item => {
+      indsval.forEach((item) => {
         years.push(item.indicatorDate);
         scenarioNames.push(item.scenarioName);
         okeiName = item.okeiName;
       });
 
-      years = indsval.map(item => item.indicatorDate).filter((item, i, arr) => arr.indexOf(item) === i);
+      years = indsval.map((item) => item.indicatorDate).filter((item, i, arr) => arr.indexOf(item) === i);
 
-      scenarioNames = indsval.map(item => item.scenarioName).filter((item, i, arr) => arr.indexOf(item) === i);
+      scenarioNames = indsval.map((item) => item.scenarioName).filter((item, i, arr) => arr.indexOf(item) === i);
 
       // --------------------------Объект series для графика------------------
-      chartindsvals = scenarioNames.map(scen => ({
+      chartindsvals = scenarioNames.map((scen) => ({
         name: scen,
         type: "bar",
         showBackground: true,
         itemStyle: {
           //color:
           shadowBlur: 10,
-          shadowColor: "#cecece"
+          shadowColor: "#cecece",
         },
         large: true,
         label: {
@@ -44,30 +44,30 @@ let IndsChart = props => {
             textStyle: {
               color: "#000",
               fontWeight: "bold",
-              fontSize: "12"
-            }
-          }
+              fontSize: "12",
+            },
+          },
         },
-        animationDelay: function(idx) {
+        animationDelay: function (idx) {
           return idx * 10;
         },
-        data: years.map(year =>
+        data: years.map((year) =>
           indsval
             .filter((val, i, arr) => {
               if (val.scenarioName == scen && val.indicatorDate == year) {
                 return val.value;
               }
             })
-            .map(item => item.value)
+            .map((item) => item.value)
             .find((item, i, arr) => arr.indexOf(item) === i)
-        )
+        ),
       }));
       //console.log(chartindsvals);
       //years = indsval.map(item => item.indicatorDate.split("-")[0]).filter((item, i, arr) => arr.indexOf(item) === i);
       if (props.frequencyId == 1) {
-        years = years.filter((item, i, arr) => arr.indexOf(item) === i).map(i => i.split("-")[0]);
+        years = years.filter((item, i, arr) => arr.indexOf(item) === i).map((i) => i.split("-")[0]);
       } else {
-        years = years.filter((item, i, arr) => arr.indexOf(item) === i).map(i => i);
+        years = years.filter((item, i, arr) => arr.indexOf(item) === i).map((i) => i);
       }
 
       // years = years.filter((item, i, arr) => arr.indexOf(item) === i).map(i => i.split("-")[0]);
@@ -82,14 +82,14 @@ let IndsChart = props => {
         //text: indsval[0].indicatorName,
         textStyle: {
           fontSize: 11,
-          width: 70
-        }
+          width: 70,
+        },
       },
       legend: {
         data: scenarioNames,
         orient: "horizontal", // 'vertical'
         x: "center", // 'center' | 'left' | {number},
-        y: "top" // 'center' | 'bottom' | {number}
+        y: "top", // 'center' | 'bottom' | {number}
       },
       toolbox: {
         show: true,
@@ -97,30 +97,31 @@ let IndsChart = props => {
           mark: { show: true },
           magicType: {
             show: true,
-            type: ["line", "bar", "stack", "tiled"],
-            title: "Линейный"
+            // type: ["line", "bar", "stack", "tiled"],
+            type: ["line", "bar", "tiled"],
+            title: "Линейный",
           },
           dataView: {
             title: "Данные",
             readOnly: false,
-            lang: ["Просмотр данных", "Закрыть", "Обновить"]
+            lang: ["Просмотр данных", "Закрыть", "Обновить"],
           },
-          saveAsImage: { show: true, title: "Скачать", pixelRatio: "2" }
-        }
+          saveAsImage: { show: true, title: "Скачать", pixelRatio: "3" },
+        },
       },
       tooltip: {
         trigger: "axis",
         axisPointer: {
           type: "cross",
-          snap: "true"
-        }
+          snap: "true",
+        },
       },
       xAxis: {
         data: years,
         silent: false,
         splitLine: {
-          show: false
-        }
+          show: false,
+        },
       },
       dataZoom: [
         {
@@ -128,7 +129,7 @@ let IndsChart = props => {
           start: 0,
           end: 50,
 
-          showDetail: true
+          showDetail: true,
         },
         {
           type: "slider",
@@ -147,25 +148,25 @@ let IndsChart = props => {
             shadowBlur: 3,
             shadowColor: "rgba(0, 0, 0, 0.6)",
             shadowOffsetX: 2,
-            shadowOffsetY: 2
-          }
-        }
+            shadowOffsetY: 2,
+          },
+        },
       ],
       yAxis: {
         name: okeiName,
         nameLocation: "middle",
         nameGap: "45",
         type: "value",
-        boundaryGap: ["0%", "50%"]
+        boundaryGap: ["0%", "50%"],
         //scale: true //масштабирует
       },
       series: chartindsvals,
       blendMode: "source-over",
       //animationEasing: "elasticOut",
       animationEasing: "bounceIn",
-      animationDelayUpdate: function(idx) {
+      animationDelayUpdate: function (idx) {
         return idx * 5;
-      }
+      },
     };
   };
 
@@ -179,7 +180,7 @@ let IndsChart = props => {
                 fontSize: "14px",
                 lineHeight: "1.5",
                 fontWeight: "bold",
-                textTransform: "uppercase"
+                textTransform: "uppercase",
               }}
             >
               {props.indVals ? (
