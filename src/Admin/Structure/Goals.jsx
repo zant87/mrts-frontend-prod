@@ -1,5 +1,5 @@
 import React from 'react';
-import {MDBBreadcrumb, MDBBreadcrumbItem, MDBCol, MDBContainer, MDBRow} from "mdbreact";
+import { MDBCol, MDBContainer, MDBRow } from "mdbreact";
 import MUIDataTable from "mui-datatables";
 import axios from 'axios';
 
@@ -23,8 +23,6 @@ export default class AdminGoalsPage extends React.Component {
                 this.setState({ data});
             })
     };
-
-
 
     render() {
 
@@ -91,7 +89,7 @@ export default class AdminGoalsPage extends React.Component {
         return (
             <MDBContainer fluid>
                 <MDBRow center>
-                    <MDBCol md={'12'} className='mb-5 mx-auto'>
+                    <MDBCol md={'12'} className='my-5 mx-auto'>
                         <MUIDataTable
                             title={"Дерево целей и задач"}
                             data={data}
