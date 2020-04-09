@@ -1,34 +1,32 @@
 import React from "react";
 import { MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText } from "mdbreact";
 import ReactEcharts from "echarts-for-react";
-import s from "./indsChart.module.css";
+import s from "./ParamsChart.module.css";
 import Preloader from "@/Common/Preloader/Preloader";
 
-let IndsChart = (props) => {
-  let indsval = null;
-  let chartindsvals = null;
+let ParamsChart = (props) => {
+  let paramsval = null;
+  let chartparamsvals = null;
 
   let getOption = () => {
     let years = [];
-    let scenarioNames = [];
+
     let okeiName = "";
 
-    if (props.indVals) {
-      indsval = props.indVals.sort((a, b) => (a.indicatorDate > b.indicatorDate ? 1 : -1));
+    if (props.paramVals) {
+      paramsval = props.paramVals.sort((a, b) => (a.parameterDate > b.parameterDate ? 1 : -1));
 
-      indsval.forEach((item) => {
-        years.push(item.indicatorDate);
-        scenarioNames.push(item.scenarioName);
-        okeiName = item.okeiName;
+      paramsval.forEach((item) => {
+        years.push(item.parameterDate);
+
+        //okeiName = item.okeiName;
       });
 
-      years = indsval.map((item) => item.indicatorDate).filter((item, i, arr) => arr.indexOf(item) === i);
-
-      scenarioNames = indsval.map((item) => item.scenarioName).filter((item, i, arr) => arr.indexOf(item) === i);
+      years = paramsval.map((item) => item.parameterDate).filter((item, i, arr) => arr.indexOf(item) === i);
 
       // --------------------------Объект series для графика------------------
-      chartindsvals = scenarioNames.map((scen) => ({
-        name: scen,
+      chartparamsvals = {
+        name: "Факт",
         type: "bar",
         showBackground: true,
         itemStyle: {
@@ -52,41 +50,37 @@ let IndsChart = (props) => {
           return idx * 10;
         },
         data: years.map((year) =>
-          indsval
+          paramsval
             .filter((val, i, arr) => {
-              if (val.scenarioName == scen && val.indicatorDate == year) {
+              if (val.parameterDate == year) {
                 return val.value;
               }
             })
             .map((item) => item.value)
             .find((item, i, arr) => arr.indexOf(item) === i)
         ),
-      }));
-      //console.log(chartindsvals);
-      //years = indsval.map(item => item.indicatorDate.split("-")[0]).filter((item, i, arr) => arr.indexOf(item) === i);
+      };
+
       if (props.frequencyId == 1) {
         years = years.filter((item, i, arr) => arr.indexOf(item) === i).map((i) => i.split("-")[0]);
       } else {
         years = years.filter((item, i, arr) => arr.indexOf(item) === i).map((i) => i);
       }
-
-      // years = years.filter((item, i, arr) => arr.indexOf(item) === i).map(i => i.split("-")[0]);
     }
 
     //------------Объект options для echarts--------------
     return {
-      color: ["#003366", "#006699", "#4cabce"],
+      color: ["#006699", "#006699", "#4cabce"],
       //color: ["#62ab1b", "#e37600", "#0091e4"],
       //color: ["#003366", "#006699", "#ec7e13"],
       title: {
-        //text: indsval[0].indicatorName,
         textStyle: {
           fontSize: 11,
           width: 70,
         },
       },
       legend: {
-        data: scenarioNames,
+        data: "Факт",
         orient: "horizontal", // 'vertical'
         x: "center", // 'center' | 'left' | {number},
         y: "top", // 'center' | 'bottom' | {number}
@@ -97,7 +91,7 @@ let IndsChart = (props) => {
           mark: { show: true },
           magicType: {
             show: true,
-            // type: ["line", "bar", "stack", "tiled"],
+
             type: ["line", "bar", "tiled"],
             title: "Линейный",
           },
@@ -127,7 +121,7 @@ let IndsChart = (props) => {
         {
           type: "inside",
           start: 0,
-          end: 50,
+          end: 100,
 
           showDetail: true,
         },
@@ -160,7 +154,7 @@ let IndsChart = (props) => {
         boundaryGap: ["0%", "50%"],
         //scale: true //масштабирует
       },
-      series: chartindsvals,
+      series: chartparamsvals,
       blendMode: "source-over",
       //animationEasing: "elasticOut",
       animationEasing: "bounceIn",
@@ -183,17 +177,13 @@ let IndsChart = (props) => {
                 textTransform: "uppercase",
               }}
             >
-              {props.indVals ? (
-                props.indVals[0].indicatorCode.replace("IND_", "") + " " + props.indVals[0].indicatorName
-              ) : (
-                <div>Нет данных</div>
-              )}
+              {props.paramVals ? props.paramVals[0].parameterName : <div>Нет данных</div>}
             </MDBCardTitle>
-            {props.isFetchingIndData ? (
+            {props.isFetchingParamData ? (
               <Preloader />
             ) : (
               <MDBCardText className="m-0 p-0">
-                {props.indVals ? <ReactEcharts option={getOption()} className={s.chart} /> : <div>Нет данных</div>}
+                {props.paramVals ? <ReactEcharts option={getOption()} className={s.chart} /> : <div>Нет данных</div>}
               </MDBCardText>
             )}
           </MDBCardBody>
@@ -203,4 +193,4 @@ let IndsChart = (props) => {
   );
 };
 
-export default IndsChart;
+export default ParamsChart;

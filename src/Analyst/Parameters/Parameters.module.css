@@ -1,0 +1,10 @@
+.paramslist {
+  border: 1px solid #e7e7e7;
+  font-size: 14px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  /* overflow: hidden scroll; */
+  line-height: 1.3;
+  /* min-height: 500px; */
+  height: 600px;
+}

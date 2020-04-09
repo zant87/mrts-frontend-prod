@@ -17,7 +17,7 @@ import {
   MDBNavItem,
   MDBNavLink,
   MDBRow,
-  MDBCol
+  MDBCol,
 } from "mdbreact";
 import { AppRoutes } from "@/Common/AppRoutes";
 
@@ -30,17 +30,17 @@ class App extends React.Component {
       isAdmin: false,
       isOperator: false,
       isAnalyst: false,
-      collapseID: ""
+      collapseID: "",
     };
   }
 
   componentDidMount() {
-    authenticationService.currentUser.subscribe(x =>
+    authenticationService.currentUser.subscribe((x) =>
       this.setState({
         currentUser: x,
         isAdmin: x && x.role === Role.Admin,
         isAnalyst: x && x.role === Role.Analyst,
-        isOperator: x && x.role === Role.Operator
+        isOperator: x && x.role === Role.Operator,
       })
     );
   }
@@ -50,12 +50,12 @@ class App extends React.Component {
     history.push("/login");
   }
 
-  toggleCollapse = collapseID => () =>
-    this.setState(prevState => ({
-      collapseID: prevState.collapseID !== collapseID ? collapseID : ""
+  toggleCollapse = (collapseID) => () =>
+    this.setState((prevState) => ({
+      collapseID: prevState.collapseID !== collapseID ? collapseID : "",
     }));
 
-  closeCollapse = collID => () => {
+  closeCollapse = (collID) => () => {
     const { collapseID } = this.state;
     window.scrollTo(0, 0);
     collapseID === collID && this.setState({ collapseID: "" });
@@ -119,6 +119,13 @@ class App extends React.Component {
                             <MDBNavItem>
                               <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/admin/archive">
                                 <strong>Архив</strong>
+                              </MDBNavLink>
+                            </MDBNavItem>
+                          )}
+                          {isAnalyst && (
+                            <MDBNavItem>
+                              <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/analyst/parameters">
+                                <strong>Показатели</strong>
                               </MDBNavLink>
                             </MDBNavItem>
                           )}

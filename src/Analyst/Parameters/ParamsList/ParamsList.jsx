@@ -16,15 +16,12 @@ import {
   MDBInput,
 } from "mdbreact";
 import { NavLink } from "react-router-dom";
-// import indsstyle from "./../Indicators.module.css";
-import indsstyle from "./../Indicators.module.css";
-import IndsSettings from "../IndsSettings/IndsSettings";
+import paramsstyle from "./../Parameters.module.css";
+import ParamsSettings from "../ParamsSettings/ParamsSettings";
 import Preloader from "@/Common/Preloader/Preloader";
 import { render } from "react-dom";
-//import "../Indicators.module.css";
 
-class IndsList extends React.Component {
-  //let inds = props.inds.sort((a, b) => (a.code > b.code ? 1 : -1));
+class ParamsList extends React.Component {
   state = {
     modal: false,
     radio: 2,
@@ -48,28 +45,21 @@ class IndsList extends React.Component {
 
   onSaveFilters = () => {
     let freq = this.setFrequency.current.value;
-    //debugger;
-    // this.props.setFrequencyId(freq);
     this.props.onFilterChanged(freq);
     this.toggle();
   };
 
   render() {
-    console.log(indsstyle);
-    let inds = null;
+    let params = null;
 
-    inds = this.props.inds.sort((a, b) => (a.code > b.code ? 1 : -1));
+    params = this.props.params.sort((a, b) => (a.id > b.id ? 1 : -1));
 
-    if (this.props.goalId !== null) {
-      inds = inds.filter((x) => x.goalId == this.props.goalId);
-    }
-
-    if (this.props.transportTypeId != "0") {
-      inds = inds.filter((x) => x.transportTypeId == this.props.transportTypeId);
-    }
+    // if (this.props.transportTypeId != "0") {
+    //   params = params.filter(x => x.transportTypeId == this.props.transportTypeId);
+    // }
 
     if (this.props.searchQuery != null) {
-      inds = inds.filter((x) => x.name.trim().toLowerCase().includes(this.props.searchQuery.trim().toLowerCase()));
+      params = params.filter((x) => x.parameterName.trim().toLowerCase().includes(this.props.searchQuery.trim().toLowerCase()));
     }
 
     return (
@@ -142,7 +132,7 @@ class IndsList extends React.Component {
 
         <MDBCard style={{ width: "100%" }}>
           <MDBCardHeader color="special-color">
-            Индикаторы ТС
+            Показатели
             <MDBIcon
               onClick={this.toggle}
               icon="filter"
@@ -153,32 +143,29 @@ class IndsList extends React.Component {
           </MDBCardHeader>
           <MDBCardBody>
             <MDBCardTitle>Фильтры</MDBCardTitle>
-            <IndsSettings
-              goals={this.props.goals}
+            <ParamsSettings
               transportTypes={this.props.transportTypes}
-              setGoalId={this.props.setGoalId}
-              goalId={this.props.goalId}
               setSearchQuery={this.props.setSearchQuery}
               searchQuery={this.props.searchQuery}
               transportTypeId={this.props.transportTypeId}
               setTransportTypeId={this.props.setTransportTypeId}
             />
-            <MDBCardTitle>Выберите индикатор</MDBCardTitle>
+            <MDBCardTitle>Выберите показатель</MDBCardTitle>
             <MDBCardText>
-              {this.props.isFetchingInds ? (
+              {this.props.isFetchingParams ? (
                 <Preloader />
               ) : (
-                <div className={indsstyle.indsliste}>
+                <div className={paramsstyle.paramslist}>
                   <div className="list-group">
-                    {inds.map((ind) => (
+                    {params.map((param) => (
                       <NavLink
                         exact
-                        to={"/analyst/indicators/" + ind.id}
-                        key={ind.id}
+                        to={"/analyst/parameters/" + param.id}
+                        key={param.id}
                         activeClassName="active"
                         className="list-group-item list-group-item-action text-justify"
                       >
-                        {ind.code.replace("IND_", "") + " " + ind.name}
+                        {param.id + ". " + param.parameterName}
                       </NavLink>
                     ))}
                   </div>
@@ -192,4 +179,4 @@ class IndsList extends React.Component {
   }
 }
 
-export default IndsList;
+export default ParamsList;
