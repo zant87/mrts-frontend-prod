@@ -27,6 +27,7 @@ import AdminArchiveProjectsPage from "@/Admin/Archive/Projects";
 import AdminArchiveActivitiesPage from "@/Admin/Archive/Activities";
 import { Route } from "react-router-dom";
 import { LoginPage } from "@/Common/LoginPage";
+import AnalystParametersPage from "@/Analyst/Parameters/ParametersContainer";
 import AnalystIndicatorsPage from "@/Analyst/Indicators/IndicatorsContainer";
 import AnalystLevelsPage from "@/Analyst/Levels";
 import AnalystDynamicsPage from "@/Analyst/Dynamics";
@@ -90,6 +91,7 @@ export const AppRoutes = () => {
 
       {/* Аналитик */}
       {/* <PrivateRoute path="/analyst/indicators/:indId?" roles={Role.Analyst} render={props => <AnalystIndicatorsPage {...props} />} /> */}
+      <PrivateRoute path="/analyst/parameters/:paramId?" roles={Role.Analyst} component={AnalystParametersPage} />
       <PrivateRoute path="/analyst/indicators/:indId?" roles={Role.Analyst} component={AnalystIndicatorsPage} />
       <PrivateRoute exact path="/analyst/levels" roles={Role.Analyst} component={AnalystLevelsPage} />
       <PrivateRoute exact path="/analyst/dynamics" roles={Role.Analyst} component={AnalystDynamicsPage} />

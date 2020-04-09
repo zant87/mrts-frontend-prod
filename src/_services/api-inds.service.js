@@ -3,7 +3,7 @@ import * as axios from "axios";
 const instance = axios.create({
   // withCredentials: true,
   // crossdomain: true,
-  baseURL: "http://localhost:3000/api/",
+  baseURL: "/api/",
 });
 
 export const IndsAPI = {
