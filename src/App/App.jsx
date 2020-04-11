@@ -1,13 +1,13 @@
 import React from "react";
-import { Router } from "react-router-dom";
-import { history, Role } from "@/_helpers";
-import { authenticationService } from "@/_services";
-import { Footer } from "@/_components";
-import { ReactComponent as Logo } from "@/_assets/logo.svg";
+import {Router} from "react-router-dom";
+import {history, Role} from "@/_helpers";
+import {authenticationService} from "@/_services";
+import {Footer} from "@/_components";
 import MRTSLogo from "@/_assets/mrts-logo.png";
-import { Provider } from "react-redux";
+import {Provider} from "react-redux";
 import store from "@/store";
 import {
+  MDBCol,
   MDBCollapse,
   MDBContainer,
   MDBNavbar,
@@ -17,9 +17,8 @@ import {
   MDBNavItem,
   MDBNavLink,
   MDBRow,
-  MDBCol,
 } from "mdbreact";
-import { AppRoutes } from "@/Common/AppRoutes";
+import {AppRoutes} from "@/Common/AppRoutes";
 
 class App extends React.Component {
   constructor(props) {

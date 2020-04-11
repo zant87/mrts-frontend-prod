@@ -7,6 +7,7 @@ const instance = axios.create({
 });
 
 export const ParamsAPI = {
+
   getParams() {
     return instance.get(`form-params`).then((response) => {
       return response.data;
@@ -21,7 +22,6 @@ export const ParamsAPI = {
         if (response.data.length == 0) {
           return null;
         }
-
         return response.data;
       });
   },
