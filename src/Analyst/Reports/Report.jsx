@@ -96,8 +96,6 @@ class AnalystReportPage extends React.Component {
 
         const {
             rows,
-            reportSelected,
-            selectedRow
         } = this.props;
 
         return (
