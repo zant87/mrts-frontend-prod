@@ -1,12 +1,12 @@
 import React from 'react';
-import { MDBContainer, MDBIframe } from 'mdbreact';
+import {MDBContainer, MDBIframe} from 'mdbreact';
 
 class SwaggerPage extends React.Component {
 
     render() {
         return (
             <MDBContainer fluid>
-                <MDBIframe src="http://localhost:8080/swagger-ui.html"/>
+                <MDBIframe src="http://localhost:8080/swagger-ui/index.html"/>
             </MDBContainer>
         );
     }
