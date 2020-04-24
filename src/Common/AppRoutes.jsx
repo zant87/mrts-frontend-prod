@@ -53,6 +53,7 @@ import OperatorReportAppropriationsPage from "@/Operator/Report/Appropriations";
 import OperatorReportExtraBudgetPage from "@/Operator/Report/ExtraBudget";
 import OperatorReportSourcesPage from "@/Operator/Report/Sources";
 import SwaggerPage from "@/Common/Swagger";
+import OperatorPlanResourcesEditPage from "../Operator/Plan/ResourcesEdit";
 
 export const AppRoutes = () => {
   return (
@@ -105,6 +106,7 @@ export const AppRoutes = () => {
       <PrivateRoute exact path="/operator/plan/projects" roles={Role.Operator} component={OperatorPlanProjectsPage} />
       <PrivateRoute exact path="/operator/plan/indicators" roles={Role.Operator} component={OperatorPlanIndicatorsPage} />
       <PrivateRoute exact path="/operator/plan/resources" roles={Role.Operator} component={OperatorPlanResourcesPage} />
+      <PrivateRoute path="/operator/plan/resources/:id" roles={Role.Operator} component={OperatorPlanResourcesEditPage} />
 
       {/*Control - Контроль */}
       <PrivateRoute exact path="/operator/control" roles={Role.Operator} component={OperatorControlNavigation} />
