@@ -39,9 +39,7 @@ export default class OperatorPlanResourcesEditPage extends React.Component {
     };
 
     doSave = () => {
-
         const responseData = {id: this.state.id, planingMax: this.state.planingMax, planingMin: this.state.planingMin};
-
         appAxios({
             url: `views/k-4-s`,
             method: 'PUT',
@@ -62,6 +60,36 @@ export default class OperatorPlanResourcesEditPage extends React.Component {
                 <MDBRow>
                     <MDBCol md="12" className="mb-3">
                         <MDBInput label="#" value={this.state.id} disabled={true} type="number"/>
+                    </MDBCol>
+                </MDBRow>
+                <MDBRow>
+                    <MDBCol md="12" className="mb-3">
+                        <MDBInput label="Редакция ТС" value={this.state.transportStrategyCode} disabled={true} type="text"/>
+                    </MDBCol>
+                </MDBRow>
+                <MDBRow>
+                    <MDBCol md="12" className="mb-3">
+                        <MDBInput label="Вариант реализации стратегии" value={this.state.scenarioName} disabled={true} type="text"/>
+                    </MDBCol>
+                </MDBRow>
+                <MDBRow>
+                    <MDBCol md="12" className="mb-3">
+                        <MDBInput label="Вид вложений" value={this.state.costTypeCode} disabled={true} type="text"/>
+                    </MDBCol>
+                </MDBRow>
+                <MDBRow>
+                    <MDBCol md="12" className="mb-3">
+                        <MDBInput label="Направление вложений" value={this.state.directionName} disabled={true} type="text"/>
+                    </MDBCol>
+                </MDBRow>
+                <MDBRow>
+                    <MDBCol md="12" className="mb-3">
+                        <MDBInput label="Источник финансирования" value={this.state.fundingSourceName} disabled={true} type="text"/>
+                    </MDBCol>
+                </MDBRow>
+                <MDBRow>
+                    <MDBCol md="12" className="mb-3">
+                        <MDBInput label="Период реализации стратегии" value={this.state.stageName} disabled={true} type="text"/>
                     </MDBCol>
                 </MDBRow>
                 <MDBRow>
