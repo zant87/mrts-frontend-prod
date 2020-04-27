@@ -38,6 +38,8 @@ class CustomToolbarSelect extends React.Component {
     handleClickBlockSelected = () => {
         const rowIndex = this.props.selectedRows.data.map(row => row.dataIndex);
         const rowId = this.props.displayData[rowIndex].data[0];
+        console.log(`Посылаем в форму редактирования URL: ${history.location.pathname}/${rowId}`);
+        console.log(this.props.displayData[rowIndex].data);
         history.push(`${history.location.pathname}/${rowId}`, this.props.displayData[rowIndex].data);
     };
 

@@ -9,13 +9,14 @@ export default class OperatorPlanResourcesPage extends React.Component {
 
     state = {
         page: 0,
-        count: 1,
-        data: [["Загружаем данные..."]],
+        count: 0,
+        data: [],
         rowsPerPage: 20,
-        isLoading: false
+        isLoading: false,
     };
 
     componentDidMount() {
+        //сохранять state через redux
         this.getData();
     };
 
@@ -30,47 +31,16 @@ export default class OperatorPlanResourcesPage extends React.Component {
             });
     };
 
-    changePage = (page, rowsPerPage, sortFilterList) => {
+    onChangePage = (page, numberOfRows) => {
         this.setState({
             isLoading: true,
         });
 
-        axios.get(`/api/views/k-4-s?page=${page}&size=${rowsPerPage}`)
+        axios.get(`/api/views/k-4-s?page=${page}&size=${numberOfRows}`)
             .then(res => {
                 const count = Number(res.headers['x-total-count']);
                 const data = res.data;
-                this.setState({data: data, isLoading: false, count: count, page: page, rowsPerPage: rowsPerPage});
-            });
-    };
-
-    columnSortChange = (changedColumn, direction) => {
-
-        this.setState({
-            isLoading: true,
-        });
-
-        const page = this.state.page;
-        const rowsPerPage = this.state.rowsPerPage;
-        let sortDirection;
-
-        switch (direction) {
-            case "ascending":
-                direction = 'descending';
-                sortDirection = 'asc';
-                break;
-            case 'descending':
-                direction = 'ascending';
-                sortDirection = 'desc';
-                break;
-            default:
-                sortDirection = 'asc';
-        }
-
-        axios.get(`/api/views/k-4-s?page=${page}&size=${rowsPerPage}&sort=${changedColumn},${sortDirection}`)
-            .then(res => {
-                const count = Number(res.headers['x-total-count']);
-                const data = res.data;
-                this.setState({data: data, isLoading: false, count: count, page: page});
+                this.setState({data: data, isLoading: false, count: count, page: page, rowsPerPage: numberOfRows});
             });
     };
 
@@ -104,26 +74,25 @@ export default class OperatorPlanResourcesPage extends React.Component {
             onTableChange: (action, tableState) => {
                 switch (action) {
                     case 'changePage':
-                        this.changePage(tableState.page, tableState.rowsPerPage);
+                        this.onChangePage(tableState.page, tableState.rowsPerPage);
                         break;
                 }
             },
             customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
                 <CustomToolbarSelect selectedRows={selectedRows} displayData={displayData} setSelectedRows={setSelectedRows} />
             ),
-            // onColumnSortChange: (changedColumn, direction) => {
-            //     console.log(changedColumn, direction);
-            //     this.columnSortChange(changedColumn, direction);
-            // }
+            onChangeRowsPerPage: (numberOfRows) => {
+                this.onChangePage(this.state.page, numberOfRows);
+            }
         };
 
         return (
             <MDBContainer fluid>
                 <MDBRow center>
                     <MDBCol md={'12'} className='my-5 mx-auto'>
-                        {isLoading && <MDBSpinner />}
+                        {isLoading && <MDBSpinner multicolor />}
                         <MUIDataTable
-                            title={"Ресурсное обеспечение ТС (план)"}
+                            title={ "Ресурсное обеспечение ТС (план)"}
                             data={data}
                             columns={columns}
                             options={options}

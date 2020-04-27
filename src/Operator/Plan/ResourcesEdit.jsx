@@ -1,5 +1,5 @@
 import React from "react";
-import {MDBBtn, MDBCol, MDBContainer, MDBInput, MDBRow, MDBSelect} from "mdbreact";
+import { MDBBtn, MDBCol, MDBContainer, MDBInput, MDBRow, MDBSelect } from "mdbreact";
 import appAxios from "../../_services/appAxios";
 
 export default class OperatorPlanResourcesEditPage extends React.Component {
@@ -33,9 +33,8 @@ export default class OperatorPlanResourcesEditPage extends React.Component {
         );
     };
 
-    changeHandler = event => {
+    onChangeHandler = event => {
         this.setState({[event.target.name]: Number(event.target.value)});
-        console.log(this.state);
     };
 
     doSave = () => {
@@ -94,25 +93,21 @@ export default class OperatorPlanResourcesEditPage extends React.Component {
                 </MDBRow>
                 <MDBRow>
                     <MDBCol md="12" className="mb-3">
-                        <MDBInput label="Минимальное ресурсное обеспечение, млрд. руб." value={this.state.planingMin} type="number" name="planingMin" onChange={this.changeHandler}/>
+                        <MDBInput label="Минимальное ресурсное обеспечение, млрд. руб." value={this.state.planingMin} type="number" name="planingMin" onChange={this.onChangeHandler}/>
                     </MDBCol>
                 </MDBRow>
                 <MDBRow>
                     <MDBCol md="12" className="mb-3">
-                        <MDBInput label="Максимальное ресурсное обеспечение, млрд. руб." value={this.state.planingMax} name="planingMax" type="number" onChange={this.changeHandler}/>
+                        <MDBInput label="Максимальное ресурсное обеспечение, млрд. руб." value={this.state.planingMax} name="planingMax" type="number" onChange={this.onChangeHandler}/>
                     </MDBCol>
                 </MDBRow>
                 <MDBRow>
-                    <MDBCol md="6" className="mb-3">
-                        <MDBBtn color="primary" type="none" onClick={this.doSave}>
-                            Сохранить
-                        </MDBBtn>
-                    </MDBCol>
-                    <MDBCol md="6" className="mb-3 mx-auto">
-                        <MDBBtn color="info" type="none" onClick={this.doBack}>
-                            Назад
-                        </MDBBtn>
-                    </MDBCol>
+                    <MDBBtn color="primary" type="none" onClick={this.doSave}>
+                        Сохранить
+                    </MDBBtn>
+                    <MDBBtn color="info" type="none" onClick={this.doBack}>
+                        Назад
+                    </MDBBtn>
                 </MDBRow>
             </MDBCol>
         );
