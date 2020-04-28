@@ -7,6 +7,7 @@ import Preloader from "@/Common/Preloader/Preloader";
 let IndsChart = (props) => {
   let indsval = null;
   let chartindsvals = null;
+  let echarts_react = React.createRef();
 
   let getOption = () => {
     let years = [];
@@ -93,13 +94,37 @@ let IndsChart = (props) => {
       },
       toolbox: {
         show: true,
+        tooltip: {
+          // same as option.tooltip
+          show: true,
+          formatter: function (param) {
+            return "<div>" + param.title + "</div>"; // user-defined DOM structure
+          },
+          backgroundColor: "#222",
+          textStyle: {
+            fontSize: 12,
+          },
+          extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);", // user-defined CSS styles
+        },
+
         feature: {
           mark: { show: true },
+          myTool: {
+            show: true,
+            title: "Показать/скрыть значения",
+            icon: "image://https://img.icons8.com/metro/26/000000/7.png",
+            onclick: function () {
+              setChartLabelshow();
+            },
+          },
           magicType: {
             show: true,
             // type: ["line", "bar", "stack", "tiled"],
             type: ["line", "bar", "tiled"],
-            title: "Линейный",
+            title: {
+              line: "Линейный",
+              bar: "Столбчатый",
+            },
           },
           dataView: {
             title: "Данные",
@@ -153,6 +178,9 @@ let IndsChart = (props) => {
         },
       ],
       yAxis: {
+        axisLabel: {
+          show: true,
+        },
         name: okeiName,
         nameLocation: "middle",
         nameGap: "45",
@@ -168,6 +196,40 @@ let IndsChart = (props) => {
         return idx * 5;
       },
     };
+  };
+
+  let setChartLabelshow = () => {
+    let echarts_instance = echarts_react.current.getEchartsInstance();
+    let options = echarts_instance.getOption();
+    let series = echarts_instance.getOption().series;
+
+    let show = series[0].label.show;
+
+    echarts_instance.setOption({
+      series: [
+        {
+          label: {
+            normal: {
+              show: !show,
+            },
+          },
+        },
+        {
+          label: {
+            normal: {
+              show: !show,
+            },
+          },
+        },
+        {
+          label: {
+            normal: {
+              show: !show,
+            },
+          },
+        },
+      ],
+    });
   };
 
   return (
@@ -193,7 +255,7 @@ let IndsChart = (props) => {
               <Preloader />
             ) : (
               <MDBCardText className="m-0 p-0">
-                {props.indVals ? <ReactEcharts option={getOption()} className={s.chart} /> : <div>Нет данных</div>}
+                {props.indVals ? <ReactEcharts ref={echarts_react} option={getOption()} className={s.chart} /> : <div>Нет данных</div>}
               </MDBCardText>
             )}
           </MDBCardBody>

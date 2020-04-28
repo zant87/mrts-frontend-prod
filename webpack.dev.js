@@ -9,23 +9,23 @@ const config = {
   resolve: {
     extensions: [".js", ".jsx"],
     alias: {
-      "@": path.resolve(__dirname, "src/")
-    }
+      "@": path.resolve(__dirname, "src/"),
+    },
   },
   output: {
-    publicPath: ASSET_PATH
+    publicPath: ASSET_PATH,
   },
   module: {
     rules: [
       {
         test: /\.(js)$/,
         exclude: /node_modules/,
-        use: ["babel-loader"]
+        use: ["babel-loader"],
       },
       {
         test: /\.(jsx)$/,
         exclude: /node_modules/,
-        use: ["babel-loader"]
+        use: ["babel-loader"],
       },
       // {
       //   test: /\.css$/,
@@ -34,50 +34,51 @@ const config = {
       //   //loader: "style-loader!css-loader"
       // },
       {
-        test: /\.css$/,
+        test: /\.(s*)css$/,
         use: [
           "style-loader",
           {
             loader: "css-loader",
             options: {
               importLoaders: 1,
-              modules: true
-            }
-          }
+              modules: true,
+            },
+          },
         ],
-        include: /\.module\.css$/
+        include: /\.module\.(s*)css$/,
       },
       {
         test: /\.css$/,
         use: ["style-loader", "css-loader"],
-        exclude: /\.module\.css$/
+        exclude: /\.module\.css$/,
       },
+
       { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader" },
       { test: /\.(woff|woff2)$/, loader: "url-loader?prefix=font/&limit=5000" },
       {
         test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-        loader: "url-loader?limit=10000&mimetype=application/octet-stream"
+        loader: "url-loader?limit=10000&mimetype=application/octet-stream",
       },
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
         issuer: {
-          test: /\.jsx?$/
+          test: /\.jsx?$/,
         },
-        use: ["babel-loader", "@svgr/webpack", "url-loader"]
+        use: ["babel-loader", "@svgr/webpack", "url-loader"],
       },
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        loader: "url-loader"
+        loader: "url-loader",
       },
       {
         test: /\.png(\?v=\d+\.\d+\.\d+)?$/,
-        loader: "url-loader?limit=10000&mimetype=image/png"
+        loader: "url-loader?limit=10000&mimetype=image/png",
       },
       {
         test: /\.gif(\?v=\d+\.\d+\.\d+)?$/,
-        loader: "url-loader?limit=10000&mimetype=image/gif"
-      }
-    ]
+        loader: "url-loader?limit=10000&mimetype=image/gif",
+      },
+    ],
   },
   devServer: {
     historyApiFallback: true,
@@ -86,23 +87,23 @@ const config = {
     port: 3000,
     hot: true,
     proxy: {
-      "/api": "http://localhost:8080"
-    }
+      "/api": "http://localhost:8080",
+    },
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: "./src/index.html",
       chunksSortMode: "dependency",
-      inject: "body"
+      inject: "body",
     }),
-    new FriendlyErrorsWebpackPlugin()
+    new FriendlyErrorsWebpackPlugin(),
   ],
   externals: {
     // глобальный конфиг
     config: JSON.stringify({
-      apiUrl: "http://localhost:4000"
-    })
-  }
+      apiUrl: "http://localhost:4000",
+    }),
+  },
 };
 
 module.exports = config;

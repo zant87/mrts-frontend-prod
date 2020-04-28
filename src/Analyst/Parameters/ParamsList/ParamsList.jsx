@@ -14,6 +14,7 @@ import {
   MDBBtn,
   MDBContainer,
   MDBInput,
+  MDBSelect,
 } from "mdbreact";
 import { NavLink } from "react-router-dom";
 import paramsstyle from "./../Parameters.module.css";
@@ -25,11 +26,16 @@ class ParamsList extends React.Component {
   state = {
     modal: false,
     radio: 2,
+    frequencyId: null,
   };
 
   setFrequency = React.createRef();
   setYearStart = React.createRef();
   setYearEnd = React.createRef();
+  setQuarter = React.createRef();
+  frequencyId = null;
+  selectedFormsRef = React.createRef();
+  selectedForms = [];
 
   toggle = () => {
     this.setState({
@@ -43,20 +49,73 @@ class ParamsList extends React.Component {
     });
   };
 
+  onSelectFrequency = (e) => {
+    this.setState({
+      frequencyId: this.setFrequency.current.value,
+    });
+    //this.frequencyId = e.target.value;
+    //debugger;
+    //this.frequencyId = this.setFrequency.current.value;
+    //this.props.setFrequencyId(frequencyId);
+  };
+
+  // onSelectQuarter = (e) => {
+  //   let quarterId = e.target.value;
+  //   this.props.setParamQuarterId(quarterId);
+  // };
+
+  // onSelectedForms = () => {
+  //   //debugger;
+  //   let selectedFormsArr = this.selectedFormsRef.current.state.selectValue;
+  //   //this.props.setCheckedFormId(selectedFormsArr);
+  //   console.log(this.props);
+  // };
+
   onSaveFilters = () => {
+    let quarterId = null;
     let freq = this.setFrequency.current.value;
-    this.props.onFilterChanged(freq);
+    let yearStart = this.setYearStart.current.value;
+    let yearEnd = this.setYearEnd.current.value;
+    let selectedFormsArr = this.selectedFormsRef.current.state.selectValue;
+    //debugger;
+    if (this.setQuarter.current != null) {
+      quarterId = this.setQuarter.current.value;
+    }
+
+    this.props.onFilterChanged(freq, yearStart, yearEnd, quarterId, selectedFormsArr);
     this.toggle();
   };
 
   render() {
     let params = null;
+    let forms = null;
+    let newForms = [];
+
+    if (this.props.forms) {
+      forms = this.props.forms.sort().map((item) => ({ text: item.okudName, value: item.id, checked: true }));
+      if (this.props.checkedFormId != null) {
+        let checkedFormId = this.props.checkedFormId;
+        //console.log(checkedFormId);
+        this.props.forms.forEach((form) => {
+          let checked;
+          checkedFormId.forEach((checkedForm) => {
+            if (checkedForm == form.id) {
+              checked = true;
+            }
+          });
+
+          newForms.push({ text: form.okudName, value: form.id, checked: checked });
+        });
+        console.log(newForms);
+      }
+    }
 
     params = this.props.params.sort((a, b) => (a.id > b.id ? 1 : -1));
 
-    // if (this.props.transportTypeId != "0") {
-    //   params = params.filter(x => x.transportTypeId == this.props.transportTypeId);
-    // }
+    if (this.props.transportTypeId != "0") {
+      //debugger;
+      params = params.filter((x) => x.transportTypeId == this.props.transportTypeId);
+    }
 
     if (this.props.searchQuery != null) {
       params = params.filter((x) => x.parameterName.trim().toLowerCase().includes(this.props.searchQuery.trim().toLowerCase()));
@@ -64,16 +123,46 @@ class ParamsList extends React.Component {
 
     return (
       <MDBCol lg="3" className="list h-100" style={{ marginBottom: "10px" }}>
-        <MDBModal isOpen={this.state.modal} toggle={this.toggle} centered>
+        <MDBModal isOpen={this.state.modal} toggle={this.toggle} centered animation="top" style={{ overflow: "scroll" }}>
           <MDBModalHeader toggle={this.toggle}>Настройка отображения данных</MDBModalHeader>
           <MDBModalBody>
             <MDBContainer className="mt-2">
+              <div style={{ marginBottom: "20px", clear: "left" }}>
+                <label htmlFor="scenarioform">
+                  <strong>Статистические формы</strong>
+                </label>
+                <MDBSelect
+                  //onChange={this.onSelectedForms}
+
+                  ref={this.selectedFormsRef}
+                  //className="sel"
+                  style={{ marginTop: "10px", color: "#cecece" }}
+                  color="primary"
+                  //color="blue-grey-select"
+                  label="Статистические формы"
+                  //labelClass={lev.sel}
+                  outline="true"
+                  multiple
+                  search
+                  searchLabel="Поиск форм"
+                  options={this.props.forms ? forms : null}
+                  //selected="Выберите индикаторы"
+                  selectAll
+                  selectAllLabel="Выберите все"
+                  selectAllValue={null}
+                  //focusShadow="inset 0px 10px 0px 0px"
+                  //getValue={this.selectedForms}
+                  required
+                />
+              </div>
+              <hr />
               <div className="form-group">
                 <label htmlFor="freqform">
                   <strong>Выберите частоту обновления</strong>
                 </label>
                 <select
                   ref={this.setFrequency}
+                  onChange={this.onSelectFrequency}
                   className="form-control"
                   id="freqform"
                   className="browser-default custom-select custom-select-sm"
@@ -91,6 +180,33 @@ class ParamsList extends React.Component {
                     : null}
                 </select>
               </div>
+              {this.state.frequencyId == 2 ? (
+                <div className="form-group">
+                  <label htmlFor="quarterform">
+                    <strong>Выберите квартал</strong>
+                  </label>
+                  <select
+                    ref={this.setQuarter}
+                    onChange={this.onSelectQuarter}
+                    className="form-control"
+                    id="freqform"
+                    className="browser-default custom-select custom-select-sm"
+                  >
+                    {this.props.quarters
+                      ? this.props.quarters.map((item) =>
+                          this.props.paramQuarterId == item.id ? (
+                            <option value={item.id} selected>
+                              {item.name}
+                            </option>
+                          ) : (
+                            <option value={item.id}>{item.name}</option>
+                          )
+                        )
+                      : null}
+                  </select>
+                </div>
+              ) : null}
+
               <hr />
 
               <div className="form-group">
@@ -103,7 +219,17 @@ class ParamsList extends React.Component {
                   id="yearStart"
                   className="browser-default custom-select custom-select-sm"
                 >
-                  <option value="2010">2010</option>
+                  {this.props.years
+                    ? this.props.years.map((item) =>
+                        this.props.paramYearStart == item.year ? (
+                          <option value={item.year} selected>
+                            {item.year}
+                          </option>
+                        ) : (
+                          <option value={item.year}>{item.year}</option>
+                        )
+                      )
+                    : null}
                 </select>
                 <br></br>
                 <label htmlFor="freqform">
@@ -115,7 +241,17 @@ class ParamsList extends React.Component {
                   id="yearEnd"
                   className="browser-default custom-select custom-select-sm"
                 >
-                  <option value="2010">2010</option>
+                  {this.props.years
+                    ? this.props.years.map((item) =>
+                        this.props.paramYearEnd == item.year ? (
+                          <option value={item.year} selected>
+                            {item.year}
+                          </option>
+                        ) : (
+                          <option value={item.year}>{item.year}</option>
+                        )
+                      )
+                    : null}
                 </select>
               </div>
             </MDBContainer>
@@ -143,6 +279,7 @@ class ParamsList extends React.Component {
           </MDBCardHeader>
           <MDBCardBody>
             <MDBCardTitle>Фильтры</MDBCardTitle>
+
             <ParamsSettings
               transportTypes={this.props.transportTypes}
               setSearchQuery={this.props.setSearchQuery}
