@@ -1,12 +1,14 @@
-import {combineReducers} from "redux";
+import { combineReducers } from "redux";
 import errorReducer from "./errorReducer";
 import indsReducer from "./inds-reducer";
 import paramsReducer from "./params-reducer";
-import reportsReducer from '../Analyst/Reports/ReportsReducers';
+import dynamicsReducer from "./dynamics-reducer";
+import levelsReducer from "./levels-reducer";
 
 export default combineReducers({
   errors: errorReducer,
   indsPage: indsReducer,
   paramsPage: paramsReducer,
-  reports: reportsReducer
+  dynamicsPage: dynamicsReducer,
+  levelsPage: levelsReducer,
 });

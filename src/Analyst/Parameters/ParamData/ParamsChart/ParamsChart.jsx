@@ -1,12 +1,17 @@
 import React from "react";
 import { MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText } from "mdbreact";
 import ReactEcharts from "echarts-for-react";
+
 import s from "./ParamsChart.module.css";
 import Preloader from "@/Common/Preloader/Preloader";
 
 let ParamsChart = (props) => {
   let paramsval = null;
   let chartparamsvals = null;
+  let echarts_react = React.createRef();
+  // echarts.setOption({
+  //   color: ["#cecece"],
+  // });
 
   let getOption = () => {
     let years = [];
@@ -28,6 +33,7 @@ let ParamsChart = (props) => {
       chartparamsvals = {
         name: "Факт",
         type: "bar",
+        legendHoverLink: true,
         showBackground: true,
         itemStyle: {
           //color:
@@ -80,20 +86,44 @@ let ParamsChart = (props) => {
         },
       },
       legend: {
-        data: "Факт",
+        data: ["Факт"],
         orient: "horizontal", // 'vertical'
         x: "center", // 'center' | 'left' | {number},
         y: "top", // 'center' | 'bottom' | {number}
       },
       toolbox: {
         show: true,
+        tooltip: {
+          // same as option.tooltip
+          show: true,
+          formatter: function (param) {
+            return "<div>" + param.title + "</div>"; // user-defined DOM structure
+          },
+          backgroundColor: "#222",
+          textStyle: {
+            fontSize: 12,
+          },
+          extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);", // user-defined CSS styles
+        },
         feature: {
-          mark: { show: true },
+          myTool: {
+            show: true,
+            title: "Включить/отключить значения",
+            icon: "image://https://img.icons8.com/metro/26/000000/7.png",
+            onclick: function () {
+              setChartLabelshow(true);
+            },
+          },
+          mark: { show: false },
+          showTitle: false,
+
           magicType: {
             show: true,
-
+            title: {
+              line: "Линейный",
+              bar: "Столбчатый",
+            },
             type: ["line", "bar", "tiled"],
-            title: "Линейный",
           },
           dataView: {
             title: "Данные",
@@ -164,6 +194,25 @@ let ParamsChart = (props) => {
     };
   };
 
+  //debugger;
+
+  let setChartLabelshow = () => {
+    let echarts_instance = echarts_react.current.getEchartsInstance();
+
+    let label = echarts_instance.getOption().series[0].label.show;
+    //debugger;
+
+    echarts_instance.setOption({
+      series: {
+        label: {
+          normal: {
+            show: !label,
+          },
+        },
+      },
+    });
+  };
+
   return (
     <MDBRow>
       <MDBCol>
@@ -183,7 +232,7 @@ let ParamsChart = (props) => {
               <Preloader />
             ) : (
               <MDBCardText className="m-0 p-0">
-                {props.paramVals ? <ReactEcharts option={getOption()} className={s.chart} /> : <div>Нет данных</div>}
+                {props.paramVals ? <ReactEcharts ref={echarts_react} option={getOption()} className={s.chart} /> : <div>Нет данных</div>}
               </MDBCardText>
             )}
           </MDBCardBody>

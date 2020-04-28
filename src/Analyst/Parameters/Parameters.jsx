@@ -24,7 +24,17 @@ let Parameters = (props) => {
           setFrequencyId={props.paramsPage.setFrequencyId}
           frequencyId={props.paramsPage.frequencyId}
           onFilterChanged={props.onFilterChanged}
+          forms={props.paramsPage.forms}
+          checkedFormId={props.paramsPage.checkedFormId}
+          quarters={props.paramsPage.quarters}
+          paramQuarterId={props.paramsPage.paramQuarterId}
+          years={props.paramsPage.years}
+          paramYearStart={props.paramsPage.paramYearStart}
+          paramYearEnd={props.paramsPage.paramYearEnd}
+          setParamQuarterId={props.paramsPage.setParamQuarterId}
+          setCheckedFormId={props.paramsPage.setCheckedFormId}
         />
+
         <ParamData
           paramVals={props.paramsPage.paramVals}
           isFetchingParamData={props.paramsPage.isFetchingParamData}

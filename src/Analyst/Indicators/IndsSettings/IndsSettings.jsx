@@ -3,7 +3,7 @@ import { MDBCol, MDBIcon } from "mdbreact";
 import Preloader from "@/Common/Preloader/Preloader";
 import { Fragment } from "react";
 
-const IndsSettings = props => {
+const IndsSettings = (props) => {
   if (!props.goals || !props.transportTypes) {
     return <Preloader />;
   }
@@ -19,17 +19,17 @@ const IndsSettings = props => {
     transportTypes = props.transportTypes.sort((a, b) => (a.name > b.name ? 1 : -1));
   }
 
-  let onSelectGoal = e => {
+  let onSelectGoal = (e) => {
     let goalId = e.target.value;
     props.setGoalId(goalId);
   };
 
-  let onSelectTransportType = e => {
+  let onSelectTransportType = (e) => {
     let transportTypeID = e.target.value;
     props.setTransportTypeId(transportTypeID);
   };
 
-  let onSearchQueryChange = e => {
+  let onSearchQueryChange = (e) => {
     let searchQuery = e.target.value;
     props.setSearchQuery(searchQuery);
   };
@@ -39,7 +39,7 @@ const IndsSettings = props => {
       <div style={{ marginBottom: "20px" }}>
         <select onChange={onSelectGoal} className="browser-default custom-select custom-select-sm">
           {props.goals
-            ? goals.map(item =>
+            ? goals.map((item) =>
                 item.id === props.goalId ? (
                   <option value={item.id} selected>
                     {item.name}
@@ -55,7 +55,7 @@ const IndsSettings = props => {
         <select onChange={onSelectTransportType} className="browser-default custom-select custom-select-sm">
           <option value="0">Все виды транспорта</option>
           {props.transportTypes
-            ? transportTypes.map(item =>
+            ? transportTypes.map((item) =>
                 item.id === props.transportTypeID ? (
                   <option value={item.id} selected>
                     {item.name}

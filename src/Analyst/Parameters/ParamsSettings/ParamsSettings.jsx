@@ -1,5 +1,5 @@
 import React from "react";
-import { MDBCol, MDBIcon } from "mdbreact";
+import { MDBCol, MDBIcon, MDBSelect } from "mdbreact";
 import Preloader from "@/Common/Preloader/Preloader";
 import { Fragment } from "react";
 
@@ -10,14 +10,14 @@ const ParamsSettings = (props) => {
 
   let transportTypes = null;
 
-  // if (props.transportTypes) {
-  //   transportTypes = props.transportTypes.sort((a, b) => (a.name > b.name ? 1 : -1));
-  // }
+  if (props.transportTypes) {
+    transportTypes = props.transportTypes.sort((a, b) => (a.name > b.name ? 1 : -1));
+  }
 
-  // let onSelectTransportType = e => {
-  //   let transportTypeID = e.target.value;
-  //   props.setTransportTypeId(transportTypeID);
-  // };
+  let onSelectTransportType = (e) => {
+    let transportTypeID = e.target.value;
+    props.setTransportTypeId(transportTypeID);
+  };
 
   let onSearchQueryChange = (e) => {
     let searchQuery = e.target.value;
@@ -26,11 +26,13 @@ const ParamsSettings = (props) => {
 
   return (
     <Fragment>
-      {/* <div style={{ marginBottom: "20px" }}>
+      {/* <MDBSelect multiple options={options} selected="Choose your option" selectAll outline /> */}
+
+      <div style={{ marginBottom: "20px" }}>
         <select onChange={onSelectTransportType} className="browser-default custom-select custom-select-sm">
           <option value="0">Все виды транспорта</option>
           {props.transportTypes
-            ? transportTypes.map(item =>
+            ? transportTypes.map((item) =>
                 item.id === props.transportTypeID ? (
                   <option value={item.id} selected>
                     {item.name}
@@ -42,7 +44,8 @@ const ParamsSettings = (props) => {
             : null}
         </select>
       </div>
-      <hr /> */}
+      <hr />
+
       <div style={{ marginBottom: "20px" }}>
         <MDBCol md="50">
           <form className="form-inline mt-4 mb-4">

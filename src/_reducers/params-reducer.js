@@ -11,6 +11,13 @@ const SET_SEARCH_QUERY = "SET_SEARCH_QUERY";
 const SET_FREQUENCIES = "SET_FREQUENCIES";
 const SET_FREQUENCY_ID = "SET_FREQUENCY_ID";
 const SET_PARAM_ID = "SET_PARAM_ID";
+const SET_FORMS = "SET_FORMS";
+const SET_CHECKED_FORM_ID = "SET_CHECKED_FORM_ID";
+const SET_QUARTERS = "SET_QUARTERS";
+const SET_PARAM_QUARTER_ID = "SET_PARAM_QUARTER_ID";
+const SET_YEARS = "SET_YEARS";
+const SET_PARAM_YEAR_START = "SET_PARAM_YEAR_START";
+const SET_PARAM_YEAR_END = "SET_PARAM_YEAR_END";
 
 let initialState = {
   params: [],
@@ -24,6 +31,13 @@ let initialState = {
   transportTypeId: "0",
   frequencies: null,
   frequencyId: 1,
+  forms: null,
+  checkedFormId: null,
+  quarters: null,
+  paramQuarterId: null,
+  years: null,
+  paramYearStart: "2010",
+  paramYearEnd: "2019",
 };
 
 const paramsReducer = (state = initialState, action) => {
@@ -84,6 +98,43 @@ const paramsReducer = (state = initialState, action) => {
         ...state,
         frequencyId: action.frequencyId,
       };
+
+    case SET_FORMS:
+      return {
+        ...state,
+        forms: action.forms,
+      };
+    case SET_CHECKED_FORM_ID:
+      return {
+        ...state,
+        checkedFormId: action.checkedFormId,
+      };
+    case SET_QUARTERS:
+      return {
+        ...state,
+        quarters: action.quarters,
+      };
+    case SET_PARAM_QUARTER_ID:
+      return {
+        ...state,
+        paramQuarterId: action.paramQuarterId,
+      };
+    case SET_YEARS:
+      return {
+        ...state,
+        years: action.years,
+      };
+    case SET_PARAM_YEAR_START:
+      return {
+        ...state,
+        paramYearStart: action.paramYearStart,
+      };
+    case SET_PARAM_YEAR_END:
+      return {
+        ...state,
+        paramYearEnd: action.paramYearEnd,
+      };
+
     default:
       return state;
   }
@@ -128,25 +179,66 @@ export const setFrequencyId = (frequencyId) => ({
   frequencyId,
 });
 
+export const setForms = (forms) => ({
+  type: SET_FORMS,
+  forms,
+});
+
+export const setCheckedFormId = (checkedFormId) => ({
+  type: SET_CHECKED_FORM_ID,
+  checkedFormId,
+});
+
+export const setQuarters = (quarters) => ({
+  type: SET_QUARTERS,
+  quarters,
+});
+
+export const setParamQuarterId = (paramQuarterId) => ({
+  type: SET_PARAM_QUARTER_ID,
+  paramQuarterId,
+});
+
+export const setYears = (years) => ({
+  type: SET_YEARS,
+  years,
+});
+
+export const setParamYearStart = (paramYearStart) => ({
+  type: SET_PARAM_YEAR_START,
+  paramYearStart,
+});
+
+export const setParamYearEnd = (paramYearEnd) => ({
+  type: SET_PARAM_YEAR_END,
+  paramYearEnd,
+});
+
 //Redux ThunkCreators
-export const getParams = () => {
+export const getParams = (checkedFormsId) => {
   return (dispatch) => {
     dispatch(toogleIsFetchingParams(true));
-    ParamsAPI.getParams().then((data) => {
+    ParamsAPI.getParams(checkedFormsId).then((data) => {
       dispatch(setParams(data));
       dispatch(toogleIsFetchingParams(false));
     });
+    dispatch(setCheckedFormId(checkedFormsId));
   };
 };
 
-export const getParamValues = (paramId, frequencyId) => {
+export const getParamValues = (paramId, frequencyId, yearStart, yearEnd, quarterId) => {
   return (dispatch) => {
     dispatch(toogleIsFetchingParamData(true));
     dispatch(setParamId(paramId));
-    ParamsAPI.getParamData(paramId, frequencyId).then((data) => {
+    ParamsAPI.getParamData(paramId, frequencyId, yearStart, yearEnd, quarterId).then((data) => {
       dispatch(setParamValues(data));
       dispatch(toogleIsFetchingParamData(false));
     });
+    dispatch(setParamYearStart(yearStart));
+    dispatch(setParamYearEnd(yearEnd));
+    if (quarterId != null) {
+      dispatch(setParamQuarterId(quarterId));
+    }
     dispatch(setFrequencyId(frequencyId));
   };
 };
@@ -163,6 +255,30 @@ export const getFrequencies = () => {
   return (dispatch) => {
     ParamsAPI.getfrequencies().then((data) => {
       dispatch(setFrequencies(data));
+    });
+  };
+};
+
+export const getForms = () => {
+  return (dispatch) => {
+    ParamsAPI.getForms().then((data) => {
+      dispatch(setForms(data));
+    });
+  };
+};
+
+export const getYears = () => {
+  return (dispatch) => {
+    ParamsAPI.getYears().then((data) => {
+      dispatch(setYears(data));
+    });
+  };
+};
+
+export const getQuarters = () => {
+  return (dispatch) => {
+    ParamsAPI.getQuarters().then((data) => {
+      dispatch(setQuarters(data));
     });
   };
 };
