@@ -31,7 +31,6 @@ import AnalystParametersPage from "@/Analyst/Parameters/ParametersContainer";
 import AnalystIndicatorsPage from "@/Analyst/Indicators/IndicatorsContainer";
 import AnalystLevelsPage from "@/Analyst/Levels/LevelsContainer";
 import AnalystDynamicsPage from "@/Analyst/Dynamics/DynamicsContainer";
-import AnalystReportPage from "@/Analyst/Report";
 import AnalystMapPage from "@/Analyst/Map";
 import OperatorPlanNavigation from "@/Operator/Plan/Navigation";
 import OperatorPlanActivitiesPage from "@/Operator/Plan/Activities";
@@ -53,6 +52,9 @@ import OperatorReportAppropriationsPage from "@/Operator/Report/Appropriations";
 import OperatorReportExtraBudgetPage from "@/Operator/Report/ExtraBudget";
 import OperatorReportSourcesPage from "@/Operator/Report/Sources";
 import SwaggerPage from "@/Common/Swagger";
+import OperatorPlanResourcesEditPage from "../Operator/Plan/ResourcesEdit";
+import OperatorPlanIndicatorsEditPage from "../Operator/Plan/IndicatorsEdit";
+import AnalystReportPage from "../Analyst/Reports/Report";
 
 export const AppRoutes = () => {
   return (
@@ -105,8 +107,10 @@ export const AppRoutes = () => {
       <PrivateRoute exact path="/operator/plan/projects" roles={Role.Operator} component={OperatorPlanProjectsPage} />
       <PrivateRoute exact path="/operator/plan/indicators" roles={Role.Operator} component={OperatorPlanIndicatorsPage} />
       <PrivateRoute exact path="/operator/plan/resources" roles={Role.Operator} component={OperatorPlanResourcesPage} />
+      <PrivateRoute path="/operator/plan/resources/:id" roles={Role.Operator} component={OperatorPlanResourcesEditPage} />
+      <PrivateRoute path="/operator/plan/indicators/:id" roles={Role.Operator} component={OperatorPlanIndicatorsEditPage} />
 
-      {/*Control - Контроль */}
+        {/*Control - Контроль */}
       <PrivateRoute exact path="/operator/control" roles={Role.Operator} component={OperatorControlNavigation} />
       <PrivateRoute exact path="/operator/control/indicators" roles={Role.Operator} component={OperatorControlIndicatorsPage} />
       <PrivateRoute exact path="/operator/control/completion" roles={Role.Operator} component={OperatorControlCompletionPage} />
@@ -124,7 +128,7 @@ export const AppRoutes = () => {
       <PrivateRoute exact path="/operator/report/extraBudget" roles={Role.Operator} component={OperatorReportExtraBudgetPage} />
       <PrivateRoute exact path="/operator/report/sources" roles={Role.Operator} component={OperatorReportSourcesPage} />
 
-      {/*Обшщие страницы*/}
+      {/*Общие страницы*/}
       <PrivateRoute exact path="/" component={HomePage} />
       <PrivateRoute exact path="/swagger" component={SwaggerPage} />
       <Route path="/login" component={LoginPage} />
