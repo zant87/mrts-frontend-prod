@@ -83,7 +83,7 @@ export default class OperatorPlanProjectsPage extends React.Component {
         return (
             <MDBContainer fluid>
                 <MDBRow center>
-                    <MDBCol md={'12'} className='mb-5 mx-auto'>
+                    <MDBCol md={'12'} className='my-5 mx-auto'>
                         <MUIDataTable
                             title={"Крупные инвестиционные проекты"}
                             data={data}

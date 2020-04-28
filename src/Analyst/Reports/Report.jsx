@@ -34,7 +34,6 @@ class AnalystReportPage extends React.Component {
     };
 
     setReportFormat = event => {
-        // console.log(event.toString());
         this.setState({ reportFormat: event.toString() })
     }
 
