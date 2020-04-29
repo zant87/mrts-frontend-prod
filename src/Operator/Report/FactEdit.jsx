@@ -1,5 +1,5 @@
 import React from "react";
-import {MDBBtn, MDBCol, MDBInput, MDBRow, MDBSelect} from "mdbreact";
+import { MDBBtn, MDBCol, MDBInput, MDBRow } from "mdbreact";
 import appAxios from "../../_services/appAxios";
 import axios from "axios";
 
@@ -38,25 +38,7 @@ export default class OperatorReportFactEditPage extends React.Component {
     }
 
     componentDidMount() {
-        // this.getOkeiList(this.state.okeiId);
         console.log(this.state);
-    };
-
-    getOkeiList = (okeiId) => {
-        this.setState({ isLoading: true });
-        axios.get(`/api/nsi-okeis`)
-            .then(res => {
-                const data = res.data.map(item => {
-                    if (item.id === okeiId){
-                        return {value: item.id, text: item.name, checked: true};
-                    }
-                    else{
-                        return {value: item.id, text: item.name, checked: false};
-                    }
-                });
-                console.log(data);
-                this.setState({okeiList: data, isLoading: false});
-            });
     };
 
     onChangeHandler = event => {
