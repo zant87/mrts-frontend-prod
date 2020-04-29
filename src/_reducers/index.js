@@ -4,6 +4,7 @@ import indsReducer from "./inds-reducer";
 import paramsReducer from "./params-reducer";
 import dynamicsReducer from "./dynamics-reducer";
 import levelsReducer from "./levels-reducer";
+import reportsReducer from '../Analyst/Reports/ReportsReducers';
 
 export default combineReducers({
   errors: errorReducer,
@@ -11,4 +12,5 @@ export default combineReducers({
   paramsPage: paramsReducer,
   dynamicsPage: dynamicsReducer,
   levelsPage: levelsReducer,
+  reports: reportsReducer
 });
