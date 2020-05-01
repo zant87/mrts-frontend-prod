@@ -2,27 +2,31 @@ import React from "react";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import AddIcon from "@material-ui/icons/Add";
-import { withStyles } from "@material-ui/core/styles";
-
-const defaultToolbarStyles = {
-    iconButton: {
-    },
-};
+import NoteAddIcon from '@material-ui/icons/NoteAdd';
+import {history} from "@/_helpers";
 
 class CustomToolbar extends React.Component {
 
-    handleClick = () => {
-        console.log("clicked on icon!");
+    onHandleCreateClick = () => {
+        history.push(`${history.location.pathname}/create`);
+    };
+
+    onHandleInitClick = () => {
+        history.push(`${history.location.pathname}/init`);
     };
 
     render() {
-        const { classes } = this.props;
 
         return (
             <React.Fragment>
-                <Tooltip title={"custom icon"}>
-                    <IconButton className={classes.iconButton} onClick={this.handleClick}>
-                        <AddIcon className={classes.deleteIcon} />
+                <Tooltip title={"Создать документ основание"}>
+                    <IconButton onClick={this.onHandleCreateClick}>
+                        <AddIcon />
+                    </IconButton>
+                </Tooltip>
+                <Tooltip title={"Инициализировать отчеты исполнителей по мероприятиям"}>
+                    <IconButton onClick={this.onHandleInitClick}>
+                        <NoteAddIcon />
                     </IconButton>
                 </Tooltip>
             </React.Fragment>
@@ -31,4 +35,4 @@ class CustomToolbar extends React.Component {
 
 }
 
-export default withStyles(defaultToolbarStyles, { name: "CustomToolbar" })(CustomToolbar);
+export default CustomToolbar;

@@ -3,7 +3,6 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import EditIcon from '@material-ui/icons/Edit';
 import { withStyles } from "@material-ui/core/styles";
-import {MDBIcon, MDBTooltip} from "mdbreact";
 import {history} from "@/_helpers";
 
 const defaultToolbarSelectStyles = {
@@ -18,22 +17,6 @@ const defaultToolbarSelectStyles = {
 };
 
 class CustomToolbarSelect extends React.Component {
-
-    handleClickInverseSelection = () => {
-        const nextSelectedRows = this.props.displayData.reduce((nextSelectedRows, _, index) => {
-            if (!this.props.selectedRows.data.find(selectedRow => selectedRow.index === index)) {
-                nextSelectedRows.push(index);
-            }
-
-            return nextSelectedRows;
-        }, []);
-
-        this.props.setSelectedRows(nextSelectedRows);
-    };
-
-    handleClickDeselectAll = () => {
-        this.props.setSelectedRows([]);
-    };
 
     handleClickBlockSelected = () => {
         const rowIndex = this.props.selectedRows.data.map(row => row.dataIndex);

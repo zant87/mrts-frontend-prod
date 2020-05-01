@@ -1,5 +1,5 @@
 import React from "react";
-import {MDBBtn, MDBCol, MDBInput, MDBRow, MDBSelect} from "mdbreact";
+import { MDBBtn, MDBCol, MDBInput, MDBRow, MDBSelect } from "mdbreact";
 import appAxios from "../../_services/appAxios";
 import axios from "axios";
 
@@ -136,6 +136,7 @@ export default class OperatorPlanIndicatorsEditPage extends React.Component {
                     <MDBCol md="12" className="mb-3">
                         <MDBSelect label="Единица измерения"
                                    search={true}
+                                   searchLabel={'Поиск'}
                                    options={this.state.okeiList}
                                    getValue={this.setOkeiElement}>
                         </MDBSelect>

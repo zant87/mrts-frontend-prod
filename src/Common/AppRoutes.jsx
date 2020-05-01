@@ -56,6 +56,8 @@ import OperatorPlanResourcesEditPage from "../Operator/Plan/ResourcesEdit";
 import OperatorPlanIndicatorsEditPage from "../Operator/Plan/IndicatorsEdit";
 import AnalystReportPage from "../Analyst/Reports/Report";
 import OperatorReportFactEditPage from "../Operator/Report/FactEdit";
+import OperatorReportActivitiesCreatePage from "../Operator/Report/ActivitiesCreate";
+import OperatorReportActivitiesInitPage from "../Operator/Report/ActivitiesInit";
 
 export const AppRoutes = () => {
   return (
@@ -124,6 +126,9 @@ export const AppRoutes = () => {
       <PrivateRoute exact path="/operator/report/fact" roles={Role.Operator} component={OperatorReportFactPage} />
       <PrivateRoute path="/operator/report/fact/:id" roles={Role.Operator} component={OperatorReportFactEditPage} />
       <PrivateRoute exact path="/operator/report/activities" roles={Role.Operator} component={OperatorReportActivitiesPage} />
+      <PrivateRoute exact path="/operator/report/activities/create" roles={Role.Operator} component={OperatorReportActivitiesCreatePage} />
+      <PrivateRoute exact path="/operator/report/activities/init" roles={Role.Operator} component={OperatorReportActivitiesInitPage} />
+      //OperatorReportActivitiesCreatePage
       <PrivateRoute exact path="/operator/report/projects" roles={Role.Operator} component={OperatorReportProjectsPage} />
       <PrivateRoute exact path="/operator/report/financing" roles={Role.Operator} component={OperatorReportFinancingPage} />
       <PrivateRoute exact path="/operator/report/appropriations" roles={Role.Operator} component={OperatorReportAppropriationsPage} />
