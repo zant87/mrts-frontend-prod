@@ -1,21 +1,21 @@
 import React from 'react';
 import {MDBBreadcrumb, MDBBreadcrumbItem, MDBCol, MDBContainer, MDBRow} from "mdbreact";
 
-const AdminLoadingFromMDDPage = () => {
+const AdminLoadingReportsPage = () => {
     return (
         <MDBContainer>
             <MDBRow className='mt-5'>
                 <MDBBreadcrumb>
                     <MDBBreadcrumbItem>Главная</MDBBreadcrumbItem>
                     <MDBBreadcrumbItem>Загрузка</MDBBreadcrumbItem>
-                    <MDBBreadcrumbItem active>Загрузка из ФЗ Мониторинг Дорожных Фондов</MDBBreadcrumbItem>
+                    <MDBBreadcrumbItem active>Бланки отчетов исполнителей</MDBBreadcrumbItem>
                 </MDBBreadcrumb>
             </MDBRow>
             <MDBRow>
-                <h1>Загрузка из ФЗ Мониторинг Дорожных Фондов</h1>
+                <h1>Бланки отчетов исполнителей</h1>
             </MDBRow>
         </MDBContainer>
     );
 };
 
-export default AdminLoadingFromMDDPage;
+export default AdminLoadingReportsPage;

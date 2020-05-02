@@ -15,6 +15,12 @@ const Navigation = () => {
                         <MDBJumbotron>
                             <h1 className='text-center'>Загрузка</h1>
                             <h5 className='mt-4 grey-text'>
+                                <strong className='indigo-text'>Инициализация бланков</strong>
+                            </h5>
+                            <ul className='list-unstyled example-components-list mt-4'>
+                                <NavLink to='/admin/loading/reports' title='Бланки отчетов исполнителей' />
+                            </ul>
+                            <h5 className='mt-4 grey-text'>
                                 <strong className='indigo-text'>Загрузка из АС</strong>
                             </h5>
                             <ul className='list-unstyled example-components-list mt-4'>

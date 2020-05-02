@@ -1,7 +1,7 @@
 import React from 'react';
 import {MDBBreadcrumb, MDBBreadcrumbItem, MDBCol, MDBContainer, MDBRow} from "mdbreact";
 
-const AdminCSVPage = () => {
+const AdminLoadingFromCSVPage = () => {
     return (
         <MDBContainer>
             <MDBRow className='mt-5'>
@@ -18,4 +18,4 @@ const AdminCSVPage = () => {
     );
 };
 
-export default AdminCSVPage;
+export default AdminLoadingFromCSVPage;

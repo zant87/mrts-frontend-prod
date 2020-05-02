@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react';
 import {MDBBreadcrumb, MDBBreadcrumbItem, MDBCol, MDBContainer, MDBRow} from "mdbreact";
 
-const AdminFromEMISSPage = () => {
+const AdminLoadingFromEMISSPage = () => {
     return (
         <MDBContainer>
             <MDBRow className='mt-5'>
@@ -18,4 +18,4 @@ const AdminFromEMISSPage = () => {
     );
 };
 
-export default AdminFromEMISSPage;
+export default AdminLoadingFromEMISSPage;

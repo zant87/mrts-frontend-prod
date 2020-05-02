@@ -14,12 +14,6 @@ import AdminExecutorsByActivitiesPage from "@/Admin/Control/ExecutorsByActivitie
 import AdminExecutorsByProjectsPage from "@/Admin/Control/ExecutorsByProjects";
 import AdminExecutorsByResourcesPage from "@/Admin/Control/ExecutorsByResources";
 import AdminLoadingNavigation from "@/Admin/Loading/Navigation";
-import AdminFromEMISSPage from "@/Admin/Loading/FromEMISS";
-import AdminFromMDDPage from "@/Admin/Loading/FromMDD";
-import AdminFromMSTKPage from "@/Admin/Loading/FromMSTK";
-import AdminSDMXPage from "@/Admin/Loading/FromSDMX";
-import AdminFromXLSXPage from "@/Admin/Loading/FromXLSX";
-import AdminCSVPage from "@/Admin/Loading/FromCSV";
 import AdminArchiveNavigation from "@/Admin/Archive/Navigation";
 import AdminArchiveParametersPage from "@/Admin/Archive/Parameters";
 import AdminArchiveIndicatorsPage from "@/Admin/Archive/Indicators";
@@ -58,87 +52,98 @@ import AnalystReportPage from "../Analyst/Reports/Report";
 import OperatorReportFactEditPage from "../Operator/Report/FactEdit";
 import OperatorReportActivitiesCreatePage from "../Operator/Report/ActivitiesCreate";
 import OperatorReportActivitiesInitPage from "../Operator/Report/ActivitiesInit";
+import AdminLoadingDocumentPage from "../Admin/Loading/Document";
+import AdminLoadingReportsPage from "../Admin/Loading/Reports";
+import AdminLoadingCSVPage from "../Admin/Loading/FromCSV";
+import AdminLoadingFromXLSXPage from "../Admin/Loading/FromXLSX";
+import AdminLoadingFromEMISSPage from "../Admin/Loading/FromEMISS";
+import AdminLoadingFromMDDPage from "../Admin/Loading/FromMDD";
+import AdminLoadingFromMSTKPage from "../Admin/Loading/FromMSTK";
+import AdminLoadingFromSDMXPage from "../Admin/Loading/FromSDMX";
 
 export const AppRoutes = () => {
-  return (
-    <Fragment>
-      {/* Администратор*/}
-      {/*Structure - Настройка структуры*/}
-      <PrivateRoute exact path="/admin/structure" roles={Role.Admin} component={AdminStructureNavigation} />
-      <PrivateRoute exact path="/admin/structure/goals" roles={Role.Admin} component={AdminGoalsPage} />
-      <PrivateRoute exact path="/admin/structure/indicators" roles={Role.Admin} component={AdminIndicatorsPage} />
-      <PrivateRoute exact path="/admin/structure/params" roles={Role.Admin} component={AdminParametersPage} />
+    return (
+        <Fragment>
+            {/* Администратор*/}
+            {/*Structure - Настройка структуры*/}
+            <PrivateRoute exact path="/admin/structure" roles={Role.Admin} component={AdminStructureNavigation} />
+            <PrivateRoute exact path="/admin/structure/goals" roles={Role.Admin} component={AdminGoalsPage} />
+            <PrivateRoute exact path="/admin/structure/indicators" roles={Role.Admin} component={AdminIndicatorsPage} />
+            <PrivateRoute exact path="/admin/structure/params" roles={Role.Admin} component={AdminParametersPage} />
 
-      {/*Control - Настройка контроля*/}
-      <PrivateRoute exact path="/admin/control" roles={Role.Admin} component={AdminControlNavigation} />
-      <PrivateRoute exact path="/admin/control/executors" roles={Role.Admin} component={AdminExecutorsPage} />
-      <PrivateRoute exact path="/admin/control/executorsByIndicator" roles={Role.Admin} component={AdminExecutorsByIndicatorPage} />
-      <PrivateRoute exact path="/admin/control/executorsByParameters" roles={Role.Admin} component={AdminExecutorsByParametersPage} />
-      <PrivateRoute exact path="/admin/control/executorsByEvents" roles={Role.Admin} component={AdminExecutorsByActivitiesPage} />
-      <PrivateRoute exact path="/admin/control/executorsByProjects" roles={Role.Admin} component={AdminExecutorsByProjectsPage} />
-      <PrivateRoute exact path="/admin/control/executorsByResource" roles={Role.Admin} component={AdminExecutorsByResourcesPage} />
+            {/*Control - Настройка контроля*/}
+            <PrivateRoute exact path="/admin/control" roles={Role.Admin} component={AdminControlNavigation} />
+            <PrivateRoute exact path="/admin/control/executors" roles={Role.Admin} component={AdminExecutorsPage} />
+            <PrivateRoute exact path="/admin/control/executorsByIndicator" roles={Role.Admin} component={AdminExecutorsByIndicatorPage} />
+            <PrivateRoute exact path="/admin/control/executorsByParameters" roles={Role.Admin} component={AdminExecutorsByParametersPage} />
+            <PrivateRoute exact path="/admin/control/executorsByEvents" roles={Role.Admin} component={AdminExecutorsByActivitiesPage} />
+            <PrivateRoute exact path="/admin/control/executorsByProjects" roles={Role.Admin} component={AdminExecutorsByProjectsPage} />
+            <PrivateRoute exact path="/admin/control/executorsByResource" roles={Role.Admin} component={AdminExecutorsByResourcesPage} />
 
-      {/*Loading - Загрузка из АС и файлов*/}
-      <PrivateRoute exact path="/admin/loading" roles={Role.Admin} component={AdminLoadingNavigation} />
-      <PrivateRoute exact path="/admin/loading/fromEMISS" roles={Role.Admin} component={AdminFromEMISSPage} />
-      <PrivateRoute exact path="/admin/loading/fromMDD" roles={Role.Admin} component={AdminFromMDDPage} />
-      <PrivateRoute exact path="/admin/loading/fromMSTK" roles={Role.Admin} component={AdminFromMSTKPage} />
-      <PrivateRoute exact path="/admin/loading/fromSDMX" roles={Role.Admin} component={AdminSDMXPage} />
-      <PrivateRoute exact path="/admin/loading/fromXLSX" roles={Role.Admin} component={AdminFromXLSXPage} />
-      <PrivateRoute exact path="/admin/loading/fromCSV" roles={Role.Admin} component={AdminCSVPage} />
+            {/*Loading - Загрузка из АС и файлов*/}
+            <PrivateRoute exact path="/admin/loading" roles={Role.Admin} component={AdminLoadingNavigation} />
+            <PrivateRoute exact path="/admin/loading/fromEMISS" roles={Role.Admin} component={AdminLoadingFromEMISSPage} />
+            <PrivateRoute exact path="/admin/loading/fromMDD" roles={Role.Admin} component={AdminLoadingFromMDDPage} />
+            <PrivateRoute exact path="/admin/loading/fromMSTK" roles={Role.Admin} component={AdminLoadingFromMSTKPage} />
+            <PrivateRoute exact path="/admin/loading/fromSDMX" roles={Role.Admin} component={AdminLoadingFromSDMXPage} />
+            <PrivateRoute exact path="/admin/loading/fromXLSX" roles={Role.Admin} component={AdminLoadingFromXLSXPage} />
+            <PrivateRoute exact path="/admin/loading/fromCSV" roles={Role.Admin} component={AdminLoadingCSVPage} />
+            <PrivateRoute exact path="/admin/loading/reports" roles={Role.Admin} component={AdminLoadingReportsPage} />
+            <PrivateRoute exact path="/admin/loading/document" roles={Role.Admin} component={AdminLoadingDocumentPage} />
+            {/*AdminLoadingDocumentPage*/}
 
-      {/*Archive - Архив */}
-      <PrivateRoute exact path="/admin/archive" roles={Role.Admin} component={AdminArchiveNavigation} />
-      <PrivateRoute exact path="/admin/archive/parameters" roles={Role.Admin} component={AdminArchiveParametersPage} />
-      <PrivateRoute exact path="/admin/archive/indicators" roles={Role.Admin} component={AdminArchiveIndicatorsPage} />
-      <PrivateRoute exact path="/admin/archive/activities" roles={Role.Admin} component={AdminArchiveActivitiesPage} />
-      <PrivateRoute exact path="/admin/archive/projects" roles={Role.Admin} component={AdminArchiveProjectsPage} />
+            {/*Archive - Архив */}
+            <PrivateRoute exact path="/admin/archive" roles={Role.Admin} component={AdminArchiveNavigation} />
+            <PrivateRoute exact path="/admin/archive/parameters" roles={Role.Admin} component={AdminArchiveParametersPage} />
+            <PrivateRoute exact path="/admin/archive/indicators" roles={Role.Admin} component={AdminArchiveIndicatorsPage} />
+            <PrivateRoute exact path="/admin/archive/activities" roles={Role.Admin} component={AdminArchiveActivitiesPage} />
+            <PrivateRoute exact path="/admin/archive/projects" roles={Role.Admin} component={AdminArchiveProjectsPage} />
 
-      {/* Аналитик */}
-      {/* <PrivateRoute path="/analyst/indicators/:indId?" roles={Role.Analyst} render={props => <AnalystIndicatorsPage {...props} />} /> */}
-      <PrivateRoute path="/analyst/parameters/:paramId?" roles={Role.Analyst} component={AnalystParametersPage} />
-      <PrivateRoute path="/analyst/indicators/:indId?" roles={Role.Analyst} component={AnalystIndicatorsPage} />
-      <PrivateRoute exact path="/analyst/levels" roles={Role.Analyst} component={AnalystLevelsPage} />
-      <PrivateRoute exact path="/analyst/dynamics" roles={Role.Analyst} component={AnalystDynamicsPage} />
-      <PrivateRoute exact path="/analyst/report" roles={Role.Analyst} component={AnalystReportPage} />
-      <PrivateRoute exact path="/analyst/map" roles={Role.Analyst} component={AnalystMapPage} />
+            {/* Аналитик */}
+            {/* <PrivateRoute path="/analyst/indicators/:indId?" roles={Role.Analyst} render={props => <AnalystIndicatorsPage {...props} />} /> */}
+            <PrivateRoute path="/analyst/parameters/:paramId?" roles={Role.Analyst} component={AnalystParametersPage} />
+            <PrivateRoute path="/analyst/indicators/:indId?" roles={Role.Analyst} component={AnalystIndicatorsPage} />
+            <PrivateRoute exact path="/analyst/levels" roles={Role.Analyst} component={AnalystLevelsPage} />
+            <PrivateRoute exact path="/analyst/dynamics" roles={Role.Analyst} component={AnalystDynamicsPage} />
+            <PrivateRoute exact path="/analyst/report" roles={Role.Analyst} component={AnalystReportPage} />
+            <PrivateRoute exact path="/analyst/map" roles={Role.Analyst} component={AnalystMapPage} />
 
-      {/* Оператор */}
-      {/*Plan - Плановые показатели */}
-      <PrivateRoute exact path="/operator/plan" roles={Role.Operator} component={OperatorPlanNavigation} />
-      <PrivateRoute exact path="/operator/plan/activities" roles={Role.Operator} component={OperatorPlanActivitiesPage} />
-      <PrivateRoute exact path="/operator/plan/projects" roles={Role.Operator} component={OperatorPlanProjectsPage} />
-      <PrivateRoute exact path="/operator/plan/indicators" roles={Role.Operator} component={OperatorPlanIndicatorsPage} />
-      <PrivateRoute exact path="/operator/plan/resources" roles={Role.Operator} component={OperatorPlanResourcesPage} />
-      <PrivateRoute path="/operator/plan/resources/:id" roles={Role.Operator} component={OperatorPlanResourcesEditPage} />
-      <PrivateRoute path="/operator/plan/indicators/:id" roles={Role.Operator} component={OperatorPlanIndicatorsEditPage} />
+            {/* Оператор */}
+            {/*Plan - Плановые показатели */}
+            <PrivateRoute exact path="/operator/plan" roles={Role.Operator} component={OperatorPlanNavigation} />
+            <PrivateRoute exact path="/operator/plan/activities" roles={Role.Operator} component={OperatorPlanActivitiesPage} />
+            <PrivateRoute exact path="/operator/plan/projects" roles={Role.Operator} component={OperatorPlanProjectsPage} />
+            <PrivateRoute exact path="/operator/plan/indicators" roles={Role.Operator} component={OperatorPlanIndicatorsPage} />
+            <PrivateRoute exact path="/operator/plan/resources" roles={Role.Operator} component={OperatorPlanResourcesPage} />
+            <PrivateRoute path="/operator/plan/resources/:id" roles={Role.Operator} component={OperatorPlanResourcesEditPage} />
+            <PrivateRoute path="/operator/plan/indicators/:id" roles={Role.Operator} component={OperatorPlanIndicatorsEditPage} />
 
-        {/*Control - Контроль */}
-      <PrivateRoute exact path="/operator/control" roles={Role.Operator} component={OperatorControlNavigation} />
-      <PrivateRoute exact path="/operator/control/indicators" roles={Role.Operator} component={OperatorControlIndicatorsPage} />
-      <PrivateRoute exact path="/operator/control/completion" roles={Role.Operator} component={OperatorControlCompletionPage} />
-      <PrivateRoute exact path="/operator/control/activities" roles={Role.Operator} component={OperatorControlActivitiesPage} />
-      <PrivateRoute exact path="/operator/control/projects" roles={Role.Operator} component={OperatorControlProjectsPage} />
-      <PrivateRoute exact path="/operator/control/resources" roles={Role.Operator} component={OperatorControlResourcesPage} />
+            {/*Control - Контроль */}
+            <PrivateRoute exact path="/operator/control" roles={Role.Operator} component={OperatorControlNavigation} />
+            <PrivateRoute exact path="/operator/control/indicators" roles={Role.Operator} component={OperatorControlIndicatorsPage} />
+            <PrivateRoute exact path="/operator/control/completion" roles={Role.Operator} component={OperatorControlCompletionPage} />
+            <PrivateRoute exact path="/operator/control/activities" roles={Role.Operator} component={OperatorControlActivitiesPage} />
+            <PrivateRoute exact path="/operator/control/projects" roles={Role.Operator} component={OperatorControlProjectsPage} />
+            <PrivateRoute exact path="/operator/control/resources" roles={Role.Operator} component={OperatorControlResourcesPage} />
 
-      {/*Report - Отчетные показатели */}
-      <PrivateRoute exact path="/operator/report" roles={Role.Operator} component={OperatorReportNavigation} />
-      <PrivateRoute exact path="/operator/report/fact" roles={Role.Operator} component={OperatorReportFactPage} />
-      <PrivateRoute path="/operator/report/fact/:id" roles={Role.Operator} component={OperatorReportFactEditPage} />
-      <PrivateRoute exact path="/operator/report/activities" roles={Role.Operator} component={OperatorReportActivitiesPage} />
-      <PrivateRoute exact path="/operator/report/activities/create" roles={Role.Operator} component={OperatorReportActivitiesCreatePage} />
-      <PrivateRoute exact path="/operator/report/activities/init" roles={Role.Operator} component={OperatorReportActivitiesInitPage} />
+            {/*Report - Отчетные показатели */}
+            <PrivateRoute exact path="/operator/report" roles={Role.Operator} component={OperatorReportNavigation} />
+            <PrivateRoute exact path="/operator/report/fact" roles={Role.Operator} component={OperatorReportFactPage} />
+            <PrivateRoute path="/operator/report/fact/:id" roles={Role.Operator} component={OperatorReportFactEditPage} />
+            <PrivateRoute exact path="/operator/report/activities" roles={Role.Operator} component={OperatorReportActivitiesPage} />
+            <PrivateRoute exact path="/operator/report/activities/create" roles={Role.Operator} component={OperatorReportActivitiesCreatePage} />
+            <PrivateRoute exact path="/operator/report/activities/init" roles={Role.Operator} component={OperatorReportActivitiesInitPage} />
 
-      <PrivateRoute exact path="/operator/report/projects" roles={Role.Operator} component={OperatorReportProjectsPage} />
-      <PrivateRoute exact path="/operator/report/financing" roles={Role.Operator} component={OperatorReportFinancingPage} />
-      <PrivateRoute exact path="/operator/report/appropriations" roles={Role.Operator} component={OperatorReportAppropriationsPage} />
-      <PrivateRoute exact path="/operator/report/extraBudget" roles={Role.Operator} component={OperatorReportExtraBudgetPage} />
-      <PrivateRoute exact path="/operator/report/sources" roles={Role.Operator} component={OperatorReportSourcesPage} />
+            <PrivateRoute exact path="/operator/report/projects" roles={Role.Operator} component={OperatorReportProjectsPage} />
+            <PrivateRoute exact path="/operator/report/financing" roles={Role.Operator} component={OperatorReportFinancingPage} />
+            <PrivateRoute exact path="/operator/report/appropriations" roles={Role.Operator} component={OperatorReportAppropriationsPage} />
+            <PrivateRoute exact path="/operator/report/extraBudget" roles={Role.Operator} component={OperatorReportExtraBudgetPage} />
+            <PrivateRoute exact path="/operator/report/sources" roles={Role.Operator} component={OperatorReportSourcesPage} />
 
-      {/*Общие страницы*/}
-      <PrivateRoute exact path="/" component={HomePage} />
-      <PrivateRoute exact path="/swagger" component={SwaggerPage} />
-      <Route path="/login" component={LoginPage} />
-    </Fragment>
-  );
+            {/*Общие страницы*/}
+            <PrivateRoute exact path="/" component={HomePage} />
+            <PrivateRoute exact path="/swagger" component={SwaggerPage} />
+            <Route path="/login" component={LoginPage} />
+        </Fragment>
+    );
 };
