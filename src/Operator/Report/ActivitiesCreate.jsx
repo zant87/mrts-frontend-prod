@@ -1,5 +1,5 @@
 import React from "react";
-import {MDBBtn, MDBCol, MDBDatePicker, MDBInput, MDBRow, MDBSelect} from "mdbreact";
+import {MDBBtn, MDBCol, MDBDatePicker, MDBInput, MDBRow, MDBSelect, toast} from "mdbreact";
 import appAxios from "../../_services/appAxios";
 import axios from "axios";
 import moment from 'moment';
@@ -48,9 +48,12 @@ export default class OperatorReportActivitiesCreatePage extends React.Component 
         this.setState({ isLoading: true });
         axios.get(`/api/views/k-6-s/createActivityReportDoc?pYear=${this.state.year}&pQuarter=${this.state.quarter}&pIdDocDate=${this.state.date}&pCode=${this.state.code}&pName=${this.state.name}`)
             .then(res => {
-                console.log(res);
+                // console.log(res.headers);
                 const data = res.data;
                 this.setState({result: data, isLoading: false});
+                toast.success(`Создали основание для документа №${data}`, {
+                    closeButton: false
+                });
             });
     }
 

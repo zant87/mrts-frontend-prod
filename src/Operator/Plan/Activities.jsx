@@ -1,10 +1,8 @@
 import React from 'react';
-import {MDBCol, MDBContainer, MDBRow, MDBSpinner} from "mdbreact";
+import {MDBCol, MDBContainer, MDBRow, MDBSpinner, toast, ToastContainer } from "mdbreact";
 import MUIDataTable from "mui-datatables";
 import axios from 'axios';
 import {labels} from "../../_components/TableTextLabels";
-import CustomToolbarSelect from "../../_components/CustomToolbarSelect";
-
 
 export default class OperatorPlanActivitiesPage extends React.Component {
 
@@ -43,6 +41,11 @@ export default class OperatorPlanActivitiesPage extends React.Component {
                 const data = res.data;
                 this.setState({data: data, isLoading: false, count: count, page: page, rowsPerPage: numberOfRows});
             });
+
+        // toast.success('Success message', {
+        //     closeButton: false
+        // });
+
     };
 
     render() {

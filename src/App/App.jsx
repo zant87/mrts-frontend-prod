@@ -16,6 +16,8 @@ import {
   MDBNavbarToggler,
   MDBNavItem,
   MDBNavLink,
+  toast,
+  ToastContainer,
   MDBRow,
 } from "mdbreact";
 import {AppRoutes} from "@/Common/AppRoutes";
@@ -71,15 +73,12 @@ class App extends React.Component {
                 <MDBCol md="12">
                   {currentUser && (
                     <MDBNavbar
-                      // color='indigo'
                       color="special-color"
                       dark
                       expand="md"
                       fixed="top"
-                      scrolling
-                    >
+                      scrolling>
                       <MDBNavbarBrand className="py-0 font-weight-bold">
-                        {/* <Logo className="logo" /> */}
                         <img src={MRTSLogo} style={{ width: "30px", marginRight: "10px" }} alt="" />
                         <strong className="white-text">
                           МР<span style={{ color: "#f28d37" }}>ТС</span>
@@ -200,12 +199,17 @@ class App extends React.Component {
                   )}
                 </MDBCol>
               </MDBRow>
-              {/* <MDBRow
-                className="mt-5"
-                //center
-              > */}
+
+              <ToastContainer
+                  position="top-right"
+                  autoClose={3000}
+                  closeButton={false}
+                  newestOnTop={false}
+                  rtl={false}>
+              </ToastContainer>
+
               <AppRoutes />
-              {/* </MDBRow> */}
+
               {currentUser && <Footer />}
             </MDBContainer>
           </div>

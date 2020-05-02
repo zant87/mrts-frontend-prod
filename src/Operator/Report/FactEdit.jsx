@@ -1,5 +1,5 @@
 import React from "react";
-import { MDBBtn, MDBCol, MDBInput, MDBRow } from "mdbreact";
+import {MDBBtn, MDBCol, MDBInput, MDBRow, toast} from "mdbreact";
 import appAxios from "../../_services/appAxios";
 import axios from "axios";
 
@@ -53,7 +53,10 @@ export default class OperatorReportFactEditPage extends React.Component {
             method: 'PUT',
             data: responseData
         }).then((response) => {
-            console.log(response.headers["x-mrts-backend-alert"]);
+            const message = response.headers["x-mrts-backend-alert"];
+            toast.success(message, {
+                closeButton: false
+            });
         });
     };
 

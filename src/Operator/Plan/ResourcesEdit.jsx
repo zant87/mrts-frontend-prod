@@ -1,5 +1,5 @@
 import React from "react";
-import { MDBBtn, MDBCol, MDBContainer, MDBInput, MDBRow, MDBSelect } from "mdbreact";
+import {MDBBtn, MDBCol, MDBContainer, MDBInput, MDBRow, MDBSelect, toast} from "mdbreact";
 import appAxios from "../../_services/appAxios";
 
 export default class OperatorPlanResourcesEditPage extends React.Component {
@@ -44,7 +44,10 @@ export default class OperatorPlanResourcesEditPage extends React.Component {
             method: 'PUT',
             data: responseData
         }).then((response) => {
-            console.log(response.headers["x-mrts-backend-alert"]);
+            const message = response.headers["x-mrts-backend-alert"];
+            toast.success(message, {
+                closeButton: false
+            });
         });
     };
 

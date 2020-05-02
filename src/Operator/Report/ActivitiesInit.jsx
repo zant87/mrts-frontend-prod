@@ -1,5 +1,5 @@
 import React from "react";
-import {MDBBtn, MDBCol, MDBRow, MDBSelect} from "mdbreact";
+import {MDBBtn, MDBCol, MDBRow, MDBSelect, toast} from "mdbreact";
 import appAxios from "../../_services/appAxios";
 import axios from "axios";
 import 'moment/locale/ru';
@@ -58,9 +58,12 @@ export default class OperatorReportActivitiesInitPage extends React.Component {
         this.setState({ isLoading: true });
         axios.get(`/api/views/k-6-s/init?pIDTsVer=${this.state.transportStrategyId}&pDoc=${this.state.docId}`)
             .then(res => {
-                console.log(res);
+                // console.log(res.headers);
                 const data = res.data;
                 this.setState({result: data, isLoading: false});
+                toast.success(`Успешно инициализировали отчеты`, {
+                    closeButton: false
+                });
             });
     }
 
