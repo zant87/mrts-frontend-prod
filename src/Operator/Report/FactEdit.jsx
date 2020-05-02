@@ -53,8 +53,8 @@ export default class OperatorReportFactEditPage extends React.Component {
             method: 'PUT',
             data: responseData
         }).then((response) => {
-            const message = response.headers["x-mrts-backend-alert"];
-            toast.success(message, {
+            const message = response.headers["x-mrts-backend-params"];
+            toast.success(`Успешно обновлена запись с ID ${message}`, {
                 closeButton: false
             });
         });
