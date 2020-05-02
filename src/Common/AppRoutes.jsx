@@ -128,7 +128,7 @@ export const AppRoutes = () => {
       <PrivateRoute exact path="/operator/report/activities" roles={Role.Operator} component={OperatorReportActivitiesPage} />
       <PrivateRoute exact path="/operator/report/activities/create" roles={Role.Operator} component={OperatorReportActivitiesCreatePage} />
       <PrivateRoute exact path="/operator/report/activities/init" roles={Role.Operator} component={OperatorReportActivitiesInitPage} />
-      //OperatorReportActivitiesCreatePage
+
       <PrivateRoute exact path="/operator/report/projects" roles={Role.Operator} component={OperatorReportProjectsPage} />
       <PrivateRoute exact path="/operator/report/financing" roles={Role.Operator} component={OperatorReportFinancingPage} />
       <PrivateRoute exact path="/operator/report/appropriations" roles={Role.Operator} component={OperatorReportAppropriationsPage} />
