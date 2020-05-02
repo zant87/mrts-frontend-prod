@@ -21,7 +21,6 @@ export default class OperatorReportFactEditPage extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log(props);
 
         this.state = {
             id: this.props.location.state[0],
@@ -38,7 +37,7 @@ export default class OperatorReportFactEditPage extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.state);
+
     };
 
     onChangeHandler = event => {
@@ -47,7 +46,6 @@ export default class OperatorReportFactEditPage extends React.Component {
 
     doSave = () => {
         const responseData = {id: this.state.id, value: this.state.value};
-        console.log(responseData);
         appAxios({
             url: `views/k-5-s`,
             method: 'PUT',

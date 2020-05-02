@@ -25,7 +25,6 @@ export default class OperatorReportActivitiesPage extends React.Component {
         this.setState({ isLoading: true });
         axios.get(`/api/views/k-6-s`)
             .then(res => {
-                console.log(res.headers);
                 const count = Number(res.headers['x-total-count']);
                 const data = res.data;
                 this.setState({data: data, isLoading: false, count: count});

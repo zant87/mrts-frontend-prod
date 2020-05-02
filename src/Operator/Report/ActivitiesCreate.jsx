@@ -48,7 +48,6 @@ export default class OperatorReportActivitiesCreatePage extends React.Component 
         this.setState({ isLoading: true });
         axios.get(`/api/views/k-6-s/createActivityReportDoc?pYear=${this.state.year}&pQuarter=${this.state.quarter}&pIdDocDate=${this.state.date}&pCode=${this.state.code}&pName=${this.state.name}`)
             .then(res => {
-                // console.log(res.headers);
                 const data = res.data;
                 this.setState({result: data, isLoading: false});
                 toast.success(`Создали основание для документа №${data}`, {
@@ -63,7 +62,6 @@ export default class OperatorReportActivitiesCreatePage extends React.Component 
 
     getPickerValue = (value) => {
         const date = moment(value);
-        console.log(date);
         this.setState({date: date.format('YYYY-MM-DD')});
     }
 

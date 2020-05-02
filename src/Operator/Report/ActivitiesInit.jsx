@@ -27,14 +27,12 @@ export default class OperatorReportActivitiesInitPage extends React.Component {
                 const data = res.data.map(item => {
                     return {value: item.id, text: item.name};
                 })
-                console.log(data);
                 this.setState({docList: data, isLoading: false});
             });
     }
 
     setDoc = event => {
         this.setState({docId: event.toString()});
-        console.log(this.state);
     }
 
     getTransportStrategyList = () => {
@@ -44,21 +42,18 @@ export default class OperatorReportActivitiesInitPage extends React.Component {
                 const data = res.data.map(item => {
                     return {value: item.id, text: item.code};
                 })
-                console.log(data);
                 this.setState({transportStrategyList: data, isLoading: false});
             });
     }
 
     setTransportStrategy = event => {
         this.setState({transportStrategyId: event.toString()});
-        console.log(this.state);
     }
 
     doInit =() => {
         this.setState({ isLoading: true });
         axios.get(`/api/views/k-6-s/init?pIDTsVer=${this.state.transportStrategyId}&pDoc=${this.state.docId}`)
             .then(res => {
-                // console.log(res.headers);
                 const data = res.data;
                 this.setState({result: data, isLoading: false});
                 toast.success(`Успешно инициализировали отчеты`, {

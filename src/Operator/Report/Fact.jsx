@@ -16,7 +16,6 @@ export default class OperatorReportFactPage extends React.Component {
     };
 
     componentDidMount() {
-        //сохранять state через redux
         this.getData();
     };
 
@@ -24,7 +23,6 @@ export default class OperatorReportFactPage extends React.Component {
         this.setState({ isLoading: true });
         axios.get(`/api/views/k-5-s`)
             .then(res => {
-                // console.log(res.headers);
                 console.log(res);
                 const count = Number(res.headers['x-total-count']);
                 const data = res.data;
