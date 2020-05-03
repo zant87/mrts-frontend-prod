@@ -49,7 +49,7 @@ export default class AdminLoadingDocumentPage extends React.Component {
         axios.get(`/api/nsi-years`)
             .then(res => {
                 const data = res.data.map(item => {
-                    return {value: item.id, text: item.year};
+                    return {value: item.id, text: String(item.year)};
                 })
                 this.setState({yearList: data, isLoading: false});
             })
@@ -199,7 +199,8 @@ export default class AdminLoadingDocumentPage extends React.Component {
 
                 <MDBRow>
                     <MDBCol md="12" className="mb-3">
-                        <MDBSelect label="Тип документа"
+                        <MDBSelect searchId={'DocumentType'}
+                                   label="Тип документа"
                                    search={true}
                                    searchLabel={'Поиск'}
                                    options={this.state.documentTypeList}
@@ -210,7 +211,8 @@ export default class AdminLoadingDocumentPage extends React.Component {
 
                 <MDBRow>
                     <MDBCol md="12" className="mb-3">
-                        <MDBSelect label="Год"
+                        <MDBSelect searchId={'Year'}
+                                   label="Год"
                                    search={true}
                                    searchLabel={'Поиск'}
                                    options={this.state.yearList}
@@ -221,7 +223,8 @@ export default class AdminLoadingDocumentPage extends React.Component {
 
                 <MDBRow>
                     <MDBCol md="12" className="mb-3">
-                        <MDBSelect label="Квартал"
+                        <MDBSelect searchId={'Quarter'}
+                                   label="Квартал"
                                    search={true}
                                    searchLabel={'Поиск'}
                                    options={this.state.quarterList}
@@ -230,7 +233,7 @@ export default class AdminLoadingDocumentPage extends React.Component {
                     </MDBCol>
                 </MDBRow>
 
-                <MDBRow>
+                <MDBRow around={true}>
                     <MDBBtn color="primary" type="none" onClick={this.doSave}>
                         Сохранить
                     </MDBBtn>
