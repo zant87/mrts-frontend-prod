@@ -57,6 +57,7 @@ export default class OperatorReportActivitiesPage extends React.Component {
             { name: 'reportDescription', label: 'Отчет исполнителя'},
             { name: 'documentId', label: 'documentId', options: {display: 'excluded', filter: false}},
             { name: 'activityId', label: 'activityId', options: {display: 'excluded', filter: false}},
+            { name: 'activityReportId', label: 'activityReportId', options: {display: 'excluded', filter: false}},
         ];
 
         const { data, page, count, isLoading } = this.state;
