@@ -46,10 +46,10 @@ export default class AdminLoadingReportsPage extends React.Component {
 
     getDocumentTypeList = () => {
         this.setState({ isLoading: true });
-        axios.get(`/api/document-types?code.in=PROJECT_BUDGET_REPORT&code.in=TOTAL_BUDGET_REPORT&code.in=BUDGET_REPORT&code.in=ACTIVITY_REPORT&code.in=PROJECT_REPORT`)
+        appAxios.get(`/document-types?code.in=PROJECT_BUDGET_REPORT&code.in=TOTAL_BUDGET_REPORT&code.in=BUDGET_REPORT&code.in=ACTIVITY_REPORT&code.in=PROJECT_REPORT`)
             .then(res => {
                 const data = res.data.map(item => {
-                    return {value: item.id, text: item.name};
+                    return {value: item.id, text: item.name, code: item.code};
                 })
                 this.setState({documentTypeList: data, isLoading: false});
             })
@@ -65,7 +65,7 @@ export default class AdminLoadingReportsPage extends React.Component {
         if (typeId > 0 && typeId !== undefined && typeId !== ""){
             this.setState({ isLoading: true });
             console.log(this.state);
-            axios.get(`/api/documents?documentTypeId.equals=${typeId}`)
+            appAxios.get(`/documents?documentTypeId.equals=${typeId}`)
                 .then(res => {
                     console.log(res.data);
                     const data = res.data.map(item => {
@@ -82,7 +82,7 @@ export default class AdminLoadingReportsPage extends React.Component {
 
     getYearList = () => {
         this.setState({ isLoading: true });
-        axios.get(`/api/nsi-years`)
+        appAxios.get(`/nsi-years`)
             .then(res => {
                 const data = res.data.map(item => {
                     return {value: item.id, text: item.year};
@@ -97,7 +97,7 @@ export default class AdminLoadingReportsPage extends React.Component {
 
     getQuarterList = () => {
         this.setState({ isLoading: true });
-        axios.get(`/api/nsi-quarters`)
+        appAxios.get(`/nsi-quarters`)
             .then(res => {
                 const data = res.data.map(item => {
                     return {value: item.id, text: item.name};
@@ -110,45 +110,80 @@ export default class AdminLoadingReportsPage extends React.Component {
         this.setState({quarterId: event.toString()})
     }
 
-    doSave = () => {
+    doInit = () => {
 
-        // const responseData = { code: this.state.code,
-        //     name: this.state.name,
-        //     description: this.state.description,
-        //     beginDate: this.state.beginDate,
-        //     endDate: this.state.endDate,
-        //     documentDate: this.state.documentDate,
-        //     documentTypeId: this.state.documentTypeId,
-        //     yearId: this.state.yearId,
-        //     quarterId: this.state.quarterId
-        // };
-        //
-        // console.log(responseData);
-        //
-        // appAxios({
-        //     url: `documents`,
-        //     method: 'POST',
-        //     data: responseData
-        // }).then((response) => {
-        //     const message = response.headers["x-mrts-backend-params"];
-        //     toast.success(`Успешно создан документ с ID ${message}`, {
-        //         closeButton: false
-        //     });
-        // }).catch(function (error) {
-        //     console.log(error);
-        //     toast.error(`Ошибка при создании документа`, {
-        //         closeButton: false
-        //     });
-        // });
+        /*
+K7_DETAIL - PROJECT_BUDGET_REPORT выполняем MTS_RES_PLAN_PKG.InitProjectRes
+K8 - TOTAL_BUDGET_REPORT выполняем MTS_RES_PLAN_PKG.InitBudgetTotal
+K9, K10 - BUDGET_REPORT выполняем MTS_RES_PLAN_PKG.InitBudgetByTransport
+K6 - ACTIVITY_REPORT выполняем MTS_ACTIVITY_REPORT_PKG.InitPeriod
+K7_MASTER - PROJECT_REPORT выполняем MTS_PROJECT_REPORT_PKG.PROJECT_REPORT InitPeriod
+         */
 
-        toast.warning(`Функции не подключены`, {
-            closeButton: false
+        const documentTypeCode = this.state.documentTypeList.find(item => item.value === Number(this.state.documentTypeId)).code;
+        let url;
+
+        /*
+K6
+@RequestParam("pIDTsVer") Long pIDTsVer
+@RequestParam("pDoc") Long pDoc)
+K7Details
+@RequestParam("pDoc") Long pID,
+@RequestParam("pTSVer") Long pDoc)
+K7Master
+@RequestParam("pIDTsVer") Long pIDTsVer,
+@RequestParam("pDocProject") Long pDocProject)
+K8
+@RequestParam("pDoc") Long pDoc,
+@RequestParam("pTSVer") Long pTsVer)
+K9
+@RequestParam("pDoc") Long pDoc,
+@RequestParam("pTsVer") Long pTsVer)
+K10
+@RequestParam("pDoc") Long pDoc,
+@RequestParam("pTsVer") Long pTsVer)
+*/
+
+        switch (documentTypeCode) {
+            case 'PROJECT_BUDGET_REPORT':
+                url = `/views/k-7-details/init?pDoc=${this.state.documentId}&pTSVer=${this.state.transportStrategyId}`;
+                break;
+            case 'TOTAL_BUDGET_REPORT':
+                url = `/views/k-8-s/init?pDoc=${this.state.documentId}&pTsVer=${this.state.transportStrategyId}`;
+                break;
+            case 'BUDGET_REPORT':
+                url = `/views/k-9-s/init?pDoc=${this.state.documentId}&pTsVer=${this.state.transportStrategyId}`;
+                break;
+            case 'ACTIVITY_REPORT':
+                url = `/views/k-6-s/init?pIDTsVer=${this.state.transportStrategyId}&pDoc=${this.state.documentId}`;
+                break;
+            case 'PROJECT_REPORT':
+                url = `/views/k-7-masters/init?pIDTsVer=${this.state.transportStrategyId}&pDocProject=${this.state.documentId}`;
+                break;
+            default:
+                url = null;
+        }
+
+        this.setState({ isLoading: true });
+        appAxios.get(`${url}`)
+            .then(res => {
+                console.log(res);
+                const data = res.data;
+                this.setState({result: data, isLoading: false});
+                toast.success(`Успешно инициализировали отчет`, {
+                    closeButton: false
+                });
+
+            }).catch(function (error) {
+            console.log(error);
+            toast.error(`Ошибка при инициализации отчета`, {
+                closeButton: false
+            });
         });
-
     };
 
     doCreateDocument = () => {
-        history.push(`/admin/loading/document`);
+        history.push(`/admin/loading/document`, {documentTypeId: this.state.documentTypeId, yearId: this.state.yearId, quarterId: this.state.quarterId});
     }
 
     render() {
@@ -217,7 +252,7 @@ export default class AdminLoadingReportsPage extends React.Component {
                 )}
 
                 <MDBRow center={true}>
-                    <MDBBtn color="success" type="none" onClick={this.doSave}>
+                    <MDBBtn color="success" type="none" onClick={this.doInit}>
                         Инициализировать
                     </MDBBtn>
                 </MDBRow>

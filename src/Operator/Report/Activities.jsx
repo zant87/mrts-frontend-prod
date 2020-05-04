@@ -82,11 +82,11 @@ export default class OperatorReportActivitiesPage extends React.Component {
             onChangeRowsPerPage: (numberOfRows) => {
                 this.onChangePage(this.state.page, numberOfRows);
             },
-            customToolbar: () => {
-                return (
-                    <CustomToolbar />
-                );
-            },
+            // customToolbar: () => {
+            //     return (
+            //         <CustomToolbar />
+            //     );
+            // },
             customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
                 <CustomToolbarSelect selectedRows={selectedRows} displayData={displayData} setSelectedRows={setSelectedRows} />
             ),

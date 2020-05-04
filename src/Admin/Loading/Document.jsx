@@ -1,27 +1,35 @@
 import React from "react";
 import {MDBBtn, MDBCol, MDBDatePicker, MDBInput, MDBRow, MDBSelect, toast} from "mdbreact";
-import axios from "axios";
 import moment from "moment";
 import appAxios from "../../_services/appAxios";
 
 export default class AdminLoadingDocumentPage extends React.Component {
 
-    state = {
-        id: 0,
-        code: "",
-        name: "",
-        description: "",
-        beginDate: "2019-12-31",
-        endDate: "2099-12-31",
-        documentDate: "2019-12-31",
-        documentTypeId: 0,
-        yearId: 0,
-        quarterId: 0,
-        documentTypeList: [],
-        yearList: [],
-        quarterList: [],
-        isLoading: false
-    };
+    constructor(props) {
+
+        super(props);
+        console.log(props);
+
+        this.state = {
+            id: 0,
+            code: "",
+            name: "",
+            // description: "",
+            // beginDate: "2019-12-31",
+            // endDate: "2099-12-31",
+            documentDate: "2019-12-31",
+            documentTypeId: Number(props.location.state.documentTypeId),
+            documentTypeSelected: "",
+            yearId: Number(props.location.state.yearId),
+            yearSelected: 0,
+            quarterId: Number(props.location.state.quarterId),
+            quarterSelected: 0,
+            documentTypeList: [],
+            yearList: [],
+            quarterList: [],
+            isLoading: false
+        };
+    }
 
     componentDidMount() {
         this.getDocumentTypeList();
@@ -31,47 +39,65 @@ export default class AdminLoadingDocumentPage extends React.Component {
 
     getDocumentTypeList = () => {
         this.setState({ isLoading: true });
-        axios.get(`/api/document-types`)
+        appAxios.get(`/document-types?code.in=PROJECT_BUDGET_REPORT&code.in=TOTAL_BUDGET_REPORT&code.in=BUDGET_REPORT&code.in=ACTIVITY_REPORT&code.in=PROJECT_REPORT`)
             .then(res => {
+                let selected;
                 const data = res.data.map(item => {
-                    return {value: item.id, text: item.name};
+                    if(item.id === this.state.documentTypeId){
+                        selected = item;
+                        return {value: item.id, text: item.name, code: item.code, checked: true}
+                    }
+                    else
+                        return {value: item.id, text: item.name, code: item.code, checked: false};
                 })
-                this.setState({documentTypeList: data, isLoading: false});
+                this.setState({documentTypeList: data, isLoading: false, documentTypeSelected: selected.code});
             })
     };
 
     setDocumentType = event => {
-        this.setState({documentTypeId: event.toString()})
+        this.setState({documentTypeId: event.toString()});
     }
 
     getYearList = () => {
         this.setState({ isLoading: true });
-        axios.get(`/api/nsi-years`)
+        appAxios.get(`/nsi-years`)
             .then(res => {
+                let selected;
                 const data = res.data.map(item => {
-                    return {value: item.id, text: String(item.year)};
+                    if(item.id === this.state.yearId){
+                        selected = item;
+                        return {value: item.id, text: item.year, checked: true};
+                    }
+                    else
+                        return {value: item.id, text: item.year, checked: false};
                 })
-                this.setState({yearList: data, isLoading: false});
+                this.setState({yearList: data, isLoading: false, yearSelected: selected.year});
             })
     };
 
     setYear = event => {
-        this.setState({yearId: event.toString()})
+        this.setState({yearId: Number(event)});
     }
 
     getQuarterList = () => {
         this.setState({ isLoading: true });
-        axios.get(`/api/nsi-quarters`)
+        appAxios.get(`/nsi-quarters`)
             .then(res => {
+                let selected;
                 const data = res.data.map(item => {
-                    return {value: item.id, text: item.name};
+                    if(item.id === this.state.quarterId){
+                        selected = item;
+                        return {value: item.id, text: item.name, checked: true};
+                    }
+                    else
+                        return {value: item.id, text: item.name, checked: false};
                 })
-                this.setState({quarterList: data, isLoading: false});
+                this.setState({quarterList: data, isLoading: false, quarterSelected: selected.id});
             })
     };
 
     setQuarter = event => {
-        this.setState({quarterId: event.toString()})
+        this.setState({quarterId: Number(event)});
     }
 
     onChangeHandler = event => {
@@ -79,50 +105,78 @@ export default class AdminLoadingDocumentPage extends React.Component {
         this.setState({[event.target.name]: event.target.value});
     };
 
-    doSave = () => {
+    doCreate = () => {
 
-        const responseData = { code: this.state.code,
-            name: this.state.name,
-            description: this.state.description,
-            beginDate: this.state.beginDate,
-            endDate: this.state.endDate,
-            documentDate: this.state.documentDate,
-            documentTypeId: this.state.documentTypeId,
-            yearId: this.state.yearId,
-            quarterId: this.state.quarterId
-        };
+        console.log(this.state);
 
-        console.log(responseData);
-        appAxios({
-            url: `documents`,
-            method: 'POST',
-            data: responseData
-        }).then((response) => {
-            const message = response.headers["x-mrts-backend-params"];
-            toast.success(`Успешно создан документ с ID ${message}`, {
-                closeButton: false
-            });
-        }).catch(function (error) {
+        /*
+        *   @RequestParam("pDocTypeCode") String pDocTypeCode,
+            @RequestParam("pYear") Long pYear,
+            @RequestParam("pQuarter") Long pQuarter,
+            @RequestParam("pDocDate") LocalDate pDocDate,
+            @RequestParam("pCode") String pCode,
+            @RequestParam("pName") String pName)
+        * */
+
+        this.setState({ isLoading: true });
+        appAxios.get(`/documents/create?pDocTypeCode=${this.state.documentTypeSelected}&pYear=${this.state.yearSelected}
+        &pQuarter=${this.state.quarterSelected}&pDocDate=${this.state.documentDate}&pCode=${this.state.code}&pName=${this.state.name}`)
+            .then(res => {
+                console.log(res.data);
+                const data = res.data;
+                this.setState({result: data, isLoading: false});
+                toast.success(`Успешно создан документ с ID ${data}`, {
+                    closeButton: false
+                });
+            }).catch(function (error) {
             console.log(error);
             toast.error(`Ошибка при создании документа`, {
                 closeButton: false
             });
         });
+
+        // const responseData = { code: this.state.code,
+        //     name: this.state.name,
+        //     description: this.state.description,
+        //     beginDate: this.state.beginDate,
+        //     endDate: this.state.endDate,
+        //     documentDate: this.state.documentDate,
+        //     documentTypeId: this.state.documentTypeId,
+        //     yearId: this.state.yearId,
+        //     quarterId: this.state.quarterId
+        // };
+        //
+        // console.log(responseData);
+        // appAxios({
+        //     url: `documents`,
+        //     method: 'POST',
+        //     data: responseData
+        // }).then((response) => {
+        //     const message = response.headers["x-mrts-backend-params"];
+        //     toast.success(`Успешно создан документ с ID ${message}`, {
+        //         closeButton: false
+        //     });
+        // }).catch(function (error) {
+        //     console.log(error);
+        //     toast.error(`Ошибка при создании документа`, {
+        //         closeButton: false
+        //     });
+        // });
     };
 
     doBack = () => {
         history.back();
     };
 
-    getBeginDate = (value) => {
-        const date = moment(value);
-        this.setState({beginDate: date.format('YYYY-MM-DD')});
-    }
-
-    getEndDate = (value) => {
-        const date = moment(value);
-        this.setState({endDate: date.format('YYYY-MM-DD')});
-    }
+    // getBeginDate = (value) => {
+    //     const date = moment(value);
+    //     this.setState({beginDate: date.format('YYYY-MM-DD')});
+    // }
+    //
+    // getEndDate = (value) => {
+    //     const date = moment(value);
+    //     this.setState({endDate: date.format('YYYY-MM-DD')});
+    // }
 
     getDocumentDate = (value) => {
         const date = moment(value);
@@ -147,40 +201,39 @@ export default class AdminLoadingDocumentPage extends React.Component {
                     </MDBCol>
                 </MDBRow>
 
-                <MDBRow>
-                    <MDBCol md="12" className="mb-3">
-                        <MDBInput type="textarea" label="Описание" value={this.state.description} name="description" rows="3" onChange={this.onChangeHandler}/>
-                    </MDBCol>
-                </MDBRow>
+                {/*<MDBRow>*/}
+                {/*    <MDBCol md="12" className="mb-3">*/}
+                {/*        <MDBInput type="textarea" label="Описание" value={this.state.description} name="description" rows="3" onChange={this.onChangeHandler}/>*/}
+                {/*    </MDBCol>*/}
+                {/*</MDBRow>*/}
 
                 <MDBRow>
-                    <MDBCol md="4" className="mb-3">
-                        <label htmlFor='datepicker'>Начало действия документа</label>
-                        <MDBDatePicker getValue={this.getBeginDate}
-                                       format='YYYY-MM-DD'
-                                       locale={moment.locale('ru')}
-                                       okLabel='ОК'
-                                       name='beginDate'
-                                       keyboard={true}
-                                       invalidDateMessage='Неправильный формат даты'
-                                       valueDefault={new Date(this.state.beginDate)}
-                                       cancelLabel='Отмена'/>
 
-                    </MDBCol>
+                    {/*<MDBCol md="4" className="mb-3">*/}
+                    {/*    <label htmlFor='datepicker'>Начало действия документа</label>*/}
+                    {/*    <MDBDatePicker getValue={this.getBeginDate}*/}
+                    {/*                   format='YYYY-MM-DD'*/}
+                    {/*                   locale={moment.locale('ru')}*/}
+                    {/*                   okLabel='ОК'*/}
+                    {/*                   name='beginDate'*/}
+                    {/*                   keyboard={true}*/}
+                    {/*                   invalidDateMessage='Неправильный формат даты'*/}
+                    {/*                   valueDefault={new Date(this.state.beginDate)}*/}
+                    {/*                   cancelLabel='Отмена'/>*/}
+                    {/*</MDBCol>*/}
+                    {/*<MDBCol md="4" className="mb-3">*/}
+                    {/*    <label htmlFor='datepicker'>Конец действия документа</label>*/}
+                    {/*    <MDBDatePicker getValue={this.getEndDate}*/}
+                    {/*                   format='YYYY-MM-DD'*/}
+                    {/*                   locale={moment.locale('ru')}*/}
+                    {/*                   okLabel='ОК'*/}
+                    {/*                   name='endDate'*/}
+                    {/*                   keyboard={true}*/}
+                    {/*                   invalidDateMessage='Неправильный формат даты'*/}
+                    {/*                   valueDefault={new Date(this.state.endDate)}*/}
+                    {/*                   cancelLabel='Отмена'/>*/}
 
-                    <MDBCol md="4" className="mb-3">
-                        <label htmlFor='datepicker'>Конец действия документа</label>
-                        <MDBDatePicker getValue={this.getEndDate}
-                                       format='YYYY-MM-DD'
-                                       locale={moment.locale('ru')}
-                                       okLabel='ОК'
-                                       name='endDate'
-                                       keyboard={true}
-                                       invalidDateMessage='Неправильный формат даты'
-                                       valueDefault={new Date(this.state.endDate)}
-                                       cancelLabel='Отмена'/>
-
-                    </MDBCol>
+                    {/*</MDBCol>*/}
 
                     <MDBCol md="4" className="mb-3">
                         <label htmlFor='datepicker'>Дата документа</label>
@@ -234,7 +287,7 @@ export default class AdminLoadingDocumentPage extends React.Component {
                 </MDBRow>
 
                 <MDBRow around={true}>
-                    <MDBBtn color="primary" type="none" onClick={this.doSave}>
+                    <MDBBtn color="primary" type="none" onClick={this.doCreate}>
                         Сохранить
                     </MDBBtn>
                     <MDBBtn color="info" type="none" onClick={this.doBack}>
