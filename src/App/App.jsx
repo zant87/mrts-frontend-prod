@@ -87,7 +87,7 @@ class App extends React.Component {
                       <MDBNavbarToggler onClick={this.toggleCollapse("navbarCollapse")} />
                       <MDBCollapse id="navbarCollapse" isOpen={collapseID} navbar>
                         <MDBNavbarNav right>
-                          <MDBNavItem active>
+                          <MDBNavItem>
                             <MDBNavLink exact to="/" onClick={this.closeCollapse("navbarCollapse")}>
                               <strong>Главная</strong>
                             </MDBNavLink>
