@@ -22,7 +22,7 @@ export default class OperatorReportAppropriationsPage extends React.Component {
 
     getData = () => {
         this.setState({ isLoading: true });
-        appAxios.get(`/views/k-10-s`)
+        appAxios.get(`/views/k-9-s?sort=id,desc`)
             .then(res => {
                 const count = Number(res.headers['x-total-count']);
                 const data = res.data;
@@ -35,7 +35,7 @@ export default class OperatorReportAppropriationsPage extends React.Component {
             isLoading: true,
         });
 
-        appAxios.get(`/views/k-10-s?page=${page}&size=${numberOfRows}`)
+        appAxios.get(`/views/k-9-s?page=${page}&size=${numberOfRows}&sort=id,desc`)
             .then(res => {
                 const count = Number(res.headers['x-total-count']);
                 const data = res.data;
@@ -90,7 +90,7 @@ export default class OperatorReportAppropriationsPage extends React.Component {
                     <MDBCol md={'12'} className='my-5 mx-auto'>
                         {isLoading && <MDBSpinner multicolor />}
                         <MUIDataTable
-                            title={"Бюджетное финансирование транспорта"}
+                            title={"Бюджетные ассигнования в рамках программ развития транспорта"}
                             data={data}
                             columns={columns}
                             options={options}

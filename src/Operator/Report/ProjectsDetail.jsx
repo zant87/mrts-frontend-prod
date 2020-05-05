@@ -21,7 +21,7 @@ export default class OperatorReportProjectsDetailPage extends React.Component {
 
     getData = () => {
         this.setState({ isLoading: true });
-        appAxios.get(`/views/k-7-details`)
+        appAxios.get(`/views/k-7-details?sort=id,desc`)
             .then(res => {
                 const count = Number(res.headers['x-total-count']);
                 const data = res.data;
@@ -34,7 +34,7 @@ export default class OperatorReportProjectsDetailPage extends React.Component {
             isLoading: true,
         });
 
-        appAxios.get(`/views/k-7-details?page=${page}&size=${numberOfRows}`)
+        appAxios.get(`/views/k-7-details?page=${page}&size=${numberOfRows}&sort=id,desc`)
             .then(res => {
                 const count = Number(res.headers['x-total-count']);
                 const data = res.data;

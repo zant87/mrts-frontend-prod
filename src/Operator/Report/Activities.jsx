@@ -22,7 +22,7 @@ export default class OperatorReportActivitiesPage extends React.Component {
 
     getData = () => {
         this.setState({ isLoading: true });
-        appAxios.get(`/views/k-6-s`)
+        appAxios.get(`/views/k-6-s?sort=id,desc`)
             .then(res => {
                 const count = Number(res.headers['x-total-count']);
                 const data = res.data;
@@ -35,7 +35,7 @@ export default class OperatorReportActivitiesPage extends React.Component {
             isLoading: true,
         });
 
-        appAxios.get(`/views/k-6-s?page=${page}&size=${numberOfRows}`)
+        appAxios.get(`/views/k-6-s?page=${page}&size=${numberOfRows}&sort=id,desc`)
             .then(res => {
                 const count = Number(res.headers['x-total-count']);
                 const data = res.data;

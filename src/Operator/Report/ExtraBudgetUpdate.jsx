@@ -1,31 +1,27 @@
 import React from "react";
-import {MDBBtn, MDBCol, MDBDatePicker, MDBInput, MDBRow, MDBSelect, toast} from "mdbreact";
+import {MDBBtn, MDBCol, MDBInput, MDBRow, toast} from "mdbreact";
 import appAxios from "../../_services/appAxios";
-import axios from "axios";
-import moment from 'moment';
 import 'moment/locale/ru';
 
-export default class OperatorReportAppropriationsUpdatePage extends React.Component {
-
+export default class OperatorReportExtraBudgetUpdatePage extends React.Component {
 
     /*
             { name: 'year', label: 'Отчетный год'},
             { name: 'directionName', label: 'Направление расходов' },
-            { name: 'fundingName', label: 'Источник финансирования'},
             { name: 'costTypeName', label: 'Вид расходов'},
-            { name: 'plan', label: 'Запланировано, млн. руб.' },
-            { name: 'fact', label: 'Кассовое исполнение, млн. руб.'},
+            { name: 'fact', label: 'Фактические объемы исполнения, млн. руб.'},
             { name: 'id', label: 'id', options: {display: 'excluded', filter: false}},
             { name: 'documentId', label: 'documentId', options: {display: 'excluded', filter: false}},
-    */
+        */
+
     constructor(props) {
         super(props);
         console.log(this.props);
         this.state = {
-            id: Number(this.props.location.state[6]),
-            documentId: Number(this.props.location.state[7]),
+            id: Number(this.props.location.state[5]),
+            documentId: Number(this.props.location.state[6]),
+            fact: Number(this.props.location.state[3]),
             plan: Number(this.props.location.state[4]),
-            fact: Number(this.props.location.state[5]),
             isLoading: false
         };
     }
@@ -33,13 +29,12 @@ export default class OperatorReportAppropriationsUpdatePage extends React.Compon
     /*
             @RequestParam("pID") Long pID,
             @RequestParam("pDoc") Long pDoc,
-            @RequestParam("pPlan") BigDecimal pPlan,
             @RequestParam("pFact") BigDecimal pFact){
     */
 
     doUpdate =() => {
         this.setState({ isLoading: true });
-        appAxios.get(`/views/k-9-s/update?pID=${this.state.id}&pDoc=${this.state.documentId}&pPlan=${this.state.plan}&pFact=${this.state.fact}`)
+        appAxios.get(`/views/k-10-s/update?pID=${this.state.id}&pDoc=${this.state.documentId}&pPlan=${this.state.plan}&pFact=${this.state.fact}`)
             .then(res => {
                 const data = res.data;
                 this.setState({result: data, isLoading: false});
@@ -77,13 +72,7 @@ export default class OperatorReportAppropriationsUpdatePage extends React.Compon
 
                 <MDBRow>
                     <MDBCol md="12" className="mb-3">
-                        <MDBInput label="Запланировано, млн. руб." value={this.state.plan} onChange={this.onChangeHandler} type="number" name="plan"/>
-                    </MDBCol>
-                </MDBRow>
-
-                <MDBRow>
-                    <MDBCol md="12" className="mb-3">
-                        <MDBInput label="Кассовое исполнение, млн. руб." value={this.state.fact} onChange={this.onChangeHandler} type="number" name="fact"/>
+                        <MDBInput label="Фактические объемы исполнения, млн. руб." value={this.state.fact} onChange={this.onChangeHandler} type="number" name="fact"/>
                     </MDBCol>
                 </MDBRow>
 

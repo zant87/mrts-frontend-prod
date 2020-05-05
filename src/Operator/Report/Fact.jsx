@@ -21,7 +21,7 @@ export default class OperatorReportFactPage extends React.Component {
 
     getData = () => {
         this.setState({ isLoading: true });
-        axios.get(`/api/views/k-5-s`)
+        axios.get(`/api/views/k-5-s?sort=id,desc`)
             .then(res => {
                 console.log(res);
                 const count = Number(res.headers['x-total-count']);
@@ -35,7 +35,7 @@ export default class OperatorReportFactPage extends React.Component {
             isLoading: true,
         });
 
-        axios.get(`/api/views/k-5-s?page=${page}&size=${numberOfRows}`)
+        axios.get(`/api/views/k-5-s?page=${page}&size=${numberOfRows}&sort=id,desc`)
             .then(res => {
                 const count = Number(res.headers['x-total-count']);
                 const data = res.data;
