@@ -40,7 +40,6 @@ import OperatorControlResourcesPage from "@/Operator/Control/Resources";
 import OperatorReportNavigation from "@/Operator/Report/Navigation";
 import OperatorReportFactPage from "@/Operator/Report/Fact";
 import OperatorReportActivitiesPage from "@/Operator/Report/Activities";
-import OperatorReportProjectsPage from "@/Operator/Report/Projects";
 import OperatorReportFinancingPage from "@/Operator/Report/Financing";
 import OperatorReportAppropriationsPage from "@/Operator/Report/Appropriations";
 import OperatorReportExtraBudgetPage from "@/Operator/Report/ExtraBudget";
@@ -50,8 +49,6 @@ import OperatorPlanResourcesEditPage from "../Operator/Plan/ResourcesEdit";
 import OperatorPlanIndicatorsEditPage from "../Operator/Plan/IndicatorsEdit";
 import AnalystReportPage from "../Analyst/Reports/Report";
 import OperatorReportFactEditPage from "../Operator/Report/FactEdit";
-import OperatorReportActivitiesCreatePage from "../Operator/Report/ActivitiesCreate";
-import OperatorReportActivitiesInitPage from "../Operator/Report/ActivitiesInit";
 import AdminLoadingDocumentPage from "../Admin/Loading/Document";
 import AdminLoadingReportsPage from "../Admin/Loading/Reports";
 import AdminLoadingCSVPage from "../Admin/Loading/FromCSV";
@@ -61,6 +58,10 @@ import AdminLoadingFromMDDPage from "../Admin/Loading/FromMDD";
 import AdminLoadingFromMSTKPage from "../Admin/Loading/FromMSTK";
 import AdminLoadingFromSDMXPage from "../Admin/Loading/FromSDMX";
 import OperatorReportActivitiesUpdatePage from "../Operator/Report/ActivitiesUpdate";
+import OperatorReportProjectsMasterPage from "../Operator/Report/ProjectsMaster";
+import OperatorReportProjectsDetailPage from "../Operator/Report/ProjectsDetail";
+import OperatorReportProjectsMasterUpdatePage from "../Operator/Report/ProjectsMasterUpdate";
+import OperatorReportProjectsDetailUpdatePage from "../Operator/Report/ProjectsDetailUpdate";
 
 export const AppRoutes = () => {
     return (
@@ -131,12 +132,16 @@ export const AppRoutes = () => {
             <PrivateRoute exact path="/operator/report" roles={Role.Operator} component={OperatorReportNavigation} />
             <PrivateRoute exact path="/operator/report/fact" roles={Role.Operator} component={OperatorReportFactPage} />
             <PrivateRoute path="/operator/report/fact/:id" roles={Role.Operator} component={OperatorReportFactEditPage} />
+
             <PrivateRoute exact path="/operator/report/activities" roles={Role.Operator} component={OperatorReportActivitiesPage} />
-            {/*<PrivateRoute exact path="/operator/report/activities/create" roles={Role.Operator} component={OperatorReportActivitiesCreatePage} />*/}
-            {/*<PrivateRoute exact path="/operator/report/activities/init" roles={Role.Operator} component={OperatorReportActivitiesInitPage} />*/}
             <PrivateRoute exact path="/operator/report/activities/:id" roles={Role.Operator} component={OperatorReportActivitiesUpdatePage} />
 
-            <PrivateRoute exact path="/operator/report/projects" roles={Role.Operator} component={OperatorReportProjectsPage} />
+            <PrivateRoute exact path="/operator/report/projects_master" roles={Role.Operator} component={OperatorReportProjectsMasterPage} />
+            <PrivateRoute exact path="/operator/report/projects_master/:id" roles={Role.Operator} component={OperatorReportProjectsMasterUpdatePage} />
+
+            <PrivateRoute exact path="/operator/report/projects_detail" roles={Role.Operator} component={OperatorReportProjectsDetailPage} />
+            <PrivateRoute exact path="/operator/report/projects_detail/:id" roles={Role.Operator} component={OperatorReportProjectsDetailUpdatePage} />
+
             <PrivateRoute exact path="/operator/report/financing" roles={Role.Operator} component={OperatorReportFinancingPage} />
             <PrivateRoute exact path="/operator/report/appropriations" roles={Role.Operator} component={OperatorReportAppropriationsPage} />
             <PrivateRoute exact path="/operator/report/extraBudget" roles={Role.Operator} component={OperatorReportExtraBudgetPage} />

@@ -17,7 +17,8 @@ const Navigation = () => {
                         <ul className='list-unstyled example-components-list mt-5'>
                             <NavLink to='/operator/report/fact' title='Фактические значения показателей' />
                             <NavLink to='/operator/report/activities' title='Выполнение мероприятий по реализации ТС' />
-                            <NavLink to='/operator/report/projects' title='Выполнение крупных инвестиционных проектов' />
+                            <NavLink to='/operator/report/projects_master' title='Выполнение крупных инвестиционных проектов (master)' />
+                            <NavLink to='/operator/report/projects_detail' title='Финансирование проектов ТС (detail)' />
                             <NavLink to='/operator/report/financing' title='Бюджетное финансирование транспорта' />
                             <NavLink to='/operator/report/appropriations' title='Бюджетные ассигнования в рамках программ развития транспорта' />
                             <NavLink to='/operator/report/extrabudget' title=' Объемы привлечения внебюджетных средств' />

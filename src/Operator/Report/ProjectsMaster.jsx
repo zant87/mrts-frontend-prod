@@ -5,7 +5,7 @@ import {labels} from "../../_components/TableTextLabels";
 import CustomToolbarSelect from "../../_components/CustomToolbarSelect";
 import appAxios from "../../_services/appAxios";
 
-export default class OperatorReportActivitiesPage extends React.Component {
+export default class OperatorReportProjectsMasterPage extends React.Component {
 
     state = {
         page: 0,
@@ -16,13 +16,12 @@ export default class OperatorReportActivitiesPage extends React.Component {
     };
 
     componentDidMount() {
-        //сохранять state через redux
         this.getData();
     };
 
     getData = () => {
         this.setState({ isLoading: true });
-        appAxios.get(`/views/k-6-s`)
+        appAxios.get(`/views/k-7-masters`)
             .then(res => {
                 const count = Number(res.headers['x-total-count']);
                 const data = res.data;
@@ -35,7 +34,7 @@ export default class OperatorReportActivitiesPage extends React.Component {
             isLoading: true,
         });
 
-        appAxios.get(`/views/k-6-s?page=${page}&size=${numberOfRows}`)
+        appAxios.get(`/views/k-7-masters?page=${page}&size=${numberOfRows}`)
             .then(res => {
                 const count = Number(res.headers['x-total-count']);
                 const data = res.data;
@@ -46,17 +45,19 @@ export default class OperatorReportActivitiesPage extends React.Component {
     render() {
 
         const columns = [
-            { name: 'activityReportId', label: '#'},
-            { name: 'activityCode', label: 'Обозначение мероприятия', options: {display: 'excluded', filter: false}},
-            { name: 'activityName', label: 'Наименование мероприятия', options: {filter: false}},
-            { name: 'documentType', label: 'Вид документа'},
-            { name: 'activityDescription', label: 'Содержание мероприятия', options: {filter: false}},
-            { name: 'yearNumber', label: 'Отчетный год'},
-            { name: 'quarterName', label: 'Отчетный квартал'},
-            { name: 'reportDescription', label: 'Отчет исполнителя'},
+            { name: 'yearNumber', label: 'Отчетный год' },
+            { name: 'projectCode', label: 'Обозначение проекта' },
+            { name: 'projectName', label: 'Содержание проекта' },
+            { name: 'done', label: 'Уровень технической готовности' },
+            { name: 'planBeginYear', label: 'Сроки реализации плановые' },
+            { name: 'factStarted', label: 'Начало фактической реализации' },
+            { name: 'factFinished', label: 'Конец фактической реализации' },
+            { name: 'realPlanCost', label: 'Общие затраты (плановые)' },
+            { name: 'fact', label: 'Общие затраты (факт)' },
+            { name: 'description', label: 'Фактические результаты' },
             { name: 'documentId', label: 'documentId', options: {display: 'excluded', filter: false}},
-            { name: 'activityId', label: 'activityId', options: {display: 'excluded', filter: false}},
-            { name: 'activityReportId', label: 'activityReportId', options: {display: 'excluded', filter: false}},
+            { name: 'projectId', label: 'projectId', options: {display: 'excluded', filter: false}},
+            { name: 'id', label: 'id', options: {display: 'excluded', filter: false}},
         ];
 
         const { data, page, count, isLoading } = this.state;
@@ -82,11 +83,6 @@ export default class OperatorReportActivitiesPage extends React.Component {
             onChangeRowsPerPage: (numberOfRows) => {
                 this.onChangePage(this.state.page, numberOfRows);
             },
-            // customToolbar: () => {
-            //     return (
-            //         <CustomToolbar />
-            //     );
-            // },
             customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
                 <CustomToolbarSelect selectedRows={selectedRows} displayData={displayData} setSelectedRows={setSelectedRows} />
             ),
@@ -98,7 +94,7 @@ export default class OperatorReportActivitiesPage extends React.Component {
                     <MDBCol md={'12'} className='my-5 mx-auto'>
                         {isLoading && <MDBSpinner multicolor />}
                         <MUIDataTable
-                            title={"Выполнение мероприятий по реализации ТС"}
+                            title={"Выполнение крупных инвестиционных проектов (master)"}
                             data={data}
                             columns={columns}
                             options={options}
