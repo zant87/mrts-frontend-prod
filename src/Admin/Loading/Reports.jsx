@@ -146,7 +146,7 @@ K10
 
         switch (documentTypeCode) {
             case 'PROJECT_BUDGET_REPORT':
-                url = `/views/k-7-details/init?pDoc=${this.state.documentId}&pTSVer=${this.state.transportStrategyId}`;
+                url = `/views/k-7-details/init?pDoc=${this.state.documentId}&pTsVer=${this.state.transportStrategyId}`;
                 break;
             case 'TOTAL_BUDGET_REPORT':
                 url = `/views/k-8-s/init?pDoc=${this.state.documentId}&pTsVer=${this.state.transportStrategyId}`;
@@ -155,10 +155,10 @@ K10
                 url = `/views/k-9-s/init?pDoc=${this.state.documentId}&pTsVer=${this.state.transportStrategyId}`;
                 break;
             case 'ACTIVITY_REPORT':
-                url = `/views/k-6-s/init?pIDTsVer=${this.state.transportStrategyId}&pDoc=${this.state.documentId}`;
+                url = `/views/k-6-s/init?pTsVer=${this.state.transportStrategyId}&pDoc=${this.state.documentId}`;
                 break;
             case 'PROJECT_REPORT':
-                url = `/views/k-7-masters/init?pIDTsVer=${this.state.transportStrategyId}&pDocProject=${this.state.documentId}`;
+                url = `/views/k-7-masters/init?pTsVer=${this.state.transportStrategyId}&pDocProject=${this.state.documentId}`;
                 break;
             default:
                 url = null;
