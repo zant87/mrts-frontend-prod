@@ -21,7 +21,8 @@ export default class OperatorReportProjectsDetailPage extends React.Component {
 
     getData = () => {
         this.setState({ isLoading: true });
-        appAxios.get(`/views/k-7-details?sort=id,desc`)
+        // appAxios.get(`/views/k-7-details?sort=id,desc`)
+        appAxios.get(`/views/k-7-details?sort=id,desc&size=2000`)
             .then(res => {
                 const count = Number(res.headers['x-total-count']);
                 const data = res.data;
@@ -50,9 +51,9 @@ export default class OperatorReportProjectsDetailPage extends React.Component {
             { name: 'projectName', label: 'Содержание проекта' },
             { name: 'costTypename', label: 'Вид расходов'},
             { name: 'fundSourceName', label: 'Источник финансирования', options: {filter: false}},
-            { name: 'plan', label: 'Предусмотрено на год'},
-            { name: 'spent', label: 'Освоено на год'},
-            { name: 'fact', label: 'Кассовые расходы за год'},
+            { name: 'plan', label: 'Предусмотрено на год', options: { filter: false } },
+            { name: 'spent', label: 'Освоено на год', options: { filter: false } },
+            { name: 'fact', label: 'Кассовые расходы за год', options: { filter: false } },
             { name: 'documentId', label: 'documentId', options: {display: 'excluded', filter: false}},
             { name: 'projectId', label: 'projectId', options: {display: 'excluded', filter: false}},
             { name: 'id', label: 'id', options: {display: 'excluded', filter: false}},
@@ -61,9 +62,9 @@ export default class OperatorReportProjectsDetailPage extends React.Component {
         const { data, page, count, isLoading } = this.state;
 
         const options = {
-            serverSide: true,
-            count: count,
-            page: page,
+            // serverSide: true,
+            // count: count,
+            // page: page,
             rowsPerPage: 20,
             rowsPerPageOptions: [20, 50, 100, 1000, 2500, 5000],
             textLabels: labels,
@@ -71,16 +72,16 @@ export default class OperatorReportProjectsDetailPage extends React.Component {
             print: false,
             selectableRowsOnClick: true,
             selectableRows: 'single',
-            onTableChange: (action, tableState) => {
-                switch (action) {
-                    case 'changePage':
-                        this.onChangePage(tableState.page, tableState.rowsPerPage);
-                        break;
-                }
-            },
-            onChangeRowsPerPage: (numberOfRows) => {
-                this.onChangePage(this.state.page, numberOfRows);
-            },
+            // onTableChange: (action, tableState) => {
+            //     switch (action) {
+            //         case 'changePage':
+            //             this.onChangePage(tableState.page, tableState.rowsPerPage);
+            //             break;
+            //     }
+            // },
+            // onChangeRowsPerPage: (numberOfRows) => {
+            //     this.onChangePage(this.state.page, numberOfRows);
+            // },
             customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
                 <CustomToolbarSelect selectedRows={selectedRows} displayData={displayData} setSelectedRows={setSelectedRows} />
             ),

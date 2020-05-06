@@ -22,7 +22,8 @@ export default class OperatorReportActivitiesPage extends React.Component {
 
     getData = () => {
         this.setState({ isLoading: true });
-        appAxios.get(`/views/k-6-s?sort=id,desc`)
+        // appAxios.get(`/views/k-6-s?sort=id,desc`)
+        appAxios.get(`/views/k-6-s?sort=id,desc&size=2000`)
             .then(res => {
                 const count = Number(res.headers['x-total-count']);
                 const data = res.data;
@@ -46,14 +47,14 @@ export default class OperatorReportActivitiesPage extends React.Component {
     render() {
 
         const columns = [
-            { name: 'activityReportId', label: '#'},
+            { name: 'activityReportId', label: '#', options: {filter: false}},
             { name: 'activityCode', label: 'Обозначение мероприятия', options: {display: 'excluded', filter: false}},
             { name: 'activityName', label: 'Наименование мероприятия', options: {filter: false}},
             { name: 'documentType', label: 'Вид документа'},
             { name: 'activityDescription', label: 'Содержание мероприятия', options: {filter: false}},
             { name: 'yearNumber', label: 'Отчетный год'},
             { name: 'quarterName', label: 'Отчетный квартал'},
-            { name: 'reportDescription', label: 'Отчет исполнителя'},
+            { name: 'reportDescription', label: 'Отчет исполнителя', options: {filter: false}},
             { name: 'documentId', label: 'documentId', options: {display: 'excluded', filter: false}},
             { name: 'activityId', label: 'activityId', options: {display: 'excluded', filter: false}},
             { name: 'activityReportId', label: 'activityReportId', options: {display: 'excluded', filter: false}},
@@ -62,26 +63,26 @@ export default class OperatorReportActivitiesPage extends React.Component {
         const { data, page, count, isLoading } = this.state;
 
         const options = {
-            serverSide: true,
-            count: count,
-            page: page,
+            // serverSide: true,
+            // count: count,
+            // page: page,
             rowsPerPage: 20,
             rowsPerPageOptions: [20, 50, 100, 1000, 2500, 5000],
             textLabels: labels,
-            sortFilterList: false,
             print: false,
             selectableRowsOnClick: true,
             selectableRows: 'single',
-            onTableChange: (action, tableState) => {
-                switch (action) {
-                    case 'changePage':
-                        this.onChangePage(tableState.page, tableState.rowsPerPage);
-                        break;
-                }
-            },
-            onChangeRowsPerPage: (numberOfRows) => {
-                this.onChangePage(this.state.page, numberOfRows);
-            },
+            // sortFilterList: false,
+            // onTableChange: (action, tableState) => {
+            //     switch (action) {
+            //         case 'changePage':
+            //             this.onChangePage(tableState.page, tableState.rowsPerPage);
+            //             break;
+            //     }
+            // },
+            // onChangeRowsPerPage: (numberOfRows) => {
+            //     this.onChangePage(this.state.page, numberOfRows);
+            // },
             // customToolbar: () => {
             //     return (
             //         <CustomToolbar />

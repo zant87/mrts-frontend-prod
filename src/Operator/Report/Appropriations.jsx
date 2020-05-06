@@ -22,7 +22,8 @@ export default class OperatorReportAppropriationsPage extends React.Component {
 
     getData = () => {
         this.setState({ isLoading: true });
-        appAxios.get(`/views/k-9-s?sort=id,desc`)
+        // appAxios.get(`/views/k-9-s?sort=id,desc`)
+        appAxios.get(`/views/k-9-s?sort=id,desc&size=2000`)
             .then(res => {
                 const count = Number(res.headers['x-total-count']);
                 const data = res.data;
@@ -59,25 +60,25 @@ export default class OperatorReportAppropriationsPage extends React.Component {
         const { data, page, count, isLoading } = this.state;
 
         const options = {
-            serverSide: true,
-            count: count,
-            page: page,
+            // serverSide: true,
+            // count: count,
+            // page: page,
             rowsPerPage: 20,
             rowsPerPageOptions: [20, 50, 100, 1000, 2500, 5000],
             textLabels: labels,
             print: false,
             selectableRowsOnClick: true,
             selectableRows: 'single',
-            onTableChange: (action, tableState) => {
-                switch (action) {
-                    case 'changePage':
-                        this.onChangePage(tableState.page, tableState.rowsPerPage);
-                        break;
-                }
-            },
-            onChangeRowsPerPage: (numberOfRows) => {
-                this.onChangePage(this.state.page, numberOfRows);
-            },
+            // onTableChange: (action, tableState) => {
+            //     switch (action) {
+            //         case 'changePage':
+            //             this.onChangePage(tableState.page, tableState.rowsPerPage);
+            //             break;
+            //     }
+            // },
+            // onChangeRowsPerPage: (numberOfRows) => {
+            //     this.onChangePage(this.state.page, numberOfRows);
+            // },
             customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
                 <CustomToolbarSelect selectedRows={selectedRows} displayData={displayData} setSelectedRows={setSelectedRows} />
             ),
