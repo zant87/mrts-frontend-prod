@@ -22,9 +22,18 @@ export default class OperatorReportExtraBudgetUpdatePage extends React.Component
             documentId: Number(this.props.location.state[6]),
             fact: Number(this.props.location.state[3]),
             plan: Number(this.props.location.state[4]),
+            year: this.props.location.state[0],
+            directionName: this.props.location.state[1],
+            costTypeName: this.props.location.state[2],
             isLoading: false
         };
     }
+
+    /*
+            { name: 'year', label: 'Отчетный год'},
+            { name: 'directionName', label: 'Направление расходов' },
+            { name: 'costTypeName', label: 'Вид расходов'},
+     */
 
     /*
             @RequestParam("pID") Long pID,
@@ -67,6 +76,24 @@ export default class OperatorReportExtraBudgetUpdatePage extends React.Component
                 <MDBRow>
                     <MDBCol md="12" className="mb-3">
                         <MDBInput label="#" value={this.state.id} disabled={true} type="number" name="id"/>
+                    </MDBCol>
+                </MDBRow>
+
+                <MDBRow>
+                    <MDBCol md="12" className="mb-3">
+                        <MDBInput label="Отчетный год" value={this.state.year} disabled={true} type="number" name="year"/>
+                    </MDBCol>
+                </MDBRow>
+
+                <MDBRow>
+                    <MDBCol md="12" className="mb-3">
+                        <MDBInput label="Направление расходов" value={this.state.directionName} disabled={true} type="text" name="directionName"/>
+                    </MDBCol>
+                </MDBRow>
+
+                <MDBRow>
+                    <MDBCol md="12" className="mb-3">
+                        <MDBInput label="Вид расходов" value={this.state.costTypeName} disabled={true} type="text" name="directionName"/>
                     </MDBCol>
                 </MDBRow>
 

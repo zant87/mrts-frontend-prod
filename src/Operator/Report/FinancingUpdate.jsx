@@ -15,6 +15,8 @@ export default class OperatorReportFinancingUpdatePage extends React.Component {
             documentId: Number(this.props.location.state[5]),
             plan: Number(this.props.location.state[2]),
             fact: Number(this.props.location.state[3]),
+            year: Number(this.props.location.state[0]),
+            expenditureName: this.props.location.state[1],
             isLoading: false
         };
     }
@@ -61,6 +63,18 @@ export default class OperatorReportFinancingUpdatePage extends React.Component {
                 <MDBRow>
                     <MDBCol md="12" className="mb-3">
                         <MDBInput label="#" value={this.state.id} disabled={true} type="number" name="id"/>
+                    </MDBCol>
+                </MDBRow>
+
+                <MDBRow>
+                    <MDBCol md="12" className="mb-3">
+                        <MDBInput label="Направление расходов" value={this.state.expenditureName} disabled={true} type="text" name="expenditureName"/>
+                    </MDBCol>
+                </MDBRow>
+
+                <MDBRow>
+                    <MDBCol md="12" className="mb-3">
+                        <MDBInput label="Отчетный год" value={this.state.year} disabled={true} type="number" name="year"/>
                     </MDBCol>
                 </MDBRow>
 

@@ -26,6 +26,10 @@ export default class OperatorReportAppropriationsUpdatePage extends React.Compon
             documentId: Number(this.props.location.state[7]),
             plan: Number(this.props.location.state[4]),
             fact: Number(this.props.location.state[5]),
+            year: this.props.location.state[0],
+            directionName: this.props.location.state[1],
+            fundingName: this.props.location.state[2],
+            costTypeName: this.props.location.state[3],
             isLoading: false
         };
     }
@@ -74,6 +78,35 @@ export default class OperatorReportAppropriationsUpdatePage extends React.Compon
                         <MDBInput label="#" value={this.state.id} disabled={true} type="number" name="id"/>
                     </MDBCol>
                 </MDBRow>
+
+                <MDBRow>
+                    <MDBCol md="12" className="mb-3">
+                        <MDBInput label="Отчетный год" value={this.state.year} disabled={true} type="text" name="year"/>
+                    </MDBCol>
+                </MDBRow>
+
+                <MDBRow>
+                    <MDBCol md="12" className="mb-3">
+                        <MDBInput label="Направление расходов" value={this.state.directionName} disabled={true} type="text" name="directionName"/>
+                    </MDBCol>
+                </MDBRow>
+
+                <MDBRow>
+                    <MDBCol md="12" className="mb-3">
+                        <MDBInput label="Источник финансирования" value={this.state.fundingName} disabled={true} type="text" name="fundingName"/>
+                    </MDBCol>
+                </MDBRow>
+
+                <MDBRow>
+                    <MDBCol md="12" className="mb-3">
+                        <MDBInput label="Вид расходов" value={this.state.costTypeName} disabled={true} type="text" name="costTypeName"/>
+                    </MDBCol>
+                </MDBRow>
+
+                {/*{ name: 'year', label: 'Отчетный год'},*/}
+                {/*{ name: 'directionName', label: 'Направление расходов' },*/}
+                {/*{ name: 'fundingName', label: 'Источник финансирования'},*/}
+                {/*{ name: 'costTypeName', label: 'Вид расходов'},*/}
 
                 <MDBRow>
                     <MDBCol md="12" className="mb-3">

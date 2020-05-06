@@ -18,6 +18,7 @@ export default class OperatorReportProjectsDetailUpdatePage extends React.Compon
             spent: Number(this.props.location.state[6]),
             fact: Number(this.props.location.state[7]),
             year: Number(this.props.location.state[0]),
+            projectName: this.props.location.state[2],
             isLoading: false
         };
     }
@@ -65,6 +66,18 @@ export default class OperatorReportProjectsDetailUpdatePage extends React.Compon
                 <MDBRow>
                     <MDBCol md="12" className="mb-3">
                         <MDBInput label="#" value={this.state.id} disabled={true} type="number" name="id"/>
+                    </MDBCol>
+                </MDBRow>
+
+                <MDBRow>
+                    <MDBCol md="12" className="mb-3">
+                        <MDBInput label="Содержание проекта" value={this.state.projectName} disabled={true} type="textarea" rows="2" name="projectName"/>
+                    </MDBCol>
+                </MDBRow>
+
+                <MDBRow>
+                    <MDBCol md="12" className="mb-3">
+                        <MDBInput label="Отчетный год" value={this.state.year} disabled={true} type="number" name="year"/>
                     </MDBCol>
                 </MDBRow>
 

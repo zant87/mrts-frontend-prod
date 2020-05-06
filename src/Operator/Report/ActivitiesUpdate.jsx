@@ -15,6 +15,7 @@ export default class OperatorReportActivitiesUpdatePage extends React.Component 
             documentId: Number(this.props.location.state[8]),
             activityId: this.props.location.state[9],
             activityReportID: this.props.location.state[10],
+            activityName: this.props.location.state[2],
             isLoading: false
         };
     }
@@ -60,6 +61,12 @@ export default class OperatorReportActivitiesUpdatePage extends React.Component 
                 <MDBRow>
                     <MDBCol md="12" className="mb-3">
                         <MDBInput label="#" value={this.state.id} disabled={true} type="number" name="id"/>
+                    </MDBCol>
+                </MDBRow>
+
+                <MDBRow>
+                    <MDBCol md="12" className="mb-3">
+                        <MDBInput label="Наименование мероприятия" value={this.state.activityName} disabled={true} type="textarea" rows="2" name="activityName"/>
                     </MDBCol>
                 </MDBRow>
 
