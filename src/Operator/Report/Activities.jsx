@@ -66,7 +66,7 @@ export default class OperatorReportActivitiesPage extends React.Component {
             count: count,
             page: page,
             rowsPerPage: 20,
-            rowsPerPageOptions: [20, 50, 100],
+            rowsPerPageOptions: [20, 50, 100, 1000, 2500, 5000],
             textLabels: labels,
             sortFilterList: false,
             print: false,

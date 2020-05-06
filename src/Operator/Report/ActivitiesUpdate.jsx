@@ -72,7 +72,7 @@ export default class OperatorReportActivitiesUpdatePage extends React.Component 
 
                 <MDBRow>
                     <MDBCol md="12" className="mb-3">
-                        <MDBInput type="textarea" label="Описание" rows="5" onChange={this.onChangeHandler} name='description'/>
+                        <MDBInput type="textarea" label="Отчет исполнителя" rows="5" onChange={this.onChangeHandler} name='description'/>
                     </MDBCol>
                 </MDBRow>
 

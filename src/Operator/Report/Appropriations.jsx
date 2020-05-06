@@ -46,12 +46,12 @@ export default class OperatorReportAppropriationsPage extends React.Component {
     render() {
 
         const columns = [
-            { name: 'year', label: 'Отчетный год'},
-            { name: 'directionName', label: 'Направление расходов' },
-            { name: 'fundingName', label: 'Источник финансирования'},
-            { name: 'costTypeName', label: 'Вид расходов'},
-            { name: 'plan', label: 'Запланировано, млн. руб.' },
-            { name: 'fact', label: 'Кассовое исполнение, млн. руб.'},
+            { name: 'year', label: 'Отчетный год', options: { filter: true} },
+            { name: 'directionName', label: 'Направление расходов', options: { filter: true} },
+            { name: 'fundingName', label: 'Источник финансирования', options: { filter: true} },
+            { name: 'costTypeName', label: 'Вид расходов', options: { filter: true} },
+            { name: 'plan', label: 'Запланировано, млн. руб.' , options: { filter: false} },
+            { name: 'fact', label: 'Кассовое исполнение, млн. руб.', options: { filter: false} },
             { name: 'id', label: 'id', options: {display: 'excluded', filter: false}},
             { name: 'documentId', label: 'documentId', options: {display: 'excluded', filter: false}},
         ];
@@ -63,9 +63,8 @@ export default class OperatorReportAppropriationsPage extends React.Component {
             count: count,
             page: page,
             rowsPerPage: 20,
-            rowsPerPageOptions: [20, 50, 100],
+            rowsPerPageOptions: [20, 50, 100, 1000, 2500, 5000],
             textLabels: labels,
-            sortFilterList: false,
             print: false,
             selectableRowsOnClick: true,
             selectableRows: 'single',
