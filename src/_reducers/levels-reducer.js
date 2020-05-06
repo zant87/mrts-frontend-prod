@@ -142,7 +142,10 @@ const levelsReducer = (state = initialState, action) => {
 
 //ActionCreators
 export const setInds = (inds) => ({ type: SET_INDS, inds });
-export const setCheckedIndsId = (checkedindsId) => ({ type: SET_CHECKED_INDS_ID, checkedindsId });
+export const setCheckedIndsId = (checkedindsId) => ({
+  type: SET_CHECKED_INDS_ID,
+  checkedindsId,
+});
 export const toogleIsFetchingInds = (isFetchingInds) => ({
   type: TOOGLE_IS_FETCHING_INDS,
   isFetchingInds,
@@ -219,12 +222,24 @@ export const getInds = () => {
   };
 };
 
-export const getLevValues = (selectedIndsArr, frequencyLevId, scenarioId, year, quarter) => {
+export const getLevValues = (
+  selectedIndsArr,
+  frequencyLevId,
+  scenarioId,
+  year,
+  quarter
+) => {
   return (dispatch) => {
     //debugger;
     dispatch(toogleIsFetchingLevData(true));
     dispatch(setCheckedIndsId(selectedIndsArr));
-    LevelsAPI.getLevelsData(selectedIndsArr, frequencyLevId, scenarioId, year, quarter).then((data) => {
+    LevelsAPI.getLevelsData(
+      selectedIndsArr,
+      frequencyLevId,
+      scenarioId,
+      year,
+      quarter
+    ).then((data) => {
       //debugger;
       dispatch(setLevValues(data));
       dispatch(toogleIsFetchingLevData(false));

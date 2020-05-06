@@ -1,5 +1,13 @@
 import React from "react";
-import { MDBCol, MDBNav, MDBNavItem, MDBNavLink, MDBIcon, MDBTabContent, MDBTabPane } from "mdbreact";
+import {
+  MDBCol,
+  MDBNav,
+  MDBNavItem,
+  MDBNavLink,
+  MDBIcon,
+  MDBTabContent,
+  MDBTabPane,
+} from "mdbreact";
 import LevelsTable from "./LevelsTable/LevelsTable";
 import LevelsChart from "./LevelsChart/LevelsChart";
 
@@ -20,20 +28,39 @@ class LevelsData extends React.Component {
     return (
       <MDBCol lg="9" className="chart mt-10" style={{ marginBottom: "10px" }}>
         {/* <MDBCardHeader color="special-color p-1"> */}
-        <MDBNav tabs className="nav-justified  mt-0  special-color  " color="blue-grey lighten-5">
+        <MDBNav
+          tabs
+          className="nav-justified  mt-0  special-color  "
+          color="blue-grey lighten-5"
+        >
           <MDBNavItem>
-            <MDBNavLink to="#" link active={this.state.activeItemJustified === "1"} onClick={this.toggleJustified("1")} role="tab">
+            <MDBNavLink
+              to="#"
+              link
+              active={this.state.activeItemJustified === "1"}
+              onClick={this.toggleJustified("1")}
+              role="tab"
+            >
               <MDBIcon far icon="chart-bar" size="1x" /> Диаграмма
             </MDBNavLink>
           </MDBNavItem>
           <MDBNavItem>
-            <MDBNavLink to="#" link active={this.state.activeItemJustified === "2"} onClick={this.toggleJustified("2")} role="tab">
+            <MDBNavLink
+              to="#"
+              link
+              active={this.state.activeItemJustified === "2"}
+              onClick={this.toggleJustified("2")}
+              role="tab"
+            >
               <MDBIcon icon="table" size="1x" /> Таблица
             </MDBNavLink>
           </MDBNavItem>
         </MDBNav>
 
-        <MDBTabContent className="card" activeItem={this.state.activeItemJustified}>
+        <MDBTabContent
+          className="card"
+          activeItem={this.state.activeItemJustified}
+        >
           <MDBTabPane tabId="1" role="tabpanel">
             <LevelsChart
               levVals={this.props.levVals}

@@ -7,7 +7,7 @@ import IndsList from "./IndsList/IndsList";
 import IndsInfo from "./IndsInfo/IndsInfo";
 import IndData from "./IndData/IndData";
 
-let Indicators = props => {
+let Indicators = (props) => {
   //debugger;
   return (
     <div>
@@ -27,6 +27,11 @@ let Indicators = props => {
           setFrequencyId={props.indsPage.setFrequencyId}
           frequencyId={props.indsPage.frequencyId}
           onFilterChanged={props.onFilterChanged}
+          quarters={props.indsPage.quarters}
+          indsQuarterId={props.indsPage.indsQuarterId}
+          years={props.indsPage.years}
+          indsYearStart={props.indsPage.indsYearStart}
+          indsYearEnd={props.indsPage.indsYearEnd}
         />
         <IndData
           indVals={props.indsPage.indVals}

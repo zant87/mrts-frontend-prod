@@ -30,7 +30,13 @@ class ParametersContainer extends React.Component {
     let paramId = this.props.match.params.paramId;
 
     if (paramId) {
-      this.props.getParamValues(paramId, this.props.frequencyId, this.props.paramYearStart, this.props.paramYearEnd, this.props.quarterId);
+      this.props.getParamValues(
+        paramId,
+        this.props.frequencyId,
+        this.props.paramYearStart,
+        this.props.paramYearEnd,
+        this.props.quarterId
+      );
     }
   }
 
@@ -49,18 +55,34 @@ class ParametersContainer extends React.Component {
     }
   }
 
-  onFilterChanged = (frequencyId, yearStart, yearEnd, quarterId, selectedFormId) => {
+  onFilterChanged = (
+    frequencyId,
+    yearStart,
+    yearEnd,
+    quarterId,
+    selectedFormId
+  ) => {
     this.props.getParams(selectedFormId);
     let paramId = this.props.match.params.paramId;
     if (paramId) {
-      this.props.getParamValues(paramId, frequencyId, yearStart, yearEnd, quarterId);
+      this.props.getParamValues(
+        paramId,
+        frequencyId,
+        yearStart,
+        yearEnd,
+        quarterId
+      );
     }
   };
 
   render() {
     return (
       <div>
-        <Parameters paramsPage={this.props} onFilterChanged={this.onFilterChanged} />;
+        <Parameters
+          paramsPage={this.props}
+          onFilterChanged={this.onFilterChanged}
+        />
+        ;
       </div>
     );
   }

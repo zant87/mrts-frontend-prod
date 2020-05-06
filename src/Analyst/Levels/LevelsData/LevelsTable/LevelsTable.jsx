@@ -1,6 +1,17 @@
 import React from "react";
-import { MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBDataTable, ExportToCSV, MDBIcon } from "mdbreact";
+import {
+  MDBRow,
+  MDBCol,
+  MDBCard,
+  MDBCardBody,
+  MDBCardTitle,
+  MDBCardText,
+  MDBDataTable,
+  ExportToCSV,
+  MDBIcon,
+} from "mdbreact";
 import Preloader from "@/Common/Preloader/Preloader";
+import { ExportXLSX } from "@/Common/ExportXLSX/ExportXLSX";
 
 const LevelsTable = (props) => {
   let levVals = null;
@@ -10,7 +21,9 @@ const LevelsTable = (props) => {
   };
 
   if (props.levVals) {
-    levVals = props.levVals.sort((a, b) => (a.indicatorCode > b.indicatorCode ? 1 : -1));
+    levVals = props.levVals.sort((a, b) =>
+      a.indicatorCode > b.indicatorCode ? 1 : -1
+    );
 
     //---------------Объект data для MDBDataTable
     data = {
@@ -81,9 +94,25 @@ const LevelsTable = (props) => {
                 <MDBCardText>
                   {props.levVals ? (
                     <div>
-                      <ExportToCSV columns={data.columns} data={data.rows} color="deep-orange" style={{ marginBottom: "20px" }} size="sm">
-                        <MDBIcon icon="file-export" className="mr-1" /> Экспорт в CSV
-                      </ExportToCSV>
+                      <ExportXLSX
+                        csvData={levVals.map((item) => ({
+                          Код: item.indicatorCode.replace("IND_", ""),
+                          "Наименование индикатора": item.indicatorName,
+                          "Вид транспорта": item.transportTypeName,
+                          "Уровень достижения": item.level,
+                        }))}
+                        fileName={"exportLevels"}
+                      />
+                      {/* <ExportToCSV
+                        columns={data.columns}
+                        data={data.rows}
+                        color="deep-orange"
+                        style={{ marginBottom: "20px" }}
+                        size="sm"
+                      >
+                        <MDBIcon icon="file-export" className="mr-1" /> Экспорт
+                        в CSV
+                      </ExportToCSV> */}
 
                       <MDBDataTable
                         //info={false}

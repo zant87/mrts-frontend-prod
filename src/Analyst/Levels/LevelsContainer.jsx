@@ -56,7 +56,11 @@ class LevelsContainer extends React.Component {
   render() {
     return (
       <div>
-        <Levels levelsPage={this.props} onFilterChanged={this.onFilterChanged} />;
+        <Levels
+          levelsPage={this.props}
+          onFilterChanged={this.onFilterChanged}
+        />
+        ;
       </div>
     );
   }

@@ -90,7 +90,15 @@ class DynSettings extends React.Component {
       quarter = this.selectedQuarterIdRef.current.value;
       //debugger;
     }
-    this.props.getDynValues(selectedIndsArr, frequencyDynId, scenarioId, year, quarter);
+    if (selectedIndsArr.length != 0) {
+      this.props.getDynValues(
+        selectedIndsArr,
+        frequencyDynId,
+        scenarioId,
+        year,
+        quarter
+      );
+    }
     //debugger;
     //alert(this.selectedIndsRef.current.state.selectValue);
     //console.log(selectedIndsArr);
@@ -99,6 +107,10 @@ class DynSettings extends React.Component {
     //this.props.onFilterChanged(freq);
 
     //this.toggle();
+  };
+  submitHandler = (event) => {
+    event.preventDefault();
+    //event.target.className += " was-validated";
   };
 
   render() {
@@ -117,7 +129,9 @@ class DynSettings extends React.Component {
     }
 
     if (this.props.transportTypes) {
-      transportTypes = this.props.transportTypes.sort((a, b) => (a.name > b.name ? 1 : -1));
+      transportTypes = this.props.transportTypes.sort((a, b) =>
+        a.name > b.name ? 1 : -1
+      );
     }
 
     if (this.props.years) {
@@ -137,7 +151,9 @@ class DynSettings extends React.Component {
     }
 
     if (this.props.transportTypeId != "0") {
-      inds = inds.filter((x) => x.transportTypeId == this.props.transportTypeId);
+      inds = inds.filter(
+        (x) => x.transportTypeId == this.props.transportTypeId
+      );
     }
 
     // if (this.props.searchQuery != null) {
@@ -239,7 +255,10 @@ class DynSettings extends React.Component {
               <MDBRow>
                 <MDBCol size="6" style={{ padding: "7px" }}>
                   <div style={{}}>
-                    <select onChange={this.onSelectGoal} className="browser-default custom-select custom-select-md ">
+                    <select
+                      onChange={this.onSelectGoal}
+                      className="browser-default custom-select custom-select-md "
+                    >
                       {this.props.goals
                         ? goals.map((item) =>
                             item.id === this.props.goalId ? (
@@ -256,7 +275,10 @@ class DynSettings extends React.Component {
                 </MDBCol>
                 <MDBCol size="6" style={{ padding: "7px" }}>
                   <div style={{}}>
-                    <select onChange={this.onSelectTransportType} className="browser-default custom-select custom-select-md">
+                    <select
+                      onChange={this.onSelectTransportType}
+                      className="browser-default custom-select custom-select-md"
+                    >
                       <option value="0">Все виды транспорта</option>
                       {this.props.transportTypes
                         ? transportTypes.map((item) =>
@@ -275,141 +297,147 @@ class DynSettings extends React.Component {
               </MDBRow>
             </MDBContainer>
             <hr />
-            {this.props.isFetchingInds ? (
-              <Preloader />
-            ) : (
-              <div style={{ marginBottom: "20px", clear: "left" }}>
-                <label htmlFor="scenarioform">
-                  <strong>Выберите индикаторы</strong>
-                </label>
-                <MDBSelect
-                  ref={this.selectedIndsRef}
-                  //className="sel"
-                  style={{ marginTop: "10px", color: "#cecece" }}
-                  color="primary"
-                  //color="blue-grey-select"
-                  label="Выберите индикаторы"
-                  labelClass={dyn.sel}
-                  outline="true"
-                  multiple
-                  //search
-                  searchLabel="Поиск индикаторов"
-                  options={inds.map((ind) => ({ text: ind.code.replace("IND_", "") + " " + ind.name, value: ind.id, checked: true }))}
-                  //selected="Выберите индикаторы"
-                  selectAll
-                  selectAllLabel="Выберите все"
-                  selectAllValue=""
-                  //focusShadow="inset 0px 10px 0px 0px"
-                  //getValue={this.onSelectedInds}
-                  required
-                />
-              </div>
-            )}
+            <form className="needs-validation" onSubmit={this.submitHandler}>
+              {this.props.isFetchingInds ? (
+                <Preloader />
+              ) : (
+                <div style={{ marginBottom: "20px", clear: "left" }}>
+                  <label htmlFor="scenarioform">
+                    <strong>Выберите индикаторы</strong>
+                  </label>
+                  <MDBSelect
+                    ref={this.selectedIndsRef}
+                    //className="sel"
+                    style={{ marginTop: "10px", color: "#cecece" }}
+                    color="primary"
+                    //color="blue-grey-select"
+                    label="Выберите индикаторы"
+                    labelClass={dyn.sel}
+                    outline="true"
+                    multiple
+                    //search
+                    searchLabel="Поиск индикаторов"
+                    options={inds.map((ind) => ({
+                      text: ind.code.replace("IND_", "") + " " + ind.name,
+                      value: ind.id,
+                      checked: true,
+                    }))}
+                    //selected="Выберите индикаторы"
+                    selectAll
+                    selectAllLabel="Выберите все"
+                    selectAllValue=""
+                    //focusShadow="inset 0px 10px 0px 0px"
+                    //getValue={this.onSelectedInds}
+                    required
+                  />
+                </div>
+              )}
 
-            <div className="form-group">
-              <label htmlFor="scenarioform">
-                <strong>Выберите сценарий</strong>
-              </label>
-              <select
-                ref={this.selectedScenarioRef}
-                onChange={this.onSelectScenario}
-                className="form-control"
-                id="scenarioform"
-                className="browser-default custom-select custom-select-md"
-              >
-                {this.props.scenarios
-                  ? this.props.scenarios.map((item) =>
-                      this.props.scenarioId == item.id ? (
-                        <option value={item.id} selected>
-                          {item.description}
-                        </option>
-                      ) : (
-                        <option value={item.id}>{item.description}</option>
-                      )
-                    )
-                  : null}
-              </select>
-            </div>
-            <div className="form-group">
-              <label htmlFor="freqform">
-                <strong>Выберите частоту обновления</strong>
-              </label>
-              <select
-                onChange={this.onSelectFrequency}
-                ref={this.selectedFrequencyIdRef}
-                className="form-control"
-                id="freqform"
-                className="browser-default custom-select custom-select-md"
-              >
-                {this.props.frequencies
-                  ? this.props.frequencies.map((item) =>
-                      this.props.frequencyDynId == item.id ? (
-                        <option value={item.id} selected>
-                          {item.name}
-                        </option>
-                      ) : (
-                        <option value={item.id}>{item.name}</option>
-                      )
-                    )
-                  : null}
-              </select>
-            </div>
-            <div className="form-group">
-              <label htmlFor="yearform">
-                <strong>Выберите год</strong>
-              </label>
-              <select
-                ref={this.selectedYearRef}
-                className="form-control"
-                id="yearForm"
-                className="browser-default custom-select custom-select-md"
-              >
-                {this.props.years
-                  ? this.props.years.map((item) =>
-                      this.props.year == item.year ? (
-                        <option value={item.year} selected>
-                          {item.year}
-                        </option>
-                      ) : (
-                        <option value={item.year}>{item.year}</option>
-                      )
-                    )
-                  : null}
-              </select>
-            </div>
-            {this.props.frequencyDynId == 2 ? (
               <div className="form-group">
-                <label htmlFor="freqform">
-                  <strong>Выберите квартал</strong>
+                <label htmlFor="scenarioform">
+                  <strong>Выберите сценарий</strong>
                 </label>
                 <select
-                  ref={this.selectedQuarterIdRef}
-                  onChange={this.onSelectQuarter}
+                  ref={this.selectedScenarioRef}
+                  onChange={this.onSelectScenario}
                   className="form-control"
-                  id="freqform"
+                  id="scenarioform"
                   className="browser-default custom-select custom-select-md"
                 >
-                  {this.props.quarters
-                    ? this.props.quarters.map((item) =>
-                        this.props.quarterId == item.id ? (
-                          <option value={item.code} selected>
-                            {item.name}
+                  {this.props.scenarios
+                    ? this.props.scenarios.map((item) =>
+                        this.props.scenarioId == item.id ? (
+                          <option value={item.id} selected>
+                            {item.description}
                           </option>
                         ) : (
-                          <option value={item.code}>{item.name}</option>
+                          <option value={item.id}>{item.description}</option>
                         )
                       )
                     : null}
                 </select>
               </div>
-            ) : null}
-            <MDBBtn
-              color="primary"
-              onClick={this.onSaveFilters}
-              //type="submit"
-            >
-              Построить отчет
-            </MDBBtn>
+              <div className="form-group">
+                <label htmlFor="freqform">
+                  <strong>Выберите частоту обновления</strong>
+                </label>
+                <select
+                  onChange={this.onSelectFrequency}
+                  ref={this.selectedFrequencyIdRef}
+                  className="form-control"
+                  id="freqform"
+                  className="browser-default custom-select custom-select-md"
+                >
+                  {this.props.frequencies
+                    ? this.props.frequencies.map((item) =>
+                        this.props.frequencyDynId == item.id ? (
+                          <option value={item.id} selected>
+                            {item.name}
+                          </option>
+                        ) : (
+                          <option value={item.id}>{item.name}</option>
+                        )
+                      )
+                    : null}
+                </select>
+              </div>
+              <div className="form-group">
+                <label htmlFor="yearform">
+                  <strong>Выберите год</strong>
+                </label>
+                <select
+                  ref={this.selectedYearRef}
+                  className="form-control"
+                  id="yearForm"
+                  className="browser-default custom-select custom-select-md"
+                >
+                  {this.props.years
+                    ? this.props.years.map((item) =>
+                        this.props.year == item.year ? (
+                          <option value={item.year} selected>
+                            {item.year}
+                          </option>
+                        ) : (
+                          <option value={item.year}>{item.year}</option>
+                        )
+                      )
+                    : null}
+                </select>
+              </div>
+              {this.props.frequencyDynId == 2 ? (
+                <div className="form-group">
+                  <label htmlFor="freqform">
+                    <strong>Выберите квартал</strong>
+                  </label>
+                  <select
+                    ref={this.selectedQuarterIdRef}
+                    onChange={this.onSelectQuarter}
+                    className="form-control"
+                    id="freqform"
+                    className="browser-default custom-select custom-select-md"
+                  >
+                    {this.props.quarters
+                      ? this.props.quarters.map((item) =>
+                          this.props.quarterId == item.id ? (
+                            <option value={item.code} selected>
+                              {item.name}
+                            </option>
+                          ) : (
+                            <option value={item.code}>{item.name}</option>
+                          )
+                        )
+                      : null}
+                  </select>
+                </div>
+              ) : null}
+              <MDBBtn
+                color="primary"
+                onClick={this.onSaveFilters}
+                type="submit"
+              >
+                Построить отчет
+              </MDBBtn>
+            </form>
             {/* <MDBCardTitle>Выберите индикаторы</MDBCardTitle> */}
             <MDBCardText>
               {/* {this.props.isFetchingInds ? (

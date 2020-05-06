@@ -155,7 +155,10 @@ export const toogleIsFetchingParamInfo = (isFetchingParamInfo) => ({
   type: TOOGLE_IS_FETCHING_PARAM_INFO,
   isFetchingParamInfo,
 });
-export const setParamValues = (paramVals) => ({ type: SET_PARAM_VALS, paramVals });
+export const setParamValues = (paramVals) => ({
+  type: SET_PARAM_VALS,
+  paramVals,
+});
 export const setSearchQuery = (searchQuery) => ({
   type: SET_SEARCH_QUERY,
   searchQuery,
@@ -226,19 +229,32 @@ export const getParams = (checkedFormsId) => {
   };
 };
 
-export const getParamValues = (paramId, frequencyId, yearStart, yearEnd, quarterId) => {
+export const getParamValues = (
+  paramId,
+  frequencyId,
+  yearStart,
+  yearEnd,
+  quarterId
+) => {
   return (dispatch) => {
     dispatch(toogleIsFetchingParamData(true));
     dispatch(setParamId(paramId));
-    ParamsAPI.getParamData(paramId, frequencyId, yearStart, yearEnd, quarterId).then((data) => {
+    ParamsAPI.getParamData(
+      paramId,
+      frequencyId,
+      yearStart,
+      yearEnd,
+      quarterId
+    ).then((data) => {
       dispatch(setParamValues(data));
       dispatch(toogleIsFetchingParamData(false));
     });
     dispatch(setParamYearStart(yearStart));
     dispatch(setParamYearEnd(yearEnd));
-    if (quarterId != null) {
-      dispatch(setParamQuarterId(quarterId));
-    }
+    dispatch(setParamQuarterId(quarterId));
+    // if (quarterId != null) {
+    //   dispatch(setParamQuarterId(quarterId));
+    // }
     dispatch(setFrequencyId(frequencyId));
   };
 };
