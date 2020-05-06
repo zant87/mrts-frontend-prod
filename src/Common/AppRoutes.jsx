@@ -131,6 +131,7 @@ export const AppRoutes = () => {
             <PrivateRoute exact path="/operator/control/projects" roles={Role.Operator} component={OperatorControlProjectsPage} />
             <PrivateRoute exact path="/operator/control/resources" roles={Role.Operator} component={OperatorControlResourcesPage} />
 
+
             {/*Report - Отчетные показатели */}
             <PrivateRoute exact path="/operator/report" roles={Role.Operator} component={OperatorReportNavigation} />
             <PrivateRoute exact path="/operator/report/fact" roles={Role.Operator} component={OperatorReportFactPage} />
