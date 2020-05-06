@@ -65,6 +65,10 @@ import OperatorReportProjectsDetailUpdatePage from "../Operator/Report/ProjectsD
 import OperatorReportFinancingUpdatePage from "../Operator/Report/FinancingUpdate";
 import OperatorReportAppropriationsUpdatePage from "../Operator/Report/AppropriationsUpdate";
 import OperatorReportExtraBudgetUpdatePage from "../Operator/Report/ExtraBudgetUpdate";
+import OperatorCalculationIntermediatePage from "../Operator/Calculation/Intermediate";
+import OperatorCalculationValuesPage from "../Operator/Calculation/Values";
+import OperatorCalculationLevelsPage from "../Operator/Calculation/Levels";
+import OperatorCalculationNavigation from "@/Operator/Calculation/Navigation";
 
 export const AppRoutes = () => {
     return (
@@ -156,6 +160,13 @@ export const AppRoutes = () => {
             <PrivateRoute exact path="/operator/report/extraBudget/:id" roles={Role.Operator} component={OperatorReportExtraBudgetUpdatePage} />
 
             <PrivateRoute exact path="/operator/report/sources" roles={Role.Operator} component={OperatorReportSourcesPage} />
+
+            {/*Calculation - Отчетные показатели */}
+            <PrivateRoute exact path="/operator/calculation" roles={Role.Operator} component={OperatorCalculationNavigation} />
+            <PrivateRoute exact path="/operator/calculation/intermediate" roles={Role.Operator} component={OperatorCalculationIntermediatePage} />
+            <PrivateRoute exact path="/operator/calculation/values" roles={Role.Operator} component={OperatorCalculationValuesPage} />
+            <PrivateRoute exact path="/operator/calculation/levels" roles={Role.Operator} component={OperatorCalculationLevelsPage} />
+
 
             {/*Общие страницы*/}
             <PrivateRoute exact path="/" component={HomePage} />

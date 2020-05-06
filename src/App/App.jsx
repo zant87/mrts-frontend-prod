@@ -183,6 +183,13 @@ class App extends React.Component {
                               </MDBNavLink>
                             </MDBNavItem>
                           )}
+                          {isOperator && (
+                              <MDBNavItem>
+                                <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/operator/calculation">
+                                  <strong>Расчеты</strong>
+                                </MDBNavLink>
+                              </MDBNavItem>
+                          )}
                           <MDBNavItem>
                             <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/swagger">
                               <strong>Swagger</strong>
