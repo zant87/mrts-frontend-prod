@@ -15,6 +15,7 @@
     "axios": "^0.19.2",
     "echarts": "^4.7.0",
     "echarts-for-react": "^2.0.15-beta.1",
+    "file-saver": "^2.0.2",
     "history": "^4.10.1",
     "mdbreact": "./mdbreact-4.24.0.tgz",
     "mui-datatables": "^2.14.0",
@@ -29,6 +30,7 @@
     "redux-thunk": "^2.3.0",
     "rxjs": "^6.5.4",
     "styled-components": "^5.0.1",
+    "xlsx": "^0.16.0",
     "yup": "^0.26.10"
   },
   "devDependencies": {

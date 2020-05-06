@@ -1,6 +1,17 @@
 import React from "react";
-import { MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBDataTable, ExportToCSV, MDBIcon } from "mdbreact";
+import {
+  MDBRow,
+  MDBCol,
+  MDBCard,
+  MDBCardBody,
+  MDBCardTitle,
+  MDBCardText,
+  MDBDataTable,
+  ExportToCSV,
+  MDBIcon,
+} from "mdbreact";
 import Preloader from "@/Common/Preloader/Preloader";
+import { ExportXLSX } from "../../../../Common/ExportXLSX/ExportXLSX";
 
 const DynamicsTable = (props) => {
   let dynVals = null;
@@ -10,7 +21,9 @@ const DynamicsTable = (props) => {
   };
 
   if (props.dynVals) {
-    dynVals = props.dynVals.sort((a, b) => (a.indicatorCode > b.indicatorCode ? 1 : -1));
+    dynVals = props.dynVals.sort((a, b) =>
+      a.indicatorCode > b.indicatorCode ? 1 : -1
+    );
 
     //---------------Объект data для MDBDataTable
     data = {
@@ -79,7 +92,8 @@ const DynamicsTable = (props) => {
               >
                 {props.dynVals ? (
                   <div>
-                    Динамика уровня достижения за {dynVals[0].quarterLabel} г. <br />
+                    Динамика уровня достижения за {dynVals[0].quarterLabel} г.{" "}
+                    <br />
                     <br />
                     Цель: {props.dynVals[0].goalName} <br />
                     Сценарий: {props.dynVals[0].scenarioName} <br />
@@ -95,9 +109,28 @@ const DynamicsTable = (props) => {
                 <MDBCardText>
                   {props.dynVals ? (
                     <div>
-                      <ExportToCSV columns={data.columns} data={data.rows} color="deep-orange" style={{ marginBottom: "20px" }} size="sm">
-                        <MDBIcon icon="file-export" className="mr-1" /> Экспорт в CSV
-                      </ExportToCSV>
+                      <ExportXLSX
+                        csvData={dynVals.map((item) => ({
+                          Код: item.indicatorCode.replace("IND_", ""),
+                          "Наименование индикатора": item.indicatorName,
+                          "Вид транспорта": item.transportTypeName,
+                          "Пред. уровень достиженя": item.previousLevel,
+                          "Текущий уровень достижения": item.currentLevel,
+                          Динамика: item.dynamic,
+                        }))}
+                        fileName="exportDynamics"
+                      />
+
+                      {/* <ExportToCSV
+                        columns={data.columns}
+                        data={data.rows}
+                        color="deep-orange"
+                        style={{ marginBottom: "20px" }}
+                        size="sm"
+                      >
+                        <MDBIcon icon="file-export" className="mr-1" /> Экспорт
+                        в CSV
+                      </ExportToCSV> */}
 
                       <MDBDataTable
                         //info={false}

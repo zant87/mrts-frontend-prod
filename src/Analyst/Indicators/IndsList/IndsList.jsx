@@ -28,11 +28,14 @@ class IndsList extends React.Component {
   state = {
     modal: false,
     radio: 2,
+    frequencyId: null,
   };
 
   setFrequency = React.createRef();
   setYearStart = React.createRef();
   setYearEnd = React.createRef();
+  setQuarter = React.createRef();
+  frequencyId = null;
 
   toggle = () => {
     this.setState({
@@ -46,16 +49,27 @@ class IndsList extends React.Component {
     });
   };
 
+  onSelectFrequency = (e) => {
+    this.setState({
+      frequencyId: this.setFrequency.current.value,
+    });
+  };
+
   onSaveFilters = () => {
+    let quarterId = null;
     let freq = this.setFrequency.current.value;
+    let yearStart = this.setYearStart.current.value;
+    let yearEnd = this.setYearEnd.current.value;
+    if (this.setQuarter.current != null) {
+      quarterId = this.setQuarter.current.value;
+    }
     //debugger;
-    // this.props.setFrequencyId(freq);
-    this.props.onFilterChanged(freq);
+    this.props.onFilterChanged(freq, yearStart, yearEnd, quarterId);
     this.toggle();
   };
 
   render() {
-    console.log(indsstyle);
+    //console.log(indsstyle);
     let inds = null;
 
     inds = this.props.inds.sort((a, b) => (a.code > b.code ? 1 : -1));
@@ -65,17 +79,26 @@ class IndsList extends React.Component {
     }
 
     if (this.props.transportTypeId != "0") {
-      inds = inds.filter((x) => x.transportTypeId == this.props.transportTypeId);
+      inds = inds.filter(
+        (x) => x.transportTypeId == this.props.transportTypeId
+      );
     }
 
     if (this.props.searchQuery != null) {
-      inds = inds.filter((x) => x.name.trim().toLowerCase().includes(this.props.searchQuery.trim().toLowerCase()));
+      inds = inds.filter((x) =>
+        x.name
+          .trim()
+          .toLowerCase()
+          .includes(this.props.searchQuery.trim().toLowerCase())
+      );
     }
 
     return (
       <MDBCol lg="3" className="list h-100" style={{ marginBottom: "10px" }}>
         <MDBModal isOpen={this.state.modal} toggle={this.toggle} centered>
-          <MDBModalHeader toggle={this.toggle}>Настройка отображения данных</MDBModalHeader>
+          <MDBModalHeader toggle={this.toggle}>
+            Настройка отображения данных
+          </MDBModalHeader>
           <MDBModalBody>
             <MDBContainer className="mt-2">
               <div className="form-group">
@@ -83,6 +106,7 @@ class IndsList extends React.Component {
                   <strong>Выберите частоту обновления</strong>
                 </label>
                 <select
+                  onChange={this.onSelectFrequency}
                   ref={this.setFrequency}
                   className="form-control"
                   id="freqform"
@@ -101,6 +125,32 @@ class IndsList extends React.Component {
                     : null}
                 </select>
               </div>
+              {this.state.frequencyId == 2 ? (
+                <div className="form-group">
+                  <label htmlFor="quarterform">
+                    <strong>Выберите квартал</strong>
+                  </label>
+                  <select
+                    ref={this.setQuarter}
+                    onChange={this.onSelectQuarter}
+                    className="form-control"
+                    id="freqform"
+                    className="browser-default custom-select custom-select-sm"
+                  >
+                    {this.props.quarters
+                      ? this.props.quarters.map((item) =>
+                          this.props.indsQuarterId == item.id ? (
+                            <option value={item.id} selected>
+                              {item.name}
+                            </option>
+                          ) : (
+                            <option value={item.id}>{item.name}</option>
+                          )
+                        )
+                      : null}
+                  </select>
+                </div>
+              ) : null}
               <hr />
 
               <div className="form-group">
@@ -113,7 +163,17 @@ class IndsList extends React.Component {
                   id="yearStart"
                   className="browser-default custom-select custom-select-sm"
                 >
-                  <option value="2010">2010</option>
+                  {this.props.years
+                    ? this.props.years.map((item) =>
+                        this.props.indsYearStart == item.year ? (
+                          <option value={item.year} selected>
+                            {item.year}
+                          </option>
+                        ) : (
+                          <option value={item.year}>{item.year}</option>
+                        )
+                      )
+                    : null}
                 </select>
                 <br></br>
                 <label htmlFor="freqform">
@@ -125,7 +185,17 @@ class IndsList extends React.Component {
                   id="yearEnd"
                   className="browser-default custom-select custom-select-sm"
                 >
-                  <option value="2010">2010</option>
+                  {this.props.years
+                    ? this.props.years.map((item) =>
+                        this.props.indsYearEnd == item.year ? (
+                          <option value={item.year} selected>
+                            {item.year}
+                          </option>
+                        ) : (
+                          <option value={item.year}>{item.year}</option>
+                        )
+                      )
+                    : null}
                 </select>
               </div>
             </MDBContainer>

@@ -24,7 +24,13 @@ export const ParamsAPI = {
       return response.data;
     });
   },
-  getParamData(paramId, frequencyId = 1, yearStart = "", yearEnd = "", quarter = null) {
+  getParamData(
+    paramId,
+    frequencyId = 1,
+    yearStart = "",
+    yearEnd = "",
+    quarter = null
+  ) {
     let url;
 
     if (quarter == null) {
@@ -50,7 +56,7 @@ export const ParamsAPI = {
         "&quarterId.equals=" +
         quarter;
     }
-    console.log(url);
+    //console.log(url);
 
     return instance.get(url).then((response) => {
       if (response.data.length == 0) {

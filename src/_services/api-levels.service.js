@@ -12,7 +12,13 @@ export const LevelsAPI = {
       return response.data;
     });
   },
-  getLevelsData(indIds = [], frequencyId = 1, scenario = null, year = 2010, quarter = null) {
+  getLevelsData(
+    indIds = [],
+    frequencyId = 1,
+    scenario = null,
+    year = 2010,
+    quarter = null
+  ) {
     //debugger;
     let indsUrl = "";
     let url = null;
@@ -55,14 +61,18 @@ export const LevelsAPI = {
     });
   },
   getGoals() {
-    return instance.get("goals?transportStrategyVersionId.equals=3").then((response) => {
-      return response.data;
-    });
+    return instance
+      .get("goals?transportStrategyVersionId.equals=3")
+      .then((response) => {
+        return response.data;
+      });
   },
   getGoal() {
-    return instance.get("goals?transportStrategyVersionId.equals=3").then((response) => {
-      return response.data;
-    });
+    return instance
+      .get("goals?transportStrategyVersionId.equals=3")
+      .then((response) => {
+        return response.data;
+      });
   },
   getTransportTypes() {
     return instance.get("nsi-transport-types").then((response) => {
@@ -85,8 +95,10 @@ export const LevelsAPI = {
     });
   },
   getScenarios() {
-    return instance.get("scenarios?code.In=BASE&code.In=INNOVATIVE").then((response) => {
-      return response.data;
-    });
+    return instance
+      .get("scenarios?code.In=BASE&code.In=INNOVATIVE")
+      .then((response) => {
+        return response.data;
+      });
   },
 };

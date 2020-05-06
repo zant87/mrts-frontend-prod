@@ -1,6 +1,17 @@
 import React from "react";
-import { MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBDataTable, ExportToCSV, MDBIcon } from "mdbreact";
+import {
+  MDBRow,
+  MDBCol,
+  MDBCard,
+  MDBCardBody,
+  MDBCardTitle,
+  MDBCardText,
+  MDBDataTable,
+  ExportToCSV,
+  MDBIcon,
+} from "mdbreact";
 import Preloader from "@/Common/Preloader/Preloader";
+import { ExportXLSX } from "../../../../Common/ExportXLSX/ExportXLSX";
 
 const ParamsTable = (props) => {
   let paramsval = null;
@@ -16,7 +27,9 @@ const ParamsTable = (props) => {
   let rowsarr = [];
 
   if (props.paramVals) {
-    paramsval = props.paramVals.sort((a, b) => (a.parameterDate > b.parameterDate ? 1 : -1));
+    paramsval = props.paramVals.sort((a, b) =>
+      a.parameterDate > b.parameterDate ? 1 : -1
+    );
 
     paramsval.forEach((item) => {
       years.push(item.parameterDate);
@@ -25,7 +38,9 @@ const ParamsTable = (props) => {
       // valuetypeNames.push(item.valueTypeName);
     });
 
-    years = paramsval.map((item) => item.parameterDate).filter((item, i, arr) => arr.indexOf(item) === i);
+    years = paramsval
+      .map((item) => item.parameterDate)
+      .filter((item, i, arr) => arr.indexOf(item) === i);
 
     // valuetypeNames = indsval.map(item => item.valueTypeName).filter((item, i, arr) => arr.indexOf(item) === i);
 
@@ -115,7 +130,11 @@ const ParamsTable = (props) => {
                   textTransform: "uppercase",
                 }}
               >
-                {props.paramVals ? props.paramVals[0].parameterName : <div>Нет данных</div>}
+                {props.paramVals ? (
+                  props.paramVals[0].parameterName
+                ) : (
+                  <div>Нет данных</div>
+                )}
               </MDBCardTitle>
               {props.isFetchingParamData ? (
                 <Preloader />
@@ -123,9 +142,19 @@ const ParamsTable = (props) => {
                 <MDBCardText>
                   {props.paramVals ? (
                     <div>
-                      <ExportToCSV columns={data.columns} data={data.rows} color="deep-orange" size="sm">
-                        <MDBIcon icon="file-export" className="mr-1" /> Экспорт в CSV
-                      </ExportToCSV>
+                      <ExportXLSX
+                        csvData={data.rows}
+                        fileName={"exportParams"}
+                      />
+                      {/* <ExportToCSV
+                        columns={data.columns}
+                        data={data.rows}
+                        color="deep-orange"
+                        size="sm"
+                      >
+                        <MDBIcon icon="file-export" className="mr-1" /> Экспорт
+                        в CSV
+                      </ExportToCSV> */}
 
                       <MDBDataTable
                         //info={false}
