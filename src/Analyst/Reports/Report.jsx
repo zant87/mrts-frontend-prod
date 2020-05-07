@@ -1,5 +1,5 @@
 import React from 'react';
-import {MDBBtn, MDBCol, MDBRow, MDBSelect} from "mdbreact";
+import {MDBBtn, MDBCol, MDBRow, MDBSelect, toast} from "mdbreact";
 import actions from "./ReportsActions";
 import selectors from "./ReportsSelectors";
 import {connect} from 'react-redux';
@@ -20,7 +20,8 @@ class AnalystReportPage extends React.Component {
         options: [
             {
                 text: "PDF",
-                value: "PDF"
+                value: "PDF",
+                checked: true
             },
             {
                 text: "XLSX",
@@ -68,7 +69,12 @@ class AnalystReportPage extends React.Component {
                     `report_${this.state.reportCode}-${this.state.start}-${this.state.end}.${this.state.reportFormat}`);
                 document.body.appendChild(link);
                 link.click();
-            });
+            }).catch(function (error) {
+                console.log(error);
+                toast.error(`Ошибка при формировании отчета`, {
+                    closeButton: false
+                });
+            })
         }
         else
         {
@@ -112,15 +118,15 @@ class AnalystReportPage extends React.Component {
                     </MDBCol>
                 </MDBRow>
                 {this.state.reportSelected && (
-                <MDBRow>
-                    <MDBCol md="12" className="mb-3">
-                        <MDBSelect className='my-2'
-                                   options={this.state.options}
-                                   getValue={this.setReportFormat}
-                                   selected='Выберите формат'
-                                   label='Формат отчета'/>
-                    </MDBCol>
-                </MDBRow>
+                    <MDBRow>
+                        <MDBCol md="12" className="mb-3">
+                            <MDBSelect className='my-2'
+                                       options={this.state.options}
+                                       getValue={this.setReportFormat}
+                                       selected='Выберите формат'
+                                       label='Формат отчета'/>
+                        </MDBCol>
+                    </MDBRow>
                 )}
                 {(this.state.reportSelected) && (
                     <MDBRow>

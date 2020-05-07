@@ -4,6 +4,7 @@ import MUIDataTable from "mui-datatables";
 import axios from 'axios';
 import CustomToolbarSelect from "../../_components/CustomToolbarSelect";
 import { labels } from "../../_components/TableTextLabels";
+import ButtonUpdateColumn from "../../_components/ButtonUpdateColumn";
 
 export default class OperatorPlanIndicatorsPage extends React.Component {
 
@@ -57,7 +58,19 @@ export default class OperatorPlanIndicatorsPage extends React.Component {
             { name: 'okeiId', label: 'OkeiId', options: {filter: false, display: 'excluded'} },
             { name: 'okeiName', label: 'Единица измерения'},
             { name: 'value', label: 'Значение индикатора'},
-            { name: 'indicatorValueId', label: 'indicatorValueId', options: {filter: false, display: 'excluded'}}
+            { name: 'indicatorValueId', label: 'indicatorValueId', options: {filter: false, display: 'excluded'}},
+            { name: "",
+                options: {
+                    filter: false,
+                    sort: false,
+                    empty: true,
+                    customBodyRender: (value, tableMeta, updateValue) => {
+                        return (
+                            <ButtonUpdateColumn rowData = {tableMeta.rowData}/>
+                        );
+                    }
+                }
+            },
         ];
 
         const { data, page, count, isLoading } = this.state;
@@ -67,12 +80,13 @@ export default class OperatorPlanIndicatorsPage extends React.Component {
             count: count,
             page: page,
             rowsPerPage: 20,
-            rowsPerPageOptions: [20, 50, 100],
+            rowsPerPageOptions: [20, 50, 100, 1000, 2500, 5000],
             textLabels: labels,
             sortFilterList: false,
             print: false,
-            selectableRowsOnClick: true,
-            selectableRows: 'single',
+            search: false,
+            selectableRowsOnClick: false,
+            selectableRows: 'none',
             onTableChange: (action, tableState) => {
                 switch (action) {
                     case 'changePage':
@@ -80,9 +94,9 @@ export default class OperatorPlanIndicatorsPage extends React.Component {
                         break;
                 }
             },
-            customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
-                <CustomToolbarSelect selectedRows={selectedRows} displayData={displayData} setSelectedRows={setSelectedRows} />
-            ),
+            // customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
+            //     <CustomToolbarSelect selectedRows={selectedRows} displayData={displayData} setSelectedRows={setSelectedRows} />
+            // ),
             onChangeRowsPerPage: (numberOfRows) => {
                 this.onChangePage(this.state.page, numberOfRows);
             }

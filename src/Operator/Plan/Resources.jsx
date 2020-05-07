@@ -4,6 +4,7 @@ import MUIDataTable from "mui-datatables";
 import axios from 'axios';
 import CustomToolbarSelect from "../../_components/CustomToolbarSelect";
 import { labels } from "../../_components/TableTextLabels";
+import ButtonUpdateColumn from "../../_components/ButtonUpdateColumn";
 
 export default class OperatorPlanResourcesPage extends React.Component {
 
@@ -22,7 +23,7 @@ export default class OperatorPlanResourcesPage extends React.Component {
 
     getData = () => {
         this.setState({ isLoading: true });
-        axios.get(`/api/views/k-4-s`)
+        axios.get(`/api/views/k-4-s?sort=id,desc&size=2000`)
             .then(res => {
                 console.log(res.headers);
                 const count = Number(res.headers['x-total-count']);
@@ -56,34 +57,46 @@ export default class OperatorPlanResourcesPage extends React.Component {
             { name: 'stageName', label: 'Период реализации стратегии'},
             { name: 'planingMin', label: 'Минимальное ресурсное обеспечение, млрд. руб.'},
             { name: 'planingMax', label: 'Максимальное ресурсное обеспечение, млрд. руб.'},
+            { name: "",
+                options: {
+                    filter: false,
+                    sort: false,
+                    empty: true,
+                    customBodyRender: (value, tableMeta, updateValue) => {
+                        return (
+                            <ButtonUpdateColumn rowData = {tableMeta.rowData}/>
+                        );
+                    }
+                }
+            },
         ];
 
         const { data, page, count, isLoading } = this.state;
 
         const options = {
-            serverSide: true,
-            count: count,
-            page: page,
+            // count: count,
+            // page: page,
+            serverSide: false,
             rowsPerPage: 20,
-            rowsPerPageOptions: [20, 50, 100],
+            rowsPerPageOptions: [20, 50, 100, 1000, 2500, 5000],
             textLabels: labels,
-            sortFilterList: false,
             print: false,
-            selectableRowsOnClick: true,
-            selectableRows: 'single',
-            onTableChange: (action, tableState) => {
-                switch (action) {
-                    case 'changePage':
-                        this.onChangePage(tableState.page, tableState.rowsPerPage);
-                        break;
-                }
-            },
-            customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
-                <CustomToolbarSelect selectedRows={selectedRows} displayData={displayData} setSelectedRows={setSelectedRows} />
-            ),
-            onChangeRowsPerPage: (numberOfRows) => {
-                this.onChangePage(this.state.page, numberOfRows);
-            }
+            selectableRowsOnClick: false,
+            selectableRows: 'none',
+            // sortFilterList: false,
+            // onTableChange: (action, tableState) => {
+            //     switch (action) {
+            //         case 'changePage':
+            //             this.onChangePage(tableState.page, tableState.rowsPerPage);
+            //             break;
+            //     }
+            // },
+            // customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
+            //     <CustomToolbarSelect selectedRows={selectedRows} displayData={displayData} setSelectedRows={setSelectedRows} />
+            // ),
+            // onChangeRowsPerPage: (numberOfRows) => {
+            //     this.onChangePage(this.state.page, numberOfRows);
+            // }
         };
 
         return (

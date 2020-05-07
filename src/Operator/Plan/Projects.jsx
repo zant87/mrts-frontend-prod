@@ -1,14 +1,15 @@
 import React from 'react';
-import { MDBCol, MDBContainer, MDBRow } from "mdbreact";
+import {MDBCol, MDBContainer, MDBRow, MDBSpinner} from "mdbreact";
 import MUIDataTable from "mui-datatables";
 import axios from 'axios';
+import {labels} from "../../_components/TableTextLabels";
 
 export default class OperatorPlanProjectsPage extends React.Component {
 
     state = {
         page: 0,
         count: 1,
-        data: [["Загружаем данные..."]],
+        data: [],
         isLoading: false
     };
 
@@ -17,14 +18,18 @@ export default class OperatorPlanProjectsPage extends React.Component {
     };
 
     getData = () => {
-        axios.get(`/api/views/k-3-s`)
+        this.setState({
+            isLoading: true,
+        });
+        axios.get(`/api/views/k-3-s?sort=id,desc&size=2000`)
             .then(res => {
                 const data= res.data;
-                this.setState({ data});
+                this.setState({ data: data, isLoading: false, });
             })
     };
 
     render() {
+
 
         const columns = [
             { name: 'id', label: '#'},
@@ -40,50 +45,20 @@ export default class OperatorPlanProjectsPage extends React.Component {
         const { data, page, count, isLoading } = this.state;
 
         const options = {
-            textLabels: {
-                body: {
-                    noMatch: "Ничего не найдено",
-                    toolTip: "Сортировка",
-                    columnHeaderTooltip: column => `Сортировка для ${column.label}`
-                },
-                pagination: {
-                    next: "Следующая страница",
-                    previous: "Предыдущая страница",
-                    rowsPerPage: "Строк на страницу:",
-                    displayRows: "из",
-                },
-                toolbar: {
-                    search: "Поиск",
-                    downloadCsv: "Скачать CSV",
-                    print: "Печать",
-                    viewColumns: "Столбцы",
-                    filterTable: "Фильтры",
-                },
-                filter: {
-                    all: "Все",
-                    title: "Фильтры",
-                    reset: "Сброс",
-                },
-                viewColumns: {
-                    title: "Показать столбцы",
-                    titleAria: "Показать/Спрятать столбцы",
-                },
-                selectedRows: {
-                    text: "строк выбрано",
-                    delete: "Удалить",
-                    deleteAria: "Удалить выбранную(ые) строки",
-                },
-            },
+            textLabels: labels,
             sortFilterList: false,
             print: false,
-            selectableRowsOnClick: true,
+            selectableRowsOnClick: false,
             selectableRows: 'none',
+            rowsPerPage: 20,
+            rowsPerPageOptions: [20, 50, 100, 1000, 2500, 5000],
         };
 
         return (
             <MDBContainer fluid>
                 <MDBRow center>
                     <MDBCol md={'12'} className='my-5 mx-auto'>
+                        {isLoading && <MDBSpinner multicolor />}
                         <MUIDataTable
                             title={"Крупные инвестиционные проекты"}
                             data={data}

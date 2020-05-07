@@ -21,7 +21,7 @@ export default class OperatorPlanActivitiesPage extends React.Component {
 
     getData = () => {
         this.setState({ isLoading: true });
-        axios.get(`/api/views/k-2-s`)
+        axios.get(`/api/views/k-2-s?sort=id,desc&size=2000`)
             .then(res => {
                 console.log(res.headers);
                 const count = Number(res.headers['x-total-count']);
@@ -31,6 +31,7 @@ export default class OperatorPlanActivitiesPage extends React.Component {
     };
 
     onChangePage = (page, numberOfRows) => {
+
         this.setState({
             isLoading: true,
         });
@@ -41,10 +42,6 @@ export default class OperatorPlanActivitiesPage extends React.Component {
                 const data = res.data;
                 this.setState({data: data, isLoading: false, count: count, page: page, rowsPerPage: numberOfRows});
             });
-
-        // toast.success('Success message', {
-        //     closeButton: false
-        // });
 
     };
 
@@ -88,25 +85,25 @@ export default class OperatorPlanActivitiesPage extends React.Component {
         const { data, page, count, isLoading } = this.state;
 
         const options = {
-            serverSide: true,
-            count: count,
-            page: page,
+            serverSide: false,
+            // count: count,
+            // page: page,
             rowsPerPage: 20,
-            rowsPerPageOptions: [20, 50, 100],
+            rowsPerPageOptions: [20, 50, 100, 1000, 2500, 5000],
             textLabels: labels,
             sortFilterList: false,
             print: false,
             selectableRows: 'none',
-            onTableChange: (action, tableState) => {
-                switch (action) {
-                    case 'changePage':
-                        this.onChangePage(tableState.page, tableState.rowsPerPage);
-                        break;
-                }
-            },
-            onChangeRowsPerPage: (numberOfRows) => {
-                this.onChangePage(this.state.page, numberOfRows);
-            }
+            // onTableChange: (action, tableState) => {
+            //     switch (action) {
+            //         case 'changePage':
+            //             this.onChangePage(tableState.page, tableState.rowsPerPage);
+            //             break;
+            //     }
+            // },
+            // onChangeRowsPerPage: (numberOfRows) => {
+            //     this.onChangePage(this.state.page, numberOfRows);
+            // }
         };
 
         return (

@@ -132,7 +132,7 @@ export default class OperatorPlanIndicatorsEditPage extends React.Component {
                 </MDBRow>
                 <MDBRow>
                     <MDBCol md="12" className="mb-3">
-                        <MDBInput label="Значение индикатора" value={this.state.value} type="number" name="planingMin" onChange={this.onChangeHandler}/>
+                        <MDBInput label="Значение индикатора" value={this.state.value} type="number" name="value" onChange={this.onChangeHandler}/>
                     </MDBCol>
                 </MDBRow>
                 <MDBRow>

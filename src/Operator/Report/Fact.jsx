@@ -6,6 +6,7 @@ import CustomToolbarSelect from "../../_components/CustomToolbarSelect";
 import { labels } from "../../_components/TableTextLabels";
 import Button from "@material-ui/core/Button";
 import appAxios from "../../_services/appAxios";
+import ButtonUpdateColumn from "../../_components/ButtonUpdateColumn";
 
 export default class OperatorReportFactPage extends React.Component {
 
@@ -188,7 +189,19 @@ export default class OperatorReportFactPage extends React.Component {
             { name: 'year', label: 'Отчетный год', options: {filter: false} },
             { name: 'quarterName', label: 'Отчетный квартал', options: {filter: false} },
             { name: 'okeiName', label: 'Единица измерения', options: {filter: false} },
-            { name: 'value', label: 'Значение показателя', options: {filter: false} }
+            { name: 'value', label: 'Значение показателя', options: {filter: false} },
+            { name: "",
+                options: {
+                    filter: false,
+                    sort: false,
+                    empty: true,
+                    customBodyRender: (value, tableMeta, updateValue) => {
+                        return (
+                            <ButtonUpdateColumn rowData = {tableMeta.rowData}/>
+                        );
+                    }
+                }
+            },
         ];
 
         const { data, page, count, isLoading } = this.state;
@@ -203,8 +216,9 @@ export default class OperatorReportFactPage extends React.Component {
             textLabels: labels,
             sortFilterList: false,
             print: false,
-            selectableRowsOnClick: true,
-            selectableRows: 'single',
+            search: false,
+            selectableRowsOnClick: false,
+            selectableRows: 'none',
             onTableChange: (action, tableState) => {
                 switch (action) {
                     case 'changePage':
@@ -212,9 +226,9 @@ export default class OperatorReportFactPage extends React.Component {
                         break;
                 }
             },
-            customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
-                <CustomToolbarSelect selectedRows={selectedRows} displayData={displayData} setSelectedRows={setSelectedRows} />
-            ),
+            // customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
+            //     <CustomToolbarSelect selectedRows={selectedRows} displayData={displayData} setSelectedRows={setSelectedRows} />
+            // ),
             onChangeRowsPerPage: (numberOfRows) => {
                 this.onChangePage(this.state.page, numberOfRows);
             },

@@ -4,6 +4,7 @@ import MUIDataTable from "mui-datatables";
 import {labels} from "../../_components/TableTextLabels";
 import CustomToolbarSelect from "../../_components/CustomToolbarSelect";
 import appAxios from "../../_services/appAxios";
+import ButtonUpdateColumn from "../../_components/ButtonUpdateColumn";
 
 export default class OperatorReportProjectsMasterPage extends React.Component {
 
@@ -59,6 +60,18 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
             { name: 'documentId', label: 'documentId', options: {display: 'excluded', filter: false}},
             { name: 'projectId', label: 'projectId', options: {display: 'excluded', filter: false}},
             { name: 'id', label: 'id', options: {display: 'excluded', filter: false}},
+            { name: "",
+                options: {
+                    filter: false,
+                    sort: false,
+                    empty: true,
+                    customBodyRender: (value, tableMeta, updateValue) => {
+                        return (
+                            <ButtonUpdateColumn rowData = {tableMeta.rowData}/>
+                        );
+                    }
+                }
+            },
         ];
 
         const { data, page, count, isLoading } = this.state;
@@ -72,8 +85,8 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
             textLabels: labels,
             sortFilterList: false,
             print: false,
-            selectableRowsOnClick: true,
-            selectableRows: 'single',
+            selectableRowsOnClick: false,
+            selectableRows: 'none',
             // onTableChange: (action, tableState) => {
             //     switch (action) {
             //         case 'changePage':

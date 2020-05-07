@@ -1,9 +1,11 @@
 import React from 'react';
-import {MDBCol, MDBContainer, MDBRow, MDBSpinner} from "mdbreact";
+import { MDBBtn, MDBCol, MDBContainer, MDBIcon, MDBRow, MDBSpinner } from "mdbreact";
 import MUIDataTable from "mui-datatables";
 import {labels} from "../../_components/TableTextLabels";
 import CustomToolbarSelect from "../../_components/CustomToolbarSelect";
 import appAxios from "../../_services/appAxios";
+import { history } from "@/_helpers";
+import ButtonUpdateColumn from "../../_components/ButtonUpdateColumn";
 
 export default class OperatorReportActivitiesPage extends React.Component {
 
@@ -58,20 +60,32 @@ export default class OperatorReportActivitiesPage extends React.Component {
             { name: 'documentId', label: 'documentId', options: {display: 'excluded', filter: false}},
             { name: 'activityId', label: 'activityId', options: {display: 'excluded', filter: false}},
             { name: 'activityReportId', label: 'activityReportId', options: {display: 'excluded', filter: false}},
+            { name: "",
+                options: {
+                    filter: false,
+                    sort: false,
+                    empty: true,
+                    customBodyRender: (value, tableMeta, updateValue) => {
+                        return (
+                            <ButtonUpdateColumn rowData = {tableMeta.rowData}/>
+                        );
+                    }
+                }
+            },
         ];
 
         const { data, page, count, isLoading } = this.state;
 
         const options = {
-            // serverSide: true,
-            // count: count,
-            // page: page,
             rowsPerPage: 20,
             rowsPerPageOptions: [20, 50, 100, 1000, 2500, 5000],
             textLabels: labels,
             print: false,
-            selectableRowsOnClick: true,
-            selectableRows: 'single',
+            selectableRows: 'none',
+            // serverSide: true,
+            // count: count,
+            // page: page,
+            // selectableRowsOnClick: true,
             // sortFilterList: false,
             // onTableChange: (action, tableState) => {
             //     switch (action) {
@@ -88,9 +102,9 @@ export default class OperatorReportActivitiesPage extends React.Component {
             //         <CustomToolbar />
             //     );
             // },
-            customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
-                <CustomToolbarSelect selectedRows={selectedRows} displayData={displayData} setSelectedRows={setSelectedRows} />
-            ),
+            // customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
+            //     <CustomToolbarSelect selectedRows={selectedRows} displayData={displayData} setSelectedRows={setSelectedRows} />
+            // ),
         };
 
         return (
