@@ -119,8 +119,9 @@ export default class AdminLoadingDocumentPage extends React.Component {
         * */
 
         this.setState({ isLoading: true });
-        appAxios.get(`/documents/create?pDocTypeCode=${this.state.documentTypeSelected}&pYear=${this.state.yearSelected}
-        &pQuarter=${this.state.quarterSelected}&pDocDate=${this.state.documentDate}&pCode=${this.state.code}&pName=${this.state.name}`)
+        const url = `/documents/create?pDocTypeCode=${this.state.documentTypeSelected}&pYear=${this.state.yearSelected}&pQuarter=${this.state.quarterSelected}&pDocDate=${this.state.documentDate}&pCode=${this.state.code}&pName=${this.state.name}`;
+        console.log(url);
+        appAxios.get(url)
             .then(res => {
                 console.log(res.data);
                 const data = res.data;

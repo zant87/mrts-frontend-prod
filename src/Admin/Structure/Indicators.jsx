@@ -1,5 +1,5 @@
 import React from 'react';
-import {MDBBreadcrumb, MDBBreadcrumbItem, MDBCol, MDBContainer, MDBRow} from "mdbreact";
+import {MDBBreadcrumb, MDBBreadcrumbItem, MDBCol, MDBContainer, MDBRow, MDBSpinner} from "mdbreact";
 import MUIDataTable from "mui-datatables";
 import axios from 'axios';
 import {labels} from "../../_components/TableTextLabels";
@@ -18,10 +18,15 @@ export default class AdminIndicatorsPage extends React.Component {
     };
 
     getData = () => {
-        axios.get(`/api/views/z-1-s`)
+
+        this.setState({
+            isLoading: true,
+        });
+
+        axios.get(`/api/views/z-1-s?sort=id,desc&size=2000`)
             .then(res => {
                 const data= res.data;
-                this.setState({ data});
+                this.setState({data: data, isLoading: false});
             })
     };
 
@@ -64,6 +69,7 @@ export default class AdminIndicatorsPage extends React.Component {
             <MDBContainer fluid>
                 <MDBRow center>
                     <MDBCol md={'12'} className='my-5 mx-auto'>
+                        {isLoading && <MDBSpinner multicolor />}
                         <MUIDataTable
                             title={"Индикаторы по целям ТС"}
                             data={data}

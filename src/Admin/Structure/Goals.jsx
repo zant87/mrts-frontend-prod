@@ -1,5 +1,5 @@
 import React from 'react';
-import { MDBCol, MDBContainer, MDBRow } from "mdbreact";
+import {MDBCol, MDBContainer, MDBRow, MDBSpinner} from "mdbreact";
 import MUIDataTable from "mui-datatables";
 import axios from 'axios';
 import {labels} from "../../_components/TableTextLabels";
@@ -18,10 +18,15 @@ export default class AdminGoalsPage extends React.Component {
     };
 
     getData = () => {
-        axios.get(`/api/views/z-2-s`)
+
+        this.setState({
+            isLoading: true,
+        });
+
+        axios.get(`/api/views/z-2-s?sort=id,desc&size=2000`)
             .then(res => {
                 const data= res.data;
-                this.setState({ data});
+                this.setState({data: data, isLoading: false});
             })
     };
 
@@ -60,6 +65,7 @@ export default class AdminGoalsPage extends React.Component {
             <MDBContainer fluid>
                 <MDBRow center>
                     <MDBCol md={'12'} className='my-5 mx-auto'>
+                        {isLoading && <MDBSpinner multicolor />}
                         <MUIDataTable
                             title={"Дерево целей и задач"}
                             data={data}
