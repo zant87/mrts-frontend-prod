@@ -69,25 +69,91 @@ import OperatorCalculationIntermediatePage from "../Operator/Calculation/Interme
 import OperatorCalculationValuesPage from "../Operator/Calculation/Values";
 import OperatorCalculationLevelsPage from "../Operator/Calculation/Levels";
 import OperatorCalculationNavigation from "@/Operator/Calculation/Navigation";
+import loadable from 'react-loadable';
+
+const AsyncAdminStructureNavigation = loadable( {
+        loader: () => import( '../Admin/Structure/Navigation' ),
+        loading: AdminStructureNavigation
+});
+
+const AsyncAdminStructureGoalsPage = loadable( {
+        loader: () => import( '../Admin/Structure/Goals' ),
+        loading: AdminGoalsPage
+});
+
+const AsyncAdminStructureIndicatorsPage = loadable( {
+        loader: () => import( '../Admin/Structure/Indicators' ),
+        loading: AdminIndicatorsPage
+});
+
+const AsyncAdminStructureParametersPage = loadable( {
+        loader: () => import( '../Admin/Structure/Parameters' ),
+        loading: AdminParametersPage
+});
+
+const AsyncAdminControlNavigation = loadable( {
+        loader: () => import( '../Admin/Control/Navigation' ),
+        loading: AdminControlNavigation
+});
+
+const AsyncAdminControlExecutorsPage = loadable( {
+        loader: () => import( '../Admin/Control/Executors' ),
+        loading: AdminExecutorsPage
+});
+
+const AsyncAdminControlExecutorsByActivitiesPage = loadable( {
+        loader: () => import( '../Admin/Control/ExecutorsByActivities' ),
+        loading: AdminExecutorsByActivitiesPage
+});
+
+const AsyncAdminControlExecutorsByIndicatorPage = loadable( {
+        loader: () => import( '../Admin/Control/ExecutorsByIndicators' ),
+        loading: AdminExecutorsByIndicatorPage
+});
+
+const AsyncAdminControlExecutorsByParametersPage = loadable( {
+        loader: () => import( '../Admin/Control/ExecutorsByParameters' ),
+        loading: AdminExecutorsByParametersPage
+});
+
+const AsyncAdminControlExecutorsByProjectsPage = loadable( {
+        loader: () => import( '../Admin/Control/ExecutorsByProjects' ),
+        loading: AdminExecutorsByProjectsPage
+});
+
+const AsyncAdminControlExecutorsByResourcesPage = loadable( {
+        loader: () => import( '../Admin/Control/ExecutorsByResources' ),
+        loading: AdminExecutorsByResourcesPage
+});
+
+/*
+            <PrivateRoute exact path="/admin/control" roles={Role.Admin} component={AsyncAdminControlNavigation} />
+            <PrivateRoute exact path="/admin/control/executors" roles={Role.Admin} component={AsyncAdminExecutorsPage} />
+            <PrivateRoute exact path="/admin/control/executorsByIndicator" roles={Role.Admin} component={AsyncAdminExecutorsByIndicatorPage} />
+            <PrivateRoute exact path="/admin/control/executorsByParameters" roles={Role.Admin} component={AsyncAdminExecutorsByParametersPage} />
+            <PrivateRoute exact path="/admin/control/executorsByEvents" roles={Role.Admin} component={AsyncAdminExecutorsByActivitiesPage} />
+            <PrivateRoute exact path="/admin/control/executorsByProjects" roles={Role.Admin} component={AsyncAdminExecutorsByProjectsPage} />
+            <PrivateRoute exact path="/admin/control/executorsByResource" roles={Role.Admin} component={AsyncAdminExecutorsByResourcesPage} />
+ */
 
 export const AppRoutes = () => {
     return (
         <Fragment>
             {/* Администратор*/}
             {/*Structure - Настройка структуры*/}
-            <PrivateRoute exact path="/admin/structure" roles={Role.Admin} component={AdminStructureNavigation} />
-            <PrivateRoute exact path="/admin/structure/goals" roles={Role.Admin} component={AdminGoalsPage} />
-            <PrivateRoute exact path="/admin/structure/indicators" roles={Role.Admin} component={AdminIndicatorsPage} />
-            <PrivateRoute exact path="/admin/structure/params" roles={Role.Admin} component={AdminParametersPage} />
+            <PrivateRoute exact path="/admin/structure" roles={Role.Admin} component={AsyncAdminStructureNavigation} />
+            <PrivateRoute exact path="/admin/structure/goals" roles={Role.Admin} component={AsyncAdminStructureGoalsPage} />
+            <PrivateRoute exact path="/admin/structure/indicators" roles={Role.Admin} component={AsyncAdminStructureIndicatorsPage} />
+            <PrivateRoute exact path="/admin/structure/params" roles={Role.Admin} component={AsyncAdminStructureParametersPage} />
 
             {/*Control - Настройка контроля*/}
-            <PrivateRoute exact path="/admin/control" roles={Role.Admin} component={AdminControlNavigation} />
-            <PrivateRoute exact path="/admin/control/executors" roles={Role.Admin} component={AdminExecutorsPage} />
-            <PrivateRoute exact path="/admin/control/executorsByIndicator" roles={Role.Admin} component={AdminExecutorsByIndicatorPage} />
-            <PrivateRoute exact path="/admin/control/executorsByParameters" roles={Role.Admin} component={AdminExecutorsByParametersPage} />
-            <PrivateRoute exact path="/admin/control/executorsByEvents" roles={Role.Admin} component={AdminExecutorsByActivitiesPage} />
-            <PrivateRoute exact path="/admin/control/executorsByProjects" roles={Role.Admin} component={AdminExecutorsByProjectsPage} />
-            <PrivateRoute exact path="/admin/control/executorsByResource" roles={Role.Admin} component={AdminExecutorsByResourcesPage} />
+            <PrivateRoute exact path="/admin/control" roles={Role.Admin} component={AsyncAdminControlNavigation} />
+            <PrivateRoute exact path="/admin/control/executors" roles={Role.Admin} component={AsyncAdminControlExecutorsPage} />
+            <PrivateRoute exact path="/admin/control/executorsByIndicator" roles={Role.Admin} component={AsyncAdminControlExecutorsByIndicatorPage} />
+            <PrivateRoute exact path="/admin/control/executorsByParameters" roles={Role.Admin} component={AsyncAdminControlExecutorsByParametersPage} />
+            <PrivateRoute exact path="/admin/control/executorsByActivities" roles={Role.Admin} component={AsyncAdminControlExecutorsByActivitiesPage} />
+            <PrivateRoute exact path="/admin/control/executorsByProjects" roles={Role.Admin} component={AsyncAdminControlExecutorsByProjectsPage} />
+            <PrivateRoute exact path="/admin/control/executorsByResource" roles={Role.Admin} component={AsyncAdminControlExecutorsByResourcesPage} />
 
             {/*Loading - Загрузка из АС и файлов*/}
             <PrivateRoute exact path="/admin/loading" roles={Role.Admin} component={AdminLoadingNavigation} />

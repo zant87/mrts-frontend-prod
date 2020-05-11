@@ -18,7 +18,7 @@ const Navigation = () => {
                                 <NavLink to='/admin/control/executors' title='Реестр исполнителей процессов' />
                                 <NavLink to='/admin/control/executorsByIndicator' title='Исполнители по индикаторам' />
                                 <NavLink to='/admin/control/executorsByParameters' title='Исполнители по показателям' />
-                                <NavLink to='/admin/control/executorsByEvents' title='Исполнители по мероприятиям по реализации' />
+                                <NavLink to='/admin/control/executorsByActivities' title='Исполнители по мероприятиям по реализации' />
                                 <NavLink to='/admin/control/executorsByProjects' title='Исполнители по крупным инвестиционным проектам' />
                                 <NavLink to='/admin/control/executorsByResource' title='Исполнители по ресурсному обеспечению' />
                             </ul>

@@ -2,7 +2,7 @@ const webpack = require("webpack");
 const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
 
 const ASSET_PATH = process.env.ASSET_PATH || "/";
 
@@ -20,20 +20,26 @@ const config = {
   },
   output: {
     publicPath: ASSET_PATH,
-    filename: "[name].[hash].bundle.js",
-    chunkFilename: "[name].[hash].chunk.js"
+    filename: '[name].[hash:8].js',
+    sourceMapFilename: '[name].[hash:8].map',
+    chunkFilename: '[id].[chunkhash:8].js'
   },
   module: {
     rules: [
       {
-        test: /\.(js)$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: ["babel-loader"]
-      },
-      {
-        test: /\.(jsx)$/,
-        exclude: /node_modules/,
-        use: ["babel-loader"]
+        loader: "babel-loader",
+        options: {
+          presets: [
+            '@babel/preset-env',
+            '@babel/preset-react'
+          ],
+          plugins: [
+            '@babel/plugin-transform-runtime',
+            '@babel/plugin-proposal-class-properties'
+          ]
+        }
       },
       {
         test: /\.css$/,
@@ -54,10 +60,6 @@ const config = {
         use: ["style-loader", "css-loader"],
         exclude: /\.module\.css$/
       },
-      // {
-      //   test: /\.css$/i,
-      //   use: [{ loader: "style-loader" }, { loader: "css-loader" }]
-      // },
       {
         test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
         loader: "file-loader"
@@ -92,52 +94,77 @@ const config = {
     ]
   },
   optimization: {
-    runtimeChunk: false,
-    minimizer: [
-      new TerserPlugin({
-        cache: true,
-        parallel: true,
-        terserOptions: {
-          ecma: 6,
-          toplevel: true,
-          module: true,
-          beautify: false,
-          comments: false,
-          compress: {
-            warnings: false,
-            ecma: 6,
-            module: true,
-            toplevel: true
-          },
-          output: {
-            comments: false,
-            beautify: false,
-            indent_level: 2,
-            ecma: 6
-          },
-          mangle: {
-            keep_fnames: true,
-            module: true,
-            toplevel: true
-          }
+    splitChunks: {
+      cacheGroups: {
+        default: false,
+        vendors: false,
+
+        // vendor chunk
+        vendor: {
+          // name of the chunk
+          name: 'vendor',
+
+          // async + async chunks
+          chunks: 'all',
+
+          // import file path containing node_modules
+          test: /node_modules/,
+
+          // priority
+          priority: 20
+        },
+
+        // common chunk
+        common: {
+          name: 'common',
+          minChunks: 2,
+          chunks: 'all',
+          priority: 10,
+          reuseExistingChunk: true,
+          enforce: true
         }
-      })
-    ]
+      }
+    }
   },
+  // optimization: {
+  //   runtimeChunk: true,
+  //   minimizer: [
+  //     new TerserPlugin({
+  //       cache: true,
+  //       parallel: true,
+  //       terserOptions: {
+  //         ecma: 6,
+  //         toplevel: true,
+  //         module: true,
+  //         beautify: false,
+  //         comments: false,
+  //         compress: {
+  //           warnings: false,
+  //           ecma: 6,
+  //           module: true,
+  //           toplevel: true
+  //         },
+  //         output: {
+  //           comments: false,
+  //           beautify: false,
+  //           indent_level: 2,
+  //           ecma: 6
+  //         },
+  //         mangle: {
+  //           keep_fnames: true,
+  //           module: true,
+  //           toplevel: true
+  //         }
+  //       }
+  //     })
+  //   ]
+  // },
   plugins: [
     new HtmlWebpackPlugin({
       template: "./src/index.html",
-      chunksSortMode: "dependency",
-      inject: "body"
+      inject: "body",
     }),
-    new TerserPlugin(),
-    new webpack.DefinePlugin({ "process.env.NODE_ENV": JSON.stringify("production") }),
-    new webpack.optimize.ModuleConcatenationPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
-    new MiniCssExtractPlugin({
-      filename: "[name].[hash].css",
-      chunkFilename: "[name].[hash].css"
-    })
+    new FriendlyErrorsWebpackPlugin(),
   ],
   externals: {
     config: JSON.stringify({
