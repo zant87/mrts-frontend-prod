@@ -3,12 +3,11 @@ import {MDBCol, MDBContainer, MDBRow, MDBSpinner} from "mdbreact";
 import MUIDataTable from "mui-datatables";
 import axios from 'axios';
 import {labels} from "../../_components/TableTextLabels";
+import appAxios from "../../_services/appAxios";
 
 export default class AdminGoalsPage extends React.Component {
 
     state = {
-        page: 0,
-        count: 1,
         data: [],
         isLoading: false
     };
@@ -17,39 +16,26 @@ export default class AdminGoalsPage extends React.Component {
         this.getData();
     };
 
-    getData = () => {
+    getData = async () => {
 
-        this.setState({
-            isLoading: true,
-        });
+        this.setState({ isLoading: true });
+        let res = await appAxios.get(`/views/z-2-s?sort=id,desc&size=2000`);
+        let data = res.data;
+        this.setState({ data: data, isLoading: false });
 
-        axios.get(`/api/views/z-2-s?sort=id,desc&size=2000`)
-            .then(res => {
-                const data= res.data;
-                this.setState({data: data, isLoading: false});
-            })
     };
 
     render() {
 
         const columns = [
-            { name: 'id', label: '#', options:
-                    {
-                        filter: false
-                    }
-            },
-            { name: 'transportStrategyCode', label: 'Код ТС', options:
-                    {
-                        display: 'excluded',
-                        filter: false,
-                    },
-            },
+            { name: 'id', label: '#', options: { filter: false } },
+            { name: 'transportStrategyCode', label: 'Код ТС', options: { display: 'excluded', filter: false } },
             { name: 'transportStrategyName', label: 'Редакция ТС'},
             { name: 'goalName', label: 'Цель ТС'},
             { name: 'taskName', label: 'Задача ТС'}
         ];
 
-        const { data, page, count, isLoading } = this.state;
+        const { data, isLoading } = this.state;
 
         const options = {
             rowsPerPage: 20,

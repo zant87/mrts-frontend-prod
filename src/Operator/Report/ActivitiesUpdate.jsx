@@ -16,6 +16,7 @@ export default class OperatorReportActivitiesUpdatePage extends React.Component 
             activityId: this.props.location.state[9],
             activityReportID: this.props.location.state[10],
             activityName: this.props.location.state[2],
+            description: this.props.location.state[7],
             isLoading: false
         };
     }
@@ -72,7 +73,7 @@ export default class OperatorReportActivitiesUpdatePage extends React.Component 
 
                 <MDBRow>
                     <MDBCol md="12" className="mb-3">
-                        <MDBInput type="textarea" label="Отчет исполнителя" rows="5" onChange={this.onChangeHandler} name='description'/>
+                        <MDBInput type="textarea" value={this.state.description}  label="Отчет исполнителя" rows="5" onChange={this.onChangeHandler} name='description'/>
                     </MDBCol>
                 </MDBRow>
 

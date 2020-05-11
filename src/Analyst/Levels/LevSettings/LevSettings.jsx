@@ -88,7 +88,6 @@ class LevSettings extends React.Component {
     if (frequencyLevId == 2) {
       quarter = this.selectedQuarterIdRef.current.value;
     }
-    debugger;
     if (selectedIndsArr.length != 0) {
       this.props.getLevValues(
         selectedIndsArr,

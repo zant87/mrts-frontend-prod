@@ -1,5 +1,5 @@
 import React from 'react';
-import {MDBBtn, MDBCol, MDBRow, MDBSelect, toast} from "mdbreact";
+import {MDBBtn, MDBCol, MDBRow, MDBSelect, MDBSpinner, toast} from "mdbreact";
 import actions from "./ReportsActions";
 import selectors from "./ReportsSelectors";
 import {connect} from 'react-redux';
@@ -31,7 +31,8 @@ class AnalystReportPage extends React.Component {
                 text: "DOCX",
                 value: "DOCX"
             }
-        ]
+        ],
+        isLoading: false
     };
 
     setReportFormat = event => {
@@ -54,32 +55,36 @@ class AnalystReportPage extends React.Component {
         }
     }
 
-    doDownload = () => {
-        if (this.state.reportFormat && this.state.reportCode)
-        {
-            appAxios({
+    doDownload = async () => {
+        
+        try {
+
+            this.setState({ isLoading: true });
+
+            let response = await appAxios({
                 url: `reports/${this.state.reportCode}/download?format=${this.state.reportFormat}&start=${this.state.start}&end=${this.state.end}&label=${this.state.reportLabel}`,
                 method: 'GET',
                 responseType: 'blob',
-            }).then((response) => {
-                const url = window.URL.createObjectURL(new Blob([response.data]));
-                const link = document.createElement('a');
-                link.href = url;
-                link.setAttribute('download',
-                    `report_${this.state.reportCode}-${this.state.start}-${this.state.end}.${this.state.reportFormat}`);
-                document.body.appendChild(link);
-                link.click();
-            }).catch(function (error) {
-                console.log(error);
-                toast.error(`Ошибка при формировании отчета`, {
-                    closeButton: false
-                });
-            })
+            });
+
+            let url = window.URL.createObjectURL(new Blob([response.data]));
+            let link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download',
+                `report_${this.state.reportCode}-${this.state.start}-${this.state.end}.${this.state.reportFormat}`);
+            document.body.appendChild(link);
+            link.click();
+
+            this.setState({ isLoading: false });
+
+        } catch (e) {
+
+            console.log(e);
+            toast.error(`Ошибка при построении отчета ${this.state.reportCode}`);
+            this.setState({ isLoading: false });
+
         }
-        else
-        {
-            console.log('Значение reportFormat и reportCode отсутствуют')
-        }
+
     };
 
     changeHandler = event => {
@@ -100,7 +105,7 @@ class AnalystReportPage extends React.Component {
     render() {
 
         const {
-            rows,
+            rows
         } = this.props;
 
         return (
@@ -183,9 +188,18 @@ class AnalystReportPage extends React.Component {
                         </MDBCol>
                     </MDBRow>
                 )}
-                <MDBBtn color="primary" type="none" onClick={this.doDownload} disabled={!this.state.reportSelected}>
-                    Загрузить
-                </MDBBtn>
+
+                <MDBRow center={true}>
+                    <MDBCol middle={true}>
+                        <MDBBtn color="primary" type="none" onClick={this.doDownload} disabled={!this.state.reportSelected}>
+                            Загрузить
+                        </MDBBtn>
+                    </MDBCol>
+                    <MDBCol middle={true}>
+                        {this.state.isLoading && <MDBSpinner multicolor small={true}/>}
+                    </MDBCol>
+                </MDBRow>
+
             </MDBCol>
         )
     }

@@ -18,21 +18,20 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.(js)$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: ["babel-loader"],
+        loader: "babel-loader",
+        options: {
+          presets: [
+            '@babel/preset-env',
+            '@babel/preset-react'
+          ],
+          plugins: [
+            '@babel/plugin-transform-runtime',
+            '@babel/plugin-proposal-class-properties'
+          ]
+        }
       },
-      {
-        test: /\.(jsx)$/,
-        exclude: /node_modules/,
-        use: ["babel-loader"],
-      },
-      // {
-      //   test: /\.css$/,
-      //   use: [{ loader: "style-loader" }, { loader: "css-loader" }]
-
-      //   //loader: "style-loader!css-loader"
-      // },
       {
         test: /\.(s*)css$/,
         use: [
@@ -87,13 +86,12 @@ const config = {
     port: 3000,
     hot: true,
     proxy: {
-      "/api": "http://localhost:8080",
+      "/api": "http://localhost",
     },
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: "./src/index.html",
-      chunksSortMode: "dependency",
       inject: "body",
     }),
     new FriendlyErrorsWebpackPlugin(),
