@@ -86,7 +86,7 @@ const config = {
     port: 3000,
     hot: true,
     proxy: {
-      "/api": "http://localhost",
+      "/api": "http://localhost:8080",
     },
   },
   plugins: [
