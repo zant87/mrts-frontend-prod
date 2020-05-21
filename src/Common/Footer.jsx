@@ -3,7 +3,7 @@ import { MDBFooter, MDBRow, MDBContainer } from "mdbreact";
 
 export const Footer = () => {
   return (
-    <MDBRow className="mt-1">
+    <MDBRow className="mt-0">
       {/* <MDBFooter color="dark" className="font-small pb-1 mt-0 text-center">
         <MDBContainer fluid style={{ color: "#828282" }}>
           <p className=" mb-0 py-3 text-center">
@@ -12,16 +12,24 @@ export const Footer = () => {
         </MDBContainer>
       </MDBFooter> */}
       <MDBFooter
-        // color='indigo'
-        color="special-color"
-        className="fixed-bottom"
+        color="white"
+        //color="special-color"
+        //className="fixed-bottom"
+        style={{ textAlign: "center", width: "100%", borderTop: "1px solid #cecece" }}
       >
-        <p className="footer-copyright mb-0 py-1 text-center" style={{ color: "#cecece" }}>
-          {new Date().getFullYear()} &copy;
-          <a style={{ color: "#cecece" }} href="http://www.geogracom.com">
-            {" "}
-            ООО ГЕОГРАКОМ{" "}
-          </a>
+        <p
+          className="mb-0 "
+          style={{
+            width: "100%",
+            color: "#565656",
+            fontSize: "12px",
+            fontFamily: "Geneva, Arial, Helvetica, sans-serif",
+            padding: "20px",
+          }}
+        >
+          &copy; {new Date().getFullYear()}
+          <span> Официальный интернет-ресурс Министерства транспорта Российской Федерации</span> <br />
+          <span> Все права на материалы, находящиеся на сайте, охраняются в соответствии с законодательством Российской Федерации</span>
         </p>
       </MDBFooter>
     </MDBRow>

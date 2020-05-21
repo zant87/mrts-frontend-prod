@@ -1,5 +1,5 @@
 body {
-  background-color: #edeef0;
+  /* background-color: #edeef0; */
 }
 
 .logo {
@@ -12,5 +12,6 @@ body {
 }
 
 .app {
-  background-color: #edeef0;
+  /* background-color: #edeef0; */
+  margin: 0px;
 }

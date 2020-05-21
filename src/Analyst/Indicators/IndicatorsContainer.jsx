@@ -14,6 +14,8 @@ import {
   getYears,
   getQuarters,
   setIndsQuarterId,
+  setIndsYearStart,
+  setIndsYearEnd,
 } from "@/_reducers/inds-reducer";
 import { withRouter } from "react-router-dom";
 import { compose } from "redux";
@@ -29,13 +31,7 @@ class IndicatorsContainer extends React.Component {
     let indId = this.props.match.params.indId;
 
     if (indId) {
-      this.props.getIndValues(
-        indId,
-        this.props.frequencyId,
-        this.props.indsYearStart,
-        this.props.indsYearEnd,
-        this.props.indsQuarterId
-      );
+      this.props.getIndValues(indId, this.props.frequencyId, this.props.indsYearStart, this.props.indsYearEnd, this.props.indsQuarterId);
       //debugger;
     }
   }
@@ -44,13 +40,7 @@ class IndicatorsContainer extends React.Component {
     let indId = this.props.match.params.indId;
     if (indId !== prevProps.match.params.indId) {
       if (indId) {
-        this.props.getIndValues(
-          indId,
-          this.props.frequencyId,
-          this.props.indsYearStart,
-          this.props.indsYearEnd,
-          this.props.indsQuarterId
-        );
+        this.props.getIndValues(indId, this.props.frequencyId, this.props.indsYearStart, this.props.indsYearEnd, this.props.indsQuarterId);
         // debugger;
       }
     }
@@ -58,25 +48,21 @@ class IndicatorsContainer extends React.Component {
 
   onFilterChanged = (frequencyId, yearStart, yearEnd, quarterId) => {
     let indId = this.props.match.params.indId;
+    this.props.setFrequencyId(frequencyId);
+    this.props.setIndsYearStart(yearStart);
+    this.props.setIndsYearEnd(yearEnd);
+    if (quarterId != null) {
+      this.props.setIndsQuarterId(quarterId);
+    }
     if (indId) {
-      this.props.getIndValues(
-        indId,
-        frequencyId,
-        yearStart,
-        yearEnd,
-        quarterId
-      );
+      this.props.getIndValues(indId, frequencyId, yearStart, yearEnd, quarterId);
     }
   };
 
   render() {
     return (
       <div>
-        <Indicators
-          indsPage={this.props}
-          onFilterChanged={this.onFilterChanged}
-        />
-        ;
+        <Indicators indsPage={this.props} onFilterChanged={this.onFilterChanged} />;
       </div>
     );
   }
@@ -119,6 +105,8 @@ export default compose(
     getYears,
     getQuarters,
     setIndsQuarterId,
+    setIndsYearStart,
+    setIndsYearEnd,
   }),
   withRouter
 )(IndicatorsContainer);

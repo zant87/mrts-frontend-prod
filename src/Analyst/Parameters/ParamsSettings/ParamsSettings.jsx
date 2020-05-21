@@ -33,7 +33,7 @@ const ParamsSettings = (props) => {
           <option value="0">Все виды транспорта</option>
           {props.transportTypes
             ? transportTypes.map((item) =>
-                item.id === props.transportTypeID ? (
+                item.id == props.transportTypeId ? (
                   <option value={item.id} selected>
                     {item.name}
                   </option>

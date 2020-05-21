@@ -17,6 +17,9 @@ import {
   MDBSelect,
   MDBToastContainer,
   MDBRow,
+  MDBPopover,
+  MDBPopoverHeader,
+  MDBPopoverBody,
 } from "mdbreact";
 import { NavLink } from "react-router-dom";
 import dynstyle from "./../Dynamics.module.css";
@@ -91,13 +94,7 @@ class DynSettings extends React.Component {
       //debugger;
     }
     if (selectedIndsArr.length != 0) {
-      this.props.getDynValues(
-        selectedIndsArr,
-        frequencyDynId,
-        scenarioId,
-        year,
-        quarter
-      );
+      this.props.getDynValues(selectedIndsArr, frequencyDynId, scenarioId, year, quarter);
     }
     //debugger;
     //alert(this.selectedIndsRef.current.state.selectValue);
@@ -129,9 +126,7 @@ class DynSettings extends React.Component {
     }
 
     if (this.props.transportTypes) {
-      transportTypes = this.props.transportTypes.sort((a, b) =>
-        a.name > b.name ? 1 : -1
-      );
+      transportTypes = this.props.transportTypes.sort((a, b) => (a.name > b.name ? 1 : -1));
     }
 
     if (this.props.years) {
@@ -151,9 +146,7 @@ class DynSettings extends React.Component {
     }
 
     if (this.props.transportTypeId != "0") {
-      inds = inds.filter(
-        (x) => x.transportTypeId == this.props.transportTypeId
-      );
+      inds = inds.filter((x) => x.transportTypeId == this.props.transportTypeId);
     }
 
     // if (this.props.searchQuery != null) {
@@ -230,7 +223,31 @@ class DynSettings extends React.Component {
 
         <MDBCard style={{ width: "100%" }}>
           <MDBCardHeader color="special-color">
-            Динамика уровней достижения целей
+            Динамика уровней достижения
+            <MDBPopover placement="bottom" clickable id="popper" domElement popover>
+              <div className="special-color mt-1 float-right">
+                <MDBIcon
+                  //onClick={this.toggle}
+                  icon="question-circle"
+                  size="1x"
+                  //className="special-color mt-1 float-right"
+                  style={{ cursor: "pointer", color: "#ffffff" }}
+                />
+              </div>
+              <div>
+                <MDBPopoverHeader>
+                  <span style={{ color: "#000000" }}>Справка</span>
+                </MDBPopoverHeader>
+                <MDBPopoverBody>
+                  <span style={{ color: "#000000", textAlign: "justify", fontSize: "14px" }}>
+                    Динамика уровней достижения индикаторов отражает разность уровней достижения (% достижения фактического значения
+                    индикатора по отношению к плановому значению по базому или инновационному сценариям) индикаторов за заданный период и
+                    предыдущий по отношению к заданному. Древовидная диаграмма отражает динамику уровней достижения индикаторов по заданной
+                    цели и периоду
+                  </span>
+                </MDBPopoverBody>
+              </div>
+            </MDBPopover>
             {/* <MDBIcon
               onClick={this.toggle}
               icon="filter"
@@ -255,13 +272,10 @@ class DynSettings extends React.Component {
               <MDBRow>
                 <MDBCol size="6" style={{ padding: "7px" }}>
                   <div style={{}}>
-                    <select
-                      onChange={this.onSelectGoal}
-                      className="browser-default custom-select custom-select-md "
-                    >
+                    <select onChange={this.onSelectGoal} className="browser-default custom-select custom-select-md ">
                       {this.props.goals
                         ? goals.map((item) =>
-                            item.id === this.props.goalId ? (
+                            item.id == this.props.goalId ? (
                               <option value={item.id} selected>
                                 {item.name}
                               </option>
@@ -275,14 +289,11 @@ class DynSettings extends React.Component {
                 </MDBCol>
                 <MDBCol size="6" style={{ padding: "7px" }}>
                   <div style={{}}>
-                    <select
-                      onChange={this.onSelectTransportType}
-                      className="browser-default custom-select custom-select-md"
-                    >
+                    <select onChange={this.onSelectTransportType} className="browser-default custom-select custom-select-md">
                       <option value="0">Все виды транспорта</option>
                       {this.props.transportTypes
                         ? transportTypes.map((item) =>
-                            item.id === this.props.transportTypeID ? (
+                            item.id == this.props.transportTypeId ? (
                               <option value={item.id} selected>
                                 {item.name}
                               </option>
@@ -430,11 +441,7 @@ class DynSettings extends React.Component {
                   </select>
                 </div>
               ) : null}
-              <MDBBtn
-                color="primary"
-                onClick={this.onSaveFilters}
-                type="submit"
-              >
+              <MDBBtn color="primary" onClick={this.onSaveFilters} type="submit">
                 Построить отчет
               </MDBBtn>
             </form>

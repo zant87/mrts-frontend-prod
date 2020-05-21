@@ -9,7 +9,7 @@ let Levels = (props) => {
   //debugger;
   return (
     <div>
-      <MDBRow style={{ marginTop: "40px" }}>
+      <MDBRow style={{ marginTop: "20px" }}>
         <LevSettings
           inds={props.levelsPage.inds}
           isFetchingInds={props.levelsPage.isFetchingInds}

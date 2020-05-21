@@ -40,7 +40,7 @@ const IndsSettings = (props) => {
         <select onChange={onSelectGoal} className="browser-default custom-select custom-select-sm">
           {props.goals
             ? goals.map((item) =>
-                item.id === props.goalId ? (
+                item.id == props.goalId ? (
                   <option value={item.id} selected>
                     {item.name}
                   </option>
@@ -56,7 +56,7 @@ const IndsSettings = (props) => {
           <option value="0">Все виды транспорта</option>
           {props.transportTypes
             ? transportTypes.map((item) =>
-                item.id === props.transportTypeID ? (
+                item.id == props.transportTypeId ? (
                   <option value={item.id} selected>
                     {item.name}
                   </option>

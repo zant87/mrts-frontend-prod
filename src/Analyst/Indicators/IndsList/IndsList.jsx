@@ -79,26 +79,17 @@ class IndsList extends React.Component {
     }
 
     if (this.props.transportTypeId != "0") {
-      inds = inds.filter(
-        (x) => x.transportTypeId == this.props.transportTypeId
-      );
+      inds = inds.filter((x) => x.transportTypeId == this.props.transportTypeId);
     }
 
     if (this.props.searchQuery != null) {
-      inds = inds.filter((x) =>
-        x.name
-          .trim()
-          .toLowerCase()
-          .includes(this.props.searchQuery.trim().toLowerCase())
-      );
+      inds = inds.filter((x) => x.name.trim().toLowerCase().includes(this.props.searchQuery.trim().toLowerCase()));
     }
 
     return (
       <MDBCol lg="3" className="list h-100" style={{ marginBottom: "10px" }}>
         <MDBModal isOpen={this.state.modal} toggle={this.toggle} centered>
-          <MDBModalHeader toggle={this.toggle}>
-            Настройка отображения данных
-          </MDBModalHeader>
+          <MDBModalHeader toggle={this.toggle}>Настройка отображения данных</MDBModalHeader>
           <MDBModalBody>
             <MDBContainer className="mt-2">
               <div className="form-group">

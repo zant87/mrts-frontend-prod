@@ -11,7 +11,7 @@ let Indicators = (props) => {
   //debugger;
   return (
     <div>
-      <MDBRow style={{ marginTop: "40px" }}>
+      <MDBRow style={{ marginTop: "20px" }}>
         <IndsList
           inds={props.indsPage.inds}
           isFetchingInds={props.indsPage.isFetchingInds}
@@ -33,6 +33,7 @@ let Indicators = (props) => {
           indsYearStart={props.indsPage.indsYearStart}
           indsYearEnd={props.indsPage.indsYearEnd}
         />
+
         <IndData
           indVals={props.indsPage.indVals}
           isFetchingIndData={props.indsPage.isFetchingIndData}

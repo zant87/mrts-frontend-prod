@@ -14,6 +14,8 @@ import {
   getQuarters,
   setParamQuarterId,
   setCheckedFormId,
+  setParamYearStart,
+  setParamYearEnd,
 } from "@/_reducers/params-reducer";
 import { withRouter } from "react-router-dom";
 import { compose } from "redux";
@@ -30,13 +32,7 @@ class ParametersContainer extends React.Component {
     let paramId = this.props.match.params.paramId;
 
     if (paramId) {
-      this.props.getParamValues(
-        paramId,
-        this.props.frequencyId,
-        this.props.paramYearStart,
-        this.props.paramYearEnd,
-        this.props.quarterId
-      );
+      this.props.getParamValues(paramId, this.props.frequencyId, this.props.paramYearStart, this.props.paramYearEnd, this.props.quarterId);
     }
   }
 
@@ -55,34 +51,24 @@ class ParametersContainer extends React.Component {
     }
   }
 
-  onFilterChanged = (
-    frequencyId,
-    yearStart,
-    yearEnd,
-    quarterId,
-    selectedFormId
-  ) => {
+  onFilterChanged = (frequencyId, yearStart, yearEnd, quarterId, selectedFormId) => {
     this.props.getParams(selectedFormId);
+    this.props.setFrequencyId(frequencyId);
+    this.props.setParamYearStart(yearStart);
+    this.props.setParamYearEnd(yearEnd);
+    if (quarterId != null) {
+      this.props.setParamQuarterId(quarterId);
+    }
     let paramId = this.props.match.params.paramId;
     if (paramId) {
-      this.props.getParamValues(
-        paramId,
-        frequencyId,
-        yearStart,
-        yearEnd,
-        quarterId
-      );
+      this.props.getParamValues(paramId, frequencyId, yearStart, yearEnd, quarterId);
     }
   };
 
   render() {
     return (
       <div>
-        <Parameters
-          paramsPage={this.props}
-          onFilterChanged={this.onFilterChanged}
-        />
-        ;
+        <Parameters paramsPage={this.props} onFilterChanged={this.onFilterChanged} />;
       </div>
     );
   }
@@ -125,6 +111,8 @@ export default compose(
     getQuarters,
     setParamQuarterId,
     setCheckedFormId,
+    setParamYearStart,
+    setParamYearEnd,
   }),
   withRouter
 )(ParametersContainer);

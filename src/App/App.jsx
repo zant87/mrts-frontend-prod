@@ -1,10 +1,11 @@
 import React from "react";
-import {Router} from "react-router-dom";
-import {history, Role} from "@/_helpers";
-import {authenticationService} from "@/_services";
-import {Footer} from "@/_components";
+import { Router } from "react-router-dom";
+import { history, Role } from "@/_helpers";
+import { authenticationService } from "@/_services";
+import { Footer } from "@/_components";
 import MRTSLogo from "@/_assets/mrts-logo.png";
-import {Provider} from "react-redux";
+import MintransLogo from "@/_assets/logo-mintrans.png";
+import { Provider } from "react-redux";
 import store from "@/store";
 import {
   MDBCol,
@@ -19,8 +20,9 @@ import {
   toast,
   ToastContainer,
   MDBRow,
+  MDBIcon,
 } from "mdbreact";
-import {AppRoutes} from "@/Common/AppRoutes";
+import { AppRoutes } from "@/Common/AppRoutes";
 
 class App extends React.Component {
   constructor(props) {
@@ -69,15 +71,67 @@ class App extends React.Component {
         <Router history={history}>
           <div>
             <MDBContainer fluid className="app">
-              <MDBRow className="mrts-nav">
-                <MDBCol md="12">
+              <MDBRow
+                style={{ height: "150px" }}
+                //className="mrts-nav"
+              >
+                <MDBCol md="12" style={{ padding: "0px", position: "fixed", zIndex: "9999999" }}>
+                  <MDBNavbar
+                    color="white"
+                    //dark
+                    tag="div"
+                    light
+                    expand="md"
+                    //fixed="top"
+                    style={{ width: "100%", margin: "0", boxShadow: "none" }}
+                    scrolling
+                  >
+                    <MDBNavbarBrand className="py-0 font-weight-bold">
+                      <img src={MintransLogo} style={{ width: "200px", marginRight: "10px", float: "left" }} alt="" />
+                      <div style={{ marginLeft: "20px", borderLeft: "1px solid #bfbfbf", float: "left", paddingLeft: "20px" }}>
+                        <div>
+                          <strong>
+                            <span style={{ color: "#000", fontSize: "14px" }}>
+                              ИНФОРМАЦИОННО-АНАЛИТИЧЕСКАЯ СИСТЕМА РЕГУЛИРОВАНИЯ НА ТРАНСПОРТЕ
+                            </span>
+                          </strong>
+                        </div>
+                        <div>
+                          <span style={{ color: "#898989", fontSize: "12px" }}>
+                            Мониторинг реализации транспортной стратегии Российской Федерации
+                          </span>
+                        </div>
+                      </div>
+                      <div style={{ marginLeft: "50px", float: "left", paddingLeft: "20px" }}>
+                        <MDBIcon icon="headphones-alt" size="3x" style={{ color: "#117db0" }} />
+                      </div>
+                      <div style={{ marginLeft: "20px", float: "left", paddingLeft: "20px", color: "#117db0" }}>
+                        <div>
+                          <strong>
+                            <span style={{ fontSize: "14px" }}>Техническая поддержка</span>
+                          </strong>
+                        </div>
+                        <div>
+                          <span style={{ fontSize: "14px" }}>+7 (495) 380-21-53</span>
+                        </div>
+                      </div>
+                    </MDBNavbarBrand>
+                  </MDBNavbar>
                   {currentUser && (
                     <MDBNavbar
                       color="special-color"
+                      //color="grey lighten-3"
                       dark
+                      //light
                       expand="md"
-                      fixed="top"
-                      scrolling>
+                      //fixed="top"
+                      scrolling
+                      style={{
+                        boxShadow: "none",
+
+                        width: "100%",
+                      }}
+                    >
                       <MDBNavbarBrand className="py-0 font-weight-bold">
                         <img src={MRTSLogo} style={{ width: "30px", marginRight: "10px" }} alt="" />
                         <strong className="white-text">
@@ -184,11 +238,11 @@ class App extends React.Component {
                             </MDBNavItem>
                           )}
                           {isOperator && (
-                              <MDBNavItem>
-                                <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/operator/calculation">
-                                  <strong>Расчеты</strong>
-                                </MDBNavLink>
-                              </MDBNavItem>
+                            <MDBNavItem>
+                              <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/operator/calculation">
+                                <strong>Расчеты</strong>
+                              </MDBNavLink>
+                            </MDBNavItem>
                           )}
                           <MDBNavItem>
                             <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/swagger">
@@ -207,15 +261,9 @@ class App extends React.Component {
                 </MDBCol>
               </MDBRow>
 
-              <ToastContainer
-                  position="top-right"
-                  autoClose={3000}
-                  closeButton={false}
-                  newestOnTop={false}
-                  rtl={false}>
-              </ToastContainer>
+              <ToastContainer position="top-right" autoClose={3000} closeButton={false} newestOnTop={false} rtl={false}></ToastContainer>
 
-              <AppRoutes />
+              <AppRoutes style={{ marginTop: "250px" }} />
 
               {currentUser && <Footer />}
             </MDBContainer>

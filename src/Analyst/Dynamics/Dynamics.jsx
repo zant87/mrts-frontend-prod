@@ -11,7 +11,7 @@ let Dynamics = (props) => {
   //debugger;
   return (
     <div>
-      <MDBRow style={{ marginTop: "40px" }}>
+      <MDBRow style={{ marginTop: "20px" }}>
         <DynSettings
           inds={props.dynamicsPage.inds}
           isFetchingInds={props.dynamicsPage.isFetchingInds}

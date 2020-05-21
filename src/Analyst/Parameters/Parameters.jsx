@@ -11,7 +11,7 @@ let Parameters = (props) => {
   //debugger;
   return (
     <div>
-      <MDBRow style={{ marginTop: "40px" }}>
+      <MDBRow style={{ marginTop: "20px" }}>
         <ParamsList
           params={props.paramsPage.params}
           isFetchingParams={props.paramsPage.isFetchingParams}
