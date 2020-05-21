@@ -1,8 +1,7 @@
 const webpack = require("webpack");
 const path = require("path");
-const TerserPlugin = require("terser-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
+const AsyncChunkNames = require('webpack-async-chunk-names-plugin');
 
 const ASSET_PATH = process.env.ASSET_PATH || "/";
 
@@ -164,7 +163,7 @@ const config = {
       template: "./src/index.html",
       inject: "body",
     }),
-    new FriendlyErrorsWebpackPlugin(),
+    new AsyncChunkNames()
   ],
   externals: {
     config: JSON.stringify({
