@@ -23,7 +23,7 @@ let DynamicsChart = (props) => {
         years.push(item.currentDate);
         scenarioNames.push(item.scenarioName);
         okeiName = item.okeiName;
-        let ind = item.indicatorCode.replace("IND_", ""); //+ " " + item.indicatorName;
+        let ind = item.indicatorCode.replace("IND_", "") + " " + item.shortName;
         checkedInds.push(ind);
       });
 
@@ -137,6 +137,12 @@ let DynamicsChart = (props) => {
           },
           inverse: true,
           data: checkedInds,
+          nameTextStyle: {
+            fontSize: "10",
+          },
+          axisLabel: {
+            fontSize: "10",
+          },
         },
       ],
       series: [
@@ -147,6 +153,9 @@ let DynamicsChart = (props) => {
             show: true,
             position: "left",
             color: "#000000",
+            textStyle: {
+              fontSize: "12",
+            },
           },
           data: chartDynvals,
         },
@@ -192,7 +201,16 @@ let DynamicsChart = (props) => {
               <Preloader />
             ) : (
               <MDBCardText className="m-0 p-0">
-                {props.dynVals ? <ReactEcharts ref={echarts_react} option={getOption()} className={s.chart} /> : <div>Нет данных</div>}
+                {props.dynVals ? (
+                  <ReactEcharts
+                    style={{ margin: "0px", padding: "0px", width: "100%" }}
+                    ref={echarts_react}
+                    option={getOption()}
+                    className={s.chart}
+                  />
+                ) : (
+                  <div>Нет данных</div>
+                )}
               </MDBCardText>
             )}
           </MDBCardBody>
