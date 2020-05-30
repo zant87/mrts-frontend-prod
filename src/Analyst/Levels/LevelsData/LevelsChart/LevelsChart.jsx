@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  MDBRow,
-  MDBCol,
-  MDBCard,
-  MDBCardBody,
-  MDBCardTitle,
-  MDBCardText,
-} from "mdbreact";
+import { MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText } from "mdbreact";
 import ReactEcharts from "echarts-for-react";
 import s from "./LevelsChart.module.css";
 import Preloader from "@/Common/Preloader/Preloader";
@@ -19,9 +12,7 @@ let LevelsChart = (props) => {
 
   let getOption = () => {
     if (props.levVals) {
-      levVals = props.levVals.sort((a, b) =>
-        a.indicatorCode > b.indicatorCode ? 1 : -1
-      );
+      levVals = props.levVals.sort((a, b) => (a.indicatorCode > b.indicatorCode ? 1 : -1));
 
       levVals.forEach((item) => {
         let ind = item.indicatorCode.replace("IND_", ""); //+ " " + item.indicatorName;
@@ -113,10 +104,10 @@ let LevelsChart = (props) => {
           padding: [5, 5],
           width: 200,
           height: 100,
-          // fontSize: "12px",
+          fontSize: "12px",
         },
         indicator: levVals.map((item) => ({
-          name: item.indicatorCode.replace("IND_", ""),
+          name: item.indicatorCode.replace("IND_", "") + " " + item.shortName,
           max: item.level + 30,
         })),
       },
@@ -177,25 +168,13 @@ let LevelsChart = (props) => {
                 textTransform: "uppercase",
               }}
             >
-              {props.levVals ? (
-                "Уровни достижения за " + props.levVals[0].quarterLabel + " г."
-              ) : (
-                <div>Нет данных</div>
-              )}
+              {props.levVals ? "Уровни достижения за " + props.levVals[0].quarterLabel + " г." : <div>Нет данных</div>}
             </MDBCardTitle>
             {props.isFetchingLevData ? (
               <Preloader />
             ) : (
               <MDBCardText className="m-0 p-0">
-                {props.levVals ? (
-                  <ReactEcharts
-                    ref={echarts_react}
-                    option={getOption()}
-                    className={s.chart}
-                  />
-                ) : (
-                  <div>Нет данных</div>
-                )}
+                {props.levVals ? <ReactEcharts ref={echarts_react} option={getOption()} className={s.chart} /> : <div>Нет данных</div>}
               </MDBCardText>
             )}
           </MDBCardBody>

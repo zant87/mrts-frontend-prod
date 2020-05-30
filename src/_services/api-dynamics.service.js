@@ -40,7 +40,7 @@ export const DynamicsAPI = {
         scenario +
         "&year.equals=" +
         year +
-        "&quarterCode.equals=" +
+        "&quarterId.equals=" +
         quarter +
         indsUrl;
     }

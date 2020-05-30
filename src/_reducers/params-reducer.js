@@ -229,23 +229,11 @@ export const getParams = (checkedFormsId) => {
   };
 };
 
-export const getParamValues = (
-  paramId,
-  frequencyId,
-  yearStart,
-  yearEnd,
-  quarterId
-) => {
+export const getParamValues = (paramId, frequencyId, yearStart, yearEnd, quarterId) => {
   return (dispatch) => {
     dispatch(toogleIsFetchingParamData(true));
     dispatch(setParamId(paramId));
-    ParamsAPI.getParamData(
-      paramId,
-      frequencyId,
-      yearStart,
-      yearEnd,
-      quarterId
-    ).then((data) => {
+    ParamsAPI.getParamData(paramId, frequencyId, yearStart, yearEnd, quarterId).then((data) => {
       dispatch(setParamValues(data));
       dispatch(toogleIsFetchingParamData(false));
     });
