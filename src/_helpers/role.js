@@ -1,5 +1,5 @@
 export const Role = {
-    Admin: 'mrts-admin',
-    Analyst: 'mrts-analyst',
-    Operator: 'mrts-operator'
+    Admin: 'mrts-admins',
+    Analyst: 'mrts-analysts',
+    Operator: 'mrts-operators'
 };

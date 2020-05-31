@@ -30,6 +30,7 @@ class App extends React.Component {
 
     this.state = {
       currentUser: null,
+      fullname: '',
       isAdmin: false,
       isOperator: false,
       isAnalyst: false,
@@ -65,14 +66,23 @@ class App extends React.Component {
         isIconShow: "block",
       });
     }
+
     authenticationService.currentUser.subscribe((x) =>
       this.setState({
         currentUser: x,
-        isAdmin: x && x.role === Role.Admin,
-        isAnalyst: x && x.role === Role.Analyst,
-        isOperator: x && x.role === Role.Operator,
+        fullname: x.fullname
       })
     );
+
+    authenticationService.currentUserRole.subscribe((x) =>
+        this.setState({
+          currentUserRole: x,
+          isAdmin: x && x.role === Role.Admin,
+          isAnalyst: x && x.role === Role.Analyst,
+          isOperator: x && x.role === Role.Operator,
+        })
+    );
+
   }
 
   componentWillUnmount() {
@@ -80,8 +90,8 @@ class App extends React.Component {
   }
 
   logout() {
-    authenticationService.logout();
-    history.push("/login");
+    // authenticationService.logout();
+    // history.push("/login");
   }
 
   toggleCollapse = (collapseID) => () =>
@@ -134,7 +144,11 @@ class App extends React.Component {
   };
 
   render() {
-    const { currentUser, isAdmin, isOperator, isAnalyst, collapseID } = this.state;
+    const { currentUser, fullname, isAdmin, isOperator, isAnalyst, collapseID, currentUserRole } = this.state;
+
+    console.log('Данные о пользователе', currentUser);
+    console.log('Роль пользователя', currentUserRole);
+
     return (
       <Provider store={store}>
         <Router history={history}>
@@ -158,9 +172,21 @@ class App extends React.Component {
                           </strong>
                         </div>
                         <div>
-                          <span style={{ color: "#898989", fontSize: "12px" }}>
-                            Мониторинг реализации транспортной стратегии Российской Федерации (АРМ ТЕКУЩИЙ)
-                          </span>
+                          {isAdmin && (
+                              <span style={{ color: "#898989", fontSize: "12px" }}>
+                                Мониторинг реализации транспортной стратегии Российской Федерации (АРМ Администратора)
+                              </span>
+                          )}
+                          {isOperator && (
+                              <span style={{ color: "#898989", fontSize: "12px" }}>
+                                Мониторинг реализации транспортной стратегии Российской Федерации (АРМ Оператора)
+                              </span>
+                          )}
+                          {isAnalyst && (
+                              <span style={{ color: "#898989", fontSize: "12px" }}>
+                                Мониторинг реализации транспортной стратегии Российской Федерации (АРМ Аналитика)
+                              </span>
+                          )}
                         </div>
                       </MDBCol>
                       <MDBCol style={{ marginTop: "15px" }}>
@@ -172,7 +198,7 @@ class App extends React.Component {
                                   <MDBIcon icon="user-alt" size="2x" style={{ color: "#117db0", float: "left" }} />
                                 </a>
                               </div>
-                              <div style={{ display: this.state.isUserShow }}>Фамилия Имя Отчество</div>
+                              <div style={{ display: this.state.isUserShow }}>{fullname}</div>
                             </MDBCol>
                             <MDBCol>
                               <div style={{ float: "right", fontWeight: "bold", display: this.state.isSupportShow }}>
@@ -369,13 +395,13 @@ class App extends React.Component {
                               </MDBNavLink>
                             </MDBNavItem>
                           )}
+                          {/*<MDBNavItem>*/}
+                          {/*  <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/swagger">*/}
+                          {/*    <strong>Swagger</strong>*/}
+                          {/*  </MDBNavLink>*/}
+                          {/*</MDBNavItem>*/}
                           <MDBNavItem>
-                            <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/swagger">
-                              <strong>Swagger</strong>
-                            </MDBNavLink>
-                          </MDBNavItem>
-                          <MDBNavItem>
-                            <a className="nav-link" onClick={this.logout}>
+                            <a className="nav-link" href="https://mrts-test.asutk.ru/logout">
                               <strong>Выход</strong>
                             </a>
                           </MDBNavItem>

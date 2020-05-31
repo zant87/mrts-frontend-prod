@@ -44,7 +44,6 @@ import OperatorReportFinancingPage from "@/Operator/Report/Financing";
 import OperatorReportAppropriationsPage from "@/Operator/Report/Appropriations";
 import OperatorReportExtraBudgetPage from "@/Operator/Report/ExtraBudget";
 import OperatorReportSourcesPage from "@/Operator/Report/Sources";
-import SwaggerPage from "@/Common/Swagger";
 import OperatorPlanResourcesEditPage from "../Operator/Plan/ResourcesEdit";
 import OperatorPlanIndicatorsEditPage from "../Operator/Plan/IndicatorsEdit";
 import AnalystReportPage from "../Analyst/Reports/Report";
@@ -274,8 +273,11 @@ export const AppRoutes = () => {
 
       {/*Общие страницы*/}
       <PrivateRoute exact path="/" component={HomePage} />
-      <PrivateRoute exact path="/swagger" component={SwaggerPage} />
-      <Route path="/login" component={LoginPage} />
+      <PrivateRoute exact path="/operator" component={HomePage} />
+      <PrivateRoute exact path="/analyst" component={HomePage} />
+      <PrivateRoute exact path="/admin" component={HomePage} />
+      {/*<PrivateRoute exact path="/swagger" component={SwaggerPage} />*/}
+      {/*<Route path="/login" component={LoginPage} />*/}
     </Fragment>
   );
 };
