@@ -20,7 +20,7 @@ import {
   toast,
   ToastContainer,
   MDBRow,
-  MDBIcon, MDBDropdownItem, MDBDropdownMenu, MDBDropdown, MDBDropdownToggle,
+  MDBIcon, MDBDropdownItem, MDBDropdownMenu, MDBDropdown, MDBDropdownToggle, MDBTooltip,
 } from "mdbreact";
 import { AppRoutes } from "@/Common/AppRoutes";
 import cookie from 'react-cookies'
@@ -158,148 +158,23 @@ class App extends React.Component {
   render() {
     const { currentUser, fullname, isAdmin, isOperator, isAnalyst, collapseID, currentUserRole, isDevMode } = this.state;
 
-    // console.log('Данные о пользователе', currentUser);
-    // console.log('Роль пользователя', currentUserRole);
-
     return (
       <Provider store={store}>
         <Router history={history}>
-          <div id="test">
-            <MDBContainer fluid className="app" onScroll={this.handleScroll}>
-              <MDBRow
-                style={{ height: this.state.marginTop }}
-
-                //className="mrts-nav"
-              >
-                <MDBCol md="12" style={{ padding: "0px", position: "fixed", zIndex: "9999999" }}>
-                  <MDBContainer fluid style={{ height: "90px", width: "100%", display: this.state.isHeadershow }}>
-                    <MDBRow>
-                      <MDBCol style={{ fontWeight: "bold", minWidth: "500px", marginTop: "15px" }}>
-                        <img src={MintransLogo} style={{ width: "60px", marginRight: "20px", float: "left" }} alt="" />
-                        <div style={{ marginLeft: "30px" }}>
-                          <strong>
-                            <span style={{ color: "#000", fontSize: "12px", letterSpacing: "0.5 pt" }}>
-                              ИНФОРМАЦИОННО-АНАЛИТИЧЕСКАЯ СИСТЕМА РЕГУЛИРОВАНИЯ НА ТРАНСПОРТЕ
-                            </span>
-                          </strong>
-                        </div>
-                        <div>
-                          {isAdmin && (
-                              <span style={{ color: "#898989", fontSize: "12px" }}>
-                                Мониторинг реализации транспортной стратегии Российской Федерации (АРМ Администратора)
-                              </span>
-                          )}
-                          {isOperator && (
-                              <span style={{ color: "#898989", fontSize: "12px" }}>
-                                Мониторинг реализации транспортной стратегии Российской Федерации (АРМ Оператора)
-                              </span>
-                          )}
-                          {isAnalyst && (
-                              <span style={{ color: "#898989", fontSize: "12px" }}>
-                                Мониторинг реализации транспортной стратегии Российской Федерации (АРМ Аналитика)
-                              </span>
-                          )}
-                        </div>
-                      </MDBCol>
-                      <MDBCol style={{ marginTop: "15px" }}>
-                        <MDBContainer style={{ display: this.state.isIconShow }}>
-                          <MDBRow>
-                            <MDBCol style={{ marginTop: "10px", fontSize: "14px" }}>
-                              <div style={{ width: "40px", height: "100%", float: "left" }}>
-                                <a onClick={this.logout}>
-                                  <MDBIcon icon="user-alt" size="2x" style={{ color: "#117db0", float: "left" }} />
-                                </a>
-                              </div>
-                              <div style={{ display: this.state.isUserShow }}>{fullname}</div>
-                            </MDBCol>
-                            <MDBCol>
-                              <div style={{ float: "right", fontWeight: "bold", display: this.state.isSupportShow }}>
-                                <strong>
-                                  <span style={{ fontSize: "12px" }}>
-                                    <a href="http://support.asutk.ru" style={{ color: "#117db0" }}>
-                                      Техническая поддержка
-                                    </a>
-                                  </span>
-                                </strong>
-                                <br />
-                                <span style={{ fontSize: "12px" }}>+7 (495) 380-21-53</span>
-                              </div>
-                              <div style={{ width: "40px", height: "100%", float: "right" }}>
-                                <a href="http://support.asutk.ru" style={{ color: "#117db0" }}>
-                                  <MDBIcon icon="headphones" size="2x" style={{ color: "#117db0", float: "left" }} />
-                                </a>
-                              </div>
-                            </MDBCol>
-                          </MDBRow>
-                        </MDBContainer>
-                      </MDBCol>
-                    </MDBRow>
-                  </MDBContainer>
-                  {/* <MDBNavbar
-                    color="white"
-                    //dark
-                    tag="div"
-                    light
-                    expand="md"
-                    //fixed="top"
-                    style={{ width: "100%", margin: "0", boxShadow: "none", display: this.state.isHeadershow }}
-                    scrolling
-                  >
-                    <MDBNavbarBrand className="py-0 font-weight-bold" style={{ width: "100%" }}>
-                      <div style={{ marginLeft: "10px", float: "left", paddingLeft: "0px" }}>
-                        <img src={MintransLogo} style={{ width: "60px", marginRight: "20px", float: "left" }} alt="" />
-                        <div style={{ marginLeft: "30px" }}>
-                          <strong>
-                            <span style={{ color: "#000", fontSize: "12px", letterSpacing: "0.5 pt" }}>
-                              ИНФОРМАЦИОННО-АНАЛИТИЧЕСКАЯ СИСТЕМА РЕГУЛИРОВАНИЯ НА ТРАНСПОРТЕ
-                            </span>
-                          </strong>
-                        </div>
-                        <div>
-                          <span style={{ color: "#898989", fontSize: "12px" }}>
-                            Мониторинг реализации транспортной стратегии Российской Федерации
-                          </span>
-                        </div>
-                      </div>
-                      
-                      <div style={{ marginLeft: "10px", float: "right", paddingLeft: "0px", color: "#117db0" }}>
-                       
-                        <MDBIcon icon="user-alt" size="2x" style={{ color: "#117db0", float: "left" }} />{" "}
-                        <div>Добрый день, Фамилия Имя</div>
-                        <div>
-                          <strong>
-                            <span style={{ fontSize: "12px" }}>
-                              <a href="http://support.asutk.ru" style={{ color: "#117db0" }}>
-                                Техническая поддержка
-                              </a>
-                            </span>
-                          </strong>
-                          <br />
-                          <span style={{ fontSize: "12px" }}>+7 (495) 380-21-53</span>
-                        </div>
-                      </div>
-                    </MDBNavbarBrand>
-                  </MDBNavbar> */}
+          <div>
+            <MDBContainer fluid className="app">
+              <MDBRow className="mrts-nav">
+                <MDBCol md="12">
                   {currentUser && (
-                    <MDBNavbar
-                      color="special-color"
-                      //color="grey lighten-3"
-                      dark
-                      //light
-                      expand="xl"
-                      //fixed="top"
-                      scrolling
-                      style={{
-                        boxShadow: "none",
-
-                        width: "100%",
-                      }}
-                    >
+                      <MDBNavbar
+                          color="special-color"
+                          dark
+                          expand="md"
+                          fixed="top"
+                          scrolling>
                       <MDBNavbarBrand className="py-0 font-weight-bold">
-                        <img src={MRTSLogo} style={{ width: "30px", marginRight: "10px" }} alt="" />
-                        <strong className="white-text">
-                          МР<span style={{ color: "#f28d37" }}>ТС</span>
-                        </strong>
+                        <img src={MintransLogo} style={{ width: "45px", marginRight: "10px" }} alt="" />
+                        <strong className="white-text">МРТС РФ</strong>
                       </MDBNavbarBrand>
                       <MDBNavbarToggler onClick={this.toggleCollapse("navbarCollapse")} />
                       <MDBCollapse id="navbarCollapse" isOpen={collapseID} navbar>
@@ -421,7 +296,7 @@ class App extends React.Component {
                               <MDBNavItem>
                                 <MDBDropdown>
                                   <MDBDropdownToggle nav caret>
-                                    <MDBIcon icon="user" className="mr-1" />
+                                    <MDBIcon icon="user" className="mr-1"/>
                                   </MDBDropdownToggle>
                                   <MDBDropdownMenu className="dropdown-default" right>
                                     <MDBDropdownItem onClick={this.setAdminRole}>Администратор</MDBDropdownItem>
@@ -431,6 +306,17 @@ class App extends React.Component {
                                 </MDBDropdown>
                               </MDBNavItem>
                           )}
+
+                          <MDBNavItem>
+                            <MDBTooltip material placement="bottom" clickable>
+                              <MDBNavLink to='#'>
+                                <MDBIcon icon="headphones-alt" className="mr-1" />
+                              </MDBNavLink>
+                              <span>
+                                <em>Техническая поддержка</em><br/><b>+7 (495) 380-21-53</b>
+                              </span>
+                            </MDBTooltip>
+                          </MDBNavItem>
 
                           {isDevMode && (
                           <MDBNavItem>
@@ -457,7 +343,7 @@ class App extends React.Component {
 
               <ToastContainer position="top-right" autoClose={3000} closeButton={false} newestOnTop={false} rtl={false}></ToastContainer>
 
-              <AppRoutes style={{ marginTop: "100px", height: "100%" }} />
+              <AppRoutes />
 
               {currentUser && <Footer />}
             </MDBContainer>

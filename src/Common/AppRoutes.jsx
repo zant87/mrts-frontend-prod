@@ -69,6 +69,7 @@ import OperatorCalculationValuesPage from "../Operator/Calculation/Values";
 import OperatorCalculationLevelsPage from "../Operator/Calculation/Levels";
 import OperatorCalculationNavigation from "@/Operator/Calculation/Navigation";
 import loadable from "react-loadable";
+import SwaggerPage from "./Swagger";
 
 const AsyncAdminStructureNavigation = loadable({
     loader: () => import("../Admin/Structure/Navigation"),
@@ -337,7 +338,7 @@ export const AppRoutes = () => {
             <PrivateRoute exact path="/operator" component={HomePage} />
             <PrivateRoute exact path="/analyst" component={HomePage} />
             <PrivateRoute exact path="/admin" component={HomePage} />
-            {/*<PrivateRoute exact path="/swagger" component={SwaggerPage} />*/}
+            <PrivateRoute exact path="/swagger" component={SwaggerPage} />
             {/*<Route path="/login" component={LoginPage} />*/}
         </Fragment>
     );
