@@ -1,34 +1,102 @@
 import {BehaviorSubject} from 'rxjs';
-
-import config from 'config';
-import {handleResponse} from '@/_helpers';
-import appAxios from "./appAxios";
 import { Base64 } from 'js-base64';
 import cookie from 'react-cookies'
+import {Role} from "../_helpers";
+import { history } from "@/_helpers";
+
+if (process.env.NODE_ENV === "production") {
+    console.log('Production Mode Is On');
+}
+else {
+    console.log('Development Mode Is On');
+
+    const data = {
+        id: 'userid',
+        name: 'Администратор',
+        surname: 'МРТС',
+        fullname: 'Адмиристратор МРТС',
+        roles: 'mrts-admins',
+        email: 'email@email.com',
+    };
+
+    let cookies = cookie.select(/ser/g);
+
+    if (Object.entries(cookies).length === 0) {
+        console.log('Setting Development Mode Cookies');
+        cookie.save('UserInfo', Base64.encode( JSON.stringify(data)));
+        cookie.save('UserRole', Base64.encode( JSON.stringify({role: 'mrts-admins'})));
+    }
+}
 
 const currentUserSubject = new BehaviorSubject(JSON.parse(Base64.decode(cookie.load('UserInfo'))));
 const currentUserRole = new BehaviorSubject(JSON.parse(Base64.decode(cookie.load('UserRole'))));
 
-/*
-
-            const data = {
-                id: req.user['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'],
-                name: req.user['http://schemas.xmlsoap.org/claims/CommonName'],
-                surname: req.user['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname'],
-                roles: req.user['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'],
-                email: req.user.email
-            };
-
- */
-
 export const authenticationService = {
     login,
     logout,
+    setRole,
     currentUser: currentUserSubject.asObservable(),
     currentUserRole: currentUserRole.asObservable(),
     get currentUserValue () { return currentUserSubject.value },
     get currentUserRoleValue () { return currentUserRole.value },
 };
+
+function setRole(role) {
+    console.log('Switching Role to ', role);
+    let data;
+    switch (role) {
+        case Role.Admin:
+
+            data = {
+                id: 'userid_admin',
+                name: 'Администратор',
+                surname: 'МРТС',
+                fullname: 'Адмиристратор МРТС',
+                roles: 'mrts-admins',
+                email: 'email@email.com',
+            };
+
+            cookie.save('UserInfo', Base64.encode( JSON.stringify(data)));
+            cookie.save('UserRole', Base64.encode(JSON.stringify({role: Role.Admin})));
+            history.push(`/`);
+            window.location.reload();
+            break;
+        case Role.Analyst:
+
+             data = {
+                id: 'userid_analyst',
+                name: 'Аналитик',
+                surname: 'МРТС',
+                fullname: 'Аналитик МРТС',
+                roles: 'mrts-analysts',
+                email: 'email@email.com',
+            };
+
+            cookie.save('UserInfo', Base64.encode( JSON.stringify(data)));
+            cookie.save('UserRole', Base64.encode(JSON.stringify({role: Role.Analyst})));
+            history.push(`/`);
+            window.location.reload();
+            break;
+        case Role.Operator:
+
+            data = {
+                id: 'userid_operator',
+                name: 'Оператор',
+                surname: 'МРТС',
+                fullname: 'Оператор МРТС',
+                roles: 'mrts-operators',
+                email: 'email@email.com',
+            };
+
+            cookie.save('UserInfo', Base64.encode( JSON.stringify(data)));
+            cookie.save('UserRole', Base64.encode(JSON.stringify({role: Role.Operator})));
+            history.push(`/`);
+            window.location.reload();
+            break;
+        default:
+            console.log('No Role Defined');
+    }
+}
 
 function login(username, password) {
 

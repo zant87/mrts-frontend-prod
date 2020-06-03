@@ -1,3 +1,4 @@
+const webpack = require("webpack");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ASSET_PATH = process.env.ASSET_PATH || "/";
@@ -51,19 +52,18 @@ const config = {
         use: ["style-loader", "css-loader"],
         exclude: /\.module\.css$/,
       },
-
-      { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader" },
-      { test: /\.(woff|woff2)$/, loader: "url-loader?prefix=font/&limit=5000" },
-      {
-        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-        loader: "url-loader?limit=10000&mimetype=application/octet-stream",
-      },
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
         issuer: {
           test: /\.jsx?$/,
         },
         use: ["babel-loader", "@svgr/webpack", "url-loader"],
+      },
+      { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader" },
+      { test: /\.(woff|woff2)$/, loader: "url-loader?prefix=font/&limit=5000" },
+      {
+        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+        loader: "url-loader?limit=10000&mimetype=application/octet-stream",
       },
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,

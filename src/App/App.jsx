@@ -20,9 +20,10 @@ import {
   toast,
   ToastContainer,
   MDBRow,
-  MDBIcon,
+  MDBIcon, MDBDropdownItem, MDBDropdownMenu, MDBDropdown, MDBDropdownToggle,
 } from "mdbreact";
 import { AppRoutes } from "@/Common/AppRoutes";
+import cookie from 'react-cookies'
 
 class App extends React.Component {
   constructor(props) {
@@ -41,7 +42,7 @@ class App extends React.Component {
       isSupportShow: "block",
       isIconShow: "block",
     };
-    // this.handleScroll = this.handleScroll.bind(this);
+
   }
 
   componentDidMount() {
@@ -139,15 +140,25 @@ class App extends React.Component {
         marginTop: "160px",
       });
     }
-    //console.log(window);
-    //console.log(document.body.clientHeight);
   };
+
+  setAdminRole = () => {
+    authenticationService.setRole(Role.Admin);
+  }
+
+  setOperatorRole = () => {
+    authenticationService.setRole(Role.Operator);
+  }
+
+  setAnalystRole = () => {
+    authenticationService.setRole(Role.Analyst);
+  }
 
   render() {
     const { currentUser, fullname, isAdmin, isOperator, isAnalyst, collapseID, currentUserRole } = this.state;
 
-    console.log('Данные о пользователе', currentUser);
-    console.log('Роль пользователя', currentUserRole);
+    // console.log('Данные о пользователе', currentUser);
+    // console.log('Роль пользователя', currentUserRole);
 
     return (
       <Provider store={store}>
@@ -400,6 +411,18 @@ class App extends React.Component {
                           {/*    <strong>Swagger</strong>*/}
                           {/*  </MDBNavLink>*/}
                           {/*</MDBNavItem>*/}
+                          <MDBNavItem>
+                            <MDBDropdown>
+                              <MDBDropdownToggle nav caret>
+                                <MDBIcon icon="user" className="mr-1" />
+                              </MDBDropdownToggle>
+                              <MDBDropdownMenu className="dropdown-default" right>
+                                <MDBDropdownItem onClick={this.setAdminRole}>Администратор</MDBDropdownItem>
+                                <MDBDropdownItem onClick={this.setAnalystRole}>Аналитик</MDBDropdownItem>
+                                <MDBDropdownItem onClick={this.setOperatorRole}>Оператор</MDBDropdownItem>
+                              </MDBDropdownMenu>
+                            </MDBDropdown>
+                          </MDBNavItem>
                           <MDBNavItem>
                             <a className="nav-link" href="https://mrts-test.asutk.ru/logout">
                               <strong>Выход</strong>

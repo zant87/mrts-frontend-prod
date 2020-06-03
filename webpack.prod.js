@@ -94,6 +94,7 @@ const config = {
   },
   optimization: {
     splitChunks: {
+      chunks: 'all',
       cacheGroups: {
         default: false,
         vendors: false,
