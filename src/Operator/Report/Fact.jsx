@@ -330,7 +330,7 @@ export default class OperatorReportFactPage extends React.Component {
                   <MDBTabPane tabId="2" role="tabpanel">
                      <MDBContainer fluid>
                        <MDBRow md={'18'} center className='my-1 mx-auto'>
-                            <PivotGrid id="budgetPivot"
+                            <PivotGrid id="factPivot"
                               dataSource={new PivotGridDataSource({
                                 fields: [{
                                   caption: '#',
@@ -344,12 +344,6 @@ export default class OperatorReportFactPage extends React.Component {
                                   dataField: 'dataProviderName',
                                   dataType: 'string',
                                   width: 150,
-                                  area: 'row',
-                                  expanded: true
-                                }, {
-                                  caption: '',
-                                  dataField: 'plan',
-                                  dataType: 'string',
                                   area: 'row',
                                   expanded: true
                                 }, {

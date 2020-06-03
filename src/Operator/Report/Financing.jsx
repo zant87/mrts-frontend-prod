@@ -9,7 +9,8 @@ import ButtonUpdateColumn from "../../_components/ButtonUpdateColumn";
 
 import PivotGrid, {
     FieldChooser,
-    Export
+    Export,
+    FieldPanel
 } from 'devextreme-react/pivot-grid';
 import PivotGridDataSource from 'devextreme/ui/pivot_grid/data_source';
 import 'devextreme/dist/css/dx.common.css';
@@ -138,12 +139,11 @@ export default class OperatorReportFinancingPage extends React.Component {
                     </MDBNavLink>
                   </MDBNavItem>
                 </MDBNav>
-
                 <MDBTabContent activeItem={this.state.activeItem} >
                   <MDBTabPane tabId="1" role="tabpanel">
                             <MDBContainer fluid>
                             <MDBRow center>
-                                <MDBCol md={'18'} className='my-5 mx-auto'>
+                                <MDBCol md={'12'} className='my-5 mx-auto'>
                                     {isLoading && <MDBSpinner multicolor />}
                                     <MUIDataTable
                                         title={"Бюджетное финансирование транспорта"}
@@ -155,9 +155,71 @@ export default class OperatorReportFinancingPage extends React.Component {
                             </MDBRow>
                      </MDBContainer>
                   </MDBTabPane>
+                  
                   <MDBTabPane tabId="2" role="tabpanel">
                      <MDBContainer fluid>
                        <MDBRow md={'18'} center className='my-1 mx-auto'>
+                          <PivotGrid id="financingPivot"
+                              dataSource={new PivotGridDataSource({
+                                fields: [{
+                                  caption: '#',
+                                  width: 120,
+                                  dataField: 'id',
+                                  area: 'row',
+                                  expanded: true,
+                                  sorted: true
+                                }, {
+                                  caption: 'documentId',
+                                  width: 120,
+                                  dataField: 'documentId',
+                                  area: 'row',
+                                  expanded: true,
+                                  sorted: true
+                                },{
+                                  caption: 'Направление расходов',
+                                  dataField: 'expenditureName',
+                                  dataType: 'string',
+                                  width: 150,
+                                  area: 'row',
+                                  expanded: true
+                                },{
+                                  caption: 'year',
+                                  dataField: 'Отчетный год',
+                                  dataType: 'number',
+                                  area: 'row',
+                                  expanded: true
+                                }, {
+                                  caption: 'Запланировано, млн. руб.',
+                                  dataField: 'plan',
+                                  dataType: 'number',
+                                  area: 'row',
+                                  format: "#,###,###,##0.##",
+                                  expanded: true
+                                }, {
+                                  caption: 'Кассовое исполнение, млн. руб.',
+                                  dataField: 'fact',
+                                  dataType: 'number',
+                                  format: "#,###,###,##0.##",                
+                                  area: 'data',
+                                  expanded: true
+                                }],
+                                store: data
+                              })}
+                              allowSortingBySummary={true}
+                              allowFiltering={true}
+                              allowSorting={true}
+                              allowExpandAll={true}
+                              height={440}
+                              showBorders={true}
+                              showColumnTotals={false}
+                              showColumnGrandTotals={false}
+                              showRowTotals={false}
+                              showRowGrandTotals={false}
+                               >
+                              <FieldPanel showColumnFields={true} />
+                              <FieldChooser enabled={true} />
+                              <Export enabled={true} fileName="Фактические значения показателей" allowExportSelectedData={true} />
+                            </PivotGrid>
                           
 
 

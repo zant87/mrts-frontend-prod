@@ -5,7 +5,8 @@ import { MDBCol, MDBContainer, MDBRow, MDBSpinner, MDBTabPane, MDBTabContent, MD
 
 import PivotGrid, {
     FieldChooser,
-    Export
+    Export,
+    FieldPanel
 } from 'devextreme-react/pivot-grid';
 import PivotGridDataSource from 'devextreme/ui/pivot_grid/data_source';
 import 'devextreme/dist/css/dx.common.css';
