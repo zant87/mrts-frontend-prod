@@ -309,7 +309,6 @@ export default class OperatorReportFactPage extends React.Component {
                     </MDBNavLink>
                   </MDBNavItem>
                 </MDBNav>
-
                 <MDBTabContent activeItem={this.state.activeItem} >
                   <MDBTabPane tabId="1" role="tabpanel">
                             <MDBContainer fluid>
