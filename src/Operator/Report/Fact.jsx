@@ -5,7 +5,8 @@ import { MDBCol, MDBContainer, MDBRow, MDBSpinner, MDBTabPane, MDBTabContent, MD
 
 import PivotGrid, {
     FieldChooser,
-    Export
+    Export,
+    FieldPanel
 } from 'devextreme-react/pivot-grid';
 import PivotGridDataSource from 'devextreme/ui/pivot_grid/data_source';
 import 'devextreme/dist/css/dx.common.css';
@@ -309,11 +310,12 @@ export default class OperatorReportFactPage extends React.Component {
                     </MDBNavLink>
                   </MDBNavItem>
                 </MDBNav>
+
                 <MDBTabContent activeItem={this.state.activeItem} >
                   <MDBTabPane tabId="1" role="tabpanel">
                             <MDBContainer fluid>
                             <MDBRow center>
-                                <MDBCol md={'18'} className='my-1 mx-auto'>
+                                <MDBCol md={'12'} className='my-5 mx-auto'>
                                     {isLoading && <MDBSpinner multicolor />}
                                     <MUIDataTable
                                         title={ "Фактические значения показателей" }
@@ -328,18 +330,82 @@ export default class OperatorReportFactPage extends React.Component {
                   <MDBTabPane tabId="2" role="tabpanel">
                      <MDBContainer fluid>
                        <MDBRow md={'18'} center className='my-1 mx-auto'>
-                            <PivotGrid
-                                id="sales"
-                                dataSource={dataSource}
-                                allowSortingBySummary={true}
-                                allowSorting={true}
-                                allowFiltering={true}
-                                allowExpandAll={true}
-                                height={440}
-                                showBorders={true}
-                            >
-                                <Export enabled={true} fileName="Sales"/>
-                                <FieldChooser enabled={false}/>
+                            <PivotGrid id="budgetPivot"
+                              dataSource={new PivotGridDataSource({
+                                fields: [{
+                                  caption: '#',
+                                  width: 120,
+                                  dataField: 'id',
+                                  area: 'row',
+                                  expanded: true,
+                                  sorted: true
+                                }, {
+                                  caption: 'Источник данных',
+                                  dataField: 'dataProviderName',
+                                  dataType: 'string',
+                                  width: 150,
+                                  area: 'row',
+                                  expanded: true
+                                }, {
+                                  caption: '',
+                                  dataField: 'plan',
+                                  dataType: 'string',
+                                  area: 'row',
+                                  expanded: true
+                                }, {
+                                  caption: 'Вид транспорта',
+                                  dataField: 'transportTypeName',
+                                  dataType: 'string',                
+                                  area: 'row',
+                                  expanded: true
+                                }, {
+                                  caption: 'formCode',
+                                  dataField: 'Форма',
+                                  dataType: 'string',
+                                  area: 'row',
+                                  expanded: true
+                                }, {
+                                  caption: 'Показатель',
+                                  dataField: 'parameterName',
+                                  dataType: 'string',
+                                  area: 'row',
+                                }, {
+                                  caption: 'Отчетный год',
+                                  dataField: 'year',
+                                  dataType: 'string',
+                                  area: 'row',
+                                }, {
+                                  caption: 'Отчетный квартал',
+                                  dataField: 'quarterName',
+                                  dataType: 'string',
+                                  area: 'row',
+                                }, {
+                                  caption: 'Единица измерения',
+                                  dataField: 'okeiName',
+                                  dataType: 'string',
+                                  area: 'row',
+                                }, {
+                                  caption: 'Значение показателя',
+                                  dataField: 'value',
+                                  dataType: 'string',
+                                  area: 'data',
+                                }],
+                                store: data
+                              })}
+                              allowSortingBySummary={true}
+                              allowFiltering={true}
+                              allowSorting={true}
+                              allowExpandAll={true}
+                              height={440}
+                              showBorders={true}
+                              showColumnTotals={false}
+                              showColumnGrandTotals={false}
+                              showRowTotals={false}
+                              showRowGrandTotals={false}
+                               >
+                              <FieldPanel showColumnFields={true} />
+                              <FieldChooser enabled={true} />
+                              <Export enabled={true} fileName="Фактические значения показателей" allowExportSelectedData={true} />
                             </PivotGrid>
                        </MDBRow>
                      </MDBContainer>
