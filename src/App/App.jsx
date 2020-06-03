@@ -41,6 +41,7 @@ class App extends React.Component {
       isUserShow: "block",
       isSupportShow: "block",
       isIconShow: "block",
+      isDevMode: (process.env.NODE_ENV !== "production")
     };
 
   }
@@ -155,7 +156,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { currentUser, fullname, isAdmin, isOperator, isAnalyst, collapseID, currentUserRole } = this.state;
+    const { currentUser, fullname, isAdmin, isOperator, isAnalyst, collapseID, currentUserRole, isDevMode } = this.state;
 
     // console.log('Данные о пользователе', currentUser);
     // console.log('Роль пользователя', currentUserRole);
@@ -399,6 +400,7 @@ class App extends React.Component {
                               </MDBNavLink>
                             </MDBNavItem>
                           )}
+
                           {isOperator && (
                             <MDBNavItem>
                               <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/operator/calculation">
@@ -406,28 +408,46 @@ class App extends React.Component {
                               </MDBNavLink>
                             </MDBNavItem>
                           )}
-                          {/*<MDBNavItem>*/}
-                          {/*  <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/swagger">*/}
-                          {/*    <strong>Swagger</strong>*/}
-                          {/*  </MDBNavLink>*/}
-                          {/*</MDBNavItem>*/}
+
+                          {isDevMode && (
                           <MDBNavItem>
-                            <MDBDropdown>
-                              <MDBDropdownToggle nav caret>
-                                <MDBIcon icon="user" className="mr-1" />
-                              </MDBDropdownToggle>
-                              <MDBDropdownMenu className="dropdown-default" right>
-                                <MDBDropdownItem onClick={this.setAdminRole}>Администратор</MDBDropdownItem>
-                                <MDBDropdownItem onClick={this.setAnalystRole}>Аналитик</MDBDropdownItem>
-                                <MDBDropdownItem onClick={this.setOperatorRole}>Оператор</MDBDropdownItem>
-                              </MDBDropdownMenu>
-                            </MDBDropdown>
+                            <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/swagger">
+                              <strong>Swagger</strong>
+                            </MDBNavLink>
                           </MDBNavItem>
+                          )}
+
+                          {isDevMode && (
+                              <MDBNavItem>
+                                <MDBDropdown>
+                                  <MDBDropdownToggle nav caret>
+                                    <MDBIcon icon="user" className="mr-1" />
+                                  </MDBDropdownToggle>
+                                  <MDBDropdownMenu className="dropdown-default" right>
+                                    <MDBDropdownItem onClick={this.setAdminRole}>Администратор</MDBDropdownItem>
+                                    <MDBDropdownItem onClick={this.setAnalystRole}>Аналитик</MDBDropdownItem>
+                                    <MDBDropdownItem onClick={this.setOperatorRole}>Оператор</MDBDropdownItem>
+                                  </MDBDropdownMenu>
+                                </MDBDropdown>
+                              </MDBNavItem>
+                          )}
+
+                          {isDevMode && (
                           <MDBNavItem>
-                            <a className="nav-link" href="https://mrts-test.asutk.ru/logout">
+                            <a className="nav-link" href="#">
                               <strong>Выход</strong>
                             </a>
                           </MDBNavItem>
+                          )}
+
+                          {!isDevMode && (
+                              <MDBNavItem>
+                                <a className="nav-link" href="https://mrts-test.asutk.ru/logout">
+                                  <strong>Выход</strong>
+                                </a>
+                              </MDBNavItem>
+                          )}
+
                         </MDBNavbarNav>
                       </MDBCollapse>
                     </MDBNavbar>
