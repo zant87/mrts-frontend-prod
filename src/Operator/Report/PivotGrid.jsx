@@ -31,24 +31,22 @@ export default class OperatorReportPivotGridPage extends React.Component {
                     data: data, isLoading: false, dataSource:
                         new PivotGridDataSource({
                             fields: [
-                                // {
-                                //     caption: 'Источник данных',
-                                //     width: 120,
-                                //     dataField: 'dataProviderName',
-                                //     area: 'row'
-                                // },
-                                // {
-                                //     caption: 'Вид транспорта',
-                                //     width: 120,
-                                //     dataField: 'transportTypeName',
-                                //     area: 'row'
-                                // },
-                                // {
-                                //     caption: 'Форма',
-                                //     width: 120,
-                                //     dataField: 'formCode',
-                                //     area: 'row'
-                                // },
+                                {
+                                    caption: 'Источник данных',
+                                    width: 120,
+                                    dataField: 'dataProviderName',
+
+                                },
+                                {
+                                    caption: 'Вид транспорта',
+                                    width: 120,
+                                    dataField: 'transportTypeName',
+                                },
+                                {
+                                    caption: 'Форма',
+                                    width: 120,
+                                    dataField: 'formCode',
+                                },
                                 {
                                     caption: 'Показатель',
                                     dataField: 'parameterName',
@@ -71,7 +69,9 @@ export default class OperatorReportPivotGridPage extends React.Component {
                                     dataField: 'value',
                                     dataType: 'number',
                                     summaryType: 'sum',
-                                    area: 'data'
+                                    area: 'data',
+                                    showColumnTotals: false,
+                                    showColumnGrandTotals: false
                                 }
                             ],
                             store: data
@@ -89,13 +89,17 @@ export default class OperatorReportPivotGridPage extends React.Component {
                 <MDBRow center className='my-5'>
                     {isLoading && <MDBSpinner multicolor/>}
                     <PivotGrid
-                        id="sales"
+                        id="fact"
                         dataSource={dataSource}
-                        // allowSortingBySummary={true}
                         allowSorting={true}
                         allowFiltering={true}
                         allowExpandAll={true}
-                        // height={100}
+                        loadPanel={{enabled: true}}
+                        showColumnGrandTotals={false}
+                        showColumnTotals={false}
+                        height={600}
+                        showRowGrandTotals={false}
+                        showRowTotals={false}
                         showBorders={true}>
                         <Export enabled={true} fileName="Фактические значения показателей"/>
                         <FieldChooser enabled={true}/>
