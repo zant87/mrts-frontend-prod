@@ -70,6 +70,8 @@ import OperatorCalculationLevelsPage from "../Operator/Calculation/Levels";
 import OperatorCalculationNavigation from "@/Operator/Calculation/Navigation";
 import loadable from "react-loadable";
 import SwaggerPage from "./Swagger";
+import OperatorReportDataGridPage from "../Operator/Report/DataGrid";
+import OperatorReportPivotGridPage from "../Operator/Report/PivotGrid";
 
 const AsyncAdminStructureNavigation = loadable({
     loader: () => import("../Admin/Structure/Navigation"),
@@ -316,26 +318,43 @@ export const AppRoutes = () => {
             <PrivateRoute exact path="/operator/report/projects_detail" roles={Role.Operator} component={OperatorReportProjectsDetailPage} />
             <PrivateRoute exact path="/operator/report/projects_detail/:id" roles={Role.Operator} component={OperatorReportProjectsDetailUpdatePage}/>
 
-            <PrivateRoute exact path="/operator/report/financing" roles={Role.Operator} component={OperatorReportFinancingPage} />
-            <PrivateRoute exact path="/operator/report/financing/:id" roles={Role.Operator} component={OperatorReportFinancingUpdatePage} />
+            <PrivateRoute exact path="/operator/report/financing" roles={Role.Operator}
+                          component={OperatorReportFinancingPage}/>
+            <PrivateRoute exact path="/operator/report/financing/:id" roles={Role.Operator}
+                          component={OperatorReportFinancingUpdatePage}/>
 
-            <PrivateRoute exact path="/operator/report/appropriations" roles={Role.Operator} component={OperatorReportAppropriationsPage} />
-            <PrivateRoute exact path="/operator/report/appropriations/:id" roles={Role.Operator} component={OperatorReportAppropriationsUpdatePage}/>
+            <PrivateRoute exact path="/operator/report/appropriations" roles={Role.Operator}
+                          component={OperatorReportAppropriationsPage}/>
+            <PrivateRoute exact path="/operator/report/appropriations/:id" roles={Role.Operator}
+                          component={OperatorReportAppropriationsUpdatePage}/>
 
-            <PrivateRoute exact path="/operator/report/extraBudget" roles={Role.Operator} component={OperatorReportExtraBudgetPage} />
-            <PrivateRoute exact path="/operator/report/extraBudget/:id" roles={Role.Operator} component={OperatorReportExtraBudgetUpdatePage} />
+            <PrivateRoute exact path="/operator/report/extraBudget" roles={Role.Operator}
+                          component={OperatorReportExtraBudgetPage}/>
+            <PrivateRoute exact path="/operator/report/extraBudget/:id" roles={Role.Operator}
+                          component={OperatorReportExtraBudgetUpdatePage}/>
 
-            <PrivateRoute exact path="/operator/report/sources" roles={Role.Operator} component={OperatorReportSourcesPage} />
+            <PrivateRoute exact path="/operator/report/sources" roles={Role.Operator}
+                          component={OperatorReportSourcesPage}/>
+
+            {/*Тест DevExtreme*/}
+            <PrivateRoute exact path="/operator/report/grid" roles={Role.Operator}
+                          component={OperatorReportDataGridPage}/>
+            <PrivateRoute exact path="/operator/report/pivot" roles={Role.Operator}
+                          component={OperatorReportPivotGridPage}/>
 
             {/*Calculation - Отчетные показатели */}
-            <PrivateRoute exact path="/operator/calculation" roles={Role.Operator} component={AsyncOperatorCalculationNavigation} />
-            <PrivateRoute exact path="/operator/calculation/intermediate" roles={Role.Operator} component={AsyncOperatorCalculationIntermediatePage} />
-            <PrivateRoute exact path="/operator/calculation/values" roles={Role.Operator} component={AsyncOperatorCalculationValuesPage} />
-            <PrivateRoute exact path="/operator/calculation/levels" roles={Role.Operator} component={AsyncOperatorCalculationLevelsPage} />
+            <PrivateRoute exact path="/operator/calculation" roles={Role.Operator}
+                          component={AsyncOperatorCalculationNavigation}/>
+            <PrivateRoute exact path="/operator/calculation/intermediate" roles={Role.Operator}
+                          component={AsyncOperatorCalculationIntermediatePage}/>
+            <PrivateRoute exact path="/operator/calculation/values" roles={Role.Operator}
+                          component={AsyncOperatorCalculationValuesPage}/>
+            <PrivateRoute exact path="/operator/calculation/levels" roles={Role.Operator}
+                          component={AsyncOperatorCalculationLevelsPage}/>
 
             {/*Общие страницы*/}
-            <PrivateRoute exact path="/" component={HomePage} />
-            <PrivateRoute exact path="/operator" component={HomePage} />
+            <PrivateRoute exact path="/" component={HomePage}/>
+            <PrivateRoute exact path="/operator" component={HomePage}/>
             <PrivateRoute exact path="/analyst" component={HomePage} />
             <PrivateRoute exact path="/admin" component={HomePage} />
             <PrivateRoute exact path="/swagger" component={SwaggerPage} />

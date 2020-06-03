@@ -87,16 +87,6 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
             print: false,
             selectableRowsOnClick: false,
             selectableRows: 'none',
-            // onTableChange: (action, tableState) => {
-            //     switch (action) {
-            //         case 'changePage':
-            //             this.onChangePage(tableState.page, tableState.rowsPerPage);
-            //             break;
-            //     }
-            // },
-            // onChangeRowsPerPage: (numberOfRows) => {
-            //     this.onChangePage(this.state.page, numberOfRows);
-            // },
             customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
                 <CustomToolbarSelect selectedRows={selectedRows} displayData={displayData} setSelectedRows={setSelectedRows} />
             ),
