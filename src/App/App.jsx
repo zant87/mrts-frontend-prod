@@ -22,8 +22,8 @@ import {
   MDBRow,
   MDBIcon, MDBDropdownItem, MDBDropdownMenu, MDBDropdown, MDBDropdownToggle, MDBTooltip,
 } from "mdbreact";
-import { AppRoutes } from "@/Common/AppRoutes";
-import cookie from 'react-cookies'
+import {AppRoutes} from "@/Common/AppRoutes";
+import config from 'config';
 
 class App extends React.Component {
   constructor(props) {
