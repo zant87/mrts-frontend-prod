@@ -1,5 +1,17 @@
 import React from 'react';
-import {MDBBreadcrumb, MDBBreadcrumbItem, MDBContainer, MDBRow} from "mdbreact";
+// import {MDBBreadcrumb, MDBBreadcrumbItem, MDBContainer, MDBRow} from "mdbreact";
+
+import { MDBCol, MDBContainer, MDBRow, MDBSpinner, MDBTabPane, MDBTabContent, MDBNav, MDBNavItem, MDBNavLink, MDBBreadcrumb, MDBBreadcrumbItem } from "mdbreact";
+
+import PivotGrid, {
+    FieldChooser,
+    Export
+} from 'devextreme-react/pivot-grid';
+import PivotGridDataSource from 'devextreme/ui/pivot_grid/data_source';
+import 'devextreme/dist/css/dx.common.css';
+import 'devextreme/dist/css/dx.light.css';
+
+
 
 const OperatorReportSourcesPage = () => {
     return (

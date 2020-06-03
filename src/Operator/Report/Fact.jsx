@@ -1,5 +1,19 @@
 import React, {Fragment} from 'react';
-import {MDBCol, MDBContainer, MDBRow, MDBSpinner} from "mdbreact";
+// import {MDBCol, MDBContainer, MDBRow, MDBSpinner} from "mdbreact";
+
+import { MDBCol, MDBContainer, MDBRow, MDBSpinner, MDBTabPane, MDBTabContent, MDBNav, MDBNavItem, MDBNavLink } from "mdbreact";
+
+import PivotGrid, {
+    FieldChooser,
+    Export
+} from 'devextreme-react/pivot-grid';
+import PivotGridDataSource from 'devextreme/ui/pivot_grid/data_source';
+import 'devextreme/dist/css/dx.common.css';
+import 'devextreme/dist/css/dx.light.css';
+
+import {sales} from "./pivot";
+
+
 import MUIDataTable from "mui-datatables";
 import axios from 'axios';
 import CustomToolbarSelect from "../../_components/CustomToolbarSelect";
@@ -7,6 +21,36 @@ import { labels } from "../../_components/TableTextLabels";
 import Button from "@material-ui/core/Button";
 import appAxios from "../../_services/appAxios";
 import ButtonUpdateColumn from "../../_components/ButtonUpdateColumn";
+
+const dataSource = new PivotGridDataSource({
+    fields: [{
+        caption: 'Region',
+        width: 120,
+        dataField: 'region',
+        area: 'row'
+    }, {
+        caption: 'City',
+        dataField: 'city',
+        width: 150,
+        area: 'row',
+        selector: function (data) {
+            return `${data.city} (${data.country})`;
+        }
+    }, {
+        dataField: 'date',
+        dataType: 'date',
+        area: 'column'
+    }, {
+        caption: 'Sales',
+        dataField: 'amount',
+        dataType: 'number',
+        summaryType: 'sum',
+        format: 'currency',
+        area: 'data'
+    }],
+    store: sales
+});
+
 
 export default class OperatorReportFactPage extends React.Component {
 
@@ -23,7 +67,17 @@ export default class OperatorReportFactPage extends React.Component {
         parameterList: [],
         dataProviderFilter: "",
         transportTypeFilter: "",
-        parameterNameFilter: ""
+        parameterNameFilter: "",
+        activeItem: "1"
+    };
+
+
+    toggle = tab => e => {
+      if (this.state.activeItem !== tab) {
+        this.setState({
+          activeItem: tab
+        });
+      }
     };
 
     componentDidMount() {
@@ -243,18 +297,59 @@ export default class OperatorReportFactPage extends React.Component {
 
         return (
             <MDBContainer fluid>
-                <MDBRow center>
-                    <MDBCol md={'12'} className='my-5 mx-auto'>
-                        {isLoading && <MDBSpinner multicolor />}
-                        <MUIDataTable
-                            title={ "Фактические значения показателей" }
-                            data={data}
-                            columns={columns}
-                            options={options}
-                        />
-                    </MDBCol>
-                </MDBRow>
+               <MDBNav className="nav-tabs mt-5">
+                  <MDBNavItem>
+                    <MDBNavLink link to="#" active={this.state.activeItem === "1"} onClick={this.toggle("1")} role="tab" >
+                      Корректировка
+                    </MDBNavLink>
+                  </MDBNavItem>
+                  <MDBNavItem>
+                    <MDBNavLink link to="#" active={this.state.activeItem === "2"} onClick={this.toggle("2")} role="tab" >
+                      Просмотр
+                    </MDBNavLink>
+                  </MDBNavItem>
+                </MDBNav>
+
+                <MDBTabContent activeItem={this.state.activeItem} >
+                  <MDBTabPane tabId="1" role="tabpanel">
+                            <MDBContainer fluid>
+                            <MDBRow center>
+                                <MDBCol md={'18'} className='my-1 mx-auto'>
+                                    {isLoading && <MDBSpinner multicolor />}
+                                    <MUIDataTable
+                                        title={ "Фактические значения показателей" }
+                                        data={data}
+                                        columns={columns}
+                                        options={options}
+                                    />
+                                </MDBCol>
+                            </MDBRow>
+                            </MDBContainer>
+                    </MDBTabPane>
+                  <MDBTabPane tabId="2" role="tabpanel">
+                     <MDBContainer fluid>
+                       <MDBRow md={'18'} center className='my-1 mx-auto'>
+                            <PivotGrid
+                                id="sales"
+                                dataSource={dataSource}
+                                allowSortingBySummary={true}
+                                allowSorting={true}
+                                allowFiltering={true}
+                                allowExpandAll={true}
+                                height={440}
+                                showBorders={true}
+                            >
+                                <Export enabled={true} fileName="Sales"/>
+                                <FieldChooser enabled={false}/>
+                            </PivotGrid>
+                       </MDBRow>
+                     </MDBContainer>
+                  </MDBTabPane>
+                </MDBTabContent>
             </MDBContainer>
         )
     }
 };
+
+
+

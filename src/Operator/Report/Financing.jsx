@@ -1,10 +1,28 @@
 import React from 'react';
-import {MDBCol, MDBContainer, MDBRow, MDBSpinner} from "mdbreact";
+// import {MDBCol, MDBContainer, MDBRow, MDBSpinner} from "mdbreact";
+import { MDBCol, MDBContainer, MDBRow, MDBSpinner, MDBTabPane, MDBTabContent, MDBNav, MDBNavItem, MDBNavLink } from "mdbreact";
 import MUIDataTable from "mui-datatables";
 import {labels} from "../../_components/TableTextLabels";
 import CustomToolbarSelect from "../../_components/CustomToolbarSelect";
 import appAxios from "../../_services/appAxios";
 import ButtonUpdateColumn from "../../_components/ButtonUpdateColumn";
+
+import PivotGrid, {
+    FieldChooser,
+    Export
+} from 'devextreme-react/pivot-grid';
+import PivotGridDataSource from 'devextreme/ui/pivot_grid/data_source';
+import 'devextreme/dist/css/dx.common.css';
+import 'devextreme/dist/css/dx.light.css';
+
+/*
+Бюджетное финансирование транспорта
+Бюджетные ассигнования в рамках программ развития транспорта
+Объемы привлечения внебюджетных средств
+Источники финансирования транспорта организациями
+
+ARM операторы
+*/
 
 export default class OperatorReportFinancingPage extends React.Component {
 
@@ -14,6 +32,15 @@ export default class OperatorReportFinancingPage extends React.Component {
         data: [],
         rowsPerPage: 20,
         isLoading: false,
+        activeItem: "1"
+    };
+
+    toggle = tab => e => {
+      if (this.state.activeItem !== tab) {
+        this.setState({
+          activeItem: tab
+        });
+      }
     };
 
     componentDidMount() {
@@ -99,17 +126,45 @@ export default class OperatorReportFinancingPage extends React.Component {
 
         return (
             <MDBContainer fluid>
-                <MDBRow center>
-                    <MDBCol md={'12'} className='my-5 mx-auto'>
-                        {isLoading && <MDBSpinner multicolor />}
-                        <MUIDataTable
-                            title={"Бюджетное финансирование транспорта"}
-                            data={data}
-                            columns={columns}
-                            options={options}
-                        />
-                    </MDBCol>
-                </MDBRow>
+               <MDBNav className="nav-tabs mt-5">
+                  <MDBNavItem>
+                    <MDBNavLink link to="#" active={this.state.activeItem === "1"} onClick={this.toggle("1")} role="tab" >
+                      Корректировка
+                    </MDBNavLink>
+                  </MDBNavItem>
+                  <MDBNavItem>
+                    <MDBNavLink link to="#" active={this.state.activeItem === "2"} onClick={this.toggle("2")} role="tab" >
+                      Просмотр
+                    </MDBNavLink>
+                  </MDBNavItem>
+                </MDBNav>
+
+                <MDBTabContent activeItem={this.state.activeItem} >
+                  <MDBTabPane tabId="1" role="tabpanel">
+                            <MDBContainer fluid>
+                            <MDBRow center>
+                                <MDBCol md={'18'} className='my-5 mx-auto'>
+                                    {isLoading && <MDBSpinner multicolor />}
+                                    <MUIDataTable
+                                        title={"Бюджетное финансирование транспорта"}
+                                        data={data}
+                                        columns={columns}
+                                        options={options}
+                                    />
+                                </MDBCol>
+                            </MDBRow>
+                     </MDBContainer>
+                  </MDBTabPane>
+                  <MDBTabPane tabId="2" role="tabpanel">
+                     <MDBContainer fluid>
+                       <MDBRow md={'18'} center className='my-1 mx-auto'>
+                          
+
+
+                       </MDBRow>
+                     </MDBContainer>
+                  </MDBTabPane>
+                </MDBTabContent>
             </MDBContainer>
         );
     }
