@@ -25,12 +25,17 @@ export default class OperatorReportPivotGridPage extends React.Component {
         appAxios.get(`/views/k-5-s?size=5000`)
             .then(res => {
                 console.log(res);
-                // const count = Number(res.headers['x-total-count']);
+                const count = Number(res.headers['x-total-count']);
+                console.log('Всего от k5 получено {} записей', count);
                 const data = res.data;
                 this.setState({
                     data: data, isLoading: false, dataSource:
                         new PivotGridDataSource({
                             fields: [
+                                {
+                                    dataField: 'id',
+                                    visible: false
+                                },
                                 {
                                     caption: 'Источник данных',
                                     width: 120,
@@ -95,7 +100,7 @@ export default class OperatorReportPivotGridPage extends React.Component {
                         loadPanel={{enabled: true}}
                         showColumnGrandTotals={false}
                         showColumnTotals={false}
-                        height={600}
+                        // height={700}
                         showRowGrandTotals={false}
                         showRowTotals={false}
                         showBorders={true}>
