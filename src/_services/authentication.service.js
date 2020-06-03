@@ -2,12 +2,12 @@ import {BehaviorSubject} from 'rxjs';
 import { Base64 } from 'js-base64';
 import cookie from 'react-cookies'
 import {Role} from "../_helpers";
-import { history } from "@/_helpers";
+import {history} from "@/_helpers";
+import config from 'config';
 
-if (process.env.NODE_ENV === "production") {
+if (!config.isLocalDeployment) {
     console.log('Production Mode Is On');
-}
-else {
+} else {
     console.log('Development Mode Is On');
 
     const data = {

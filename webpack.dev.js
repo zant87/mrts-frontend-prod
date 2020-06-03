@@ -100,6 +100,7 @@ const config = {
     // глобальный конфиг
     config: JSON.stringify({
       apiUrl: "http://localhost:4000",
+      isLocalDeployment: true
     }),
   },
 };
