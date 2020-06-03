@@ -266,8 +266,9 @@ export const AppRoutes = () => {
             <PrivateRoute exact path="/admin/loading/fromSDMX" roles={Role.Admin} component={AsyncAdminLoadingFromSDMXPage} />
             <PrivateRoute exact path="/admin/loading/fromXLSX" roles={Role.Admin} component={AsyncAdminLoadingFromXLSXPage} />
             <PrivateRoute exact path="/admin/loading/fromCSV" roles={Role.Admin} component={AsyncAdminLoadingCSVPage} />
-            <PrivateRoute exact path="/admin/loading/reports" roles={Role.Admin} component={AsyncAdminLoadingReportsPage} />
-            <PrivateRoute exact path="/admin/loading/document" roles={Role.Admin} component={AsyncAdminLoadingDocumentPage} />
+            <PrivateRoute exact path="/admin/loading/reports" roles={Role.Admin}
+                          component={AsyncAdminLoadingReportsPage}/>
+            <PrivateRoute exact path="/admin/loading/document" roles={Role.Admin} component={AdminLoadingDocumentPage}/>
             {/*AdminLoadingDocumentPage*/}
 
             {/*Archive - Архив */}

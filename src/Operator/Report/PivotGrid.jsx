@@ -6,7 +6,7 @@ import PivotGrid, {
 import PivotGridDataSource from 'devextreme/ui/pivot_grid/data_source';
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.light.css';
-import {MDBCol, MDBContainer, MDBRow, MDBSpinner} from "mdbreact";
+import {MDBContainer, MDBRow, MDBSpinner} from "mdbreact";
 import appAxios from "../../_services/appAxios";
 
 export default class OperatorReportPivotGridPage extends React.Component {
@@ -26,7 +26,7 @@ export default class OperatorReportPivotGridPage extends React.Component {
             .then(res => {
                 console.log(res);
                 const count = Number(res.headers['x-total-count']);
-                console.log('Всего от k5 получено {} записей', count);
+                console.log('Всего от k5 получено ', count, ' записей');
                 const data = res.data;
                 this.setState({
                     data: data, isLoading: false, dataSource:
