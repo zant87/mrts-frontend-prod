@@ -22,7 +22,7 @@ export default class OperatorReportPivotGridPage extends React.Component {
 
     getData = () => {
         this.setState({isLoading: true});
-        appAxios.get(`/views/k-5-s?sort=id,desc&size=5000`)
+        appAxios.get(`/views/k-5-s?size=5000`)
             .then(res => {
                 console.log(res);
                 // const count = Number(res.headers['x-total-count']);
@@ -69,9 +69,7 @@ export default class OperatorReportPivotGridPage extends React.Component {
                                     dataField: 'value',
                                     dataType: 'number',
                                     summaryType: 'sum',
-                                    area: 'data',
-                                    showColumnTotals: false,
-                                    showColumnGrandTotals: false
+                                    area: 'data'
                                 }
                             ],
                             store: data
