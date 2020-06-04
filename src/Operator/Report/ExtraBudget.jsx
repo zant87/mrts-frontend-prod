@@ -212,7 +212,7 @@ export default class OperatorReportExtraBudgetPage extends React.Component {
                                >
                               <FieldPanel showColumnFields={true} />
                               <FieldChooser enabled={true} />
-                              <Export enabled={true} fileName="Фактические значения показателей" allowExportSelectedData={true} />
+                              <Export enabled={true} fileName="Объемы привлечения внебюджетных средств" allowExportSelectedData={true} />
                             </PivotGrid>
 
 

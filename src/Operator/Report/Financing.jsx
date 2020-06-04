@@ -212,7 +212,7 @@ export default class OperatorReportFinancingPage extends React.Component {
                                >
                               <FieldPanel showColumnFields={true} />
                               <FieldChooser enabled={true} />
-                              <Export enabled={true} fileName="Фактические значения показателей" allowExportSelectedData={true} />
+                              <Export enabled={true} fileName="Бюджетное финансирование транспорта" allowExportSelectedData={true} />
                             </PivotGrid>
                           
 
