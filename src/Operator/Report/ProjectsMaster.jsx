@@ -171,9 +171,10 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
                                           caption: 'Общие затраты (плановые)',
                                           dataField: 'realPlanCost',
                                           dataType: 'number',
+                                          summaryType: 'sum',
                                           format: "#,###,###,##0.##",
                                           width: 150,
-                                          area: 'row',
+                                          area: 'data',
                                           expanded: true
                                         }, {
                                           caption: 'Содержание проекта',
@@ -196,21 +197,22 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
                                           caption: 'Отчетный год',
                                           dataField: 'yearNumber',
                                           dataType: 'number',
-                                          area: 'row',
+                                          area: 'column',
                                         }, {
                                           caption: 'Начало фактической реализации',
                                           dataField: 'factStarted',
                                           dataType: 'string',
-                                          area: 'row',
+                                          area: 'column',
                                         }, {
                                           caption: 'Конец фактической реализации',
                                           dataField: 'factFinished',
                                           dataType: 'string',
-                                          area: 'row',
+                                          area: 'column',
                                         }, {
                                           caption: 'Общие затраты (факт)',
                                           dataField: 'fact',
                                           dataType: 'number',
+                                          summaryType: 'sum',
                                           format: "#,###,###,##0.##",
                                           area: 'data',
                                         },{
@@ -221,15 +223,18 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
                                         },{
                                           caption: 'documentId',
                                           dataField: 'documentId',
-                                          dataType: 'string'
+                                          dataType: 'string',
+                                          visible: false
                                         }, {
                                           caption: 'projectId',
                                           dataField: 'projectId',
-                                          dataType: 'string'
+                                          dataType: 'string',
+                                          visible: false
                                         }, {
                                           caption: 'id',
                                           dataField: 'id',
-                                          dataType: 'string'
+                                          dataType: 'string',
+                                          visible: false
                                         }],
                                         store: pivotData
                                       })}

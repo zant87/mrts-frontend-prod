@@ -171,13 +171,18 @@ export default class OperatorReportAppropriationsPage extends React.Component {
                                   caption: '#',
                                   width: 120,
                                   dataField: 'id',
-                                  expanded: true
+                                  visible: false
                                 }, {
                                   caption: 'documentId',
-                                  width: 120,
                                   dataField: 'documentId',
+                                  visible: false
+                                }, {
+                                  caption: 'Вид расходов',
+                                  dataField: 'costTypeName',
+                                  dataType: 'string',
+                                  area: 'row',
                                   expanded: true
-                                },{
+                                }, {
                                   caption: 'Направление расходов',
                                   dataField: 'directionName',
                                   dataType: 'string',
@@ -192,28 +197,30 @@ export default class OperatorReportAppropriationsPage extends React.Component {
                                   area: 'row',
                                   expanded: true
                                 }, {
-                                  caption: 'Вид расходов',
-                                  dataField: 'costTypeName',
-                                  dataType: 'string',
-                                  area: 'row',
-                                  expanded: true
-                                }, {
                                   caption: 'year',
                                   dataField: 'Отчетный год',
                                   dataType: 'number',
-                                  area: 'row',
+                                  area: 'column',
                                   expanded: true
-                                },  {
+                                }, {
+                                  caption: 'quarter',
+                                  dataField: 'Отчетный квартал',
+                                  dataType: 'number',
+                                  area: 'column',
+                                  expanded: true
+                                }, {
                                   caption: 'Запланировано, млн. руб.',
                                   dataField: 'plan',
                                   dataType: 'number',
+                                  summaryType: 'sum',
                                   format: "#,###,###,##0.##",
-                                  area: 'row',
+                                  area: 'data',
                                   expanded: true
                                 },{
                                   caption: 'Кассовое исполнение, млн. руб.',
                                   dataField: 'fact',
-                                  dataType: 'number', 
+                                  dataType: 'number',
+                                  summaryType: 'sum', 
                                   format: "#,###,###,##0.##",               
                                   area: 'data',
                                   expanded: true

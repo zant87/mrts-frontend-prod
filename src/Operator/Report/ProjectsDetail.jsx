@@ -195,40 +195,46 @@ export default class OperatorReportProjectsDetailPage extends React.Component {
                                           area: 'row',
                                           expanded: true
                                         }, {
-                                          caption: 'Предусмотрено на год',
-                                          dataField: 'plan',
-                                          dataType: 'number',
-                                          format: "#,###,###,##0.##",
-                                          area: 'row',
-                                        }, {
                                           caption: 'Отчетный год',
                                           dataField: 'yearNumber',
                                           dataType: 'number',
-                                          area: 'row',
+                                          area: 'column',
                                         }, {
+                                          caption: 'Предусмотрено на год',
+                                          dataField: 'plan',
+                                          dataType: 'number',
+                                          summaryType: 'sum',
+                                          format: "#,###,###,##0.##",
+                                          area: 'data',
+                                        },{
                                           caption: 'Освоено на год',
                                           dataField: 'spent',
                                           dataType: 'number',
+                                          summaryType: 'sum',
                                           format: "#,###,###,##0.##",
-                                          area: 'row',
+                                          area: 'data',
                                         }, {
                                           caption: 'Кассовые расходы за год',
                                           dataField: 'fact',
                                           dataType: 'number',
+                                          summaryType: 'sum',
                                           format: "#,###,###,##0.##",
                                           area: 'data',
                                         }, {
                                           caption: 'documentId',
                                           dataField: 'documentId',
-                                          dataType: 'string'
+                                          dataType: 'string',
+                                          visible: false
                                         }, {
                                           caption: 'projectId',
                                           dataField: 'projectId',
-                                          dataType: 'string'
+                                          dataType: 'string',
+                                          visible: false
                                         }, {
                                           caption: 'id',
                                           dataField: 'id',
-                                          dataType: 'string'
+                                          dataType: 'string',
+                                          visible: false
                                         }],
                                         store: data
                                       })}

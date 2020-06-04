@@ -199,12 +199,12 @@ export default class OperatorReportActivitiesPage extends React.Component {
                                   caption: 'Отчетный год',
                                   dataField: 'yearNumber',
                                   dataType: 'number',
-                                  area: 'row',
+                                  area: 'column',
                                 }, {
                                   caption: 'Отчетный квартал',
                                   dataField: 'quarterName',
                                   dataType: 'string',
-                                  area: 'row',
+                                  area: 'column',
                                 }, {
                                   caption: 'Отчет исполнителя',
                                   dataField: 'reportDescription',
@@ -213,15 +213,18 @@ export default class OperatorReportActivitiesPage extends React.Component {
                                 }, {
                                   caption: 'documentId',
                                   dataField: 'documentId',
-                                  dataType: 'string'
+                                  dataType: 'string',
+                                  visible: false
                                 },{
                                   caption: 'activityId',
                                   dataField: 'activityId',
-                                  dataType: 'string'
+                                  dataType: 'string',
+                                  visible: false
                                 },{
                                   caption: 'activityReportId',
                                   dataField: 'activityReportId',
-                                  dataType: 'string'
+                                  dataType: 'string',
+                                  visible: false
                                 }],
                                 store: data
                               })}

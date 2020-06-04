@@ -44,24 +44,23 @@ export default class OperatorReportExtraBudgetPage extends React.Component {
         this.getPivotData();
     };
 
-    getData = () => {
-        this.setState({ isLoading: true });
-        // appAxios.get(`/views/k-10-s?sort=id,desc`)
+    getPivotData = () => {
+        this.setState({ isLoadingPivot: true });
         appAxios.get(`/views/k-10-s-all`)
             .then(res => {
                 const count = Number(res.headers['x-total-count']);
                 const data = res.data;
-                this.setState({data: data, isLoading: false, count: count});
+                this.setState({pivotData: data, isLoadingPivot: false, count: count});
             });
     };
 
-    getPivotData = () => {
-        this.setState({ isLoadingPivot: true });
+    getData = () => {
+        this.setState({ isLoading: true });
         appAxios.get(`/views/k-10-s?sort=id,desc&size=2000`)
             .then(res => {
                 const count = Number(res.headers['x-total-count']);
                 const data = res.data;
-                this.setState({pivotData: data, isLoadingPivot: false, count: count});
+                this.setState({data: data, isLoading: false, count: count});
             });
     };
 
@@ -101,6 +100,7 @@ export default class OperatorReportExtraBudgetPage extends React.Component {
                 }
             },
         ];
+
 
         const { data, pivotData, page, count, isLoading, isLoadingPivot } = this.state;
 
@@ -164,7 +164,7 @@ export default class OperatorReportExtraBudgetPage extends React.Component {
                   <MDBTabPane tabId="2" role="tabpanel">
                      <MDBContainer fluid>
                        <MDBRow md={'18'} center className='my-1 mx-auto'>
-                           {isLoading && <MDBSpinner multicolor />}
+                           {isLoadingPivot && <MDBSpinner multicolor />}
                            <PivotGrid id="budgetPivot"
                               dataSource={new PivotGridDataSource({
                                 fields: [{
@@ -174,10 +174,8 @@ export default class OperatorReportExtraBudgetPage extends React.Component {
                                   sorted: true
                                 }, {
                                   caption: 'documentId',
-                                  width: 120,
                                   dataField: 'documentId',
-                                  expanded: true,
-                                  sorted: true
+                                  visible: false,
                                 },{
                                   caption: 'Направление расходов',
                                   dataField: 'directionName',
@@ -189,29 +187,31 @@ export default class OperatorReportExtraBudgetPage extends React.Component {
                                   caption: 'year',
                                   dataField: 'Отчетный год',
                                   dataType: 'number',
-                                  area: 'row',
+                                  area: 'column',
                                   expanded: true
                                 }, {
                                   caption: 'Вид расходов',
                                   dataField: 'costTypeName',
                                   dataType: 'string',
-                                  area: 'row',
-                                  expanded: true
+                                  area: 'row'
                                 }, {
                                   caption: 'Запланировано, млн. руб.',
                                   dataField: 'plan',
                                   dataType: 'number',
+                                  summaryType: 'sum',
+                                  area: 'data',
                                   format: "#,###,###,##0.##",
                                   expanded: true
                                 },{
                                   caption: 'Фактические объемы исполнения, млн. руб.',
                                   dataField: 'fact',
                                   dataType: 'number', 
+                                  summaryType: 'sum',
                                   format: "#,###,###,##0.##",               
                                   area: 'data',
                                   expanded: true
                                 }],
-                                store: data
+                                store: pivotData
                               })}
                               allowSortingBySummary={true}
                               allowFiltering={true}
@@ -228,8 +228,7 @@ export default class OperatorReportExtraBudgetPage extends React.Component {
                               <FieldChooser enabled={true} />
                               <Export enabled={true} fileName="Объемы привлечения внебюджетных средств" allowExportSelectedData={true} />
                             </PivotGrid>
-
-
+                            
                        </MDBRow>
                      </MDBContainer>
                   </MDBTabPane>
