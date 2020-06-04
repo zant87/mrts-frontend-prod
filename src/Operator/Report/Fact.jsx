@@ -12,9 +12,6 @@ import PivotGridDataSource from 'devextreme/ui/pivot_grid/data_source';
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.light.css';
 
-import {sales} from "./pivot";
-
-
 import MUIDataTable from "mui-datatables";
 import axios from 'axios';
 import CustomToolbarSelect from "../../_components/CustomToolbarSelect";
@@ -23,35 +20,6 @@ import Button from "@material-ui/core/Button";
 import appAxios from "../../_services/appAxios";
 import ButtonUpdateColumn from "../../_components/ButtonUpdateColumn";
 
-const dataSource = new PivotGridDataSource({
-    fields: [{
-        caption: 'Region',
-        width: 120,
-        dataField: 'region',
-        area: 'row'
-    }, {
-        caption: 'City',
-        dataField: 'city',
-        width: 150,
-        area: 'row',
-        selector: function (data) {
-            return `${data.city} (${data.country})`;
-        }
-    }, {
-        dataField: 'date',
-        dataType: 'date',
-        area: 'column'
-    }, {
-        caption: 'Sales',
-        dataField: 'amount',
-        dataType: 'number',
-        summaryType: 'sum',
-        format: 'currency',
-        area: 'data'
-    }],
-    store: sales
-});
-
 
 export default class OperatorReportFactPage extends React.Component {
 
@@ -59,8 +27,10 @@ export default class OperatorReportFactPage extends React.Component {
         page: 0,
         count: 0,
         data: [],
+        pivotData: [],
         rowsPerPage: 20,
         isLoading: false,
+        isLoadingPivot: false,
         serverSideFilterList: [],
         filters: [[], [], [], [], [], [], [], [], []],
         dataProviderList: [],
@@ -83,10 +53,12 @@ export default class OperatorReportFactPage extends React.Component {
 
     componentDidMount() {
         this.getData();
+        this.getPivotData();
         this.getDataProviderList();
         this.getTransportTypeList();
         this.getParameterList();
     };
+
 
     getParameterList = () => {
         this.setState({ isLoading: true });
@@ -143,6 +115,20 @@ export default class OperatorReportFactPage extends React.Component {
                 const count = Number(res.headers['x-total-count']);
                 const data = res.data;
                 this.setState({data: data, isLoading: false, count: count});
+            });
+
+    };
+
+    getPivotData = () => {
+
+        this.setState({ isLoadingPivot: true });
+
+        appAxios.get(`/views/k-5-s-all`)
+            .then(res => {
+                console.log(res);
+                const count = Number(res.headers['x-total-count']);
+                const data = res.data;
+                this.setState({pivotData: data, isLoadingPivot: false, count: count});
             });
 
     };
@@ -259,7 +245,7 @@ export default class OperatorReportFactPage extends React.Component {
             },
         ];
 
-        const { data, page, count, isLoading } = this.state;
+        const { data, pivotData, page, count, isLoading, isLoadingPivot } = this.state;
 
         const options = {
             serverSide: true,
@@ -298,18 +284,18 @@ export default class OperatorReportFactPage extends React.Component {
 
         return (
             <MDBContainer fluid>
-               <MDBNav className="nav-tabs mt-5">
-                  <MDBNavItem>
-                    <MDBNavLink link to="#" active={this.state.activeItem === "1"} onClick={this.toggle("1")} role="tab" >
-                      Корректировка
-                    </MDBNavLink>
-                  </MDBNavItem>
-                  <MDBNavItem>
-                    <MDBNavLink link to="#" active={this.state.activeItem === "2"} onClick={this.toggle("2")} role="tab" >
-                      Просмотр
-                    </MDBNavLink>
-                  </MDBNavItem>
-                </MDBNav>
+                       <MDBNav md={'12'} className="nav-tabs mt-5" >
+                          <MDBNavItem>
+                            <MDBNavLink link to="#" active={this.state.activeItem === "1"} onClick={this.toggle("1")} role="tab" >
+                              Корректировка
+                            </MDBNavLink>
+                          </MDBNavItem>
+                          <MDBNavItem>
+                            <MDBNavLink link to="#" active={this.state.activeItem === "2"} onClick={this.toggle("2")} role="tab" >
+                              Просмотр
+                            </MDBNavLink>
+                          </MDBNavItem>
+                        </MDBNav>
 
                 <MDBTabContent activeItem={this.state.activeItem} >
                   <MDBTabPane tabId="1" role="tabpanel">
@@ -329,36 +315,41 @@ export default class OperatorReportFactPage extends React.Component {
                     </MDBTabPane>
                   <MDBTabPane tabId="2" role="tabpanel">
                      <MDBContainer fluid>
-                       <MDBRow md={'18'} center className='my-1 mx-auto'>
+                       <MDBRow center>
+                          <MDBCol md={'12'} className='my-5 mx-auto'>
+                            {isLoadingPivot && <MDBSpinner multicolor />}
                             <PivotGrid id="factPivot"
                               dataSource={new PivotGridDataSource({
                                 fields: [{
                                   caption: '#',
-                                  width: 120,
                                   dataField: 'id',
-                                  area: 'row',
-                                  expanded: true,
-                                  sorted: true
-                                }, {
-                                  caption: 'Источник данных',
-                                  dataField: 'dataProviderName',
-                                  dataType: 'string',
-                                  width: 150,
-                                  area: 'row',
-                                  expanded: true
+                                  visible: false
                                 }, {
                                   caption: 'Вид транспорта',
                                   dataField: 'transportTypeName',
                                   dataType: 'string',                
                                   area: 'row',
-                                  expanded: true
+                                  expanded: false
+                                
                                 }, {
-                                  caption: 'formCode',
-                                  dataField: 'Форма',
+                                  caption: 'Источник данных',
+                                  dataField: 'dataProviderName',
                                   dataType: 'string',
                                   area: 'row',
                                   expanded: true
                                 }, {
+                                  caption: 'okudName',
+                                  dataField: 'ОКУД',
+                                  dataType: 'string',
+                                  area: 'row',
+                                  expanded: true
+                                },{
+                                  caption: 'Код транспорта',
+                                  dataField: 'transportTypeСode',
+                                  dataType: 'string',                
+                                  area: 'row',
+                                  visible: false
+                                },{
                                   caption: 'Показатель',
                                   dataField: 'parameterName',
                                   dataType: 'string',
@@ -367,24 +358,27 @@ export default class OperatorReportFactPage extends React.Component {
                                   caption: 'Отчетный год',
                                   dataField: 'year',
                                   dataType: 'number',
-                                  area: 'row',
+                                  area: 'column',
                                 }, {
                                   caption: 'Отчетный квартал',
                                   dataField: 'quarterName',
                                   dataType: 'string',
-                                  area: 'row',
+                                  area: 'column',
                                 }, {
                                   caption: 'Единица измерения',
                                   dataField: 'okeiName',
                                   dataType: 'string',
                                   area: 'row',
+                                  visible: false
                                 }, {
                                   caption: 'Значение показателя',
                                   dataField: 'value',
-                                  dataType: 'string',
+                                  dataType: 'number',
+                                  format: "#,###,###,##0.##",
+                                  summaryType: 'sum',
                                   area: 'data',
                                 }],
-                                store: data
+                                store: pivotData
                               })}
                               allowSortingBySummary={true}
                               allowFiltering={true}
@@ -401,6 +395,7 @@ export default class OperatorReportFactPage extends React.Component {
                               <FieldChooser enabled={true} />
                               <Export enabled={true} fileName="Фактические значения показателей" allowExportSelectedData={true} />
                             </PivotGrid>
+                           </MDBCol>
                        </MDBRow>
                      </MDBContainer>
                   </MDBTabPane>
