@@ -4,6 +4,7 @@ import MUIDataTable from "mui-datatables";
 import axios from 'axios';
 import {labels} from "../../_components/TableTextLabels";
 import appAxios from "../../_services/appAxios";
+import MaterialTable from "material-table";
 
 export default class AdminGoalsPage extends React.Component {
 
@@ -28,35 +29,30 @@ export default class AdminGoalsPage extends React.Component {
     render() {
 
         const columns = [
-            { name: 'id', label: '#', options: { filter: false } },
-            { name: 'transportStrategyCode', label: 'Код ТС', options: { display: 'excluded', filter: false } },
-            { name: 'transportStrategyName', label: 'Редакция ТС'},
-            { name: 'goalName', label: 'Цель ТС'},
-            { name: 'taskName', label: 'Задача ТС'}
+            // { field: 'id', title: '#', type: 'numeric' },
+            {field: 'transportStrategyName', title: 'Редакция', defaultGroupOrder: 0},
+            {field: 'goalName', title: 'Цель', defaultGroupOrder: 1},
+            // { field: 'transportStrategyCode', type: 'numeric' },
+            {field: 'taskName', title: 'Задача'}
         ];
 
         const { data, isLoading } = this.state;
-
-        const options = {
-            rowsPerPage: 20,
-            rowsPerPageOptions: [20, 50, 100],
-            textLabels: labels,
-            sortFilterList: false,
-            print: false,
-            selectableRowsOnClick: true,
-            selectableRows: 'none',
-        };
 
         return (
             <MDBContainer fluid>
                 <MDBRow center>
                     <MDBCol md={'12'} className='my-5 mx-auto'>
-                        {isLoading && <MDBSpinner multicolor />}
-                        <MUIDataTable
-                            title={"Дерево целей и задач"}
-                            data={data}
+                        <MaterialTable
+                            title="Дерево целей и задач"
                             columns={columns}
-                            options={options}
+                            data={data}
+                            isLoading={isLoading}
+                            options={{
+                                grouping: true,
+                                search: false,
+                                pageSize: 20,
+                                pageSizeOptions: [20, 50, 100]
+                            }}
                         />
                     </MDBCol>
                 </MDBRow>
