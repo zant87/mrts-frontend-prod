@@ -162,19 +162,13 @@ export default class OperatorReportFinancingPage extends React.Component {
                           <PivotGrid id="financingPivot"
                               dataSource={new PivotGridDataSource({
                                 fields: [{
-                                  caption: '#',
+                                  caption: 'id',
                                   width: 120,
-                                  dataField: 'id',
-                                  area: 'row',
-                                  expanded: true,
-                                  sorted: true
+                                  dataField: 'id'
                                 }, {
                                   caption: 'documentId',
                                   width: 120,
-                                  dataField: 'documentId',
-                                  area: 'row',
-                                  expanded: true,
-                                  sorted: true
+                                  dataField: 'documentId'
                                 },{
                                   caption: 'Направление расходов',
                                   dataField: 'expenditureName',
@@ -209,7 +203,7 @@ export default class OperatorReportFinancingPage extends React.Component {
                               allowFiltering={true}
                               allowSorting={true}
                               allowExpandAll={true}
-                              height={440}
+                              height={640}
                               showBorders={true}
                               showColumnTotals={false}
                               showColumnGrandTotals={false}

@@ -366,7 +366,7 @@ export default class OperatorReportFactPage extends React.Component {
                                 }, {
                                   caption: 'Отчетный год',
                                   dataField: 'year',
-                                  dataType: 'string',
+                                  dataType: 'number',
                                   area: 'row',
                                 }, {
                                   caption: 'Отчетный квартал',
@@ -390,7 +390,7 @@ export default class OperatorReportFactPage extends React.Component {
                               allowFiltering={true}
                               allowSorting={true}
                               allowExpandAll={true}
-                              height={440}
+                              height={640}
                               showBorders={true}
                               showColumnTotals={false}
                               showColumnGrandTotals={false}

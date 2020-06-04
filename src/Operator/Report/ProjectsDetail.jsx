@@ -176,9 +176,9 @@ export default class OperatorReportProjectsDetailPage extends React.Component {
                                           expanded: true,
                                           sorted: true
                                         }, {
-                                          caption: 'Общие затраты (плановые)',
-                                          dataField: 'realPlanCost',
-                                          dataType: 'number',
+                                          caption: 'Вид расходов',
+                                          dataField: 'costTypeName',
+                                          dataType: 'string',
                                           width: 150,
                                           area: 'row',
                                           expanded: true
@@ -189,46 +189,38 @@ export default class OperatorReportProjectsDetailPage extends React.Component {
                                           area: 'row',
                                           expanded: true
                                         }, {
-                                          caption: 'done',
-                                          dataField: 'Уровень технической готовности',
+                                          caption: 'fundSourceName',
+                                          dataField: 'Источник финансирования',
                                           dataType: 'string',
                                           area: 'row',
                                           expanded: true
                                         }, {
-                                          caption: 'Сроки реализации плановые',
-                                          dataField: 'planBeginYear',
-                                          dataType: 'string',
+                                          caption: 'Предусмотрено на год',
+                                          dataField: 'plan',
+                                          dataType: 'number',
+                                          format: "#,###,###,##0.##",
                                           area: 'row',
                                         }, {
                                           caption: 'Отчетный год',
                                           dataField: 'yearNumber',
-                                          dataType: 'string',
+                                          dataType: 'number',
                                           area: 'row',
                                         }, {
-                                          caption: 'Начало фактической реализации',
-                                          dataField: 'factStarted',
-                                          dataType: 'string',
+                                          caption: 'Освоено на год',
+                                          dataField: 'spent',
+                                          dataType: 'number',
+                                          format: "#,###,###,##0.##",
                                           area: 'row',
                                         }, {
-                                          caption: 'Конец фактической реализации',
-                                          dataField: 'factFinished',
-                                          dataType: 'string',
-                                          area: 'row',
-                                        }, {
-                                          caption: 'Общие затраты (факт)',
+                                          caption: 'Кассовые расходы за год',
                                           dataField: 'fact',
                                           dataType: 'number',
+                                          format: "#,###,###,##0.##",
                                           area: 'data',
-                                        },{
-                                          caption: 'Фактические результаты',
-                                          dataField: 'description',
-                                          dataType: 'string',
-                                          area: 'row',
-                                        },{
+                                        }, {
                                           caption: 'documentId',
                                           dataField: 'documentId',
-                                          dataType: 'string',
-                                          area: 'row',
+                                          dataType: 'string'
                                         }, {
                                           caption: 'projectId',
                                           dataField: 'projectId',
@@ -244,7 +236,7 @@ export default class OperatorReportProjectsDetailPage extends React.Component {
                                       allowFiltering={true}
                                       allowSorting={true}
                                       allowExpandAll={true}
-                                      height={440}
+                                      height={640}
                                       showBorders={true}
                                       showColumnTotals={false}
                                       showColumnGrandTotals={false}

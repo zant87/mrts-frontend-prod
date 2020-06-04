@@ -198,7 +198,7 @@ export default class OperatorReportActivitiesPage extends React.Component {
                                 }, {
                                   caption: 'Отчетный год',
                                   dataField: 'yearNumber',
-                                  dataType: 'string',
+                                  dataType: 'number',
                                   area: 'row',
                                 }, {
                                   caption: 'Отчетный квартал',
@@ -213,18 +213,15 @@ export default class OperatorReportActivitiesPage extends React.Component {
                                 }, {
                                   caption: 'documentId',
                                   dataField: 'documentId',
-                                  dataType: 'string',
-                                  area: 'row',
+                                  dataType: 'string'
                                 },{
                                   caption: 'activityId',
                                   dataField: 'activityId',
-                                  dataType: 'string',
-                                  area: 'row',
+                                  dataType: 'string'
                                 },{
                                   caption: 'activityReportId',
                                   dataField: 'activityReportId',
-                                  dataType: 'string',
-                                  area: 'row',
+                                  dataType: 'string'
                                 }],
                                 store: data
                               })}
@@ -232,7 +229,7 @@ export default class OperatorReportActivitiesPage extends React.Component {
                               allowFiltering={true}
                               allowSorting={true}
                               allowExpandAll={true}
-                              height={440}
+                              height={640}
                               showBorders={true}
                               showColumnTotals={false}
                               showColumnGrandTotals={false}

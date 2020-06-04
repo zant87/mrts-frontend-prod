@@ -157,14 +157,11 @@ export default class OperatorReportExtraBudgetPage extends React.Component {
                                   caption: '#',
                                   width: 120,
                                   dataField: 'id',
-                                  area: 'row',
-                                  expanded: true,
                                   sorted: true
                                 }, {
                                   caption: 'documentId',
                                   width: 120,
                                   dataField: 'documentId',
-                                  area: 'row',
                                   expanded: true,
                                   sorted: true
                                 },{
@@ -191,10 +188,9 @@ export default class OperatorReportExtraBudgetPage extends React.Component {
                                   dataField: 'plan',
                                   dataType: 'number',
                                   format: "#,###,###,##0.##",
-                                  area: 'row',
                                   expanded: true
                                 },{
-                                  caption: 'Кассовое исполнение, млн. руб.',
+                                  caption: 'Фактические объемы исполнения, млн. руб.',
                                   dataField: 'fact',
                                   dataType: 'number', 
                                   format: "#,###,###,##0.##",               
@@ -207,7 +203,7 @@ export default class OperatorReportExtraBudgetPage extends React.Component {
                               allowFiltering={true}
                               allowSorting={true}
                               allowExpandAll={true}
-                              height={440}
+                              height={640}
                               showBorders={true}
                               showColumnTotals={false}
                               showColumnGrandTotals={false}

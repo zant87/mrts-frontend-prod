@@ -23,6 +23,7 @@ export default class OperatorReportAppropriationsPage extends React.Component {
         page: 0,
         count: 0,
         data: [],
+        pivotData: [],
         rowsPerPage: 20,
         isLoading: false,
         activeItem: "1"
@@ -49,6 +50,16 @@ export default class OperatorReportAppropriationsPage extends React.Component {
                 const count = Number(res.headers['x-total-count']);
                 const data = res.data;
                 this.setState({data: data, isLoading: false, count: count});
+            });
+    };
+
+    getPivotData = () => {
+        this.setState({ isLoading: true });
+        appAxios.get(`/views/k-9-s?sort=id,desc`)
+            .then(res => {
+                const count = Number(res.headers['x-total-count']);
+                const data = res.data;
+                this.setState({pivotData: data, isLoading: false, count: count});
             });
     };
 
@@ -157,16 +168,12 @@ export default class OperatorReportAppropriationsPage extends React.Component {
                                   caption: '#',
                                   width: 120,
                                   dataField: 'id',
-                                  area: 'row',
-                                  expanded: true,
-                                  sorted: true
+                                  expanded: true
                                 }, {
                                   caption: 'documentId',
                                   width: 120,
                                   dataField: 'documentId',
-                                  area: 'row',
-                                  expanded: true,
-                                  sorted: true
+                                  expanded: true
                                 },{
                                   caption: 'Направление расходов',
                                   dataField: 'directionName',
@@ -214,7 +221,7 @@ export default class OperatorReportAppropriationsPage extends React.Component {
                               allowFiltering={true}
                               allowSorting={true}
                               allowExpandAll={true}
-                              height={440}
+                              height={640}
                               showBorders={true}
                               showColumnTotals={false}
                               showColumnGrandTotals={false}

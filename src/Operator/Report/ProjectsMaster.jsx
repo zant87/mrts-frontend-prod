@@ -171,6 +171,7 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
                                           caption: 'Общие затраты (плановые)',
                                           dataField: 'realPlanCost',
                                           dataType: 'number',
+                                          format: "#,###,###,##0.##",
                                           width: 150,
                                           area: 'row',
                                           expanded: true
@@ -189,12 +190,12 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
                                         }, {
                                           caption: 'Сроки реализации плановые',
                                           dataField: 'planBeginYear',
-                                          dataType: 'string',
+                                          dataType: 'number',
                                           area: 'row',
                                         }, {
                                           caption: 'Отчетный год',
                                           dataField: 'yearNumber',
-                                          dataType: 'string',
+                                          dataType: 'number',
                                           area: 'row',
                                         }, {
                                           caption: 'Начало фактической реализации',
@@ -210,6 +211,7 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
                                           caption: 'Общие затраты (факт)',
                                           dataField: 'fact',
                                           dataType: 'number',
+                                          format: "#,###,###,##0.##",
                                           area: 'data',
                                         },{
                                           caption: 'Фактические результаты',
@@ -219,8 +221,7 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
                                         },{
                                           caption: 'documentId',
                                           dataField: 'documentId',
-                                          dataType: 'string',
-                                          area: 'row',
+                                          dataType: 'string'
                                         }, {
                                           caption: 'projectId',
                                           dataField: 'projectId',
@@ -236,7 +237,7 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
                                       allowFiltering={true}
                                       allowSorting={true}
                                       allowExpandAll={true}
-                                      height={440}
+                                      height={640}
                                       showBorders={true}
                                       showColumnTotals={false}
                                       showColumnGrandTotals={false}
