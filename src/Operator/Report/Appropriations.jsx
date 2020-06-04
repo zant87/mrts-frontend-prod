@@ -26,6 +26,7 @@ export default class OperatorReportAppropriationsPage extends React.Component {
         pivotData: [],
         rowsPerPage: 20,
         isLoading: false,
+        isLoadingPivot: false,
         activeItem: "1"
     };
 
@@ -40,6 +41,7 @@ export default class OperatorReportAppropriationsPage extends React.Component {
     componentDidMount() {
         //сохранять state через redux
         this.getData();
+        this.getPivotData();
     };
 
     getData = () => {
@@ -54,12 +56,12 @@ export default class OperatorReportAppropriationsPage extends React.Component {
     };
 
     getPivotData = () => {
-        this.setState({ isLoading: true });
-        appAxios.get(`/views/k-9-s?sort=id,desc`)
+        this.setState({ isLoadingPivot: true });
+        appAxios.get(`/views/k-9-s-all`)
             .then(res => {
                 const count = Number(res.headers['x-total-count']);
                 const data = res.data;
-                this.setState({pivotData: data, isLoading: false, count: count});
+                this.setState({pivotData: data, isLoadingPivot: false, count: count});
             });
     };
 
@@ -101,7 +103,7 @@ export default class OperatorReportAppropriationsPage extends React.Component {
             },
         ];
 
-        const { data, page, count, isLoading } = this.state;
+        const { data, pivotData, page, count, isLoading, isLoadingPivot } = this.state;
 
         const options = {
             // serverSide: true,
@@ -162,6 +164,7 @@ export default class OperatorReportAppropriationsPage extends React.Component {
                   <MDBTabPane tabId="2" role="tabpanel">
                      <MDBContainer fluid>
                        <MDBRow md={'18'} center className='my-1 mx-auto'>
+                           {isLoadingPivot && <MDBSpinner multicolor />}
                            <PivotGrid id="appropriationsPivot"
                               dataSource={new PivotGridDataSource({
                                 fields: [{
@@ -215,7 +218,7 @@ export default class OperatorReportAppropriationsPage extends React.Component {
                                   area: 'data',
                                   expanded: true
                                 }],
-                                store: data
+                                store: pivotData
                               })}
                               allowSortingBySummary={true}
                               allowFiltering={true}

@@ -23,8 +23,10 @@ export default class OperatorReportExtraBudgetPage extends React.Component {
         page: 0,
         count: 0,
         data: [],
+        pivotData: [],
         rowsPerPage: 20,
         isLoading: false,
+        isLoadingPivot: false,
         activeItem: "1"
     };
 
@@ -39,16 +41,27 @@ export default class OperatorReportExtraBudgetPage extends React.Component {
     componentDidMount() {
         //сохранять state через redux
         this.getData();
+        this.getPivotData();
     };
 
     getData = () => {
         this.setState({ isLoading: true });
         // appAxios.get(`/views/k-10-s?sort=id,desc`)
-        appAxios.get(`/views/k-10-s?sort=id,desc&size=2000`)
+        appAxios.get(`/views/k-10-s-all`)
             .then(res => {
                 const count = Number(res.headers['x-total-count']);
                 const data = res.data;
                 this.setState({data: data, isLoading: false, count: count});
+            });
+    };
+
+    getPivotData = () => {
+        this.setState({ isLoadingPivot: true });
+        appAxios.get(`/views/k-10-s?sort=id,desc&size=2000`)
+            .then(res => {
+                const count = Number(res.headers['x-total-count']);
+                const data = res.data;
+                this.setState({pivotData: data, isLoadingPivot: false, count: count});
             });
     };
 
@@ -89,7 +102,7 @@ export default class OperatorReportExtraBudgetPage extends React.Component {
             },
         ];
 
-        const { data, page, count, isLoading } = this.state;
+        const { data, pivotData, page, count, isLoading, isLoadingPivot } = this.state;
 
         const options = {
             // serverSide: true,
@@ -151,6 +164,7 @@ export default class OperatorReportExtraBudgetPage extends React.Component {
                   <MDBTabPane tabId="2" role="tabpanel">
                      <MDBContainer fluid>
                        <MDBRow md={'18'} center className='my-1 mx-auto'>
+                           {isLoading && <MDBSpinner multicolor />}
                            <PivotGrid id="budgetPivot"
                               dataSource={new PivotGridDataSource({
                                 fields: [{

@@ -31,8 +31,10 @@ export default class OperatorReportFinancingPage extends React.Component {
         page: 0,
         count: 0,
         data: [],
+        pivotData: [],
         rowsPerPage: 20,
         isLoading: false,
+        isLoadingPivot: false,
         activeItem: "1"
     };
 
@@ -47,6 +49,7 @@ export default class OperatorReportFinancingPage extends React.Component {
     componentDidMount() {
         //сохранять state через redux
         this.getData();
+        this.getPivotData();
     };
 
     getData = () => {
@@ -57,6 +60,16 @@ export default class OperatorReportFinancingPage extends React.Component {
                 const count = Number(res.headers['x-total-count']);
                 const data = res.data;
                 this.setState({data: data, isLoading: false, count: count});
+            });
+    };
+
+    getPivotData = () => {
+        this.setState({ isLoadingPivot: true });
+        appAxios.get(`/views/k-8-s-all`)
+            .then(res => {
+                const count = Number(res.headers['x-total-count']);
+                const data = res.data;
+                this.setState({pivotData: data, isLoadingPivot: false, count: count});
             });
     };
 
@@ -96,7 +109,7 @@ export default class OperatorReportFinancingPage extends React.Component {
             },
         ];
 
-        const { data, page, count, isLoading } = this.state;
+        const { data, pivotData, page, count, isLoading, isLoadingPivot } = this.state;
 
         const options = {
             // serverSide: true,
@@ -155,20 +168,20 @@ export default class OperatorReportFinancingPage extends React.Component {
                             </MDBRow>
                      </MDBContainer>
                   </MDBTabPane>
-                  
                   <MDBTabPane tabId="2" role="tabpanel">
                      <MDBContainer fluid>
                        <MDBRow md={'18'} center className='my-1 mx-auto'>
+                          {isLoadingPivot && <MDBSpinner multicolor />}
                           <PivotGrid id="financingPivot"
                               dataSource={new PivotGridDataSource({
                                 fields: [{
-                                  caption: 'id',
+                                  caption: '#',
                                   width: 120,
                                   dataField: 'id'
                                 }, {
                                   caption: 'documentId',
-                                  width: 120,
-                                  dataField: 'documentId'
+                                  dataField: 'documentId',
+                                  visible: false
                                 },{
                                   caption: 'Направление расходов',
                                   dataField: 'expenditureName',
@@ -177,27 +190,29 @@ export default class OperatorReportFinancingPage extends React.Component {
                                   area: 'row',
                                   expanded: true
                                 },{
-                                  caption: 'year',
-                                  dataField: 'Отчетный год',
+                                  caption: 'Отчетный год',
+                                  dataField: 'year',
                                   dataType: 'number',
-                                  area: 'row',
+                                  area: 'column',
                                   expanded: true
                                 }, {
                                   caption: 'Запланировано, млн. руб.',
                                   dataField: 'plan',
                                   dataType: 'number',
-                                  area: 'row',
+                                  area: 'data',
+                                  summaryType: 'sum',
                                   format: "#,###,###,##0.##",
                                   expanded: true
                                 }, {
                                   caption: 'Кассовое исполнение, млн. руб.',
                                   dataField: 'fact',
                                   dataType: 'number',
+                                  summaryType: 'sum',
                                   format: "#,###,###,##0.##",                
                                   area: 'data',
                                   expanded: true
                                 }],
-                                store: data
+                                store: pivotData
                               })}
                               allowSortingBySummary={true}
                               allowFiltering={true}
@@ -215,8 +230,6 @@ export default class OperatorReportFinancingPage extends React.Component {
                               <Export enabled={true} fileName="Бюджетное финансирование транспорта" allowExportSelectedData={true} />
                             </PivotGrid>
                           
-
-
                        </MDBRow>
                      </MDBContainer>
                   </MDBTabPane>
