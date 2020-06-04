@@ -1,6 +1,5 @@
 import React from 'react';
-import {MDBCol, MDBContainer, MDBIframe, MDBRow, MDBSpinner} from 'mdbreact';
-import MUIDataTable from "mui-datatables";
+import {MDBCol, MDBContainer, MDBIframe, MDBRow} from 'mdbreact';
 
 class SwaggerPage extends React.Component {
 
@@ -9,7 +8,8 @@ class SwaggerPage extends React.Component {
         <MDBContainer fluid>
             <MDBRow center>
                 <MDBCol md={'12'} className='my-5 mx-auto'>
-                    <MDBIframe src="http://localhost:8080/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config"/>
+                    <MDBIframe
+                        src="http://10.10.10.187:8080/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config"/>
                 </MDBCol>
             </MDBRow>
         </MDBContainer>

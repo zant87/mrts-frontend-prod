@@ -33,8 +33,8 @@ export default class OperatorReportFactPage extends React.Component {
         this.getParameterList();
     };
 
-    getParameterList = () => {
-        this.setState({ isLoading: true });
+    getParameterList = async () => {
+        this.setState({isLoading: true});
         appAxios.get(`/parameters`)
             .then(res => {
                 const data = res.data.map(item => {
@@ -44,8 +44,8 @@ export default class OperatorReportFactPage extends React.Component {
             });
     }
 
-    getTransportTypeList = () => {
-        this.setState({ isLoading: true });
+    getTransportTypeList = async () => {
+        this.setState({isLoading: true});
         appAxios.get(`/nsi-transport-types`)
             .then(res => {
                 const data = res.data.map(item => {
@@ -56,8 +56,8 @@ export default class OperatorReportFactPage extends React.Component {
     }
 
 
-    getDataProviderList = () => {
-        this.setState({ isLoading: true });
+    getDataProviderList = async () => {
+        this.setState({isLoading: true});
         appAxios.get(`/nsi-data-providers`)
             .then(res => {
                 const data = res.data.map(item => {
@@ -67,17 +67,17 @@ export default class OperatorReportFactPage extends React.Component {
             });
     }
 
-    getData = () => {
+    getData = async () => {
 
-        this.setState({ isLoading: true });
+        this.setState({isLoading: true});
 
         let filterString = '';
 
         if (this.state.dataProviderFilter.length > 0)
-            filterString = filterString.concat( '&dataProviderName.equals=', this.state.dataProviderFilter );
+            filterString = filterString.concat('&dataProviderName.equals=', this.state.dataProviderFilter);
 
         if (this.state.transportTypeFilter.length > 0)
-            filterString = filterString.concat( '&transportTypeName.equals=', this.state.transportTypeFilter );
+            filterString = filterString.concat('&transportTypeName.equals=', this.state.transportTypeFilter);
 
         if (this.state.parameterNameFilter.length > 0)
             filterString = filterString.concat( '&parameterName.equals=', this.state.parameterNameFilter );
@@ -244,10 +244,10 @@ export default class OperatorReportFactPage extends React.Component {
         return (
             <MDBContainer fluid>
                 <MDBRow center>
-                    <MDBCol md={'12'} className='my-5 mx-auto'>
-                        {isLoading && <MDBSpinner multicolor />}
+                    <MDBCol md={'12'} className='mx-auto'>
+                        {isLoading && <MDBSpinner multicolor/>}
                         <MUIDataTable
-                            title={ "Фактические значения показателей" }
+                            title={"Фактические значения показателей"}
                             data={data}
                             columns={columns}
                             options={options}

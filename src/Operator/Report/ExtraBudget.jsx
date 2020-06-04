@@ -24,7 +24,7 @@ export default class OperatorReportExtraBudgetPage extends React.Component {
     getData = () => {
         this.setState({ isLoading: true });
         // appAxios.get(`/views/k-10-s?sort=id,desc`)
-        appAxios.get(`/views/k-10-s?sort=id,desc&size=2000`)
+        appAxios.get(`/views/k-10-s-all`)
             .then(res => {
                 const count = Number(res.headers['x-total-count']);
                 const data = res.data;
@@ -100,8 +100,8 @@ export default class OperatorReportExtraBudgetPage extends React.Component {
         return (
             <MDBContainer fluid>
                 <MDBRow center>
-                    <MDBCol md={'12'} className='my-5 mx-auto'>
-                        {isLoading && <MDBSpinner multicolor />}
+                    <MDBCol md={'12'} className='mx-auto'>
+                        {isLoading && <MDBSpinner multicolor/>}
                         <MUIDataTable
                             title={"Объемы привлечения внебюджетных средств"}
                             data={data}
