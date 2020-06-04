@@ -1,7 +1,7 @@
 import React from 'react';
 // import { MDBBtn, MDBCol, MDBContainer, MDBIcon, MDBRow, MDBSpinner } from "mdbreact";
 
-import { MDBCol, MDBContainer, MDBRow, MDBSpinner, MDBTabPane, MDBTabContent, MDBNav, MDBNavItem, MDBNavLink } from "mdbreact";
+import { MDBCol, MDBContainer, MDBRow, MDBIcon, MDBSpinner, MDBTabPane, MDBTabContent, MDBNav, MDBNavItem, MDBNavLink } from "mdbreact";
 
 import PivotGrid, {
     FieldChooser,
@@ -12,6 +12,7 @@ import PivotGridDataSource from 'devextreme/ui/pivot_grid/data_source';
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.light.css';
 
+import ReportsNav from "./ReportsNav";
 import MUIDataTable from "mui-datatables";
 import {labels} from "../../_components/TableTextLabels";
 import CustomToolbarSelect from "../../_components/CustomToolbarSelect";
@@ -29,6 +30,11 @@ export default class OperatorReportActivitiesPage extends React.Component {
         isLoading: false,
         activeItem: "1"
     };
+
+    constructor(props) {
+      super(props);
+      this.toggle = this.toggle.bind(this);
+    }
 
     toggle = tab => e => {
       if (this.state.activeItem !== tab) {
@@ -130,20 +136,9 @@ export default class OperatorReportActivitiesPage extends React.Component {
 
         return (
             <MDBContainer fluid>
-                <MDBNav className="nav-tabs mt-5">
-                  <MDBNavItem>
-                    <MDBNavLink link to="#" active={this.state.activeItem === "1"} onClick={this.toggle("1")} role="tab" >
-                      Корректировка
-                    </MDBNavLink>
-                  </MDBNavItem>
-                  <MDBNavItem>
-                    <MDBNavLink link to="#" active={this.state.activeItem === "2"} onClick={this.toggle("2")} role="tab" >
-                      Просмотр
-                    </MDBNavLink>
-                  </MDBNavItem>
-                </MDBNav>
+                <ReportsNav activeItem={this.state.activeItem} onHandleToggle={this.toggle} /> 
+                <MDBTabContent activeItem={this.state.activeItem} className="card"  >
 
-                <MDBTabContent activeItem={this.state.activeItem} >
                   <MDBTabPane tabId="1" role="tabpanel">
                     <MDBContainer fluid>
                         <MDBRow center>
@@ -159,6 +154,7 @@ export default class OperatorReportActivitiesPage extends React.Component {
                         </MDBRow>
                     </MDBContainer>
                  </MDBTabPane>
+
                   <MDBTabPane tabId="2" role="tabpanel">
                      <MDBContainer fluid>
                        <MDBRow md={'18'} center className='my-1 mx-auto'>

@@ -1,7 +1,7 @@
 import React from 'react';
 // import {MDBBreadcrumb, MDBBreadcrumbItem, MDBContainer, MDBRow} from "mdbreact";
 
-import { MDBCol, MDBContainer, MDBRow, MDBSpinner, MDBTabPane, MDBTabContent, MDBNav, MDBNavItem, MDBNavLink, MDBBreadcrumb, MDBBreadcrumbItem } from "mdbreact";
+import { MDBCol, MDBContainer, MDBRow, MDBIcon, MDBSpinner, MDBTabPane, MDBTabContent, MDBNav, MDBNavItem, MDBNavLink, MDBBreadcrumb, MDBBreadcrumbItem } from "mdbreact";
 
 import PivotGrid, {
     FieldChooser,

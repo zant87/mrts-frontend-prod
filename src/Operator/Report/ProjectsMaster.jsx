@@ -1,7 +1,7 @@
 import React from 'react';
 // import {MDBCol, MDBContainer, MDBRow, MDBSpinner} from "mdbreact";
 
-import { MDBCol, MDBContainer, MDBRow, MDBSpinner, MDBTabPane, MDBTabContent, MDBNav, MDBNavItem, MDBNavLink } from "mdbreact";
+import { MDBCol, MDBContainer, MDBRow, MDBIcon, MDBSpinner, MDBTabPane, MDBTabContent, MDBNav, MDBNavItem, MDBNavLink } from "mdbreact";
 
 import PivotGrid, {
     FieldChooser,
@@ -11,7 +11,7 @@ import PivotGrid, {
 import PivotGridDataSource from 'devextreme/ui/pivot_grid/data_source';
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.light.css';
-
+import ReportsNav from "./ReportsNav";
 import MUIDataTable from "mui-datatables";
 import {labels} from "../../_components/TableTextLabels";
 import CustomToolbarSelect from "../../_components/CustomToolbarSelect";
@@ -127,19 +127,8 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
 
         return (
             <MDBContainer fluid>
-                <MDBNav className="nav-tabs mt-5">
-                  <MDBNavItem>
-                    <MDBNavLink link to="#" active={this.state.activeItem === "1"} onClick={this.toggle("1")} role="tab" >
-                      Корректировка
-                    </MDBNavLink>
-                  </MDBNavItem>
-                  <MDBNavItem>
-                    <MDBNavLink link to="#" active={this.state.activeItem === "2"} onClick={this.toggle("2")} role="tab" >
-                      Просмотр
-                    </MDBNavLink>
-                  </MDBNavItem>
-                </MDBNav>
-                <MDBTabContent activeItem={this.state.activeItem} >
+                <ReportsNav activeItem={this.state.activeItem} onHandleToggle={this.toggle} /> 
+                <MDBTabContent activeItem={this.state.activeItem} className="card" >
                   <MDBTabPane tabId="1" role="tabpanel">
                                 <MDBContainer fluid>
                                     <MDBRow center>
