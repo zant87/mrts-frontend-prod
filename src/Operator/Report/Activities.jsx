@@ -1,5 +1,17 @@
 import React from 'react';
-import { MDBBtn, MDBCol, MDBContainer, MDBIcon, MDBRow, MDBSpinner } from "mdbreact";
+// import { MDBBtn, MDBCol, MDBContainer, MDBIcon, MDBRow, MDBSpinner } from "mdbreact";
+
+import { MDBCol, MDBContainer, MDBRow, MDBSpinner, MDBTabPane, MDBTabContent, MDBNav, MDBNavItem, MDBNavLink } from "mdbreact";
+
+import PivotGrid, {
+    FieldChooser,
+    Export,
+    FieldPanel
+} from 'devextreme-react/pivot-grid';
+import PivotGridDataSource from 'devextreme/ui/pivot_grid/data_source';
+import 'devextreme/dist/css/dx.common.css';
+import 'devextreme/dist/css/dx.light.css';
+
 import MUIDataTable from "mui-datatables";
 import {labels} from "../../_components/TableTextLabels";
 import CustomToolbarSelect from "../../_components/CustomToolbarSelect";
@@ -15,6 +27,15 @@ export default class OperatorReportActivitiesPage extends React.Component {
         data: [],
         rowsPerPage: 20,
         isLoading: false,
+        activeItem: "1"
+    };
+
+    toggle = tab => e => {
+      if (this.state.activeItem !== tab) {
+        this.setState({
+          activeItem: tab
+        });
+      }
     };
 
     componentDidMount() {
@@ -109,17 +130,124 @@ export default class OperatorReportActivitiesPage extends React.Component {
 
         return (
             <MDBContainer fluid>
-                <MDBRow center>
-                    <MDBCol md={'12'} className='my-5 mx-auto'>
-                        {isLoading && <MDBSpinner multicolor />}
-                        <MUIDataTable
-                            title={"Выполнение мероприятий по реализации ТС"}
-                            data={data}
-                            columns={columns}
-                            options={options}
-                        />
-                    </MDBCol>
-                </MDBRow>
+                <MDBNav className="nav-tabs mt-5">
+                  <MDBNavItem>
+                    <MDBNavLink link to="#" active={this.state.activeItem === "1"} onClick={this.toggle("1")} role="tab" >
+                      Корректировка
+                    </MDBNavLink>
+                  </MDBNavItem>
+                  <MDBNavItem>
+                    <MDBNavLink link to="#" active={this.state.activeItem === "2"} onClick={this.toggle("2")} role="tab" >
+                      Просмотр
+                    </MDBNavLink>
+                  </MDBNavItem>
+                </MDBNav>
+
+                <MDBTabContent activeItem={this.state.activeItem} >
+                  <MDBTabPane tabId="1" role="tabpanel">
+                    <MDBContainer fluid>
+                        <MDBRow center>
+                            <MDBCol md={'12'} className='my-5 mx-auto'>
+                                {isLoading && <MDBSpinner multicolor />}
+                                <MUIDataTable
+                                    title={"Выполнение мероприятий по реализации ТС"}
+                                    data={data}
+                                    columns={columns}
+                                    options={options}
+                                />
+                            </MDBCol>
+                        </MDBRow>
+                    </MDBContainer>
+                 </MDBTabPane>
+                  <MDBTabPane tabId="2" role="tabpanel">
+                     <MDBContainer fluid>
+                       <MDBRow md={'18'} center className='my-1 mx-auto'>
+                            <PivotGrid id="factPivot"
+                              dataSource={new PivotGridDataSource({
+                                fields: [{
+                                  caption: '#',
+                                  width: 120,
+                                  dataField: 'activityReportId',
+                                  area: 'row',
+                                  expanded: true,
+                                  sorted: true
+                                }, {
+                                  caption: 'Обозначение мероприятия',
+                                  dataField: 'activityCode',
+                                  dataType: 'string',
+                                  width: 150,
+                                  area: 'row',
+                                  expanded: true
+                                }, {
+                                  caption: 'Наименование мероприятия',
+                                  dataField: 'activityName',
+                                  dataType: 'string',                
+                                  area: 'row',
+                                  expanded: true
+                                }, {
+                                  caption: 'documentType',
+                                  dataField: 'Вид документа',
+                                  dataType: 'string',
+                                  area: 'row',
+                                  expanded: true
+                                }, {
+                                  caption: 'Содержание мероприятия',
+                                  dataField: 'activityDescription',
+                                  dataType: 'string',
+                                  area: 'row',
+                                }, {
+                                  caption: 'Отчетный год',
+                                  dataField: 'yearNumber',
+                                  dataType: 'string',
+                                  area: 'row',
+                                }, {
+                                  caption: 'Отчетный квартал',
+                                  dataField: 'quarterName',
+                                  dataType: 'string',
+                                  area: 'row',
+                                }, {
+                                  caption: 'Отчет исполнителя',
+                                  dataField: 'reportDescription',
+                                  dataType: 'string',
+                                  area: 'data',
+                                }, {
+                                  caption: 'documentId',
+                                  dataField: 'documentId',
+                                  dataType: 'string',
+                                  area: 'row',
+                                },{
+                                  caption: 'activityId',
+                                  dataField: 'activityId',
+                                  dataType: 'string',
+                                  area: 'row',
+                                },{
+                                  caption: 'activityReportId',
+                                  dataField: 'activityReportId',
+                                  dataType: 'string',
+                                  area: 'row',
+                                }],
+                                store: data
+                              })}
+                              allowSortingBySummary={true}
+                              allowFiltering={true}
+                              allowSorting={true}
+                              allowExpandAll={true}
+                              height={440}
+                              showBorders={true}
+                              showColumnTotals={false}
+                              showColumnGrandTotals={false}
+                              showRowTotals={false}
+                              showRowGrandTotals={false}
+                               >
+                              <FieldPanel showColumnFields={true} />
+                              <FieldChooser enabled={true} />
+                              <Export enabled={true} fileName="Выполнение мероприятий по реализации ТС" allowExportSelectedData={true} />
+                            </PivotGrid>
+                       </MDBRow>
+                     </MDBContainer>
+                  </MDBTabPane>
+                </MDBTabContent>
+
             </MDBContainer>
         );
     }
