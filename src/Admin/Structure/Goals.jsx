@@ -30,7 +30,14 @@ export default class AdminGoalsPage extends React.Component {
 
         const columns = [
             // { field: 'id', title: '#', type: 'numeric' },
-            {field: 'transportStrategyName', title: 'Редакция', defaultGroupOrder: 0},
+            {
+                field: 'transportStrategyName', title: 'Редакция', defaultGroupOrder: 0,
+                // cellStyle: {
+                //     backgroundColor: '#039be5',
+                //     color: '#FFF',
+                //     width: '100px'
+                // },
+            },
             {field: 'goalName', title: 'Цель', defaultGroupOrder: 1},
             // { field: 'transportStrategyCode', type: 'numeric' },
             {field: 'taskName', title: 'Задача'}
@@ -51,7 +58,8 @@ export default class AdminGoalsPage extends React.Component {
                                 grouping: true,
                                 search: false,
                                 pageSize: 20,
-                                pageSizeOptions: [20, 50, 100]
+                                pageSizeOptions: [20, 50, 100],
+                                tableLayout: 'fixed'
                             }}
                         />
                     </MDBCol>

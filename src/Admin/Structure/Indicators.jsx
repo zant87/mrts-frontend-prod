@@ -69,7 +69,8 @@ export default class AdminIndicatorsPage extends React.Component {
                                 grouping: true,
                                 search: false,
                                 pageSize: 20,
-                                pageSizeOptions: [20, 50, 100]
+                                pageSizeOptions: [20, 50, 100],
+                                tableLayout: 'fixed'
                             }}
                         />
                     </MDBCol>
