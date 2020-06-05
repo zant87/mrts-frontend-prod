@@ -2,6 +2,7 @@ import React from 'react';
 import {MDBCol, MDBContainer, MDBRow, toast} from "mdbreact";
 import appAxios from "../../_services/appAxios";
 import MaterialTable from "material-table";
+import {ruLocalization} from "../../_components/MaterialTableLocalization";
 
 export default class OperatorReportAppropriationsPage extends React.Component {
 
@@ -10,6 +11,20 @@ export default class OperatorReportAppropriationsPage extends React.Component {
         count: 0,
         data: [],
         isLoading: false,
+    };
+
+    componentDidMount() {
+        this.getData();
+    };
+
+    getData = async () => {
+        this.setState({isLoading: true});
+        appAxios.get(`/views/k-9-s-all`)
+            .then(res => {
+                const count = Number(res.headers['x-total-count']);
+                const data = res.data;
+                this.setState({data: data, isLoading: false, count: count});
+            });
     };
 
     render() {
@@ -23,7 +38,7 @@ export default class OperatorReportAppropriationsPage extends React.Component {
             {field: 'fact', title: 'Кассовое исполнение, млн. руб.'},
         ];
 
-        const {data, page, count, isLoading} = this.state;
+        const {data, isLoading} = this.state;
         const tableRef = React.createRef();
 
         return (
@@ -34,30 +49,21 @@ export default class OperatorReportAppropriationsPage extends React.Component {
                             title="Бюджетные ассигнования в рамках программ развития транспорта"
                             columns={columns}
                             tableRef={tableRef}
-                            data={query =>
-                                new Promise((resolve, reject) => {
-                                    appAxios.get(`/views/k-9-s?page=${query.page}&size=${query.pageSize}&sort=id,desc`)
-                                        .then(res => {
-                                            const count = Number(res.headers['x-total-count']);
-                                            const data = res.data;
-
-                                            resolve({
-                                                data: data,
-                                                page: query.page,
-                                                totalCount: count
-                                            });
-                                        });
-                                })}
-
+                            data={data}
+                            isLoading={isLoading}
+                            localization={ruLocalization}
                             editable={{
                                 onRowUpdate: (newData, oldData) =>
                                     new Promise((resolve, reject) => {
                                         setTimeout(() => {
                                             const dataUpdate = [...data];
-                                            const index = oldData.tableData.id;
-                                            dataUpdate[index] = newData;
+                                            const index = dataUpdate.findIndex(item => item.id === oldData.id);
 
-                                            console.log(newData);
+                                            newData.plan = (newData.plan !== null) ? newData.plan : 0;
+                                            newData.fact = (newData.fact !== null) ? newData.fact : 0;
+
+                                            dataUpdate[index] = newData;
+                                            this.setState({data: dataUpdate});
 
                                             appAxios({
                                                 url: `/views/k-9-s/update?pID=${newData.id}&pDoc=${newData.documentId}&pPlan=${newData.plan}&pFact=${newData.fact}`,
@@ -75,9 +81,10 @@ export default class OperatorReportAppropriationsPage extends React.Component {
                             }}
                             options={{
                                 actionsColumnIndex: 999,
-                                search: false,
+                                search: true,
                                 pageSize: 20,
                                 pageSizeOptions: [20, 50, 100],
+                                filtering: true
                             }}
                         />
                     </MDBCol>

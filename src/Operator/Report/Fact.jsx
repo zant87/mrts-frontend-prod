@@ -2,6 +2,7 @@ import React from 'react';
 import {MDBCol, MDBContainer, MDBRow, toast} from "mdbreact";
 import appAxios from "../../_services/appAxios";
 import MaterialTable from "material-table";
+import {ruLocalization} from "../../_components/MaterialTableLocalization";
 
 export default class OperatorReportFactPage extends React.Component {
 
@@ -10,74 +11,30 @@ export default class OperatorReportFactPage extends React.Component {
         count: 0,
         data: [],
         isLoading: false,
-        dataProviderList: [],
-        transportTypeList: [],
-        parameterList: [],
     }
 
     componentDidMount() {
-        this.getDataProviderList();
-        this.getTransportTypeList();
-        this.getParameterList();
+        this.getData();
+    }
+
+    getData = async () => {
+        this.setState({isLoading: true});
+        appAxios.get(`/views/k-5-s-all`)
+            .then(res => {
+                console.log(res);
+                const count = Number(res.headers['x-total-count']);
+                const data = res.data;
+                this.setState({data: data, isLoading: false, count: count});
+            });
     };
-
-    getParameterList = async () => {
-        this.setState({isLoading: true});
-        appAxios.get(`/parameters`)
-            .then(res => {
-                // console.log(res);
-                const data = res.data.map(item => {
-                    return item.name;
-                })
-                this.setState({parameterList: data, isLoading: false});
-            });
-    }
-
-    getTransportTypeList = async () => {
-        this.setState({isLoading: true});
-        appAxios.get(`/nsi-transport-types`)
-            .then(res => {
-
-                const data = res.data.map(item => {
-                    return {id: item.id, name: item.name};
-                })
-
-                const mod_data = data.reduce(function (acc, cur, i) {
-                    acc[cur.id] = cur.name;
-                    return acc;
-                }, {});
-
-                console.log(data);
-                console.log(mod_data);
-                this.setState({transportTypeList: mod_data, isLoading: false});
-            });
-    }
-
-
-    getDataProviderList = async () => {
-        this.setState({isLoading: true});
-        appAxios.get(`/nsi-data-providers`)
-            .then(res => {
-                const data = res.data.map(item => {
-                    return item.name;
-                })
-                this.setState({dataProviderList: data, isLoading: false});
-            });
-    }
 
     render() {
 
         const columns = [
-            {field: 'id', title: '#', filtering: false},
+            {field: 'id', title: '#', filtering: false, editable: 'never'},
             {field: 'dataProviderName', title: 'Источник данных', editable: 'never'},
-            // {field: 'transportTypeName', title: 'Вид транспорта', editable: 'never'},
-            {
-                field: 'transportTypeId',
-                title: 'Вид транспорта',
-                lookup: this.state.transportTypeList,
-                editable: 'never'
-            },
-            {field: 'formCode', title: 'Форма', editable: 'never', filtering: false},
+            {field: 'transportTypeName', title: 'Вид транспорта', editable: 'never'},
+            {field: 'formCode', title: 'Форма', editable: 'never'},
             {field: 'parameterName', title: 'Показатель', editable: 'never'},
             {field: 'year', title: 'Отчетный год', editable: 'never'},
             {field: 'quarterName', title: 'Отчетный квартал', editable: 'never'},
@@ -86,7 +43,7 @@ export default class OperatorReportFactPage extends React.Component {
         ];
 
         const tableRef = React.createRef();
-        const {data, page, count, isLoading} = this.state;
+        const {data, isLoading} = this.state;
 
         return (
 
@@ -97,31 +54,20 @@ export default class OperatorReportFactPage extends React.Component {
                             title="Фактические значения показателей"
                             columns={columns}
                             tableRef={tableRef}
-                            data={query =>
-                                new Promise((resolve, reject) => {
-                                    appAxios.get(`/views/k-5-s?page=${query.page}&size=${query.pageSize}&sort=id,desc`)
-                                        .then(res => {
-                                            const count = Number(res.headers['x-total-count']);
-                                            const data = res.data;
-
-                                            resolve({
-                                                data: data,
-                                                page: query.page,
-                                                totalCount: count
-                                            });
-                                        });
-                                })}
-
+                            data={data}
+                            isLoading={isLoading}
+                            localization={ruLocalization}
                             editable={{
                                 onRowUpdate: (newData, oldData) =>
                                     new Promise((resolve, reject) => {
                                         setTimeout(() => {
                                             const dataUpdate = [...data];
-                                            const index = oldData.tableData.id;
+                                            const index = dataUpdate.findIndex(item => item.id === oldData.id);
+
+                                            newData.value = (newData.value !== null) ? newData.value : 0;
                                             dataUpdate[index] = newData;
 
-                                            console.log(newData);
-
+                                            this.setState({data: dataUpdate});
                                             const requestData = {id: newData.id, value: newData.value};
 
                                             appAxios({
@@ -136,12 +82,12 @@ export default class OperatorReportFactPage extends React.Component {
                                             });
 
                                             resolve();
-                                        }, 1000)
+                                        }, 6000)
                                     }),
                             }}
                             options={{
                                 actionsColumnIndex: 999,
-                                search: false,
+                                search: true,
                                 pageSize: 20,
                                 pageSizeOptions: [20, 50, 100],
                                 filtering: true
@@ -152,4 +98,4 @@ export default class OperatorReportFactPage extends React.Component {
             </MDBContainer>
         )
     }
-};
+}

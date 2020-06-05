@@ -6,6 +6,7 @@ import CustomToolbarSelect from "../../_components/CustomToolbarSelect";
 import appAxios from "../../_services/appAxios";
 import ButtonUpdateColumn from "../../_components/ButtonUpdateColumn";
 import MaterialTable from "material-table";
+import {ruLocalization} from "../../_components/MaterialTableLocalization";
 
 export default class OperatorReportFinancingPage extends React.Component {
 
@@ -14,6 +15,20 @@ export default class OperatorReportFinancingPage extends React.Component {
         count: 0,
         data: [],
         isLoading: false,
+    };
+
+    componentDidMount() {
+        this.getData();
+    };
+
+    getData = async () => {
+        this.setState({isLoading: true});
+        appAxios.get(`/views/k-8-s-all`)
+            .then(res => {
+                const count = Number(res.headers['x-total-count']);
+                const data = res.data;
+                this.setState({data: data, isLoading: false, count: count});
+            });
     };
 
     render() {
@@ -36,30 +51,21 @@ export default class OperatorReportFinancingPage extends React.Component {
                             title="Бюджетное финансирование транспорта"
                             columns={columns}
                             tableRef={tableRef}
-                            data={query =>
-                                new Promise((resolve, reject) => {
-                                    appAxios.get(`/views/k-8-s?page=${query.page}&size=${query.pageSize}&sort=id,desc`)
-                                        .then(res => {
-                                            const count = Number(res.headers['x-total-count']);
-                                            const data = res.data;
-
-                                            resolve({
-                                                data: data,
-                                                page: query.page,
-                                                totalCount: count
-                                            });
-                                        });
-                                })}
-
+                            isLoading={isLoading}
+                            localization={ruLocalization}
+                            data={data}
                             editable={{
                                 onRowUpdate: (newData, oldData) =>
                                     new Promise((resolve, reject) => {
                                         setTimeout(() => {
                                             const dataUpdate = [...data];
-                                            const index = oldData.tableData.id;
+                                            const index = dataUpdate.findIndex(item => item.id === oldData.id);
+
+                                            newData.plan = (newData.plan !== null) ? newData.plan : 0;
+                                            newData.fact = (newData.fact !== null) ? newData.fact : 0;
                                             dataUpdate[index] = newData;
 
-                                            console.log(newData);
+                                            this.setState({data: dataUpdate});
 
                                             appAxios({
                                                 url: `/views/k-8-s/update?pID=${newData.id}&pDoc=${newData.documentId}&pPlan=${newData.plan}&pFact=${newData.fact}`,
@@ -77,9 +83,10 @@ export default class OperatorReportFinancingPage extends React.Component {
                             }}
                             options={{
                                 actionsColumnIndex: 999,
-                                search: false,
+                                search: true,
                                 pageSize: 20,
                                 pageSizeOptions: [20, 50, 100],
+                                filtering: true
                             }}
                         />
                     </MDBCol>
