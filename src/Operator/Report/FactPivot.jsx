@@ -175,7 +175,7 @@ export default class OperatorReportFactPivotPage extends React.Component {
                 <MDBRow center>
                     <MDBCol md={'12'} className='mx-auto'>
                         {isLoading && <MDBSpinner multicolor/>}
-                        <PivotGrid
+                        {!isLoading && <PivotGrid
                             id="fact"
                             dataSource={dataSource}
                             allowSorting={true}
@@ -191,7 +191,7 @@ export default class OperatorReportFactPivotPage extends React.Component {
                             showBorders={true}>
                             <Export enabled={true} fileName="Фактические значения показателей"/>
                             <FieldChooser enabled={true}/>
-                        </PivotGrid>
+                        </PivotGrid>}
                     </MDBCol>
                 </MDBRow>
             </MDBContainer>

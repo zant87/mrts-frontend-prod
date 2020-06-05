@@ -1,7 +1,5 @@
 import React from 'react';
-import { MDBBreadcrumb, MDBBreadcrumbItem, MDBCol, MDBContainer, MDBRow, MDBSpinner } from "mdbreact";
-import MUIDataTable from "mui-datatables";
-import {labels} from "../../_components/TableTextLabels";
+import {MDBCol, MDBContainer, MDBRow} from "mdbreact";
 import appAxios from "../../_services/appAxios";
 import MaterialTable from "material-table";
 
@@ -53,13 +51,6 @@ export default class AdminIndicatorsPage extends React.Component {
             <MDBContainer fluid>
                 <MDBRow center>
                     <MDBCol md={'12'} className='my-5 mx-auto'>
-                        {/*{isLoading && <MDBSpinner multicolor />}*/}
-                        {/*<MUIDataTable*/}
-                        {/*    title={"Индикаторы по целям ТС"}*/}
-                        {/*    data={data}*/}
-                        {/*    columns={columns}*/}
-                        {/*    options={options}*/}
-                        {/*/>*/}
                         <MaterialTable
                             title="Индикаторы по целям ТС"
                             columns={columns}

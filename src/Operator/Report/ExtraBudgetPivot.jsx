@@ -126,6 +126,7 @@ export default class OperatorReportExtraBudgetPivotPage extends React.Component 
                 <MDBRow center>
                     <MDBCol md={'12'} className='mx-auto'>
                         {isLoading && <MDBSpinner multicolor/>}
+                        {!isLoading &&
                         <PivotGrid
                             id="fact"
                             dataSource={dataSource}
@@ -143,6 +144,7 @@ export default class OperatorReportExtraBudgetPivotPage extends React.Component 
                             <Export enabled={true} fileName="Фактические значения показателей"/>
                             <FieldChooser enabled={true}/>
                         </PivotGrid>
+                        }
                     </MDBCol>
                 </MDBRow>
             </MDBContainer>
