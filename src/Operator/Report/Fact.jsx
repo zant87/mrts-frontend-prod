@@ -37,13 +37,16 @@ export default class OperatorReportFactPage extends React.Component {
         this.setState({isLoading: true});
         appAxios.get(`/nsi-transport-types`)
             .then(res => {
+
                 const data = res.data.map(item => {
                     return {id: item.id, name: item.name};
                 })
+
                 const mod_data = data.reduce(function (acc, cur, i) {
                     acc[cur.id] = cur.name;
                     return acc;
                 }, {});
+
                 console.log(data);
                 console.log(mod_data);
                 this.setState({transportTypeList: mod_data, isLoading: false});

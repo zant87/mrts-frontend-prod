@@ -27,8 +27,8 @@ const Navigation = () => {
                                      title=' Объемы привлечения внебюджетных средств'/>
                             <NavLink to='/operator/report/sources'
                                      title='Источники финансирования транспорта организациями'/>
-                            <NavLink to='/operator/report/grid' title='Тест DevExtreme DataGrid'/>
-                            <NavLink to='/operator/report/pivot' title='Тест DevExtreme PivotGird'/>
+                            {/*<NavLink to='/operator/report/grid' title='Тест DevExtreme DataGrid'/>*/}
+                            {/*<NavLink to='/operator/report/pivot' title='Тест DevExtreme PivotGird'/>*/}
                         </ul>
                     </MDBJumbotron>
                 </MDBCol>

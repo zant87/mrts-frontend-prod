@@ -356,10 +356,10 @@ export const AppRoutes = () => {
                           component={OperatorReportSourcesPage}/>
 
             {/*Тест DevExtreme*/}
-            <PrivateRoute exact path="/operator/report/grid" roles={Role.Operator}
-                          component={OperatorReportDataGridPage}/>
-            <PrivateRoute exact path="/operator/report/pivot" roles={Role.Operator}
-                          component={OperatorReportFactPivotPage}/>
+            {/*<PrivateRoute exact path="/operator/report/grid" roles={Role.Operator}*/}
+            {/*              component={OperatorReportDataGridPage}/>*/}
+            {/*<PrivateRoute exact path="/operator/report/pivot" roles={Role.Operator}*/}
+            {/*              component={OperatorReportFactPivotPage}/>*/}
 
             {/*Calculation - Отчетные показатели */}
             <PrivateRoute exact path="/operator/calculation" roles={Role.Operator}
