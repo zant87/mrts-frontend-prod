@@ -5,6 +5,10 @@ import { authenticationService } from "@/_services";
 import { Footer } from "@/_components";
 import MRTSLogo from "@/_assets/mrts-logo.png";
 import MintransLogo from "@/_assets/logo-mintrans_.png";
+
+import { loadMessages, locale } from 'devextreme/localization';
+import ruMessages from 'devextreme/localization/messages/ru.json';
+
 import { Provider } from "react-redux";
 import store from "@/store";
 import {
@@ -42,9 +46,13 @@ class App extends React.Component {
       isSupportShow: "block",
       isIconShow: "block",
       // isDevMode: (process.env.NODE_ENV !== "production")
-      isDevMode: config.isLocalDeployment
+      isDevMode: config.isLocalDeployment,
+      locale: 'ru',
     };
 
+    this.initMessages();
+    locale(this.state.locale);
+    
   }
 
   componentDidMount() {
@@ -68,7 +76,7 @@ class App extends React.Component {
         isSupportShow: "block",
         isIconShow: "block",
       });
-    }
+    }    
 
     authenticationService.currentUser.subscribe((x) =>
       this.setState({
@@ -86,6 +94,19 @@ class App extends React.Component {
         })
     );
 
+  }
+
+  getLocale() {
+    const locale = sessionStorage.getItem('locale');
+    return locale != null ? locale : 'en';
+  }
+
+  setLocale(locale) {
+    sessionStorage.setItem('locale', locale);
+  }
+
+  initMessages() {
+    loadMessages(ruMessages);
   }
 
   componentWillUnmount() {
