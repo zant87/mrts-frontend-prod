@@ -194,11 +194,11 @@ class App extends React.Component {
                           expand="md"
                           fixed="top"
                           scrolling>
-                      <MDBNavbarBrand className="py-0 font-weight-bold">
-                        <img src={MintransLogo} style={{ width: "45px", marginRight: "10px" }} alt="" />
+                      <MDBNavbarBrand className="py-0">
+                        <img src={MintransLogo} style={{width: "45px", marginRight: "10px"}} alt=""/>
                         <strong className="white-text">МРТС РФ</strong>
                       </MDBNavbarBrand>
-                      <MDBNavbarToggler onClick={this.toggleCollapse("navbarCollapse")} />
+                        <MDBNavbarToggler onClick={this.toggleCollapse("navbarCollapse")}/>
                       <MDBCollapse id="navbarCollapse" isOpen={collapseID} navbar>
                         <MDBNavbarNav right>
                           <MDBNavItem>

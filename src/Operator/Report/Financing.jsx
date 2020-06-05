@@ -1,11 +1,13 @@
 import React from 'react';
-// import {MDBCol, MDBContainer, MDBRow, MDBSpinner} from "mdbreact";
-import { MDBCol, MDBContainer, MDBRow, MDBIcon, MDBSpinner, MDBTabPane, MDBTabContent, MDBNav, MDBNavItem, MDBNavLink } from "mdbreact";
+
+import { MDBCol, MDBContainer, MDBRow, MDBIcon, MDBSpinner, MDBTabPane, MDBTabContent, MDBNav, MDBNavItem, MDBNavLink, toast } from "mdbreact";
+
 import MUIDataTable from "mui-datatables";
 import {labels} from "../../_components/TableTextLabels";
 import CustomToolbarSelect from "../../_components/CustomToolbarSelect";
 import appAxios from "../../_services/appAxios";
 import ButtonUpdateColumn from "../../_components/ButtonUpdateColumn";
+import MaterialTable from "material-table";
 
 import ReportsNav from "./ReportsNav";
 import PivotGrid, {
@@ -90,27 +92,13 @@ export default class OperatorReportFinancingPage extends React.Component {
     render() {
 
         const columns = [
-            { name: 'year', label: 'Отчетный год'},
-            { name: 'expenditureName', label: 'Направление расходов' },
-            { name: 'plan', label: 'Запланировано, млн. руб.' , options: { filter: false } },
-            { name: 'fact', label: 'Кассовое исполнение, млн. руб.', options: { filter: false } },
-            { name: 'id', label: 'id', options: {display: 'excluded', filter: false}},
-            { name: 'documentId', label: 'documentId', options: {display: 'excluded', filter: false}},
-            { name: "",
-                options: {
-                    filter: false,
-                    sort: false,
-                    empty: true,
-                    customBodyRender: (value, tableMeta, updateValue) => {
-                        return (
-                            <ButtonUpdateColumn rowData = {tableMeta.rowData}/>
-                        );
-                    }
-                }
-            },
+            {field: 'year', title: 'Отчетный год', editable: 'never'},
+            {field: 'expenditureName', title: 'Направление расходов', editable: 'never'},
+            {field: 'plan', title: 'Запланировано, млн. руб.'},
+            {field: 'fact', title: 'Кассовое исполнение, млн. руб.'},
         ];
 
-        const { data, pivotData, page, count, isLoading, isLoadingPivot } = this.state;
+        // const { data, pivotData, page, count, isLoading, isLoadingPivot } = this.state;
 
         const options = {
             // serverSide: true,
@@ -139,8 +127,8 @@ export default class OperatorReportFinancingPage extends React.Component {
             // ),
         };
 
-        return (
-            <MDBContainer fluid>
+        // return (
+            {/* <MDBContainer fluid>
                <ReportsNav activeItem={this.state.activeItem} onHandleToggle={this.toggle} />
                 <MDBTabContent activeItem={this.state.activeItem} className="card" >
                   <MDBTabPane tabId="1" role="tabpanel">
@@ -223,7 +211,72 @@ export default class OperatorReportFinancingPage extends React.Component {
                        </MDBRow>
                      </MDBContainer>
                   </MDBTabPane>
-                </MDBTabContent>
+                </MDBTabContent> */}
+
+        const {data, page, count, isLoading} = this.state;
+        const tableRef = React.createRef();
+
+        return (
+            <MDBContainer fluid>
+
+
+
+
+            
+                <MDBRow center>
+                    <MDBCol md={'12'} className='mx-auto'>
+                        <MaterialTable
+                            title="Бюджетное финансирование транспорта"
+                            columns={columns}
+                            tableRef={tableRef}
+                            data={query =>
+                                new Promise((resolve, reject) => {
+                                    appAxios.get(`/views/k-8-s?page=${query.page}&size=${query.pageSize}&sort=id,desc`)
+                                        .then(res => {
+                                            const count = Number(res.headers['x-total-count']);
+                                            const data = res.data;
+
+                                            resolve({
+                                                data: data,
+                                                page: query.page,
+                                                totalCount: count
+                                            });
+                                        });
+                                })}
+
+                            editable={{
+                                onRowUpdate: (newData, oldData) =>
+                                    new Promise((resolve, reject) => {
+                                        setTimeout(() => {
+                                            const dataUpdate = [...data];
+                                            const index = oldData.tableData.id;
+                                            dataUpdate[index] = newData;
+
+                                            console.log(newData);
+
+                                            appAxios({
+                                                url: `/views/k-8-s/update?pID=${newData.id}&pDoc=${newData.documentId}&pPlan=${newData.plan}&pFact=${newData.fact}`,
+                                                method: 'GET'
+                                            }).then((response) => {
+                                                const message = response.headers["x-mrts-backend-params"];
+                                                toast.success(`Успешно обновлена запись с ID ${newData.id}`, {
+                                                    closeButton: false
+                                                });
+                                            });
+
+                                            resolve();
+                                        }, 1000)
+                                    }),
+                            }}
+                            options={{
+                                actionsColumnIndex: 999,
+                                search: false,
+                                pageSize: 20,
+                                pageSizeOptions: [20, 50, 100],
+                            }}
+                        />
+                    </MDBCol>
+                </MDBRow>
             </MDBContainer>
         );
     }

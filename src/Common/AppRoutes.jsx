@@ -71,7 +71,11 @@ import OperatorCalculationNavigation from "@/Operator/Calculation/Navigation";
 import loadable from "react-loadable";
 import SwaggerPage from "./Swagger";
 import OperatorReportDataGridPage from "../Operator/Report/DataGrid";
-import OperatorReportPivotGridPage from "../Operator/Report/PivotGrid";
+import OperatorReportFactPivotPage from "../Operator/Report/FactPivot";
+import OperatorReportFactTabsPage from "../Operator/Report/FactTabs";
+import OperatorReportFinancingTabsPage from "../Operator/Report/FinancingTabs";
+import OperatorReportAppropriationsTabsPage from "../Operator/Report/AppropriationsTabs";
+import OperatorReportExtraBudgetTabsPage from "../Operator/Report/ExtraBudgetTabs";
 
 const AsyncAdminStructureNavigation = loadable({
     loader: () => import("../Admin/Structure/Navigation"),
@@ -265,9 +269,10 @@ export const AppRoutes = () => {
             <PrivateRoute exact path="/admin/loading/fromMSTK" roles={Role.Admin} component={AsyncAdminLoadingFromMSTKPage} />
             <PrivateRoute exact path="/admin/loading/fromSDMX" roles={Role.Admin} component={AsyncAdminLoadingFromSDMXPage} />
             <PrivateRoute exact path="/admin/loading/fromXLSX" roles={Role.Admin} component={AsyncAdminLoadingFromXLSXPage} />
-            <PrivateRoute exact path="/admin/loading/fromCSV" roles={Role.Admin} component={AsyncAdminLoadingCSVPage} />
-            <PrivateRoute exact path="/admin/loading/reports" roles={Role.Admin} component={AsyncAdminLoadingReportsPage} />
-            <PrivateRoute exact path="/admin/loading/document" roles={Role.Admin} component={AsyncAdminLoadingDocumentPage} />
+            <PrivateRoute exact path="/admin/loading/fromCSV" roles={Role.Admin} component={AsyncAdminLoadingCSVPage}/>
+            <PrivateRoute exact path="/admin/loading/reports" roles={Role.Admin}
+                          component={AsyncAdminLoadingReportsPage}/>
+            <PrivateRoute exact path="/admin/loading/document" roles={Role.Admin} component={AdminLoadingDocumentPage}/>
             {/*AdminLoadingDocumentPage*/}
 
             {/*Archive - Архив */}
@@ -297,39 +302,53 @@ export const AppRoutes = () => {
             <PrivateRoute exact path="/operator/plan/indicators/:id" roles={Role.Operator} component={AsyncOperatorPlanIndicatorsEditPage} />
 
             {/*Control - Контроль */}
-            <PrivateRoute exact path="/operator/control" roles={Role.Operator} component={OperatorControlNavigation} />
-            <PrivateRoute exact path="/operator/control/indicators" roles={Role.Operator} component={OperatorControlIndicatorsPage} />
-            <PrivateRoute exact path="/operator/control/completion" roles={Role.Operator} component={OperatorControlCompletionPage} />
-            <PrivateRoute exact path="/operator/control/activities" roles={Role.Operator} component={OperatorControlActivitiesPage} />
-            <PrivateRoute exact path="/operator/control/projects" roles={Role.Operator} component={OperatorControlProjectsPage} />
-            <PrivateRoute exact path="/operator/control/resources" roles={Role.Operator} component={OperatorControlResourcesPage} />
+            <PrivateRoute exact path="/operator/control" roles={Role.Operator} component={OperatorControlNavigation}/>
+            <PrivateRoute exact path="/operator/control/indicators" roles={Role.Operator}
+                          component={OperatorControlIndicatorsPage}/>
+            <PrivateRoute exact path="/operator/control/completion" roles={Role.Operator}
+                          component={OperatorControlCompletionPage}/>
+            <PrivateRoute exact path="/operator/control/activities" roles={Role.Operator}
+                          component={OperatorControlActivitiesPage}/>
+            <PrivateRoute exact path="/operator/control/projects" roles={Role.Operator}
+                          component={OperatorControlProjectsPage}/>
+            <PrivateRoute exact path="/operator/control/resources" roles={Role.Operator}
+                          component={OperatorControlResourcesPage}/>
 
             {/*Report - Отчетные показатели */}
-            <PrivateRoute exact path="/operator/report" roles={Role.Operator} component={OperatorReportNavigation} />
-            <PrivateRoute exact path="/operator/report/fact" roles={Role.Operator} component={OperatorReportFactPage} />
-            <PrivateRoute exact path="/operator/report/fact/:id" roles={Role.Operator} component={OperatorReportFactEditPage} />
+            <PrivateRoute exact path="/operator/report" roles={Role.Operator} component={OperatorReportNavigation}/>
+            <PrivateRoute exact path="/operator/report/fact" roles={Role.Operator}
+                          component={OperatorReportFactTabsPage}/>
+            {/*<PrivateRoute exact path="/operator/report/fact" roles={Role.Operator} component={OperatorReportFactPage} />*/}
+            <PrivateRoute exact path="/operator/report/fact/:id" roles={Role.Operator}
+                          component={OperatorReportFactEditPage}/>
 
-            <PrivateRoute exact path="/operator/report/activities" roles={Role.Operator} component={OperatorReportActivitiesPage} />
-            <PrivateRoute exact path="/operator/report/activities/:id" roles={Role.Operator} component={OperatorReportActivitiesUpdatePage} />
+            <PrivateRoute exact path="/operator/report/activities" roles={Role.Operator}
+                          component={OperatorReportActivitiesPage}/>
+            <PrivateRoute exact path="/operator/report/activities/:id" roles={Role.Operator}
+                          component={OperatorReportActivitiesUpdatePage}/>
 
-            <PrivateRoute exact path="/operator/report/projects_master" roles={Role.Operator} component={OperatorReportProjectsMasterPage} />
-            <PrivateRoute exact path="/operator/report/projects_master/:id" roles={Role.Operator} component={OperatorReportProjectsMasterUpdatePage}/>
+            <PrivateRoute exact path="/operator/report/projects_master" roles={Role.Operator}
+                          component={OperatorReportProjectsMasterPage}/>
+            <PrivateRoute exact path="/operator/report/projects_master/:id" roles={Role.Operator}
+                          component={OperatorReportProjectsMasterUpdatePage}/>
 
-            <PrivateRoute exact path="/operator/report/projects_detail" roles={Role.Operator} component={OperatorReportProjectsDetailPage} />
-            <PrivateRoute exact path="/operator/report/projects_detail/:id" roles={Role.Operator} component={OperatorReportProjectsDetailUpdatePage}/>
+            <PrivateRoute exact path="/operator/report/projects_detail" roles={Role.Operator}
+                          component={OperatorReportProjectsDetailPage}/>
+            <PrivateRoute exact path="/operator/report/projects_detail/:id" roles={Role.Operator}
+                          component={OperatorReportProjectsDetailUpdatePage}/>
 
             <PrivateRoute exact path="/operator/report/financing" roles={Role.Operator}
-                          component={OperatorReportFinancingPage}/>
+                          component={OperatorReportFinancingTabsPage}/>
             <PrivateRoute exact path="/operator/report/financing/:id" roles={Role.Operator}
                           component={OperatorReportFinancingUpdatePage}/>
 
             <PrivateRoute exact path="/operator/report/appropriations" roles={Role.Operator}
-                          component={OperatorReportAppropriationsPage}/>
+                          component={OperatorReportAppropriationsTabsPage}/>
             <PrivateRoute exact path="/operator/report/appropriations/:id" roles={Role.Operator}
                           component={OperatorReportAppropriationsUpdatePage}/>
 
             <PrivateRoute exact path="/operator/report/extraBudget" roles={Role.Operator}
-                          component={OperatorReportExtraBudgetPage}/>
+                          component={OperatorReportExtraBudgetTabsPage}/>
             <PrivateRoute exact path="/operator/report/extraBudget/:id" roles={Role.Operator}
                           component={OperatorReportExtraBudgetUpdatePage}/>
 
@@ -337,10 +356,10 @@ export const AppRoutes = () => {
                           component={OperatorReportSourcesPage}/>
 
             {/*Тест DevExtreme*/}
-            <PrivateRoute exact path="/operator/report/grid" roles={Role.Operator}
-                          component={OperatorReportDataGridPage}/>
-            <PrivateRoute exact path="/operator/report/pivot" roles={Role.Operator}
-                          component={OperatorReportPivotGridPage}/>
+            {/*<PrivateRoute exact path="/operator/report/grid" roles={Role.Operator}*/}
+            {/*              component={OperatorReportDataGridPage}/>*/}
+            {/*<PrivateRoute exact path="/operator/report/pivot" roles={Role.Operator}*/}
+            {/*              component={OperatorReportFactPivotPage}/>*/}
 
             {/*Calculation - Отчетные показатели */}
             <PrivateRoute exact path="/operator/calculation" roles={Role.Operator}

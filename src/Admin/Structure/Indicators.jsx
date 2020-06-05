@@ -1,8 +1,7 @@
 import React from 'react';
-import { MDBBreadcrumb, MDBBreadcrumbItem, MDBCol, MDBContainer, MDBRow, MDBSpinner } from "mdbreact";
-import MUIDataTable from "mui-datatables";
-import {labels} from "../../_components/TableTextLabels";
+import {MDBCol, MDBContainer, MDBRow} from "mdbreact";
 import appAxios from "../../_services/appAxios";
+import MaterialTable from "material-table";
 
 export default class AdminIndicatorsPage extends React.Component {
 
@@ -27,37 +26,43 @@ export default class AdminIndicatorsPage extends React.Component {
     render() {
 
         const columns = [
-            { name: 'id', label: '#', options: { filter: false } },
-            { name: 'transportStrategyCode', label: 'Код ТС', options: { display: 'excluded', filter: false } },
-            { name: 'transportStrategyName', label: 'Редакция ТС'},
-            { name: 'indicatorCode', label: 'Шифр'},
-            { name: 'indicatorName', label: 'Индикатор ТС'},
-            { name: 'goalName', label: 'Цель ТС'},
-            { name: 'transportTypeName', label: 'Вид транспорта'}
+            // { field: 'id', label: '#', },
+            // { field: 'transportStrategyCode', label: 'Код ТС', options: { display: 'excluded', filter: false } },
+            {field: 'transportStrategyName', title: 'Редакция', defaultGroupOrder: 0},
+            // { field: 'indicatorCode', title: 'Шифр'},
+            {field: 'goalName', title: 'Цель', defaultGroupOrder: 1},
+            {field: 'transportTypeName', title: 'Вид транспорта'},
+            {field: 'indicatorName', title: 'Индикатор'},
         ];
 
-        const { data, isLoading } = this.state;
+        const {data, isLoading} = this.state;
 
-        const options = {
-            rowsPerPage: 20,
-            rowsPerPageOptions: [20, 50, 100],
-            textLabels: labels,
-            sortFilterList: false,
-            print: false,
-            selectableRowsOnClick: false,
-            selectableRows: 'none',
-        };
+        // const options = {
+        //     rowsPerPage: 20,
+        //     rowsPerPageOptions: [20, 50, 100],
+        //     textLabels: labels,
+        //     sortFilterList: false,
+        //     print: false,
+        //     selectableRowsOnClick: false,
+        //     selectableRows: 'none',
+        // };
 
         return (
             <MDBContainer fluid>
                 <MDBRow center>
                     <MDBCol md={'12'} className='my-5 mx-auto'>
-                        {isLoading && <MDBSpinner multicolor />}
-                        <MUIDataTable
-                            title={"Индикаторы по целям ТС"}
-                            data={data}
+                        <MaterialTable
+                            title="Индикаторы по целям ТС"
                             columns={columns}
-                            options={options}
+                            data={data}
+                            isLoading={isLoading}
+                            options={{
+                                grouping: true,
+                                search: false,
+                                pageSize: 20,
+                                pageSizeOptions: [20, 50, 100],
+                                tableLayout: 'fixed'
+                            }}
                         />
                     </MDBCol>
                 </MDBRow>

@@ -1,21 +1,19 @@
 import React from 'react';
-import {MDBBreadcrumb, MDBBreadcrumbItem, MDBContainer, MDBRow} from "mdbreact";
+import {MDBCol, MDBContainer, MDBRow} from "mdbreact";
 
-const AdminParametersPage = () => {
-    return (
-        <MDBContainer>
-            <MDBRow className='mt-5'>
-                <MDBBreadcrumb>
-                    <MDBBreadcrumbItem>Главная</MDBBreadcrumbItem>
-                    <MDBBreadcrumbItem>Структура</MDBBreadcrumbItem>
-                    <MDBBreadcrumbItem active>Показатели для расчета индикаторов ТС</MDBBreadcrumbItem>
-                </MDBBreadcrumb>
-            </MDBRow>
-            <MDBRow>
-                <h1>Показатели для расчета индикаторов ТС</h1>
-            </MDBRow>
-        </MDBContainer>
-    );
-};
+export default class AdminParametersPage extends React.Component {
 
-export default AdminParametersPage;
+    render() {
+
+        return (
+            <MDBContainer fluid>
+                <MDBRow center>
+                    <MDBCol md={'12'} className='my-5 mx-auto'>
+                        <h1>Показатели для расчета индикаторов ТС</h1>
+
+                    </MDBCol>
+                </MDBRow>
+            </MDBContainer>
+        )
+    }
+}
