@@ -1,10 +1,8 @@
-import React, {Fragment} from 'react';
-import {MDBCol, MDBContainer, MDBRow, MDBSpinner} from "mdbreact";
-import MUIDataTable from "mui-datatables";
-import axios from 'axios';
-import CustomToolbarSelect from "../../_components/CustomToolbarSelect";
-import { labels } from "../../_components/TableTextLabels";
-import ButtonUpdateColumn from "../../_components/ButtonUpdateColumn";
+import React from 'react';
+import {MDBCol, MDBContainer, MDBRow, toast} from "mdbreact";
+import appAxios from "../../_services/appAxios";
+import MaterialTable from "material-table";
+import {ruLocalization} from "../../_components/MaterialTableLocalization";
 
 export default class OperatorPlanIndicatorsPage extends React.Component {
 
@@ -12,18 +10,18 @@ export default class OperatorPlanIndicatorsPage extends React.Component {
         page: 0,
         count: 0,
         data: [],
-        rowsPerPage: 20,
         isLoading: false,
+        okeiList: []
     };
 
     componentDidMount() {
-        //сохранять state через redux
         this.getData();
+        this.getOkeiList();
     };
 
-    getData = () => {
-        this.setState({ isLoading: true });
-        axios.get(`/api/views/k-1-s?sort=id,desc`)
+    getData = async () => {
+        this.setState({isLoading: true});
+        appAxios.get(`/views/k-1-s-all`)
             .then(res => {
                 console.log(res.headers);
                 const count = Number(res.headers['x-total-count']);
@@ -32,86 +30,87 @@ export default class OperatorPlanIndicatorsPage extends React.Component {
             });
     };
 
-    onChangePage = (page, numberOfRows) => {
-        this.setState({
-            isLoading: true,
-        });
-
-        axios.get(`/api/views/k-1-s?page=${page}&size=${numberOfRows}&sort=id,desc`)
+    getOkeiList = async () => {
+        appAxios.get(`/nsi-okeis`)
             .then(res => {
-                const count = Number(res.headers['x-total-count']);
-                const data = res.data;
-                this.setState({data: data, isLoading: false, count: count, page: page, rowsPerPage: numberOfRows});
+                const data = res.data.map(item => {
+                    return {id: item.id, name: item.name};
+                })
+                const mod_data = data.reduce(function (acc, cur, i) {
+                    acc[cur.id] = cur.name;
+                    return acc;
+                }, {});
+                console.log(data);
+                console.log(mod_data);
+                this.setState({okeiList: mod_data});
             });
-    };
+    }
 
     render() {
 
         const columns = [
-            { name: 'id', label: '#', options: {filter: false} },
-            { name: 'transportStrategyCode', label: 'Редакция ТС'},
-            { name: 'scenarioName', label: 'Вариант реализации стратегии'},
-            { name: 'goalName', label: 'Цель'},
-            { name: 'indicatorName', label: 'Индикатор'},
-            { name: 'transportTypeName', label: 'Вид транспорта'},
-            { name: 'indicatorDate', label: 'Этап реализации стратегии'},
-            { name: 'okeiId', label: 'OkeiId', options: {filter: false, display: 'excluded'} },
-            { name: 'okeiName', label: 'Единица измерения'},
-            { name: 'value', label: 'Значение индикатора'},
-            { name: 'indicatorValueId', label: 'indicatorValueId', options: {filter: false, display: 'excluded'}},
-            { name: "",
-                options: {
-                    filter: false,
-                    sort: false,
-                    empty: true,
-                    customBodyRender: (value, tableMeta, updateValue) => {
-                        return (
-                            <ButtonUpdateColumn rowData = {tableMeta.rowData}/>
-                        );
-                    }
-                }
-            },
+            {field: 'id', title: '#', filtering: false, editable: 'never'},
+            {field: 'transportStrategyCode', title: 'Редакция ТС', editable: 'never'},
+            {field: 'scenarioName', title: 'Вариант реализации стратегии', editable: 'never'},
+            {field: 'goalName', title: 'Цель', editable: 'never'},
+            {field: 'indicatorName', title: 'Индикатор', editable: 'never'},
+            {field: 'transportTypeName', title: 'Вид транспорта', editable: 'never'},
+            {field: 'indicatorDate', title: 'Этап реализации стратегии', editable: 'never'},
+            {field: 'okeiId', title: 'Единица измерения', lookup: this.state.okeiList},
+            {field: 'value', title: 'Значение индикатора', filtering: false},
         ];
 
-        const { data, page, count, isLoading } = this.state;
-
-        const options = {
-            serverSide: true,
-            count: count,
-            page: page,
-            rowsPerPage: 20,
-            rowsPerPageOptions: [20, 50, 100, 1000, 2500, 5000],
-            textLabels: labels,
-            sortFilterList: false,
-            print: false,
-            search: false,
-            selectableRowsOnClick: false,
-            selectableRows: 'none',
-            onTableChange: (action, tableState) => {
-                switch (action) {
-                    case 'changePage':
-                        this.onChangePage(tableState.page, tableState.rowsPerPage);
-                        break;
-                }
-            },
-            // customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
-            //     <CustomToolbarSelect selectedRows={selectedRows} displayData={displayData} setSelectedRows={setSelectedRows} />
-            // ),
-            onChangeRowsPerPage: (numberOfRows) => {
-                this.onChangePage(this.state.page, numberOfRows);
-            }
-        };
+        const {data, isLoading} = this.state;
+        const tableRef = React.createRef();
 
         return (
             <MDBContainer fluid>
                 <MDBRow center>
                     <MDBCol md={'12'} className='my-5 mx-auto'>
-                        {isLoading && <MDBSpinner multicolor />}
-                        <MUIDataTable
-                            title={ "Индикаторы ТС по целям и задачам (план)" }
-                            data={data}
+                        <MaterialTable
+                            title="Индикаторы ТС по целям и задачам (план)"
                             columns={columns}
-                            options={options}
+                            tableRef={tableRef}
+                            data={data}
+                            isLoading={isLoading}
+                            localization={ruLocalization}
+                            editable={{
+                                onRowUpdate: (newData, oldData) =>
+                                    new Promise((resolve, reject) => {
+                                        setTimeout(() => {
+                                            const dataUpdate = [...data];
+                                            const index = dataUpdate.findIndex(item => item.id === oldData.id);
+                                            dataUpdate[index] = newData;
+                                            this.setState({data: dataUpdate});
+
+                                            const responseData = {
+                                                id: newData.id, okeiId: newData.okeiId,
+                                                indicatorValueId: newData.indicatorValueId, value: newData.value
+                                            };
+
+                                            console.log(responseData);
+                                            appAxios({
+                                                url: `views/k-1-s`,
+                                                method: 'PUT',
+                                                data: responseData
+                                            }).then((response) => {
+                                                const message = response.headers["x-mrts-backend-params"];
+                                                toast.success(`Успешно обновлена запись с ID ${message}`, {
+                                                    closeButton: false
+                                                });
+                                            });
+
+                                            resolve();
+                                        }, 1000)
+                                    }),
+                            }}
+                            options={{
+                                actionsColumnIndex: 999,
+                                search: true,
+                                pageSize: 20,
+                                pageSizeOptions: [20, 50, 100],
+                                filtering: true
+                            }}
                         />
                     </MDBCol>
                 </MDBRow>
