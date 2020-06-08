@@ -23,7 +23,7 @@ class OperatorReportFactTabsPage extends React.Component {
             <MDBContainer fluid>
                 <MDBRow between>
                     <MDBCol md={'12'} className='my-5 mx-auto'>
-                        <MDBNav className="nav-tabs special-color" tabs color="blue-grey">
+                        <MDBNav className="nav-tabs mt-5 special-color" tabs color="blue-grey">
                             <MDBNavItem>
                                 <MDBNavLink link to="#" active={this.state.activeItemJustified === "1"}
                                             onClick={this.toggleJustified("1")} role="tab">

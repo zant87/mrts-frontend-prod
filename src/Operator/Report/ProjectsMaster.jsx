@@ -1,17 +1,5 @@
 import React from 'react';
-// import {MDBCol, MDBContainer, MDBRow, MDBSpinner} from "mdbreact";
-
-import { MDBCol, MDBContainer, MDBRow, MDBIcon, MDBSpinner, MDBTabPane, MDBTabContent, MDBNav, MDBNavItem, MDBNavLink } from "mdbreact";
-
-import PivotGrid, {
-    FieldChooser,
-    Export,
-    FieldPanel
-} from 'devextreme-react/pivot-grid';
-import PivotGridDataSource from 'devextreme/ui/pivot_grid/data_source';
-import 'devextreme/dist/css/dx.common.css';
-import 'devextreme/dist/css/dx.light.css';
-import ReportsNav from "./ReportsNav";
+import {MDBCol, MDBContainer, MDBRow, MDBSpinner} from "mdbreact";
 import MUIDataTable from "mui-datatables";
 import {labels} from "../../_components/TableTextLabels";
 import CustomToolbarSelect from "../../_components/CustomToolbarSelect";
@@ -24,23 +12,12 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
         page: 0,
         count: 0,
         data: [],
-        pivotData: [],
         rowsPerPage: 20,
         isLoading: false,
-        activeItem: "1"
-    };
-
-    toggle = tab => e => {
-      if (this.state.activeItem !== tab) {
-        this.setState({
-          activeItem: tab
-        });
-      }
     };
 
     componentDidMount() {
         this.getData();
-        this.getPivotData();
     };
 
     getData = () => {
@@ -51,16 +28,6 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
                 const count = Number(res.headers['x-total-count']);
                 const data = res.data;
                 this.setState({data: data, isLoading: false, count: count});
-            });
-    };
-
-    getPivotData = () => {
-        this.setState({ isLoading: true });
-        appAxios.get(`/views/k-7-masters?sort=id,desc`)
-            .then(res => {
-                const count = Number(res.headers['x-total-count']);
-                const data = res.data;
-                this.setState({pivotData: data, isLoading: false, count: count});
             });
     };
 
@@ -107,7 +74,7 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
             },
         ];
 
-        const { data, pivotData, page, count, isLoading } = this.state;
+        const { data, page, count, isLoading } = this.state;
 
         const options = {
             // serverSide: true,
@@ -127,125 +94,17 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
 
         return (
             <MDBContainer fluid>
-                <ReportsNav activeItem={this.state.activeItem} onHandleToggle={this.toggle} /> 
-                <MDBTabContent activeItem={this.state.activeItem} className="card" >
-                  <MDBTabPane tabId="1" role="tabpanel">
-                                <MDBContainer fluid>
-                                    <MDBRow center>
-                                        <MDBCol md={'12'} className='my-5 mx-auto'>
-                                            {isLoading && <MDBSpinner multicolor />}
-                                            <MUIDataTable
-                                                title={"Выполнение крупных инвестиционных проектов (master)"}
-                                                data={data}
-                                                columns={columns}
-                                                options={options}
-                                            />
-                                        </MDBCol>
-                                    </MDBRow>
-                                </MDBContainer>
-                 </MDBTabPane>
-                  <MDBTabPane tabId="2" role="tabpanel">
-                             <MDBContainer fluid>
-                               <MDBRow md={'12'} center className='my-5 mx-auto'>
-                                    <PivotGrid id="projectsMasterPivot"
-                                      dataSource={new PivotGridDataSource({
-                                        fields: [{
-                                          caption: 'projectCode',
-                                          width: 120,
-                                          dataField: 'Обозначение проекта',
-                                          area: 'row',
-                                          expanded: true,
-                                          sorted: true
-                                        }, {
-                                          caption: 'Общие затраты (плановые)',
-                                          dataField: 'realPlanCost',
-                                          dataType: 'number',
-                                          summaryType: 'sum',
-                                          format: "#,###,###,##0.##",
-                                          width: 150,
-                                          area: 'data',
-                                          expanded: true
-                                        }, {
-                                          caption: 'Содержание проекта',
-                                          dataField: 'projectName',
-                                          dataType: 'string',                
-                                          area: 'row',
-                                          expanded: true
-                                        }, {
-                                          caption: 'done',
-                                          dataField: 'Уровень технической готовности',
-                                          dataType: 'string',
-                                          area: 'row',
-                                          expanded: true
-                                        }, {
-                                          caption: 'Сроки реализации плановые',
-                                          dataField: 'planBeginYear',
-                                          dataType: 'number',
-                                          area: 'row',
-                                        }, {
-                                          caption: 'Отчетный год',
-                                          dataField: 'yearNumber',
-                                          dataType: 'number',
-                                          area: 'column',
-                                        }, {
-                                          caption: 'Начало фактической реализации',
-                                          dataField: 'factStarted',
-                                          dataType: 'string',
-                                          area: 'column',
-                                        }, {
-                                          caption: 'Конец фактической реализации',
-                                          dataField: 'factFinished',
-                                          dataType: 'string',
-                                          area: 'column',
-                                        }, {
-                                          caption: 'Общие затраты (факт)',
-                                          dataField: 'fact',
-                                          dataType: 'number',
-                                          summaryType: 'sum',
-                                          format: "#,###,###,##0.##",
-                                          area: 'data',
-                                        },{
-                                          caption: 'Фактические результаты',
-                                          dataField: 'description',
-                                          dataType: 'string',
-                                          area: 'row',
-                                        },{
-                                          caption: 'documentId',
-                                          dataField: 'documentId',
-                                          dataType: 'string',
-                                          visible: false
-                                        }, {
-                                          caption: 'projectId',
-                                          dataField: 'projectId',
-                                          dataType: 'string',
-                                          visible: false
-                                        }, {
-                                          caption: 'id',
-                                          dataField: 'id',
-                                          dataType: 'string',
-                                          visible: false
-                                        }],
-                                        store: pivotData
-                                      })}
-                                      allowSortingBySummary={true}
-                                      allowFiltering={true}
-                                      allowSorting={true}
-                                      allowExpandAll={true}
-                                      height={640}
-                                      showBorders={true}
-                                      showColumnTotals={false}
-                                      showColumnGrandTotals={false}
-                                      showRowTotals={false}
-                                      showRowGrandTotals={false}
-                                       >
-                                      <FieldPanel showColumnFields={true} />
-                                      <FieldChooser enabled={true} />
-                                      <Export enabled={true} fileName="Выполнение крупных инвестиционных проектов (master)" allowExportSelectedData={true} />
-                                    </PivotGrid>
-                               </MDBRow>
-                            </MDBContainer>
-                    </MDBTabPane>
-                </MDBTabContent>
+                <MDBRow center>
+                    <MDBCol md={'12'} className='my-5 mx-auto'>
+                        {isLoading && <MDBSpinner multicolor />}
+                        <MUIDataTable
+                            title={"Выполнение крупных инвестиционных проектов (master)"}
+                            data={data}
+                            columns={columns}
+                            options={options}
+                        />
+                    </MDBCol>
+                </MDBRow>
             </MDBContainer>
         );
     }

@@ -1,22 +1,8 @@
 import React from 'react';
-
-import { MDBCol, MDBContainer, MDBRow, MDBSpinner, MDBIcon, MDBTabPane, MDBTabContent, MDBNav, MDBNavItem, MDBNavLink, toast } from "mdbreact";
-import MUIDataTable from "mui-datatables";
-import {labels} from "../../_components/TableTextLabels";
-import CustomToolbarSelect from "../../_components/CustomToolbarSelect";
-import ButtonUpdateColumn from "../../_components/ButtonUpdateColumn";
-import ReportsNav from "./ReportsNav";
-import PivotGrid, {
-    FieldChooser,
-    Export,
-    FieldPanel
-} from 'devextreme-react/pivot-grid';
-import PivotGridDataSource from 'devextreme/ui/pivot_grid/data_source';
-import 'devextreme/dist/css/dx.common.css';
-import 'devextreme/dist/css/dx.light.css';
-
+import {MDBCol, MDBContainer, MDBRow, toast} from "mdbreact";
 import appAxios from "../../_services/appAxios";
 import MaterialTable from "material-table";
+import {ruLocalization} from "../../_components/MaterialTableLocalization";
 
 export default class OperatorReportAppropriationsPage extends React.Component {
 
@@ -24,58 +10,20 @@ export default class OperatorReportAppropriationsPage extends React.Component {
         page: 0,
         count: 0,
         data: [],
-        pivotData: [],
-        rowsPerPage: 20,
         isLoading: false,
-        isLoadingPivot: false,
-        activeItem: "1"
-    };
-
-    toggle = tab => e => {
-      if (this.state.activeItem !== tab) {
-        this.setState({
-          activeItem: tab
-        });
-      }
     };
 
     componentDidMount() {
-        //сохранять state через redux
         this.getData();
-        this.getPivotData();
     };
 
-    getData = () => {
-        this.setState({ isLoading: true });
-        // appAxios.get(`/views/k-9-s?sort=id,desc`)
-        appAxios.get(`/views/k-9-s?sort=id,desc&size=2000`)
-            .then(res => {
-                const count = Number(res.headers['x-total-count']);
-                const data = res.data;
-                this.setState({data: data, isLoading: false, count: count});
-            });
-    };
-
-    getPivotData = () => {
-        this.setState({ isLoadingPivot: true });
+    getData = async () => {
+        this.setState({isLoading: true});
         appAxios.get(`/views/k-9-s-all`)
             .then(res => {
                 const count = Number(res.headers['x-total-count']);
                 const data = res.data;
-                this.setState({pivotData: data, isLoadingPivot: false, count: count});
-            });
-    };
-
-    onChangePage = (page, numberOfRows) => {
-        this.setState({
-            isLoading: true,
-        });
-
-        appAxios.get(`/views/k-9-s?page=${page}&size=${numberOfRows}&sort=id,desc`)
-            .then(res => {
-                const count = Number(res.headers['x-total-count']);
-                const data = res.data;
-                this.setState({data: data, isLoading: false, count: count, page: page, rowsPerPage: numberOfRows});
+                this.setState({data: data, isLoading: false, count: count});
             });
     };
 
@@ -90,141 +38,7 @@ export default class OperatorReportAppropriationsPage extends React.Component {
             {field: 'fact', title: 'Кассовое исполнение, млн. руб.'},
         ];
 
-        const { data, pivotData, page, count, isLoading, isLoadingPivot } = this.state;
-
-        const options = {
-            // serverSide: true,
-            // count: count,
-            // page: page,
-            rowsPerPage: 20,
-            rowsPerPageOptions: [20, 50, 100, 1000, 2500, 5000],
-            textLabels: labels,
-            print: false,
-            selectableRows: 'none',
-            // selectableRowsOnClick: true,
-            // onTableChange: (action, tableState) => {
-            //     switch (action) {
-            //         case 'changePage':
-            //             this.onChangePage(tableState.page, tableState.rowsPerPage);
-            //             break;
-            //     }
-            // },
-            // onChangeRowsPerPage: (numberOfRows) => {
-            //     this.onChangePage(this.state.page, numberOfRows);
-            // },
-            // customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
-            //     <CustomToolbarSelect selectedRows={selectedRows} displayData={displayData} setSelectedRows={setSelectedRows} />
-            // ),
-        };
-
-        /* return (
-            <MDBContainer fluid>
-                <ReportsNav activeItem={this.state.activeItem} onHandleToggle={this.toggle} />
-                <MDBTabContent activeItem={this.state.activeItem} className="card" >
-                  <MDBTabPane tabId="1" role="tabpanel">
-
-                        <MDBRow center>
-                            <MDBCol md={'12'} className='my-5 mx-auto'>
-                                {isLoading && <MDBSpinner multicolor />}
-                                <MUIDataTable
-                                    title={"Бюджетные ассигнования в рамках программ развития транспорта"}
-                                    data={data}
-                                    columns={columns}
-                                    options={options}
-                                />
-                            </MDBCol>
-                        </MDBRow>
-                  </MDBTabPane>
-                  <MDBTabPane tabId="2" role="tabpanel">
-                     <MDBContainer fluid>
-                       <MDBRow md={'18'} center className='my-1 mx-auto'>
-                           {isLoadingPivot && <MDBSpinner multicolor />}
-                           <PivotGrid id="appropriationsPivot"
-                              dataSource={new PivotGridDataSource({
-                                fields: [{
-                                  caption: '#',
-                                  width: 120,
-                                  dataField: 'id',
-                                  visible: false
-                                }, {
-                                  caption: 'documentId',
-                                  dataField: 'documentId',
-                                  visible: false
-                                }, {
-                                  caption: 'Вид расходов',
-                                  dataField: 'costTypeName',
-                                  dataType: 'string',
-                                  area: 'row',
-                                  expanded: true
-                                }, {
-                                  caption: 'Направление расходов',
-                                  dataField: 'directionName',
-                                  dataType: 'string',
-                                  width: 150,
-                                  area: 'row',
-                                  expanded: true
-                                },{
-                                  caption: 'Источник финансирования',
-                                  dataField: 'fundingName',
-                                  dataType: 'string',
-                                  width: 150,
-                                  area: 'row',
-                                  expanded: true
-                                }, {
-                                  caption: 'year',
-                                  dataField: 'Отчетный год',
-                                  dataType: 'number',
-                                  area: 'column',
-                                  expanded: true
-                                }, {
-                                  caption: 'quarter',
-                                  dataField: 'Отчетный квартал',
-                                  dataType: 'number',
-                                  area: 'column',
-                                  expanded: true
-                                }, {
-                                  caption: 'Запланировано, млн. руб.',
-                                  dataField: 'plan',
-                                  dataType: 'number',
-                                  summaryType: 'sum',
-                                  format: "#,###,###,##0.##",
-                                  area: 'data',
-                                  expanded: true
-                                },{
-                                  caption: 'Кассовое исполнение, млн. руб.',
-                                  dataField: 'fact',
-                                  dataType: 'number',
-                                  summaryType: 'sum', 
-                                  format: "#,###,###,##0.##",               
-                                  area: 'data',
-                                  expanded: true
-                                }],
-                                store: pivotData
-                              })}
-                              allowSortingBySummary={true}
-                              allowFiltering={true}
-                              allowSorting={true}
-                              allowExpandAll={true}
-                              height={640}
-                              showBorders={true}
-                              showColumnTotals={false}
-                              showColumnGrandTotals={false}
-                              showRowTotals={false}
-                              showRowGrandTotals={false}
-                               >
-                              <FieldPanel showColumnFields={true} />
-                              <FieldChooser enabled={true} />
-                              <Export enabled={true} fileName="Бюджетные ассигнования в рамках программ развития транспорта" allowExportSelectedData={true} />
-                            </PivotGrid>
-
-
-                       </MDBRow>
-                     </MDBContainer>
-                  </MDBTabPane>
-                </MDBTabContent>
-
-        const {data, page, count, isLoading} = this.state; */
-        
+        const {data, isLoading} = this.state;
         const tableRef = React.createRef();
 
         return (
@@ -235,30 +49,21 @@ export default class OperatorReportAppropriationsPage extends React.Component {
                             title="Бюджетные ассигнования в рамках программ развития транспорта"
                             columns={columns}
                             tableRef={tableRef}
-                            data={query =>
-                                new Promise((resolve, reject) => {
-                                    appAxios.get(`/views/k-9-s?page=${query.page}&size=${query.pageSize}&sort=id,desc`)
-                                        .then(res => {
-                                            const count = Number(res.headers['x-total-count']);
-                                            const data = res.data;
-
-                                            resolve({
-                                                data: data,
-                                                page: query.page,
-                                                totalCount: count
-                                            });
-                                        });
-                                })}
-
+                            data={data}
+                            isLoading={isLoading}
+                            localization={ruLocalization}
                             editable={{
                                 onRowUpdate: (newData, oldData) =>
                                     new Promise((resolve, reject) => {
                                         setTimeout(() => {
                                             const dataUpdate = [...data];
-                                            const index = oldData.tableData.id;
-                                            dataUpdate[index] = newData;
+                                            const index = dataUpdate.findIndex(item => item.id === oldData.id);
 
-                                            console.log(newData);
+                                            newData.plan = (newData.plan !== null) ? newData.plan : 0;
+                                            newData.fact = (newData.fact !== null) ? newData.fact : 0;
+
+                                            dataUpdate[index] = newData;
+                                            this.setState({data: dataUpdate});
 
                                             appAxios({
                                                 url: `/views/k-9-s/update?pID=${newData.id}&pDoc=${newData.documentId}&pPlan=${newData.plan}&pFact=${newData.fact}`,
@@ -276,9 +81,10 @@ export default class OperatorReportAppropriationsPage extends React.Component {
                             }}
                             options={{
                                 actionsColumnIndex: 999,
-                                search: false,
+                                search: true,
                                 pageSize: 20,
                                 pageSizeOptions: [20, 50, 100],
+                                filtering: true
                             }}
                         />
                     </MDBCol>
