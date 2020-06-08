@@ -18,6 +18,7 @@ body {
 
 .webmap {
     height: 810px;
+    width: 100%;
 }
 
 .dx-datagrid-text-content {

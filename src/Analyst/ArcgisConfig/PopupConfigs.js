@@ -1,51 +1,36 @@
 export const ProjectsTemplate = {
-    title: "{NAME}",
+    title: '{NAME}',
     content: [
         {
-            type: "fields",
+            type: 'fields',
             fieldInfos: [
                 {
-                    fieldName: "PERCENT_READY",
-                    label: "Уровень технической готовности к 31.12.2018 г.",
+                    fieldName: 'PERCENT_READY',
+                    label: 'Уровень технической готовности к 31.12.2018 г.',
                 },
                 {
-                    fieldName: "COST_PLAN",
-                    label: "Планируемый бюджет, млрд руб."
+                    fieldName: 'COST_PLAN',
+                    label: 'Планируемый бюджет, млрд руб.'
                 },
                 {
-                    fieldName: "YEAR_START",
-                    label: " Год начала проекта"
+                    fieldName: 'YEAR_START',
+                    label: ' Год начала проекта'
                 },
                 {
-                    fieldName: "YEAR_FINISH ",
-                    label: "Год завершения проекта"
-                },
-            ]
-        }
-    ]
-};
-
-export const RailwayTemplate = {
-    title: "{NAME}",
-    content: [
-        {
-            type: "fields",
-            fieldInfos: [
-                {
-                    fieldName: "PERCENT_READY",
-                    label: "Уровень технической готовности к 31.12.2018 г.",
+                    fieldName: 'YEAR_FINISH',
+                    label: 'Год завершения проекта'
                 },
                 {
-                    fieldName: "COST_PLAN",
-                    label: "Планируемый бюджет, млрд руб."
+                    fieldName: 'VARIANT',
+                    label: 'Вариант Стратегии'
                 },
                 {
-                    fieldName: "YEAR_START",
-                    label: " Год начала проекта"
+                    fieldName: 'TYPE_BUDGET',
+                    label: 'Тип бюджета'
                 },
                 {
-                    fieldName: "YEAR_FINISH ",
-                    label: "Год завершения проекта"
+                    fieldName: 'PROJECT_TYPE',
+                    label: 'Тип проекта'
                 },
             ]
         }

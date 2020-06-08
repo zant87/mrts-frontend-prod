@@ -1,7 +1,7 @@
 import React from 'react';
 import {loadModules} from 'esri-loader';
 import config from 'config';
-import {ProjectsTemplate, RailwayTemplate} from "./ArcgisConfig/PopupConfigs";
+import {ProjectsTemplate} from "./ArcgisConfig/PopupConfigs";
 
 class AnalystMapPage extends React.Component {
 
@@ -14,22 +14,42 @@ class AnalystMapPage extends React.Component {
         loadModules(['esri/Map', 'esri/views/MapView', 'esri/layers/FeatureLayer', 'esri/layers/MapImageLayer', 'esri/widgets/Legend'], {css: true})
             .then(([ArcGISMap, MapView, FeatureLayer, MapImageLayer, Legend]) => {
 
-                const tiles = new MapImageLayer({
-                    url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer/"
+                const titles = new MapImageLayer({
+                    url: config.arcGisMapServerUrl
                 });
 
                 const layer1 = new FeatureLayer({
-                    url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer/1",
+                    url: config.arcGisMapServerUrl + "1",
                     popupTemplate: ProjectsTemplate
                 });
 
                 const layer2 = new FeatureLayer({
-                    url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer/2",
-                    popupTemplate: RailwayTemplate
+                    url: config.arcGisMapServerUrl + "2",
+                    popupTemplate: ProjectsTemplate
+                });
+
+                const layer3 = new FeatureLayer({
+                    url: config.arcGisMapServerUrl + "3",
+                    popupTemplate: ProjectsTemplate
+                });
+
+                const layer4 = new FeatureLayer({
+                    url: config.arcGisMapServerUrl + "4",
+                    popupTemplate: ProjectsTemplate
+                });
+
+                const layer5 = new FeatureLayer({
+                    url: config.arcGisMapServerUrl + "5",
+                    popupTemplate: ProjectsTemplate
+                });
+
+                const layer6 = new FeatureLayer({
+                    url: config.arcGisMapServerUrl + "6",
+                    popupTemplate: ProjectsTemplate
                 });
 
                 const map = new ArcGISMap({
-                    layers: [tiles, layer1, layer2],
+                    layers: [titles, layer1, layer2, layer3, layer4, layer5, layer6],
                 });
 
                 this.view = new MapView({
@@ -43,7 +63,7 @@ class AnalystMapPage extends React.Component {
                     view: this.view,
                     layerInfos: [
                         {
-                            layer: [layer1, layer2],
+                            layer: titles,
                             title: "МРТС"
                         }
                     ]
