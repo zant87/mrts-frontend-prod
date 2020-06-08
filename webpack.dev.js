@@ -100,7 +100,8 @@ const config = {
     // глобальный конфиг
     config: JSON.stringify({
       apiUrl: "http://localhost:4000",
-      isLocalDeployment: true
+      isLocalDeployment: true,
+      arcGisMapServerUrl: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer"
     }),
   },
 };
