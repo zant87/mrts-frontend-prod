@@ -27,17 +27,17 @@ class OperatorReportExtraBudgetTabsPage extends React.Component {
             <MDBContainer fluid>
                 <MDBRow between>
                     <MDBCol md={'12'} className='my-5 mx-auto'>
-                        <MDBNav tabs color='cyan'>
+                        <MDBNav className="nav-tabs mt-5 special-color" tabs color="blue-grey">
                             <MDBNavItem>
                                 <MDBNavLink link to="#" active={this.state.activeItemJustified === "1"}
                                             onClick={this.toggleJustified("1")} role="tab">
-                                    Таблица
+                                    <MDBIcon icon="table" size="1x" />&nbsp;&nbsp;Корректировка
                                 </MDBNavLink>
                             </MDBNavItem>
                             <MDBNavItem>
                                 <MDBNavLink link to="#" active={this.state.activeItemJustified === "2"}
                                             onClick={this.toggleJustified("2")} role="tab">
-                                    Сводная таблица
+                                    <MDBIcon icon="tablet-alt" size="1x" />&nbsp;&nbsp;Просмотр
                                 </MDBNavLink>
                             </MDBNavItem>
                         </MDBNav>
