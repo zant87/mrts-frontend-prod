@@ -99,7 +99,7 @@ export default class AdminArchiveProjectsPage extends React.Component {
                     </MDBBreadcrumb>
                 </MDBRow>
                 <MDBRow>
-                   <TableContainerE data={this.state.data} isLoading={this.state.isLoading} columns={columns} title={"Архив выполнения крупных инвестиционных проектов"}/> 
+                   <TableContainer data={this.state.data} isLoading={this.state.isLoading} columns={columns} title={"Архив выполнения крупных инвестиционных проектов"}/> 
                 </MDBRow>
             </MDBContainer>
         );
