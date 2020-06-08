@@ -57,6 +57,8 @@ export default class AdminArchiveActivitiesPage extends React.Component {
             {field: 'beginDate', title: 'Начало периода', filtering: true },
             {field: 'endDate', title: 'Конец периода', filtering: true },
         ];
+
+        const { data, isLoading } = this.state;
         
         /*id": 1,
             "transportStrategyCode": "VER_12_05_2018",

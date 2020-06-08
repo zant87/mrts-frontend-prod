@@ -1,6 +1,7 @@
 import React from 'react';
 import {MDBBreadcrumb, MDBBreadcrumbItem, MDBContainer, MDBRow} from "mdbreact";
 import TableContainer from "./common/TableContainer";
+import PivotContainer from "./PivotContainer";
 import appAxios from "../../_services/appAxios";
 
 export default class AdminArchiveIndicatorsPage extends React.Component  {
@@ -46,6 +47,105 @@ export default class AdminArchiveIndicatorsPage extends React.Component  {
             {field: 'value', title: 'Значение показателя', filtering: true, editable: 'never' },
         ];
 
+        const { data, isLoading } = this.state;
+
+        const pivotFields = [{
+                              caption: '#',
+                              width: 120,
+                              dataField: 'id'
+                            }, {
+                              caption: 'goalCode',
+                              dataField: 'goalCode',
+                              visible: false
+                            },{
+                              caption: 'Отчетный год',
+                              dataField: 'year',
+                              dataType: 'number',
+                              area: 'column',
+                              expanded: true
+                            }, {
+                              caption: 'Отчетный квартал',
+                              dataField: 'quarterName',
+                              area: 'column',
+                              expanded: true
+                            }, {
+                              caption: 'Код показателя',
+                              dataField: 'indicatorCode',
+                              dataType: 'string',
+                              area: 'row',
+                              expanded: true
+                            }, {
+                              caption: 'Показатель',
+                              dataField: 'indicatorName',
+                              dataType: 'string',
+                              area: 'row',
+                              expanded: true
+                            }
+                            , {
+                              caption: 'Сценарий',
+                              dataField: 'scenarioName',
+                              dataType: 'string',
+                              area: 'row',
+                              expanded: true
+                            }
+                            , {
+                              caption: 'ОКЕИ',
+                              dataField: 'okeiCode',
+                              dataType: 'string',
+                              area: 'row',
+                              expanded: true
+                            }
+                            , {
+                              caption: 'Тип транспорта',
+                              dataField: 'transportTypeName',
+                              dataType: 'string',
+                              area: 'row',
+                              expanded: true
+                            }
+                            , {
+                              caption: 'Начало периода',
+                              dataField: 'endDate',
+                              area: 'column',
+                              expanded: true
+                            },
+                            {
+                              caption: 'Конец периода',
+                              dataField: 'endDate',
+                              area: 'column',
+                              expanded: true
+                            }, {
+                              caption: 'Значение показателя',
+                              dataField: 'value',
+                              dataType: 'number',
+                              summaryType: 'sum',
+                              format: "#,###,###,##0.##",                
+                              area: 'data',
+                              expanded: true
+                            },{
+                              caption: 'quarterId',
+                              dataField: 'quarterId',
+                              visible: false
+                            }, {
+                              caption: 'goalId',
+                              dataField: 'goalId',
+                              visible: false
+                            }, {
+                              caption: 'indicatorId',
+                              dataField: 'indicatorId',
+                              visible: false
+                            }, {
+                              caption: 'indicatorValueId',
+                              dataField: 'indicatorValueId',
+                              visible: false
+                            }, {
+                              caption: 'okeiId',
+                              dataField: 'okeiId',
+                              visible: false
+                            }, {
+                              caption: 'transportTypeId',
+                              dataField: 'transportTypeId',
+                              visible: false
+                            }];
 
         /* "id": 10909,
             "year": 2010,
@@ -83,7 +183,8 @@ export default class AdminArchiveIndicatorsPage extends React.Component  {
                     </MDBBreadcrumb>
                 </MDBRow>
                 <MDBRow>
-                   <TableContainer data={this.state.data} isLoading={this.state.isLoading} columns={columns} title={"Архив расчета индикаторов ТС"}/> 
+                  {/* <TableContainer data={data} isLoading={isLoading} columns={columns} title={"Архив расчета индикаторов ТС"}/>  */}
+                      <PivotContainer pFields={pivotFields} pData={this.state.data} isPLoading={isLoading} title={"Архив расчета индикаторов ТС"}/> 
                 </MDBRow>
             </MDBContainer>
         );

@@ -60,6 +60,8 @@ export default class AdminArchiveParametersPage extends React.Component {
             {field: 'value', title: 'Значение показателя', filtering: true, editable: 'never' },
         ];
 
+        const { data, isLoading } = this.state;
+
     return (
         <MDBContainer fluid>
             <MDBRow className='mt-5'>

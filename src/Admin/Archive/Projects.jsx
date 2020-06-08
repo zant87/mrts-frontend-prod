@@ -48,6 +48,8 @@ export default class AdminArchiveProjectsPage extends React.Component {
             {field: 'endDate', title: 'Конец периода', filtering: true },
         ];
 
+        const { data, isLoading } = this.state;
+
 
         /*"id": 53,
             "transportStrategyCode": "VER_12_05_2018",
@@ -97,7 +99,7 @@ export default class AdminArchiveProjectsPage extends React.Component {
                     </MDBBreadcrumb>
                 </MDBRow>
                 <MDBRow>
-                   <TableContainer data={this.state.data} isLoading={this.state.isLoading} columns={columns} title={"Архив выполнения крупных инвестиционных проектов"}/> 
+                   <TableContainerE data={this.state.data} isLoading={this.state.isLoading} columns={columns} title={"Архив выполнения крупных инвестиционных проектов"}/> 
                 </MDBRow>
             </MDBContainer>
         );
