@@ -2,6 +2,7 @@ import React from 'react';
 import {MDBCol, MDBContainer, MDBRow, toast} from "mdbreact";
 import appAxios from "../../_services/appAxios";
 import MaterialTable from "material-table";
+import {ruLocalization} from "../../_components/MaterialTableLocalization";
 
 export default class OperatorReportActivitiesPage extends React.Component {
 
@@ -12,10 +13,25 @@ export default class OperatorReportActivitiesPage extends React.Component {
         isLoading: false
     };
 
+    componentDidMount() {
+        this.getData();
+    };
+
+    getData = async () => {
+        this.setState({isLoading: true});
+        appAxios.get(`/views/k-6-s-all`)
+            .then(res => {
+                const count = Number(res.headers['x-total-count']);
+                const data = res.data;
+                this.setState({data: data, isLoading: false, count: count});
+            });
+    };
+
+
     render() {
 
         const columns = [
-            {field: 'activityReportId', title: '#', editable: 'never'},
+            {field: 'activityReportId', title: '#', editable: 'never', filtering: false},
             {field: 'activityName', title: 'Наименование мероприятия', editable: 'never'},
             {field: 'documentType', title: 'Вид документа', editable: 'never'},
             {field: 'activityDescription', title: 'Содержание мероприятия', editable: 'never'},
@@ -35,30 +51,17 @@ export default class OperatorReportActivitiesPage extends React.Component {
                             title="Выполнение мероприятий по реализации ТС"
                             columns={columns}
                             tableRef={tableRef}
-                            data={query =>
-                                new Promise((resolve, reject) => {
-                                    appAxios.get(`/views/k-6-s?page=${query.page}&size=${query.pageSize}&sort=id,desc`)
-                                        .then(res => {
-                                            const count = Number(res.headers['x-total-count']);
-                                            const data = res.data;
-
-                                            resolve({
-                                                data: data,
-                                                page: query.page,
-                                                totalCount: count
-                                            });
-                                        });
-                                })}
-
+                            isLoading={isLoading}
+                            localization={ruLocalization}
+                            data={data}
                             editable={{
                                 onRowUpdate: (newData, oldData) =>
                                     new Promise((resolve, reject) => {
                                         setTimeout(() => {
                                             const dataUpdate = [...data];
-                                            const index = oldData.tableData.id;
+                                            const index = dataUpdate.findIndex(item => item.id === oldData.id);
                                             dataUpdate[index] = newData;
-
-                                            console.log(newData);
+                                            this.setState({data: dataUpdate});
 
                                             appAxios({
                                                 url: `/views/k-6-s/update?pID=${newData.activityReportId}&pDoc=${newData.documentId}&pRptDescription=${newData.reportDescription}`,
@@ -76,9 +79,10 @@ export default class OperatorReportActivitiesPage extends React.Component {
                             }}
                             options={{
                                 actionsColumnIndex: 999,
-                                search: false,
+                                search: true,
                                 pageSize: 20,
                                 pageSizeOptions: [20, 50, 100],
+                                filtering: true
                             }}
                         />
                     </MDBCol>

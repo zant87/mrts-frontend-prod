@@ -1,8 +1,11 @@
 import React from 'react';
-import {MDBCol, MDBContainer, MDBRow, MDBSpinner, toast, ToastContainer } from "mdbreact";
+import {MDBCol, MDBContainer, MDBRow, MDBSpinner, toast, ToastContainer} from "mdbreact";
 import MUIDataTable from "mui-datatables";
 import axios from 'axios';
 import {labels} from "../../_components/TableTextLabels";
+import MaterialTable from "material-table";
+import {ruLocalization} from "../../_components/MaterialTableLocalization";
+import appAxios from "../../_services/appAxios";
 
 export default class OperatorPlanActivitiesPage extends React.Component {
 
@@ -10,18 +13,16 @@ export default class OperatorPlanActivitiesPage extends React.Component {
         page: 0,
         count: 0,
         data: [],
-        rowsPerPage: 20,
         isLoading: false,
     };
 
     componentDidMount() {
-        //сохранять state через redux
         this.getData();
     };
 
-    getData = () => {
-        this.setState({ isLoading: true });
-        axios.get(`/api/views/k-2-s?sort=id,desc&size=2000`)
+    getData = async () => {
+        this.setState({isLoading: true});
+        axios.get(`/api/views/k-2-s-all`)
             .then(res => {
                 console.log(res.headers);
                 const count = Number(res.headers['x-total-count']);
@@ -30,93 +31,41 @@ export default class OperatorPlanActivitiesPage extends React.Component {
             });
     };
 
-    onChangePage = (page, numberOfRows) => {
-
-        this.setState({
-            isLoading: true,
-        });
-
-        axios.get(`/api/views/k-2-s?page=${page}&size=${numberOfRows}`)
-            .then(res => {
-                const count = Number(res.headers['x-total-count']);
-                const data = res.data;
-                this.setState({data: data, isLoading: false, count: count, page: page, rowsPerPage: numberOfRows});
-            });
-
-    };
 
     render() {
 
         const columns = [
-            { name: 'id', label: '#', options:
-                    {
-                        filter: false
-                    }
-            },
-            { name: 'transportStrategyCode', label: 'Код ТС', options:
-                    {
-                        display: 'excluded',
-                        filter: false,
-                    },
-            },
-            { name: 'transportStrategyName', label: 'Редакция ТС'},
-            { name: 'activityCode', label: 'Обозначение мероприятия'},
-            { name: 'activityDescription', label: 'Содержание мероприятия', options:
-                    {
-                        filter: false,
-                    }},
-            { name: 'documentType', label: 'Вид документа'},
-            { name: 'yearBegin', label: 'Начало реализации'},
-            { name: 'yearEnd', label: 'Конец реализации'},
-            { name: 'activityId', label: 'ИД Мероприятия', options:
-                    {
-                        display: 'excluded',
-                        filter: false,
-                    },
-            },
-            { name: 'transportStrategyVersionId', label: 'ИД ТС', options:
-                    {
-                        display: 'excluded',
-                        filter: false,
-                    },
-            },
+            {field: 'id', title: '#', filtering: false},
+            {field: 'transportStrategyCode', title: 'Код ТС'},
+            {field: 'transportStrategyName', title: 'Редакция ТС'},
+            {field: 'activityCode', title: 'Обозначение мероприятия'},
+            {field: 'activityDescription', title: 'Содержание мероприятия'},
+            {field: 'documentType', title: 'Вид документа'},
+            {field: 'yearBegin', title: 'Начало реализации'},
+            {field: 'yearEnd', title: 'Конец реализации'},
         ];
 
-        const { data, page, count, isLoading } = this.state;
-
-        const options = {
-            serverSide: false,
-            // count: count,
-            // page: page,
-            rowsPerPage: 20,
-            rowsPerPageOptions: [20, 50, 100, 1000, 2500, 5000],
-            textLabels: labels,
-            sortFilterList: false,
-            print: false,
-            selectableRows: 'none',
-            // onTableChange: (action, tableState) => {
-            //     switch (action) {
-            //         case 'changePage':
-            //             this.onChangePage(tableState.page, tableState.rowsPerPage);
-            //             break;
-            //     }
-            // },
-            // onChangeRowsPerPage: (numberOfRows) => {
-            //     this.onChangePage(this.state.page, numberOfRows);
-            // }
-        };
+        const tableRef = React.createRef();
+        const {data, isLoading} = this.state;
 
         return (
-        <MDBContainer fluid>
-            <MDBRow center>
-                <MDBCol md={'12'} className='my-5 mx-auto'>
-                    {isLoading && <MDBSpinner multicolor />}
-                    <MUIDataTable
-                        title={"Мероприятия по реализации ТС"}
-                        data={data}
-                        columns={columns}
-                        options={options}
-                    />
+            <MDBContainer fluid>
+                <MDBRow center>
+                    <MDBCol md={'12'} className='my-5 mx-auto'>
+                        <MaterialTable
+                            title="Мероприятия по реализации ТС"
+                            columns={columns}
+                            tableRef={tableRef}
+                            data={data}
+                            isLoading={isLoading}
+                            localization={ruLocalization}
+                            options={{
+                                search: true,
+                                pageSize: 20,
+                                pageSizeOptions: [20, 50, 100],
+                                filtering: true
+                            }}
+                        />
                 </MDBCol>
             </MDBRow>
         </MDBContainer>

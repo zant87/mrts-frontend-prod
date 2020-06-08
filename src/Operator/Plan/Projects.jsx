@@ -1,8 +1,8 @@
 import React from 'react';
-import {MDBCol, MDBContainer, MDBRow, MDBSpinner} from "mdbreact";
-import MUIDataTable from "mui-datatables";
-import axios from 'axios';
-import {labels} from "../../_components/TableTextLabels";
+import {MDBCol, MDBContainer, MDBRow} from "mdbreact";
+import MaterialTable from "material-table";
+import {ruLocalization} from "../../_components/MaterialTableLocalization";
+import appAxios from "../../_services/appAxios";
 
 export default class OperatorPlanProjectsPage extends React.Component {
 
@@ -17,14 +17,14 @@ export default class OperatorPlanProjectsPage extends React.Component {
         this.getData();
     };
 
-    getData = () => {
+    getData = async () => {
         this.setState({
             isLoading: true,
         });
-        axios.get(`/api/views/k-3-s?sort=id,desc&size=2000`)
+        appAxios.get(`/views/k-3-s-all`)
             .then(res => {
-                const data= res.data;
-                this.setState({ data: data, isLoading: false, });
+                const data = res.data;
+                this.setState({data: data, isLoading: false,});
             })
     };
 
@@ -32,38 +32,36 @@ export default class OperatorPlanProjectsPage extends React.Component {
 
 
         const columns = [
-            { name: 'id', label: '#'},
-            { name: 'transportStrategyName', label: 'Редакция ТС'},
-            { name: 'projectCode', label: 'Обозначение проекта'},
-            { name: 'projectName', label: 'Проект'},
-            { name: 'scenarioName', label: 'Вариант реализации стратегии'},
-            { name: 'cost', label: 'Общие затраты млрд. руб'},
-            { name: 'workStage', label: 'Стадия работ'},
-            { name: 'geolink', label: 'Географическая привязка' },
+            {field: 'id', title: '#', filtering: false},
+            {field: 'transportStrategyName', title: 'Редакция ТС'},
+            {field: 'projectCode', title: 'Обозначение проекта'},
+            {field: 'projectName', title: 'Проект'},
+            {field: 'scenarioName', title: 'Вариант реализации стратегии'},
+            {field: 'cost', title: 'Общие затраты млрд. руб'},
+            {field: 'workStage', title: 'Стадия работ'},
+            {field: 'geolink', title: 'Географическая привязка'},
         ];
 
-        const { data, page, count, isLoading } = this.state;
-
-        const options = {
-            textLabels: labels,
-            sortFilterList: false,
-            print: false,
-            selectableRowsOnClick: false,
-            selectableRows: 'none',
-            rowsPerPage: 20,
-            rowsPerPageOptions: [20, 50, 100, 1000, 2500, 5000],
-        };
+        const tableRef = React.createRef();
+        const {data, isLoading} = this.state;
 
         return (
             <MDBContainer fluid>
                 <MDBRow center>
                     <MDBCol md={'12'} className='my-5 mx-auto'>
-                        {isLoading && <MDBSpinner multicolor />}
-                        <MUIDataTable
-                            title={"Крупные инвестиционные проекты"}
-                            data={data}
+                        <MaterialTable
+                            title="Крупные инвестиционные проекты"
                             columns={columns}
-                            options={options}
+                            tableRef={tableRef}
+                            data={data}
+                            isLoading={isLoading}
+                            localization={ruLocalization}
+                            options={{
+                                search: true,
+                                pageSize: 20,
+                                pageSizeOptions: [20, 50, 100],
+                                filtering: true
+                            }}
                         />
                     </MDBCol>
                 </MDBRow>
