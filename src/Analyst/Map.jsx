@@ -1,6 +1,7 @@
 import React from 'react';
 import {loadModules} from 'esri-loader';
 import config from 'config';
+import {ProjectsTemplate, RailwayTemplate} from "./ArcgisConfig/PopupConfigs";
 
 class AnalystMapPage extends React.Component {
     constructor(props) {
@@ -12,40 +13,32 @@ class AnalystMapPage extends React.Component {
         loadModules(['esri/Map', 'esri/views/MapView', 'esri/layers/FeatureLayer', 'esri/layers/MapImageLayer', 'esri/widgets/Legend'], {css: true})
             .then(([ArcGISMap, MapView, FeatureLayer, MapImageLayer, Legend]) => {
 
-                const template = {
-                    title: "{NAME}",
-                    content: [
-                        {
-                            type: "fields",
-                            fieldInfos: [
-                                {
-                                    fieldName: "PERCENT_READY",
-                                    label: "Уровень технической готовности к 31.12.2018 г.",
-                                },
-                                {
-                                    fieldName: "COST_PLAN ",
-                                    label: "Планируемый бюджет, млрд руб."
-                                },
-                            ]
-                        }
-                    ]
-                };
-
                 const layer = new MapImageLayer({
                     url: config.arcGisMapServerUrl,
-                    sublayers: [
-                        {
-                            id: 26,
-                        },
-                        {
-                            id: 1,
-                            popupEnabled: true,
-                            popupTemplate: template
-                        }]
+                    // sublayers:
+                    //     [
+                    //         {
+                    //             id: 1,
+                    //             // popupEnabled: true,
+                    //             // popupTemplate: ProjectsTemplate
+                    //         },
+                    //         {
+                    //             id: 2,
+                    //             // popupEnabled: true,
+                    //             // popupTemplate: ProjectsTemplate
+                    //         },
+                    //         {
+                    //             id: 3,
+                    //             // popupEnabled: true,
+                    //             // popupTemplate: ProjectsTemplate
+                    //         },
+                    //     ]
                 });
 
                 const map = new ArcGISMap({
-                    layers: [layer]
+                    // basemap: 'gray',
+                    layers: [layer],
+                    zoom: 12,
                 });
 
                 this.view = new MapView({
