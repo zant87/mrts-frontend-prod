@@ -14,31 +14,22 @@ class AnalystMapPage extends React.Component {
         loadModules(['esri/Map', 'esri/views/MapView', 'esri/layers/FeatureLayer', 'esri/layers/MapImageLayer', 'esri/widgets/Legend'], {css: true})
             .then(([ArcGISMap, MapView, FeatureLayer, MapImageLayer, Legend]) => {
 
-                const layer = new MapImageLayer({
-                    url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer/",
-                    // sublayers:
-                    //     [
-                    //         {
-                    //             id: 1,
-                    //             // popupEnabled: true,
-                    //             // popupTemplate: ProjectsTemplate
-                    //         },
-                    //         {
-                    //             id: 2,
-                    //             // popupEnabled: true,
-                    //             // popupTemplate: ProjectsTemplate
-                    //         },
-                    //         {
-                    //             id: 3,
-                    //             // popupEnabled: true,
-                    //             // popupTemplate: ProjectsTemplate
-                    //         },
-                    //     ]
+                const tiles = new MapImageLayer({
+                    url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer/"
+                });
+
+                const layer1 = new FeatureLayer({
+                    url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer/1",
+                    popupTemplate: ProjectsTemplate
+                });
+
+                const layer2 = new FeatureLayer({
+                    url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer/2",
+                    popupTemplate: RailwayTemplate
                 });
 
                 const map = new ArcGISMap({
-                    // basemap: 'gray',
-                    layers: [layer],
+                    layers: [tiles, layer1, layer2],
                 });
 
                 this.view = new MapView({
@@ -52,7 +43,7 @@ class AnalystMapPage extends React.Component {
                     view: this.view,
                     layerInfos: [
                         {
-                            layer: layer,
+                            layer: [layer1, layer2],
                             title: "МРТС"
                         }
                     ]
