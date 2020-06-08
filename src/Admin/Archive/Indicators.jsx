@@ -183,8 +183,8 @@ export default class AdminArchiveIndicatorsPage extends React.Component  {
                     </MDBBreadcrumb>
                 </MDBRow>
                 <MDBRow>
-                  {/* <TableContainer data={data} isLoading={isLoading} columns={columns} title={"Архив расчета индикаторов ТС"}/>  */}
-                      <PivotContainer pFields={pivotFields} pData={this.state.data} isPLoading={isLoading} title={"Архив расчета индикаторов ТС"}/> 
+                   <TableContainer data={data} isLoading={isLoading} columns={columns} title={"Архив расчета индикаторов ТС"}/>  
+                   {/* <PivotContainer pFields={pivotFields} pData={this.state.data} isPLoading={isLoading} title={"Архив расчета индикаторов ТС"}/>  */}
                 </MDBRow>
             </MDBContainer>
         );

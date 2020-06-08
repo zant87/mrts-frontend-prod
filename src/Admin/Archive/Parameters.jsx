@@ -56,7 +56,7 @@ export default class AdminArchiveParametersPage extends React.Component {
             {field: 'okudName', title: 'ОКУД', filtering: true, editable: 'never'},
             {field: 'parameterName', title: 'Показатель', filtering: true, editable: 'never'},
             {field: 'transportTypeName', title: 'Тип транспорта', filtering: true, editable: 'never'},
-            {field: 'dataProviderCode', title: 'Отчетный квартал', filtering: true, editable: 'never'},
+            {field: 'dataProviderCode', title: 'Источник', filtering: true, editable: 'never'},
             {field: 'value', title: 'Значение показателя', filtering: true, editable: 'never' },
         ];
 
