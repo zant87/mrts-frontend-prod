@@ -4,6 +4,7 @@ import config from 'config';
 import {ProjectsTemplate, RailwayTemplate} from "./ArcgisConfig/PopupConfigs";
 
 class AnalystMapPage extends React.Component {
+
     constructor(props) {
         super(props);
         this.mapRef = React.createRef();
@@ -14,7 +15,7 @@ class AnalystMapPage extends React.Component {
             .then(([ArcGISMap, MapView, FeatureLayer, MapImageLayer, Legend]) => {
 
                 const layer = new MapImageLayer({
-                    url: config.arcGisMapServerUrl,
+                    url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer/",
                     // sublayers:
                     //     [
                     //         {
@@ -38,7 +39,6 @@ class AnalystMapPage extends React.Component {
                 const map = new ArcGISMap({
                     // basemap: 'gray',
                     layers: [layer],
-                    zoom: 12,
                 });
 
                 this.view = new MapView({
