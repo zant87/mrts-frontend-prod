@@ -11,66 +11,82 @@ class AnalystMapPage extends React.Component {
     }
 
     componentDidMount() {
-        loadModules(['esri/Map', 'esri/views/MapView', 'esri/layers/FeatureLayer', 'esri/layers/MapImageLayer', 'esri/widgets/Legend'], {css: true})
-            .then(([ArcGISMap, MapView, FeatureLayer, MapImageLayer, Legend]) => {
+        loadModules(['esri/Map', 'esri/views/MapView', 'esri/layers/FeatureLayer', 'esri/layers/MapImageLayer', 'esri/widgets/Legend', 'esri/widgets/LayerList'], {css: true})
+            .then(([ArcGISMap, MapView, FeatureLayer, MapImageLayer, LayerList]) => {
 
                 const titles = new MapImageLayer({
-                    url: config.arcGisMapServerUrl
+                    url: config.arcGisMapServerUrl,
+                    title: 'Картооснова',
+                    sublayers: [{id: 32}, {id: 31}, {id: 30}, {id: 29}, {id: 28}, {id: 27}]
                 });
 
-                const layer1 = new FeatureLayer({
-                    url: config.arcGisMapServerUrl + "1",
-                    popupTemplate: ProjectsTemplate
-                });
-
-                const layer2 = new FeatureLayer({
-                    url: config.arcGisMapServerUrl + "2",
-                    popupTemplate: ProjectsTemplate
-                });
-
-                const layer3 = new FeatureLayer({
-                    url: config.arcGisMapServerUrl + "3",
-                    popupTemplate: ProjectsTemplate
-                });
-
-                const layer4 = new FeatureLayer({
-                    url: config.arcGisMapServerUrl + "4",
+                const layer6 = new FeatureLayer({
+                    url: config.arcGisMapServerUrl + "6",
+                    title: 'Воздушный транспорт: на 2018 год, %',
                     popupTemplate: ProjectsTemplate
                 });
 
                 const layer5 = new FeatureLayer({
                     url: config.arcGisMapServerUrl + "5",
+                    title: 'Морской транспорт: на 2018 год, %',
                     popupTemplate: ProjectsTemplate
                 });
 
-                const layer6 = new FeatureLayer({
-                    url: config.arcGisMapServerUrl + "6",
+                const layer4 = new FeatureLayer({
+                    url: config.arcGisMapServerUrl + "4",
+                    title: 'Внутренний водный транспорт: на 2018 год, %',
                     popupTemplate: ProjectsTemplate
                 });
+
+                const layer3 = new FeatureLayer({
+                    url: config.arcGisMapServerUrl + "3",
+                    title: 'Дорожное хозяйство: на 2018 год, %',
+                    popupTemplate: ProjectsTemplate
+                });
+
+                const layer2 = new FeatureLayer({
+                    url: config.arcGisMapServerUrl + "2",
+                    title: 'Железнодорожный транспорт: на 2018 год, %',
+                    popupTemplate: ProjectsTemplate
+                });
+
+                const layer1 = new FeatureLayer({
+                    url: config.arcGisMapServerUrl + "1",
+                    title: 'Крупные комплексные проекты: на 2018 год, %',
+                    popupTemplate: ProjectsTemplate
+                });
+
 
                 const map = new ArcGISMap({
-                    layers: [titles, layer1, layer2, layer3, layer4, layer5, layer6],
+                    layers: [
+                        titles,
+                        layer6, layer5, layer5, layer4, layer3, layer2, layer1,
+                    ],
                 });
 
-                this.view = new MapView({
+                const view = new MapView({
                     container: this.mapRef.current,
                     map: map,
                     center: [37, 55],
                     zoom: 12,
                 });
 
-                const legend = new Legend({
-                    view: this.view,
-                    layerInfos: [
-                        {
-                            layer: titles,
-                            title: "МРТС"
+                view.when(function () {
+                    const layerList = new LayerList({
+                        view: view,
+                        listItemCreatedFunction: function (event) {
+                            const item = event.item;
+                            if (item.layer.type !== "group") {
+                                item.panel = {
+                                    content: "legend",
+                                    open: true
+                                };
+                            }
                         }
-                    ]
+                    });
+
+                    view.ui.add(layerList, "top-right");
                 });
-
-                this.view.ui.add(legend, "bottom-right");
-
             });
     }
 
@@ -83,6 +99,7 @@ class AnalystMapPage extends React.Component {
     render() {
         return (
             <div className="webmap my-5" ref={this.mapRef}/>
+
         );
     }
 }
