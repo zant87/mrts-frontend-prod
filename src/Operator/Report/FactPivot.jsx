@@ -1,24 +1,37 @@
 import React from 'react';
 import PivotGrid, {
     FieldChooser,
-    Export
+    Export,
+    HeaderFilter
 } from 'devextreme-react/pivot-grid';
 import PivotGridDataSource from 'devextreme/ui/pivot_grid/data_source';
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.light.css';
-import {MDBCol, MDBContainer, MDBRow, MDBSpinner} from "mdbreact";
+import {MDBCol, MDBContainer, MDBRow, MDBSpinner, MDBSelect} from "mdbreact";
 import appAxios from "../../_services/appAxios";
 
 export default class OperatorReportFactPivotPage extends React.Component {
 
     state = {
         isLoading: true,
-        dataSource: {}
+        dataSource: {},
+
+        transportTypeId: '',
+        dataProviderId: '',
+        okudId: '',
+
+        transportTypeList: [],
+        dataProviderList: [],
+        okudList: [],
     };
 
     componentDidMount() {
         this.getData();
     };
+
+    handleChange = e => {
+
+    }
 
     getData = () => {
         this.setState({isLoading: true});
@@ -170,8 +183,88 @@ export default class OperatorReportFactPivotPage extends React.Component {
 
         const {dataSource, isLoading} = this.state;
 
+        // dataProvider
+
         return (
             <MDBContainer fluid>
+                <MDBRow>
+                    <MDBCol md="12" className="mb-3">
+                        <MDBSelect searchId={'transportTypeId'}
+                                   label="Вид транспорта"
+                                   search={true}
+                                   searchLabel={'Поиск'}
+                                   options={this.state.transportTypeList}
+                                   getValue={this.handleChange}>
+                        </MDBSelect>
+                    </MDBCol>
+                </MDBRow>
+                <MDBRow>
+                    <MDBCol md="12" className="mb-3">
+                        <MDBSelect searchId={'dataProviderId'}
+                                   label="Источник данных"
+                                   search={true}
+                                   searchLabel={'Поиск'}
+                                   options={this.state.dataProviderList}
+                                   getValue={this.handleChange}>
+                        </MDBSelect>
+                    </MDBCol>
+                </MDBRow>
+                <MDBRow>
+                    <MDBCol md="12" className="mb-3">
+                        <MDBSelect searchId={'algorithm'}
+                                   label="Алгоритм"
+                                   search={true}
+                                   searchLabel={'Поиск'}
+                                   options={this.state.algorithmList}
+                                   getValue={this.handleChange}>
+                        </MDBSelect>
+                    </MDBCol>
+                </MDBRow>
+                <MDBRow>
+                    <MDBCol md="12" className="mb-3">
+                        <MDBSelect searchId={'okudId'}
+                                   label="ОКУД"
+                                   search={true}
+                                   searchLabel={'Поиск'}
+                                   options={this.state.okudList}
+                                   getValue={this.handleChange}>
+                        </MDBSelect>
+                    </MDBCol>
+                </MDBRow>
+                {/* <MDBRow>
+                    <MDBCol md="12" className="mb-3">
+                        <MDBSelect searchId={'algorithm'}
+                                   label="Алгоритм"
+                                   search={true}
+                                   searchLabel={'Поиск'}
+                                   options={this.state.algorithmList}
+                                   getValue={this.handleChange}>
+                        </MDBSelect>
+                    </MDBCol>
+                </MDBRow>
+                <MDBRow>
+                    <MDBCol md="12" className="mb-3">
+                        <MDBSelect searchId={'algorithm'}
+                                   label="Алгоритм"
+                                   search={true}
+                                   searchLabel={'Поиск'}
+                                   options={this.state.algorithmList}
+                                   getValue={this.handleChange}>
+                        </MDBSelect>
+                    </MDBCol>
+                </MDBRow>
+                <MDBRow>
+                    <MDBCol md="12" className="mb-3">
+                        <MDBSelect searchId={'algorithm'}
+                                   label="Алгоритм"
+                                   search={true}
+                                   searchLabel={'Поиск'}
+                                   options={this.state.algorithmList}
+                                   getValue={this.handleChange}>
+                        </MDBSelect>
+                    </MDBCol>
+                </MDBRow> */}
+
                 <MDBRow center>
                     <MDBCol md={'12'} className='mx-auto'>
                         {isLoading && <MDBSpinner multicolor/>}
@@ -188,7 +281,14 @@ export default class OperatorReportFactPivotPage extends React.Component {
                             height={'680'}
                             showRowGrandTotals={false}
                             showRowTotals={false}
-                            showBorders={true}>
+                            showBorders={true}
+                            >
+                            <HeaderFilter
+                                allowSearch={true}
+                                visible={true}
+                                width={300}
+                                height={400}
+                              />
                             <Export enabled={true} fileName="Фактические значения показателей"/>
                             <FieldChooser enabled={true}/>
                         </PivotGrid>}

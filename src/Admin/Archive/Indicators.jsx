@@ -4,6 +4,14 @@ import TableContainer from "./common/TableContainer";
 import PivotContainer from "./PivotContainer";
 import appAxios from "../../_services/appAxios";
 
+/*
+  TODO:
+    Нужны серверные фильтры на года и источник информации. 
+
+    Также они нужны в пивоте "OТЧЕТНЫЕ ПОКАЗАТЕЛИ" 
+      case: ФАКТИЧЕСКИЕ ЗНАЧЕНИЯ ПОКАЗАТЕЛЕЙ
+*/
+
 export default class AdminArchiveIndicatorsPage extends React.Component  {
 
     state = {

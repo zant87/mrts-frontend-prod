@@ -178,7 +178,18 @@ class OperatorReportFactTabsPage extends React.Component {
                             <TableContainer data={data} isLoading={isLoading} columns={columns} title={TITLE}/> 
                         </MDBTabPane>
                         <MDBTabPane tabId="2" role="tabpanel">
-                             <PivotContainer pFields={pivotFields} pData={pivotData} isPLoading={isPivotLoading} title={TITLE} />
+                             <MDBRow>
+                                    <MDBCol md="12" className="mb-3">
+                                        <MDBSelect searchId={'algorithm'}
+                                                   label="Алгоритм"
+                                                   search={true}
+                                                   searchLabel={'Поиск'}
+                                                   options={this.state.algorithmList}
+                                                   getValue={this.setAlgorithm}>
+                                        </MDBSelect>
+                                    </MDBCol>
+                            </MDBRow>
+                            <PivotContainer pFields={pivotFields} pData={pivotData} isPLoading={isPivotLoading} title={TITLE} />
                         </MDBTabPane>
                 </MDBTabContent>
             </MDBContainer>
