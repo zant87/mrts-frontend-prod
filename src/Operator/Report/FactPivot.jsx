@@ -19,10 +19,16 @@ export default class OperatorReportFactPivotPage extends React.Component {
         transportTypeId: '',
         dataProviderId: '',
         okudId: '',
+        parameterId: '',
+        year: '',
+        quarterId: '',
 
         transportTypeList: [],
         dataProviderList: [],
         okudList: [],
+        parameterList: [],
+        yearList: [],
+        quarterList: [],
     };
 
     componentDidMount() {
@@ -231,39 +237,39 @@ export default class OperatorReportFactPivotPage extends React.Component {
                         </MDBSelect>
                     </MDBCol>
                 </MDBRow>
-                {/* <MDBRow>
+                <MDBRow>
                     <MDBCol md="12" className="mb-3">
-                        <MDBSelect searchId={'algorithm'}
-                                   label="Алгоритм"
+                        <MDBSelect searchId={'parameterId'}
+                                   label="Показатель"
                                    search={true}
                                    searchLabel={'Поиск'}
-                                   options={this.state.algorithmList}
+                                   options={this.state.parameterList}
                                    getValue={this.handleChange}>
                         </MDBSelect>
                     </MDBCol>
                 </MDBRow>
                 <MDBRow>
                     <MDBCol md="12" className="mb-3">
-                        <MDBSelect searchId={'algorithm'}
-                                   label="Алгоритм"
+                        <MDBSelect searchId={'year'}
+                                   label="Отчетный год"
                                    search={true}
                                    searchLabel={'Поиск'}
-                                   options={this.state.algorithmList}
+                                   options={this.state.yearList}
                                    getValue={this.handleChange}>
                         </MDBSelect>
                     </MDBCol>
                 </MDBRow>
                 <MDBRow>
                     <MDBCol md="12" className="mb-3">
-                        <MDBSelect searchId={'algorithm'}
-                                   label="Алгоритм"
+                        <MDBSelect searchId={'quarterId'}
+                                   label="Отчетный квартал"
                                    search={true}
                                    searchLabel={'Поиск'}
-                                   options={this.state.algorithmList}
+                                   options={this.state.quarterList}
                                    getValue={this.handleChange}>
                         </MDBSelect>
                     </MDBCol>
-                </MDBRow> */}
+                </MDBRow> 
 
                 <MDBRow center>
                     <MDBCol md={'12'} className='mx-auto'>
