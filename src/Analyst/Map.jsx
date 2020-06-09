@@ -21,41 +21,40 @@ class AnalystMapPage extends React.Component {
                 });
 
                 const layer6 = new FeatureLayer({
-                    url: config.arcGisMapServerUrl + "6",
+                    url: config.arcGisMapServerUrl + "/6",
                     title: 'Воздушный транспорт: на 2018 год, %',
                     popupTemplate: ProjectsTemplate
                 });
 
                 const layer5 = new FeatureLayer({
-                    url: config.arcGisMapServerUrl + "5",
+                    url: config.arcGisMapServerUrl + "/5",
                     title: 'Морской транспорт: на 2018 год, %',
                     popupTemplate: ProjectsTemplate
                 });
 
                 const layer4 = new FeatureLayer({
-                    url: config.arcGisMapServerUrl + "4",
+                    url: config.arcGisMapServerUrl + "/4",
                     title: 'Внутренний водный транспорт: на 2018 год, %',
                     popupTemplate: ProjectsTemplate
                 });
 
                 const layer3 = new FeatureLayer({
-                    url: config.arcGisMapServerUrl + "3",
+                    url: config.arcGisMapServerUrl + "/3",
                     title: 'Дорожное хозяйство: на 2018 год, %',
                     popupTemplate: ProjectsTemplate
                 });
 
                 const layer2 = new FeatureLayer({
-                    url: config.arcGisMapServerUrl + "2",
+                    url: config.arcGisMapServerUrl + "/2",
                     title: 'Железнодорожный транспорт: на 2018 год, %',
                     popupTemplate: ProjectsTemplate
                 });
 
                 const layer1 = new FeatureLayer({
-                    url: config.arcGisMapServerUrl + "1",
+                    url: config.arcGisMapServerUrl + "/1",
                     title: 'Крупные комплексные проекты: на 2018 год, %',
                     popupTemplate: ProjectsTemplate
                 });
-
 
                 const map = new ArcGISMap({
                     layers: [

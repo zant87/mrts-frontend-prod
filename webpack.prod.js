@@ -170,7 +170,7 @@ const config = {
     config: JSON.stringify({
       apiUrl: "http://localhost:4000",
       isLocalDeployment: true,
-      arcGisMapServerLocalUrl: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer/",
+      arcGisMapServerLocalUrl: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer",
       arcGisMapServerRemoteUrl: "https://agoracle.asutk.ru/arcgis/rest/services/TS_projects/MapServer/"
     })
   }
