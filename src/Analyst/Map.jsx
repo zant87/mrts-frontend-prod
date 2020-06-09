@@ -12,12 +12,17 @@ class AnalystMapPage extends React.Component {
 
     componentDidMount() {
         loadModules(['esri/Map', 'esri/views/MapView', 'esri/layers/FeatureLayer', 'esri/layers/MapImageLayer', 'esri/widgets/Legend', 'esri/widgets/LayerList'], {css: true})
-            .then(([ArcGISMap, MapView, FeatureLayer, MapImageLayer, LayerList]) => {
+            .then(([ArcGISMap, MapView, FeatureLayer, MapImageLayer, Legend, LayerList]) => {
 
                 const titles = new MapImageLayer({
                     url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer",
                     title: 'Картооснова',
-                    sublayers: [{id: 32}, {id: 31}, {id: 30}, {id: 29}, {id: 28}, {id: 27}]
+                    sublayers:
+                        [
+                            {id: 32, title: 'Страны'}, {id: 31, title: 'Регионы РФ'},
+                            {id: 30, title: 'Федеральные округа РФ'}, {id: 29, title: 'Границы РФ'},
+                            {id: 28, title: 'Центры регионов РФ'}, {id: 27, title: 'Столица РФ'}
+                        ]
                 });
 
                 const layer6 = new FeatureLayer({
@@ -68,6 +73,16 @@ class AnalystMapPage extends React.Component {
                     center: [37, 55],
                     zoom: 12,
                 });
+
+                // const legend = new Legend({
+                //     view: view,
+                //     // layerInfos: [
+                //     //     {
+                //     //         // layer: [layer6, layer5, layer5, layer4, layer3, layer2, layer1],
+                //     //         title: "МРТС"
+                //     //     }
+                //     // ]
+                // });
 
                 view.when(function () {
                     const layerList = new LayerList({
