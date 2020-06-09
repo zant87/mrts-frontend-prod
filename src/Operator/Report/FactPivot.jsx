@@ -11,27 +11,6 @@ import {MDBCol, MDBContainer, MDBRow, MDBSpinner, MDBSelect, MDBBtn} from "mdbre
 import appAxios from "../../_services/appAxios";
 
 export default class OperatorReportFactPivotPage extends React.Component {
-
-    state = {
-        isLoading: true,
-        dataSource: {},
-
-        transportTypeId: '',
-        dataProviderId: '',
-        okudId: '',
-        parameterId: '',
-        year: '',
-        quarterId: '',
-
-        transportTypeList: [],
-        dataProviderList: [],
-        okudList: [],
-        parameterList: [],
-        yearList: [],
-        quarterList: [],
-
-    };
-
     static fields = [{
                             dataField: 'id',
                             visible: false
@@ -159,14 +138,36 @@ export default class OperatorReportFactPivotPage extends React.Component {
                             summaryType: 'sum',
                             area: 'data'
                         }];
+    state = {
+        isLoading: true,
+        dataSource: {},
 
-    componentDidMount() {
-        this.getData();
+        transportTypeId: '',
+        dataProviderId: '',
+        okudId: '',
+        parameterId: '',
+        year: '',
+        quarterId: '',
+
+        transportTypeList: [], // v
+
+        dataProviderList: [], // v
+        okudList: [],         // v
+        parameterList: [], // v
+        yearList: [],  // v
+        quarterList: [], // v
+
     };
 
-    handleChange = e => {
-
-    }
+    componentDidMount() {
+        // this.getData();
+        this.getTransportTypeList();
+        this.getDataProviderList();
+        this.getParameterList();
+        this.getOkudList();
+        this.getQuarterList();
+        this.getDataYearList();
+    };
 
     filterData = () => {
         this.setState({isLoading: true});
@@ -182,6 +183,88 @@ export default class OperatorReportFactPivotPage extends React.Component {
                 });
             });
     };
+
+    handleChange = e => {
+        console.log(" id es: " + e)
+        const val = e.toString();
+        /*this.setState((prevState) => ({
+            ...prevState, [e.element.searchId]: val,
+        }));*/
+    }
+
+    getTransportTypeList = () => {
+        this.setState({ isLoading: true });
+        appAxios.get(`/nsi-transport-types`)
+            .then(res => {
+                let selected;
+                const data = res.data.map(item => {
+                        return {value: item.code, text: item.year, checked: false};
+                })
+                this.setState({transportTypeList: data, isLoading: false});
+            })
+    };
+
+    getDataProviderList = () => {
+        this.setState({ isLoading: true });
+        appAxios.get(`/nsi-data-providers`)
+            .then(res => {
+                let selected;
+                const data = res.data.map(item => {
+                        return {value: item.code, text: item.year, checked: false};
+                })
+                this.setState({dataProviderList: data, isLoading: false});
+            })
+    };
+
+    getParameterList = () => {
+        this.setState({ isLoading: true });
+        appAxios.get(`/parameters`)
+            .then(res => {
+                let selected;
+                const data = res.data.map(item => {
+                        return {value: item.code, text: item.year, checked: false};
+                })
+                this.setState({parameterList: data, isLoading: false});
+            })
+    };
+
+    getOkudList = () => {
+        this.setState({ isLoading: true });
+        appAxios.get(`/nsi-okuds`)
+            .then(res => {
+                let selected;
+                const data = res.data.map(item => {
+                        return {value: item.code, text: item.year, checked: false};
+                })
+                this.setState({okudList: data, isLoading: false});
+            })
+    };
+
+    getQuarterList = () => {
+        this.setState({ isLoading: true });
+        appAxios.get(`/nsi-quarters`)
+            .then(res => {
+                let selected;
+                const data = res.data.map(item => {
+                        return {value: item.code, text: item.year, checked: false};
+                })
+                this.setState({quarterList: data, isLoading: false});
+            })
+    };
+
+    getDataYearList = () => {
+        this.setState({ isLoading: true });
+        appAxios.get(`/nsi-years`)
+            .then(res => {
+                let selected;
+                const data = res.data.map(item => {
+                        return {value: item.code, text: item.year, checked: false};
+                })
+                this.setState({yearList: data, isLoading: false});
+            })
+    };
+
+    
 
 
     getData = () => {
@@ -238,17 +321,6 @@ export default class OperatorReportFactPivotPage extends React.Component {
                                    search={true}
                                    searchLabel={'Поиск'}
                                    options={this.state.dataProviderList}
-                                   getValue={this.handleChange}>
-                        </MDBSelect>
-                    </MDBCol>
-                </MDBRow>
-                <MDBRow>
-                    <MDBCol md="12" className="mb-3">
-                        <MDBSelect searchId={'algorithm'}
-                                   label="Алгоритм"
-                                   search={true}
-                                   searchLabel={'Поиск'}
-                                   options={this.state.algorithmList}
                                    getValue={this.handleChange}>
                         </MDBSelect>
                     </MDBCol>
