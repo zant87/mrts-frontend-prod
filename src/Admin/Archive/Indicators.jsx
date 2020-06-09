@@ -55,14 +55,27 @@ class AdminArchiveIndicatorsPage extends React.Component  {
 
         this.props.getTransportTypes();
         // this.props.getInds();
-        // this.props.getYears();
-        // this.props.getQuarters();
-        // this.props.getScenarios();
+        this.props.getYears();
+        this.props.getQuarters();
+        this.props.getScenarios();
     }
 
     filterData = () => {
         const { transportTypeId, scenarioId, okudId, indicatorId, year, quarterId, beginDate, endDate } = this.state;
         // this.props.getParameterValues(transportTypeId, dataProviderId, okudId, parameterId, year, quarterId);
+    }
+
+    componentDidUpdate(prevProps) {
+
+        /*if (this.props.parameterVals !== prevProps.parameterVals) {
+            if (this.props.parameterVals) {
+                // console.log(" parameterVals ---> %j", this.props.parameterVals)
+                const { parameterVals } = this.props;
+                this.setState({
+                   data: parameterVals,
+                });
+            }
+        } */
     }
 
     getData = async () => {
@@ -152,7 +165,9 @@ class AdminArchiveIndicatorsPage extends React.Component  {
 
         const { data, isLoading } = this.state;
 
+        // let transportTypes = function() { return {}; };
         let transportTypes = [];
+
         if (this.props.transportTypes) {
                 transportTypes = this.props.transportTypes.map(item => {
                         return { value: item.id, text: item.name, checked: false };
