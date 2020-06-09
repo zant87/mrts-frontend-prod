@@ -160,8 +160,6 @@ export default class OperatorReportFactPivotPage extends React.Component {
         this.filterData = this.filterData.bind(this);
         this.getData = this.getData.bind(this);
         this.onReset = this.onReset.bind(this);
-        // this.setTransportType = this.setTransportType.bind(this);
-
     }
 
     componentDidMount() {

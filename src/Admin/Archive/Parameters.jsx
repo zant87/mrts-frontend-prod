@@ -1,34 +1,40 @@
 import React from 'react';
-import {MDBBreadcrumb, MDBBreadcrumbItem, MDBContainer, MDBRow} from "mdbreact";
+import {MDBBreadcrumb, MDBBreadcrumbItem, MDBContainer, MDBRow, MDBSelect, MBBBtn} from "mdbreact";
 import TableContainer from "./common/TableContainer";
 import appAxios from "../../_services/appAxios";
 
 export default class AdminArchiveParametersPage extends React.Component {
 
-    state = {
-        page: 0,
-        count: 0,
-        data: [],
-        isLoading: false,
+      constructor(props) {
+        super(props);
+        this.state = {
+                page: 0,
+                count: 0,
+                data: [],
+                isLoading: false,
 
-        transportTypeId: '',
-        dataProviderId: '',
-        okudId: '',
-        parameterId: '',
-        year: '',
-        quarterId: '',
+                transportTypeId: '',
+                dataProviderId: '',
+                okudId: '',
+                parameterId: '',
+                year: '',
+                quarterId: '',
 
-        transportTypeList: [],
-        dataProviderList: [], 
-        okudList: [],         
-        parameterList: [], 
-        yearList: [],  
-        quarterList: [],
+                transportTypeList: [],
+                dataProviderList: [], 
+                okudList: [],         
+                parameterList: [], 
+                yearList: [],  
+                quarterList: [],
 
+            }
+        this.filterData = this.filterData.bind(this);
+        this.getData = this.getData.bind(this);
+        this.onReset = this.onReset.bind(this);
     }
 
     componentDidMount() {
-        // this.getData();
+        this.getData();
         this.getTransportTypeList();
         this.getDataProviderList();
         this.getParameterList();
@@ -38,8 +44,14 @@ export default class AdminArchiveParametersPage extends React.Component {
     }
 
     filterData = async () => {
+
         this.setState({isLoading: true});
-        appAxios.get(`/views/i-1-s-all`)
+        appAxios.get(`/views/i-1-s?transportTypeId.equals=` + transportTypeId + 
+                                          `&dataProviderId.equals=` + dataProviderId + 
+                                          `&okudId.equals=` + okudId +
+                                          `&parameterId.equals=` + parameterId +
+                                          `&year.equals=` + year +
+                                          `&quarterId.equals=` + quarterId)
             .then(res => {
                 console.log(res);
                 const count = Number(res.headers['x-total-count']);
@@ -54,7 +66,7 @@ export default class AdminArchiveParametersPage extends React.Component {
             .then(res => {
                 let selected;
                 const data = res.data.map(item => {
-                        return {value: item.code, text: item.year, checked: false};
+                        return {value: item.id, text: item.name, checked: false};
                 })
                 this.setState({transportTypeList: data, isLoading: false});
             })
@@ -66,7 +78,7 @@ export default class AdminArchiveParametersPage extends React.Component {
             .then(res => {
                 let selected;
                 const data = res.data.map(item => {
-                        return {value: item.code, text: item.year, checked: false};
+                        return {value: item.id, text: item.name, checked: false};
                 })
                 this.setState({dataProviderList: data, isLoading: false});
             })
@@ -78,7 +90,7 @@ export default class AdminArchiveParametersPage extends React.Component {
             .then(res => {
                 let selected;
                 const data = res.data.map(item => {
-                        return {value: item.code, text: item.year, checked: false};
+                        return {value: item.id, text: item.name, checked: false};
                 })
                 this.setState({parameterList: data, isLoading: false});
             })
@@ -90,7 +102,7 @@ export default class AdminArchiveParametersPage extends React.Component {
             .then(res => {
                 let selected;
                 const data = res.data.map(item => {
-                        return {value: item.code, text: item.year, checked: false};
+                        return {value: item.id, text: item.name, checked: false};
                 })
                 this.setState({okudList: data, isLoading: false});
             })
@@ -102,16 +114,11 @@ export default class AdminArchiveParametersPage extends React.Component {
             .then(res => {
                 let selected;
                 const data = res.data.map(item => {
-                        return {value: item.code, text: item.year, checked: false};
+                        return {value: item.id, text: item.name, checked: false};
                 })
                 this.setState({quarterList: data, isLoading: false});
             })
     };
-
-    handleChange = e => {
-        console.log(" id es: " + e)
-        const val = e.toString();
-    }
 
     getDataYearList = () => {
         this.setState({ isLoading: true });
@@ -119,11 +126,46 @@ export default class AdminArchiveParametersPage extends React.Component {
             .then(res => {
                 let selected;
                 const data = res.data.map(item => {
-                        return {value: item.code, text: item.year, checked: false};
+                        return {value: item.year, text: item.year, checked: false};
                 })
                 this.setState({yearList: data, isLoading: false});
             })
     };
+
+    setTransportType = e => {
+        this.setState({
+            transportTypeId: e.toString()
+        });
+    }
+
+    setProvider = e => {
+        this.setState({
+            dataProviderId: e.toString()
+        });
+    }
+
+    setOkud = e => {
+        this.setState({
+            dataOkudId: e.toString()
+        });
+    }
+
+    setParameter = e => {
+        this.setState({
+            parameterId: e.toString()
+        });
+    }
+    
+    setYear = e => {
+        this.setState({
+            year: e.toString()
+        });
+    }
+    setQuarter = e => {
+        this.setState({
+            quarterId: e.toString()
+        });
+    }
 
     getData = async () => {
         this.setState({isLoading: true});
@@ -144,11 +186,16 @@ export default class AdminArchiveParametersPage extends React.Component {
             okudId: '',
             parameterId: '',
             year: '',
-            quarterId: ''
+            quarterId: '',
+            data: [],
        });
-
+       this.getTransportTypeList();
+       this.getDataProviderList();
+       this.getParameterList();
+       this.getOkudList();
+       this.getQuarterList();
+       this.getDataYearList();
     }
-
 
         /* year": 2017,
         "quarterName": "I квартал",
@@ -194,79 +241,69 @@ export default class AdminArchiveParametersPage extends React.Component {
                 </MDBBreadcrumb>
             </MDBRow>
             <MDBRow>
-                <MDBCol md="12" className="mb-3">
-                    <MDBSelect searchId={'transportTypeId'}
-                               label="Вид транспорта"
-                               search={true}
-                               searchLabel={'Поиск'}
-                               options={this.state.transportTypeList}
-                               getValue={this.handleChange}>
-                    </MDBSelect>
-                </MDBCol>
-            </MDBRow>
-            <MDBRow>
-                <MDBCol md="12" className="mb-3">
-                    <MDBSelect searchId={'dataProviderId'}
-                               label="Источник данных"
-                               search={true}
-                               searchLabel={'Поиск'}
-                               options={this.state.dataProviderList}
-                               getValue={this.handleChange}>
-                    </MDBSelect>
-                </MDBCol>
-            </MDBRow>
-            <MDBRow>
-                <MDBCol md="12" className="mb-3">
-                    <MDBSelect searchId={'okudId'}
-                               label="ОКУД"
-                               search={true}
-                               searchLabel={'Поиск'}
-                               options={this.state.okudList}
-                               getValue={this.handleChange}>
-                    </MDBSelect>
-                </MDBCol>
-            </MDBRow>
-            <MDBRow>
-                <MDBCol md="12" className="mb-3">
-                    <MDBSelect searchId={'parameterId'}
-                               label="Показатель"
-                               search={true}
-                               searchLabel={'Поиск'}
-                               options={this.state.parameterList}
-                               getValue={this.handleChange}>
-                    </MDBSelect>
-                </MDBCol>
-            </MDBRow>
-            <MDBRow>
-                <MDBCol md="12" className="mb-3">
-                    <MDBSelect searchId={'year'}
-                               label="Отчетный год"
-                               search={true}
-                               searchLabel={'Поиск'}
-                               options={this.state.yearList}
-                               getValue={this.handleChange}>
-                    </MDBSelect>
-                </MDBCol>
-            </MDBRow>
-            <MDBRow>
-                <MDBCol md="12" className="mb-3">
-                    <MDBSelect searchId={'quarterId'}
-                               label="Отчетный квартал"
-                               search={true}
-                               searchLabel={'Поиск'}
-                               options={this.state.quarterList}
-                               getValue={this.handleChange}>
-                    </MDBSelect>
-                </MDBCol>
-            </MDBRow> 
-            <MDBRow around={true}>
-                <MDBBtn color="primary" type="none" onClick={this.filterData}>
-                    Получить данные
-                </MDBBtn>
-                <MDBBtn color="primary" type="none" onClick={this.onReset}>
-                    Oчистить фильтры
-                </MDBBtn>
-            </MDBRow>
+                    <MDBCol md="3" className="mb-3">
+                        <MDBSelect searchId={'transportTypeId'}
+                                   label="Вид транспорта"
+                                   search={true}
+                                   searchLabel={'Поиск'}
+                                   options={this.state.transportTypeList}
+                                   getValue={this.setTransportType}>
+                        </MDBSelect>
+                    </MDBCol>
+                    <MDBCol md="3" className="mb-3">
+                        <MDBSelect searchId={'dataProviderId'}
+                                   label="Источник данных"
+                                   search={true}
+                                   searchLabel={'Поиск'}
+                                   options={this.state.dataProviderList}
+                                   getValue={this.setProvider}>
+                        </MDBSelect>
+                    </MDBCol>
+                    <MDBCol md="3" className="mb-3">
+                        <MDBSelect searchId={'okudId'}
+                                   label="ОКУД"
+                                   search={true}
+                                   searchLabel={'Поиск'}
+                                   options={this.state.okudList}
+                                   getValue={this.setOkud}>
+                        </MDBSelect>
+                    </MDBCol>
+                    <MDBCol md="3" className="mb-3">
+                        <MDBBtn color="primary" type="none" onClick={this.filterData}>Получить данные</MDBBtn>
+                    </MDBCol>
+                </MDBRow>
+                <MDBRow around={true}>
+                    <MDBCol md="3" className="mb-3">
+                        <MDBSelect searchId={'parameterId'}
+                                   label="Показатель"
+                                   search={true}
+                                   searchLabel={'Поиск'}
+                                   options={this.state.parameterList}
+                                   getValue={this.setParameter}>
+                        </MDBSelect>
+                    </MDBCol>
+                    <MDBCol md="3" className="mb-3">
+                        <MDBSelect searchId={'year'}
+                                   label="Отчетный год"
+                                   search={true}
+                                   searchLabel={'Поиск'}
+                                   options={this.state.yearList}
+                                   getValue={this.setYear}>
+                        </MDBSelect>
+                    </MDBCol>
+                    <MDBCol md="3" className="mb-3">
+                        <MDBSelect searchId={'quarterId'}
+                                   label="Отчетный квартал"
+                                   search={true}
+                                   searchLabel={'Поиск'}
+                                   options={this.state.quarterList}
+                                   getValue={this.setQuarter}>
+                        </MDBSelect>
+                    </MDBCol>
+                    <MDBCol md="3" className="mb-3">
+                        <MDBBtn color="primary" type="none" onClick={this.onReset}>Oчистить фильтры</MDBBtn>
+                    </MDBCol>
+                </MDBRow>
             <MDBRow>
                <TableContainer data={this.state.data} isLoading={this.state.isLoading} columns={columns} title={"Архив показателей для расчета индикаторов ТС"}/> 
             </MDBRow>
