@@ -136,6 +136,7 @@ export default class OperatorReportFactPivotPage extends React.Component {
                             caption: 'Значение показателя',
                             dataField: 'value',
                             dataType: 'number',
+                            format: "#,###,###,##0.##",
                             summaryType: 'sum',
                             area: 'data'
                         }],
@@ -157,6 +158,9 @@ export default class OperatorReportFactPivotPage extends React.Component {
                     quarterList: [], 
                 };
         this.filterData = this.filterData.bind(this);
+        this.getData = this.getData.bind(this);
+        this.onReset = this.onReset.bind(this);
+        // this.setTransportType = this.setTransportType.bind(this);
 
     }
 
@@ -175,22 +179,27 @@ export default class OperatorReportFactPivotPage extends React.Component {
 
         const { transportTypeId, dataProviderId, okudId, parameterId, year, quarterId, fields } = this.state;
 
-        appAxios.get(`/views/k-5-s?transportTypeId.equals=` + transportTypeId + 
-                                  `&dataProviderId.equals=` + dataProviderId + 
-                                  `&okudId.equals=` + okudId +
-                                  `&parameterId.equals=` + parameterId +
-                                  `&year.equals=` + year +
-                                  `&quarterId.equals=` + quarterId)
-            .then(res => {
-                console.log(res);
-                const count = Number(res.headers['x-total-count']);
-                console.log('Всего от k5 получено ', count, ' записей');
-                const data = res.data;
-                this.setState({
-                    data: data, isLoading: false, 
-                    dataSource: new PivotGridDataSource({ fields: fields, store: data })
-                });
-            });
+       if (transportTypeId === '' && dataProviderId === '' && okudId === '' && parameterId === '' && year === '' && quarterId === '') {
+            this.getData();
+        } else {
+
+                appAxios.get(`/views/k-5-s?transportTypeId.equals=` + transportTypeId + 
+                                          `&dataProviderId.equals=` + dataProviderId + 
+                                          `&okudId.equals=` + okudId +
+                                          `&parameterId.equals=` + parameterId +
+                                          `&year.equals=` + year +
+                                          `&quarterId.equals=` + quarterId)
+                    .then(res => {
+                        console.log(res);
+                        const count = Number(res.headers['x-total-count']);
+                        console.log('Всего от k5 получено ', count, ' записей');
+                        const data = res.data;
+                        this.setState({
+                            data: data, isLoading: false, 
+                            dataSource: new PivotGridDataSource({ fields: fields, store: data })
+                        });
+                    });
+       }
     };
 
     getTransportTypeList = () => {
@@ -311,29 +320,33 @@ export default class OperatorReportFactPivotPage extends React.Component {
                 const data = res.data;
                 this.setState({
                     data: data, isLoading: false, dataSource:
-                        new PivotGridDataSource({ fields: this.fields, store: data })
+                        new PivotGridDataSource({ fields: this.state.fields, store: data })
                 });
             });
     };
 
     onReset = () => {
 
-       this.setState({
+        this.setState({
             transportTypeId: '',
             dataProviderId: '',
             okudId: '',
             parameterId: '',
             year: '',
-            quarterId: ''
-       });
-
+            quarterId: '',
+            dataSource: {},
+        });
+        this.getTransportTypeList();
+        this.getDataProviderList();
+        this.getParameterList();
+        this.getOkudList();
+        this.getQuarterList();
+        this.getDataYearList(); 
     }
 
     render() {
 
         const {dataSource, isLoading} = this.state;
-
-        // dataProvider
 
         return (
             <MDBContainer fluid>
