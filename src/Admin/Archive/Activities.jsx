@@ -27,7 +27,7 @@ export default class AdminArchiveActivitiesPage extends React.Component {
     }
 
     componentDidMount() {
-        this.getData();
+        // this.getData();
     }
 
     getData = async () => {
