@@ -21,45 +21,44 @@ class AnalystMapPage extends React.Component {
                 });
 
                 const layer6 = new FeatureLayer({
-                    url: config.arcGisMapServerUrl + "/6",
+                    url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer/6",
                     title: 'Воздушный транспорт: на 2018 год, %',
                     popupTemplate: ProjectsTemplate
                 });
 
                 const layer5 = new FeatureLayer({
-                    url: config.arcGisMapServerUrl + "/5",
+                    url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer/5",
                     title: 'Морской транспорт: на 2018 год, %',
                     popupTemplate: ProjectsTemplate
                 });
 
                 const layer4 = new FeatureLayer({
-                    url: config.arcGisMapServerUrl + "/4",
+                    url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer/4",
                     title: 'Внутренний водный транспорт: на 2018 год, %',
                     popupTemplate: ProjectsTemplate
                 });
 
                 const layer3 = new FeatureLayer({
-                    url: config.arcGisMapServerUrl + "/3",
+                    url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer/3",
                     title: 'Дорожное хозяйство: на 2018 год, %',
                     popupTemplate: ProjectsTemplate
                 });
 
                 const layer2 = new FeatureLayer({
-                    url: config.arcGisMapServerUrl + "/2",
+                    url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer/2",
                     title: 'Железнодорожный транспорт: на 2018 год, %',
                     popupTemplate: ProjectsTemplate
                 });
 
                 const layer1 = new FeatureLayer({
-                    url: config.arcGisMapServerUrl + "/1",
+                    url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer/1",
                     title: 'Крупные комплексные проекты: на 2018 год, %',
                     popupTemplate: ProjectsTemplate
                 });
 
                 const map = new ArcGISMap({
                     layers: [
-                        titles,
-                        layer6, layer5, layer5, layer4, layer3, layer2, layer1,
+                        titles, layer6, layer5, layer5, layer4, layer3, layer2, layer1
                     ],
                 });
 
