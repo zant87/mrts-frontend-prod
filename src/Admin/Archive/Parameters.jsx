@@ -1,9 +1,14 @@
 import React from 'react';
-import {MDBBreadcrumb, MDBBreadcrumbItem, MDBContainer, MDBRow, MDBSelect, MBBBtn} from "mdbreact";
+import { connect } from "react-redux";
+import { getParameterValues } from "@/_reducers/archive-reducer";
+import { withRouter } from "react-router-dom";
+import { compose } from "redux";
+
+import {MDBBreadcrumb, MDBBreadcrumbItem, MDBContainer, MDBCol, MDBRow, MDBSelect, MDBBtn} from "mdbreact";
 import TableContainer from "./common/TableContainer";
 import appAxios from "../../_services/appAxios";
 
-export default class AdminArchiveParametersPage extends React.Component {
+class AdminArchiveParametersPage extends React.Component {
 
       constructor(props) {
         super(props);
@@ -28,13 +33,16 @@ export default class AdminArchiveParametersPage extends React.Component {
                 quarterList: [],
 
             }
-        this.filterData = this.filterData.bind(this);
+        // this.filterData = this.filterData.bind(this);
+        this.getParameterData = this.getParameterData.bind(this);
         this.getData = this.getData.bind(this);
         this.onReset = this.onReset.bind(this);
     }
 
     componentDidMount() {
-        this.getData();
+        // this.getData();
+        this.getParameterData();
+
         this.getTransportTypeList();
         this.getDataProviderList();
         this.getParameterList();
@@ -43,8 +51,28 @@ export default class AdminArchiveParametersPage extends React.Component {
         this.getDataYearList();
     }
 
-    filterData = async () => {
+    componentDidUpdate(prevProps) {
 
+        if (this.props.parameterVals !== prevProps.parameterVals) {
+            if (this.props.parameterVals) {
+                // console.log(" parameterVals ---> %j", this.props.parameterVals)
+                const { parameterVals } = this.props;
+                this.setState({
+                   data: parameterVals,
+                });
+            }
+        }
+    }
+
+
+    getParameterData = () => {
+        const { transportTypeId, dataProviderId, okudId, parameterId, year, quarterId, fields } = this.state;
+        this.props.getParameterValues(transportTypeId, dataProviderId, okudId, parameterId, year, quarterId);
+    }
+
+    /* filterData = async () => {
+
+        const { transportTypeId, dataProviderId, okudId, parameterId, year, quarterId } = this.state;
         this.setState({isLoading: true});
         appAxios.get(`/views/i-1-s?transportTypeId.equals=` + transportTypeId + 
                                           `&dataProviderId.equals=` + dataProviderId + 
@@ -58,7 +86,7 @@ export default class AdminArchiveParametersPage extends React.Component {
                 const data = res.data;
                 this.setState({data: data, isLoading: false, count: count});
             });
-    };
+    }; */
 
     getTransportTypeList = () => {
         this.setState({ isLoading: true });
@@ -195,6 +223,7 @@ export default class AdminArchiveParametersPage extends React.Component {
        this.getOkudList();
        this.getQuarterList();
        this.getDataYearList();
+       
     }
 
         /* year": 2017,
@@ -229,7 +258,8 @@ export default class AdminArchiveParametersPage extends React.Component {
             {field: 'value', title: 'Значение показателя', filtering: true, editable: 'never' },
         ];
 
-        const { data, isLoading } = this.state;
+        const { isFetchingParameterData } = this.props;
+        // console.log("parameterVals: %j", parameterVals );
 
     return (
         <MDBContainer fluid>
@@ -269,7 +299,7 @@ export default class AdminArchiveParametersPage extends React.Component {
                         </MDBSelect>
                     </MDBCol>
                     <MDBCol md="3" className="mb-3">
-                        <MDBBtn color="primary" type="none" onClick={this.filterData}>Получить данные</MDBBtn>
+                        <MDBBtn color="primary" type="none" onClick={this.getParameterData}>Получить данные</MDBBtn>
                     </MDBCol>
                 </MDBRow>
                 <MDBRow around={true}>
@@ -305,10 +335,21 @@ export default class AdminArchiveParametersPage extends React.Component {
                     </MDBCol>
                 </MDBRow>
             <MDBRow>
-               <TableContainer data={this.state.data} isLoading={this.state.isLoading} columns={columns} title={"Архив показателей для расчета индикаторов ТС"}/> 
+               <TableContainer data={this.state.data} isLoading={isFetchingParameterData} columns={columns} title={"Архив показателей для расчета индикаторов ТС"}/> 
             </MDBRow>
         </MDBContainer>
     );
   }
+}
+
+let mapStateToProps = (state) => {
+  return {
+    parameterVals: state.archivePage.parameterVals,
+    isFetchingParameterData: state.archivePage.isFetchingParameterData,
+  };
 };
+
+export default compose(connect(mapStateToProps, {
+                                getParameterValues,
+                              }), withRouter )(AdminArchiveParametersPage);
 
