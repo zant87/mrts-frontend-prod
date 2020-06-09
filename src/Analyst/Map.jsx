@@ -19,17 +19,20 @@ class AnalystMapPage extends React.Component {
     }
 
     componentDidMount() {
-        loadModules(['esri/Map', 'esri/views/MapView', 'esri/layers/FeatureLayer', 'esri/layers/MapImageLayer', 'esri/widgets/Legend', 'esri/widgets/LayerList'], {css: true})
-            .then(([ArcGISMap, MapView, FeatureLayer, MapImageLayer, Legend, LayerList]) => {
+        loadModules([
+            'esri/Map', 'esri/views/MapView',
+            'esri/layers/MapImageLayer', 'esri/widgets/LayerList'
+        ], {css: true})
+            .then(([ArcGISMap, MapView, MapImageLayer, LayerList]) => {
 
                 const base = new MapImageLayer({
                     url: "https://agoracle.asutk.ru/arcgis/rest/services/TS_projects/MapServer",
                     title: 'МРТС',
                     sublayers:
                         [
-                            {id: 32, title: 'Страны'},
-                            {id: 31, title: 'Регионы'},
-                            {id: 30, title: 'Федеральные округа'},
+                            {id: 32, title: 'Страны', outFields: ["*"],},
+                            {id: 31, title: 'Регионы', outFields: ["*"],},
+                            {id: 30, title: 'Федеральные округа', outFields: ["*"],},
                             {id: 29, title: 'Границы'},
                             {id: 28, title: 'Центры регионов'},
                             {id: 27, title: 'Столица'},
@@ -129,16 +132,6 @@ class AnalystMapPage extends React.Component {
                     zoom: 12,
                 });
 
-                // const legend = new Legend({
-                //     view: view,
-                //     // layerInfos: [
-                //     //     {
-                //     //         // layer: [layer6, layer5, layer5, layer4, layer3, layer2, layer1],
-                //     //         title: "МРТС"
-                //     //     }
-                //     // ]
-                // });
-
                 view.when(function () {
                     const layerList = new LayerList({
                         view: view,
@@ -166,8 +159,9 @@ class AnalystMapPage extends React.Component {
 
     render() {
         return (
-            <div className="webmap my-5" ref={this.mapRef}/>
-
+            <React.Fragment>
+                <div className="webmap my-5" ref={this.mapRef}/>
+            </React.Fragment>
         );
     }
 }

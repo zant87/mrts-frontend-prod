@@ -194,106 +194,122 @@ class App extends React.Component {
                           expand="md"
                           fixed="top"
                           scrolling>
-                      <MDBNavbarBrand className="py-0">
-                        <img src={MintransLogo} style={{width: "45px", marginRight: "10px"}} alt=""/>
-                        <strong className="white-text">МРТС РФ</strong>
-                      </MDBNavbarBrand>
-                        <MDBNavbarToggler onClick={this.toggleCollapse("navbarCollapse")}/>
-                      <MDBCollapse id="navbarCollapse" isOpen={collapseID} navbar>
-                        <MDBNavbarNav right>
-                          <MDBNavItem>
-                            <MDBNavLink exact to="/" onClick={this.closeCollapse("navbarCollapse")}>
-                              <strong>Главная</strong>
-                            </MDBNavLink>
-                          </MDBNavItem>
+                        <MDBNavbarBrand>
+                          <img src={MintransLogo} className='logo'
+                              // style={{width: "45px", marginRight: "10px"}}
+                               alt=""/>
                           {isAdmin && (
+                              <strong className='custom-font ml-2'>Мониторинг реализации транспортной стратегии РФ (АРМ
+                                Администратора)</strong>
+                          )}
+                          {isOperator && (
+                              <strong className='custom-font ml-2'>Мониторинг реализации транспортной стратегии РФ (АРМ
+                                Оператора)</strong>
+                          )}
+                          {isAnalyst && (
+                              <strong className='custom-font ml-2'>Мониторинг реализации транспортной стратегии РФ (АРМ
+                                Аналитика)</strong>
+                          )}
+                          {/*<footer className='blockquote-footer mb-0'></footer>*/}
+                          {/*<p className="font-weight-lighter">Lighter weight text (relative to the parent element).</p>*/}
+                          {/*<strong className="white-text">МРТС РФ</strong>*/}
+                        </MDBNavbarBrand>
+                        <MDBNavbarToggler onClick={this.toggleCollapse("navbarCollapse")}/>
+                        <MDBCollapse id="navbarCollapse" isOpen={collapseID} navbar>
+                          <MDBNavbarNav right>
+                            <MDBNavItem>
+                              <MDBNavLink exact to="/" onClick={this.closeCollapse("navbarCollapse")}>
+                                <strong className='custom-font'>Главная</strong>
+                              </MDBNavLink>
+                            </MDBNavItem>
+                            {isAdmin && (
                             <MDBNavItem>
                               <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/admin/structure">
-                                <strong>Структура</strong>
+                                <strong className='custom-font'>Структура</strong>
                               </MDBNavLink>
                             </MDBNavItem>
                           )}
                           {isAdmin && (
                             <MDBNavItem>
                               <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/admin/control">
-                                <strong>Контроль</strong>
+                                <strong className='custom-font'>Контроль</strong>
                               </MDBNavLink>
                             </MDBNavItem>
                           )}
                           {isAdmin && (
                             <MDBNavItem>
                               <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/admin/loading">
-                                <strong>Загрузка</strong>
+                                <strong className='custom-font'>Загрузка</strong>
                               </MDBNavLink>
                             </MDBNavItem>
                           )}
                           {isAdmin && (
                             <MDBNavItem>
                               <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/admin/archive">
-                                <strong>Архив</strong>
+                                <strong className='custom-font'>Архив</strong>
                               </MDBNavLink>
                             </MDBNavItem>
                           )}
                           {isAnalyst && (
                             <MDBNavItem>
                               <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/analyst/parameters">
-                                <strong>Показатели</strong>
+                                <strong className='custom-font'>Показатели</strong>
                               </MDBNavLink>
                             </MDBNavItem>
                           )}
                           {isAnalyst && (
                             <MDBNavItem>
                               <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/analyst/indicators">
-                                <strong>Индикаторы</strong>
+                                <strong className='custom-font'>Индикаторы</strong>
                               </MDBNavLink>
                             </MDBNavItem>
                           )}
                           {isAnalyst && (
                             <MDBNavItem>
                               <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/analyst/levels">
-                                <strong>Уровни достижения</strong>
+                                <strong className='custom-font'>Уровни достижения</strong>
                               </MDBNavLink>
                             </MDBNavItem>
                           )}
                           {isAnalyst && (
                             <MDBNavItem>
                               <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/analyst/dynamics">
-                                <strong>Динамика уровней достижения</strong>
+                                <strong className='custom-font'>Динамика уровней достижения</strong>
                               </MDBNavLink>
                             </MDBNavItem>
                           )}
                           {isAnalyst && (
                             <MDBNavItem>
                               <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/analyst/report">
-                                <strong>Отчет перед правительством</strong>
+                                <strong className='custom-font'>Отчет перед правительством</strong>
                               </MDBNavLink>
                             </MDBNavItem>
                           )}
                           {isAnalyst && (
                             <MDBNavItem>
                               <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/analyst/map">
-                                <strong>Карта мероприятий</strong>
+                                <strong className='custom-font'>Карта мероприятий</strong>
                               </MDBNavLink>
                             </MDBNavItem>
                           )}
                           {isOperator && (
                             <MDBNavItem>
                               <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/operator/plan">
-                                <strong>Плановые показатели</strong>
+                                <strong className='custom-font'>Плановые показатели</strong>
                               </MDBNavLink>
                             </MDBNavItem>
                           )}
                           {isOperator && (
                             <MDBNavItem>
                               <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/operator/control">
-                                <strong>Контроль</strong>
+                                <strong className='custom-font'>Контроль</strong>
                               </MDBNavLink>
                             </MDBNavItem>
                           )}
                           {isOperator && (
                             <MDBNavItem>
                               <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/operator/report">
-                                <strong>Отчетные показатели</strong>
+                                <strong className='custom-font'>Отчетные показатели</strong>
                               </MDBNavLink>
                             </MDBNavItem>
                           )}
@@ -301,7 +317,7 @@ class App extends React.Component {
                           {isOperator && (
                             <MDBNavItem>
                               <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/operator/calculation">
-                                <strong>Расчеты</strong>
+                                <strong className='custom-font'>Расчеты</strong>
                               </MDBNavLink>
                             </MDBNavItem>
                           )}
@@ -309,7 +325,7 @@ class App extends React.Component {
                           {isDevMode && (
                           <MDBNavItem>
                             <MDBNavLink onClick={this.closeCollapse("navbarCollapse")} to="/swagger">
-                              <strong>Swagger</strong>
+                              <strong className='custom-font'>Swagger</strong>
                             </MDBNavLink>
                           </MDBNavItem>
                           )}
@@ -343,7 +359,7 @@ class App extends React.Component {
                           {isDevMode && (
                           <MDBNavItem>
                             <a className="nav-link" href="#">
-                              <strong>Выход</strong>
+                              <strong className='custom-font'>Выход</strong>
                             </a>
                           </MDBNavItem>
                           )}
@@ -351,7 +367,7 @@ class App extends React.Component {
                           {!isDevMode && (
                               <MDBNavItem>
                                 <a className="nav-link" href="https://mrts-test.asutk.ru/logout">
-                                  <strong>Выход</strong>
+                                  <strong className='custom-font'>Выход</strong>
                                 </a>
                               </MDBNavItem>
                           )}

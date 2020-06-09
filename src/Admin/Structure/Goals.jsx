@@ -48,7 +48,7 @@ export default class AdminGoalsPage extends React.Component {
         return (
             <MDBContainer fluid>
                 <MDBRow center>
-                    <MDBCol md={'12'} className='my-5 mx-auto'>
+                    <MDBCol md={'12'} className='my-2 mx-auto'>
                         <MaterialTable
                             title="Дерево целей и задач"
                             columns={columns}

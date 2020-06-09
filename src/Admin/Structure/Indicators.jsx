@@ -50,7 +50,7 @@ export default class AdminIndicatorsPage extends React.Component {
         return (
             <MDBContainer fluid>
                 <MDBRow center>
-                    <MDBCol md={'12'} className='my-5 mx-auto'>
+                    <MDBCol md={'12'} className='my-2 mx-auto'>
                         <MaterialTable
                             title="Индикаторы по целям ТС"
                             columns={columns}

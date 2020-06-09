@@ -1,14 +1,23 @@
 body {
-  /* background-color: #edeef0; */
+    /* background-color: #edeef0; */
+}
+
+.custom-font {
+    font-size: 14px;
+}
+
+.slogan {
+    margin-left: 2.5rem;
 }
 
 .logo {
-  height: 2.5rem;
-  width: 2.5rem;
+    height: 2.5rem;
+    width: 2.5rem;
 }
 
 .mrts-nav {
     height: 2.5rem;
+    margin-bottom: 4rem;
 }
 
 .app {

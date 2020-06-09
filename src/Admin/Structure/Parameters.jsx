@@ -8,7 +8,7 @@ export default class AdminParametersPage extends React.Component {
         return (
             <MDBContainer fluid>
                 <MDBRow center>
-                    <MDBCol md={'12'} className='my-5 mx-auto'>
+                    <MDBCol md={'12'} className='my-2 mx-auto'>
                         <h1>Показатели для расчета индикаторов ТС</h1>
 
                     </MDBCol>
