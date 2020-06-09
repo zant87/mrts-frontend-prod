@@ -8,24 +8,29 @@ body {
 }
 
 .mrts-nav {
-  height: 2.5rem;
+    height: 2.5rem;
 }
 
 .app {
-  /* background-color: #edeef0; */
-  margin: 0px;
+    /* background-color: #edeef0; */
+    margin: 0px;
 }
 
-.dx-datagrid-text-content{
-  font-weight:bold;
-  font-style:normal;
-  color: #FFFFFF;
+.webmap {
+    height: 810px;
+    width: 100%;
 }
 
-.dx-pivotgrid-vertical-headers span {  
-    color: black; 
+.dx-datagrid-text-content {
+    font-weight: bold;
+    font-style: normal;
+    color: #FFFFFF;
+}
+
+.dx-pivotgrid-vertical-headers span {
+    color: black;
     /* font-weight: bold; */
-    font-style: normal; 
+    font-style: normal;
 }
 
 /* dx-pivotgrid-vertical-headers {
