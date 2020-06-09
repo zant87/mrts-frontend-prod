@@ -15,7 +15,7 @@ class AnalystMapPage extends React.Component {
             .then(([ArcGISMap, MapView, FeatureLayer, MapImageLayer, LayerList]) => {
 
                 const titles = new MapImageLayer({
-                    url: config.arcGisMapServerUrl,
+                    url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer",
                     title: 'Картооснова',
                     sublayers: [{id: 32}, {id: 31}, {id: 30}, {id: 29}, {id: 28}, {id: 27}]
                 });
