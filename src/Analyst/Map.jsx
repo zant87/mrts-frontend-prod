@@ -23,7 +23,7 @@ class AnalystMapPage extends React.Component {
             .then(([ArcGISMap, MapView, FeatureLayer, MapImageLayer, Legend, LayerList]) => {
 
                 const base = new MapImageLayer({
-                    url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer",
+                    url: "https://agoracle.asutk.ru/arcgis/rest/services/TS_projects/MapServer",
                     title: 'МРТС',
                     sublayers:
                         [
@@ -115,60 +115,10 @@ class AnalystMapPage extends React.Component {
                             },
                         ]
                 });
-                //
-                // const layer32 = new FeatureLayer({
-                //     url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer/32",
-                //     title: 'Страны',
-                //     // popupTemplate: ProjectsTemplate
-                // });
-                //
-                // const layer31 = new FeatureLayer({
-                //     url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer/31",
-                //     title: 'Регионы РФ',
-                //     // popupTemplate: ProjectsTemplate
-                // });
-                //
-                //
-                // const layer6 = new FeatureLayer({
-                //     url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer/6",
-                //     title: 'Воздушный транспорт: на 2018 год, %',
-                //     popupTemplate: ProjectsTemplate
-                // });
-                //
-                // const layer5 = new FeatureLayer({
-                //     url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer/5",
-                //     title: 'Морской транспорт: на 2018 год, %',
-                //     popupTemplate: ProjectsTemplate
-                // });
-                //
-                // const layer4 = new FeatureLayer({
-                //     url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer/4",
-                //     title: 'Внутренний водный транспорт: на 2018 год, %',
-                //     popupTemplate: ProjectsTemplate
-                // });
-                //
-                // const layer3 = new FeatureLayer({
-                //     url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer/3",
-                //     title: 'Дорожное хозяйство: на 2018 год, %',
-                //     popupTemplate: ProjectsTemplate
-                // });
-                //
-                // const layer2 = new FeatureLayer({
-                //     url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer/2",
-                //     title: 'Железнодорожный транспорт: на 2018 год, %',
-                //     popupTemplate: ProjectsTemplate
-                // });
-                //
-                // const layer1 = new FeatureLayer({
-                //     url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer/1",
-                //     title: 'Крупные комплексные проекты: на 2018 год, %',
-                //     popupTemplate: ProjectsTemplate
-                // });
 
                 const map = new ArcGISMap({
                     layers: [
                         base
-                        //layer32, layer31, layer6, layer5, layer4, layer3, layer2, layer1
                     ],
                 });
 
