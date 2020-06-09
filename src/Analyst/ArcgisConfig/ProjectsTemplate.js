@@ -5,6 +5,10 @@ export const ProjectsTemplate = {
             type: 'fields',
             fieldInfos: [
                 {
+                    fieldName: 'NAME',
+                    label: 'Название проекта'
+                },
+                {
                     fieldName: 'PERCENT_READY',
                     label: 'Уровень технической готовности к 31.12.2018 г.',
                 },
@@ -32,6 +36,10 @@ export const ProjectsTemplate = {
                     fieldName: 'PROJECT_TYPE',
                     label: 'Тип проекта'
                 },
+                {
+                    fieldName: 'WORK_STAGE',
+                    label: 'Этапы'
+                }
             ]
         }
     ]

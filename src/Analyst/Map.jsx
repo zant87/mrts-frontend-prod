@@ -1,7 +1,15 @@
 import React from 'react';
 import {loadModules} from 'esri-loader';
 import config from 'config';
-import {ProjectsTemplate} from "./ArcgisConfig/PopupConfigs";
+import {
+    AirportTemplate,
+    ProjectsTemplate,
+    RailRoadsTemplate,
+    RiverPortsTemplate,
+    RiversTemplate,
+    RoadsTemplate,
+    SeaPortsTemplate
+} from "./ArcgisConfig";
 
 class AnalystMapPage extends React.Component {
 
@@ -14,56 +22,153 @@ class AnalystMapPage extends React.Component {
         loadModules(['esri/Map', 'esri/views/MapView', 'esri/layers/FeatureLayer', 'esri/layers/MapImageLayer', 'esri/widgets/Legend', 'esri/widgets/LayerList'], {css: true})
             .then(([ArcGISMap, MapView, FeatureLayer, MapImageLayer, Legend, LayerList]) => {
 
-                const titles = new MapImageLayer({
+                const base = new MapImageLayer({
                     url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer",
-                    title: 'Картооснова',
+                    title: 'МРТС',
                     sublayers:
                         [
-                            {id: 32, title: 'Страны'}, {id: 31, title: 'Регионы РФ'},
-                            {id: 30, title: 'Федеральные округа РФ'}, {id: 29, title: 'Границы РФ'},
-                            {id: 28, title: 'Центры регионов РФ'}, {id: 27, title: 'Столица РФ'}
+                            {id: 32, title: 'Страны'},
+                            {id: 31, title: 'Регионы'},
+                            {id: 30, title: 'Федеральные округа'},
+                            {id: 29, title: 'Границы'},
+                            {id: 28, title: 'Центры регионов'},
+                            {id: 27, title: 'Столица'},
+                            {id: 25, title: 'Водные пути', visible: false, popupTemplate: RiversTemplate},
+                            {id: 24, title: 'Речные порты', visible: false, popupTemplate: RiverPortsTemplate},
+                            {id: 22, title: 'Железные дороги', visible: false, popupTemplate: RailRoadsTemplate},
+                            {id: 21, title: 'Автомобильные дороги', visible: false, popupTemplate: RoadsTemplate},
+                            {id: 20, title: 'Морские порты', visible: false, popupTemplate: SeaPortsTemplate},
+                            {id: 19, title: 'Аэропорты', visible: false, popupTemplate: AirportTemplate},
+                            {id: 17, title: 'Воздушный транспорт', visible: false, popupTemplate: ProjectsTemplate},
+                            {id: 16, title: 'Морской транспорт', visible: false, popupTemplate: ProjectsTemplate},
+                            {
+                                id: 15,
+                                title: 'Внутренний водный транспорт',
+                                visible: false,
+                                popupTemplate: ProjectsTemplate
+                            },
+                            {
+                                id: 14,
+                                title: 'Линейные объекты (Дорожное хозяйство)',
+                                visible: false,
+                                popupTemplate: ProjectsTemplate
+                            },
+                            {
+                                id: 13,
+                                title: 'Точечные объекты (Дорожное хозяйство)',
+                                visible: false,
+                                popupTemplate: ProjectsTemplate
+                            },
+                            {
+                                id: 11,
+                                title: 'Линейные объекты (Железнодорожный транспорт)',
+                                visible: false,
+                                popupTemplate: ProjectsTemplate
+                            },
+                            {
+                                id: 10,
+                                title: 'Точечные объекты (Железнодорожный транспорт)',
+                                visible: false,
+                                popupTemplate: ProjectsTemplate
+                            },
+                            {
+                                id: 8,
+                                title: 'Крупные комплексные проекты',
+                                visible: false,
+                                popupTemplate: ProjectsTemplate
+                            },
+                            {
+                                id: 6,
+                                title: 'Воздушный транспорт: на 2018 год, %',
+                                visible: true,
+                                popupTemplate: ProjectsTemplate
+                            },
+                            {
+                                id: 5,
+                                title: 'Морской транспорт: на 2018 год, %',
+                                visible: true,
+                                popupTemplate: ProjectsTemplate
+                            },
+                            {
+                                id: 4,
+                                title: 'Внутренний водный транспорт: на 2018 год, %',
+                                visible: true,
+                                popupTemplate: ProjectsTemplate
+                            },
+                            {
+                                id: 3,
+                                title: 'Дорожное хозяйство: на 2018 год, %',
+                                visible: true,
+                                popupTemplate: ProjectsTemplate
+                            },
+                            {
+                                id: 2,
+                                title: 'Железнодорожный транспорт: на 2018 год, %',
+                                visible: true,
+                                popupTemplate: ProjectsTemplate
+                            },
+                            {
+                                id: 1,
+                                title: 'Крупные комплексные проекты: на 2018 год, %',
+                                visible: true,
+                                popupTemplate: ProjectsTemplate
+                            },
                         ]
                 });
-
-                const layer6 = new FeatureLayer({
-                    url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer/6",
-                    title: 'Воздушный транспорт: на 2018 год, %',
-                    popupTemplate: ProjectsTemplate
-                });
-
-                const layer5 = new FeatureLayer({
-                    url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer/5",
-                    title: 'Морской транспорт: на 2018 год, %',
-                    popupTemplate: ProjectsTemplate
-                });
-
-                const layer4 = new FeatureLayer({
-                    url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer/4",
-                    title: 'Внутренний водный транспорт: на 2018 год, %',
-                    popupTemplate: ProjectsTemplate
-                });
-
-                const layer3 = new FeatureLayer({
-                    url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer/3",
-                    title: 'Дорожное хозяйство: на 2018 год, %',
-                    popupTemplate: ProjectsTemplate
-                });
-
-                const layer2 = new FeatureLayer({
-                    url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer/2",
-                    title: 'Железнодорожный транспорт: на 2018 год, %',
-                    popupTemplate: ProjectsTemplate
-                });
-
-                const layer1 = new FeatureLayer({
-                    url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer/1",
-                    title: 'Крупные комплексные проекты: на 2018 год, %',
-                    popupTemplate: ProjectsTemplate
-                });
+                //
+                // const layer32 = new FeatureLayer({
+                //     url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer/32",
+                //     title: 'Страны',
+                //     // popupTemplate: ProjectsTemplate
+                // });
+                //
+                // const layer31 = new FeatureLayer({
+                //     url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer/31",
+                //     title: 'Регионы РФ',
+                //     // popupTemplate: ProjectsTemplate
+                // });
+                //
+                //
+                // const layer6 = new FeatureLayer({
+                //     url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer/6",
+                //     title: 'Воздушный транспорт: на 2018 год, %',
+                //     popupTemplate: ProjectsTemplate
+                // });
+                //
+                // const layer5 = new FeatureLayer({
+                //     url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer/5",
+                //     title: 'Морской транспорт: на 2018 год, %',
+                //     popupTemplate: ProjectsTemplate
+                // });
+                //
+                // const layer4 = new FeatureLayer({
+                //     url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer/4",
+                //     title: 'Внутренний водный транспорт: на 2018 год, %',
+                //     popupTemplate: ProjectsTemplate
+                // });
+                //
+                // const layer3 = new FeatureLayer({
+                //     url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer/3",
+                //     title: 'Дорожное хозяйство: на 2018 год, %',
+                //     popupTemplate: ProjectsTemplate
+                // });
+                //
+                // const layer2 = new FeatureLayer({
+                //     url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer/2",
+                //     title: 'Железнодорожный транспорт: на 2018 год, %',
+                //     popupTemplate: ProjectsTemplate
+                // });
+                //
+                // const layer1 = new FeatureLayer({
+                //     url: "http://srvdev.geogracom.com:6080/arcgis/rest/services/TS_projects/MapServer/1",
+                //     title: 'Крупные комплексные проекты: на 2018 год, %',
+                //     popupTemplate: ProjectsTemplate
+                // });
 
                 const map = new ArcGISMap({
                     layers: [
-                        titles, layer6, layer5, layer5, layer4, layer3, layer2, layer1
+                        base
+                        //layer32, layer31, layer6, layer5, layer4, layer3, layer2, layer1
                     ],
                 });
 
@@ -98,7 +203,7 @@ class AnalystMapPage extends React.Component {
                         }
                     });
 
-                    view.ui.add(layerList, "top-right");
+                    view.ui.add(layerList, "bottom-right");
                 });
             });
     }
