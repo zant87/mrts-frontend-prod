@@ -10,11 +10,120 @@ export default class AdminArchiveParametersPage extends React.Component {
         count: 0,
         data: [],
         isLoading: false,
+
+        transportTypeId: '',
+        dataProviderId: '',
+        okudId: '',
+        parameterId: '',
+        year: '',
+        quarterId: '',
+
+        transportTypeList: [],
+        dataProviderList: [], 
+        okudList: [],         
+        parameterList: [], 
+        yearList: [],  
+        quarterList: [],
+
     }
 
     componentDidMount() {
-        this.getData();
+        // this.getData();
+        this.getTransportTypeList();
+        this.getDataProviderList();
+        this.getParameterList();
+        this.getOkudList();
+        this.getQuarterList();
+        this.getDataYearList();
     }
+
+    filterData = async () => {
+        this.setState({isLoading: true});
+        appAxios.get(`/views/i-1-s-all`)
+            .then(res => {
+                console.log(res);
+                const count = Number(res.headers['x-total-count']);
+                const data = res.data;
+                this.setState({data: data, isLoading: false, count: count});
+            });
+    };
+
+    getTransportTypeList = () => {
+        this.setState({ isLoading: true });
+        appAxios.get(`/nsi-transport-types`)
+            .then(res => {
+                let selected;
+                const data = res.data.map(item => {
+                        return {value: item.code, text: item.year, checked: false};
+                })
+                this.setState({transportTypeList: data, isLoading: false});
+            })
+    };
+
+    getDataProviderList = () => {
+        this.setState({ isLoading: true });
+        appAxios.get(`/nsi-data-providers`)
+            .then(res => {
+                let selected;
+                const data = res.data.map(item => {
+                        return {value: item.code, text: item.year, checked: false};
+                })
+                this.setState({dataProviderList: data, isLoading: false});
+            })
+    };
+
+    getParameterList = () => {
+        this.setState({ isLoading: true });
+        appAxios.get(`/parameters`)
+            .then(res => {
+                let selected;
+                const data = res.data.map(item => {
+                        return {value: item.code, text: item.year, checked: false};
+                })
+                this.setState({parameterList: data, isLoading: false});
+            })
+    };
+
+    getOkudList = () => {
+        this.setState({ isLoading: true });
+        appAxios.get(`/nsi-okuds`)
+            .then(res => {
+                let selected;
+                const data = res.data.map(item => {
+                        return {value: item.code, text: item.year, checked: false};
+                })
+                this.setState({okudList: data, isLoading: false});
+            })
+    };
+
+    getQuarterList = () => {
+        this.setState({ isLoading: true });
+        appAxios.get(`/nsi-quarters`)
+            .then(res => {
+                let selected;
+                const data = res.data.map(item => {
+                        return {value: item.code, text: item.year, checked: false};
+                })
+                this.setState({quarterList: data, isLoading: false});
+            })
+    };
+
+    handleChange = e => {
+        console.log(" id es: " + e)
+        const val = e.toString();
+    }
+
+    getDataYearList = () => {
+        this.setState({ isLoading: true });
+        appAxios.get(`/nsi-years`)
+            .then(res => {
+                let selected;
+                const data = res.data.map(item => {
+                        return {value: item.code, text: item.year, checked: false};
+                })
+                this.setState({yearList: data, isLoading: false});
+            })
+    };
 
     getData = async () => {
         this.setState({isLoading: true});
@@ -26,6 +135,19 @@ export default class AdminArchiveParametersPage extends React.Component {
                 this.setState({data: data, isLoading: false, count: count});
             });
     };
+
+    onReset = () => {
+
+       this.setState({
+            transportTypeId: '',
+            dataProviderId: '',
+            okudId: '',
+            parameterId: '',
+            year: '',
+            quarterId: ''
+       });
+
+    }
 
 
         /* year": 2017,
@@ -70,6 +192,80 @@ export default class AdminArchiveParametersPage extends React.Component {
                     <MDBBreadcrumbItem>Архив</MDBBreadcrumbItem>
                     <MDBBreadcrumbItem active>Архив показателей для расчета индикаторов ТС</MDBBreadcrumbItem>
                 </MDBBreadcrumb>
+            </MDBRow>
+            <MDBRow>
+                <MDBCol md="12" className="mb-3">
+                    <MDBSelect searchId={'transportTypeId'}
+                               label="Вид транспорта"
+                               search={true}
+                               searchLabel={'Поиск'}
+                               options={this.state.transportTypeList}
+                               getValue={this.handleChange}>
+                    </MDBSelect>
+                </MDBCol>
+            </MDBRow>
+            <MDBRow>
+                <MDBCol md="12" className="mb-3">
+                    <MDBSelect searchId={'dataProviderId'}
+                               label="Источник данных"
+                               search={true}
+                               searchLabel={'Поиск'}
+                               options={this.state.dataProviderList}
+                               getValue={this.handleChange}>
+                    </MDBSelect>
+                </MDBCol>
+            </MDBRow>
+            <MDBRow>
+                <MDBCol md="12" className="mb-3">
+                    <MDBSelect searchId={'okudId'}
+                               label="ОКУД"
+                               search={true}
+                               searchLabel={'Поиск'}
+                               options={this.state.okudList}
+                               getValue={this.handleChange}>
+                    </MDBSelect>
+                </MDBCol>
+            </MDBRow>
+            <MDBRow>
+                <MDBCol md="12" className="mb-3">
+                    <MDBSelect searchId={'parameterId'}
+                               label="Показатель"
+                               search={true}
+                               searchLabel={'Поиск'}
+                               options={this.state.parameterList}
+                               getValue={this.handleChange}>
+                    </MDBSelect>
+                </MDBCol>
+            </MDBRow>
+            <MDBRow>
+                <MDBCol md="12" className="mb-3">
+                    <MDBSelect searchId={'year'}
+                               label="Отчетный год"
+                               search={true}
+                               searchLabel={'Поиск'}
+                               options={this.state.yearList}
+                               getValue={this.handleChange}>
+                    </MDBSelect>
+                </MDBCol>
+            </MDBRow>
+            <MDBRow>
+                <MDBCol md="12" className="mb-3">
+                    <MDBSelect searchId={'quarterId'}
+                               label="Отчетный квартал"
+                               search={true}
+                               searchLabel={'Поиск'}
+                               options={this.state.quarterList}
+                               getValue={this.handleChange}>
+                    </MDBSelect>
+                </MDBCol>
+            </MDBRow> 
+            <MDBRow around={true}>
+                <MDBBtn color="primary" type="none" onClick={this.filterData}>
+                    Получить данные
+                </MDBBtn>
+                <MDBBtn color="primary" type="none" onClick={this.onReset}>
+                    Oчистить фильтры
+                </MDBBtn>
             </MDBRow>
             <MDBRow>
                <TableContainer data={this.state.data} isLoading={this.state.isLoading} columns={columns} title={"Архив показателей для расчета индикаторов ТС"}/> 

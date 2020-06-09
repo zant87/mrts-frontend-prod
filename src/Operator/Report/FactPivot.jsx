@@ -11,19 +11,20 @@ import {MDBCol, MDBContainer, MDBRow, MDBSpinner, MDBSelect, MDBBtn} from "mdbre
 import appAxios from "../../_services/appAxios";
 
 export default class OperatorReportFactPivotPage extends React.Component {
-    static fields = [{
+
+    constructor(props) {
+        super(props);
+        this.state = {
+                    fields: [{
                             dataField: 'id',
                             visible: false
-                        },
-                        {
+                        }, {
                             dataField: 'dataProviderName',
                             visible: false
-                        },
-                        {
+                        },{
                             dataField: 'transportTypeCode',
                             visible: false
-                        },
-                        {
+                        },{
                             dataField: 'formCode',
                             visible: false
                         },
@@ -137,27 +138,27 @@ export default class OperatorReportFactPivotPage extends React.Component {
                             dataType: 'number',
                             summaryType: 'sum',
                             area: 'data'
-                        }];
-    state = {
-        isLoading: true,
-        dataSource: {},
+                        }],
+                    isLoading: true,
+                    dataSource: {},
 
-        transportTypeId: '',
-        dataProviderId: '',
-        okudId: '',
-        parameterId: '',
-        year: '',
-        quarterId: '',
+                    transportTypeId: '',
+                    dataProviderId: '',
+                    okudId: '',
+                    parameterId: '',
+                    year: '',
+                    quarterId: '',
 
-        transportTypeList: [], // v
+                    transportTypeList: [],
+                    dataProviderList: [], 
+                    okudList: [],         
+                    parameterList: [],   
+                    yearList: [],         
+                    quarterList: [], 
+                };
+        this.filterData = this.filterData.bind(this);
 
-        dataProviderList: [], // v
-        okudList: [],         // v
-        parameterList: [], // v
-        yearList: [],  // v
-        quarterList: [], // v
-
-    };
+    }
 
     componentDidMount() {
         // this.getData();
@@ -171,26 +172,26 @@ export default class OperatorReportFactPivotPage extends React.Component {
 
     filterData = () => {
         this.setState({isLoading: true});
-        appAxios.get(`/views/k-5-s`)
+
+        const { transportTypeId, dataProviderId, okudId, parameterId, year, quarterId, fields } = this.state;
+
+        appAxios.get(`/views/k-5-s?transportTypeId.equals=` + transportTypeId + 
+                                  `&dataProviderId.equals=` + dataProviderId + 
+                                  `&okudId.equals=` + okudId +
+                                  `&parameterId.equals=` + parameterId +
+                                  `&year.equals=` + year +
+                                  `&quarterId.equals=` + quarterId)
             .then(res => {
                 console.log(res);
                 const count = Number(res.headers['x-total-count']);
                 console.log('Всего от k5 получено ', count, ' записей');
                 const data = res.data;
                 this.setState({
-                    data: data, isLoading: false, dataSource:
-                        new PivotGridDataSource({ fields: this.fields, store: data })
+                    data: data, isLoading: false, 
+                    dataSource: new PivotGridDataSource({ fields: fields, store: data })
                 });
             });
     };
-
-    handleChange = e => {
-        console.log(" id es: " + e)
-        const val = e.toString();
-        /*this.setState((prevState) => ({
-            ...prevState, [e.element.searchId]: val,
-        }));*/
-    }
 
     getTransportTypeList = () => {
         this.setState({ isLoading: true });
@@ -198,7 +199,7 @@ export default class OperatorReportFactPivotPage extends React.Component {
             .then(res => {
                 let selected;
                 const data = res.data.map(item => {
-                        return {value: item.code, text: item.year, checked: false};
+                        return {value: item.id, text: item.name, checked: false};
                 })
                 this.setState({transportTypeList: data, isLoading: false});
             })
@@ -210,7 +211,7 @@ export default class OperatorReportFactPivotPage extends React.Component {
             .then(res => {
                 let selected;
                 const data = res.data.map(item => {
-                        return {value: item.code, text: item.year, checked: false};
+                        return {value: item.id, text: item.name, checked: false};
                 })
                 this.setState({dataProviderList: data, isLoading: false});
             })
@@ -222,7 +223,7 @@ export default class OperatorReportFactPivotPage extends React.Component {
             .then(res => {
                 let selected;
                 const data = res.data.map(item => {
-                        return {value: item.code, text: item.year, checked: false};
+                        return {value: item.id, text: item.name, checked: false};
                 })
                 this.setState({parameterList: data, isLoading: false});
             })
@@ -234,7 +235,7 @@ export default class OperatorReportFactPivotPage extends React.Component {
             .then(res => {
                 let selected;
                 const data = res.data.map(item => {
-                        return {value: item.code, text: item.year, checked: false};
+                        return {value: item.id, text: item.name, checked: false};
                 })
                 this.setState({okudList: data, isLoading: false});
             })
@@ -246,7 +247,7 @@ export default class OperatorReportFactPivotPage extends React.Component {
             .then(res => {
                 let selected;
                 const data = res.data.map(item => {
-                        return {value: item.code, text: item.year, checked: false};
+                        return {value: item.id, text: item.name, checked: false};
                 })
                 this.setState({quarterList: data, isLoading: false});
             })
@@ -258,13 +259,46 @@ export default class OperatorReportFactPivotPage extends React.Component {
             .then(res => {
                 let selected;
                 const data = res.data.map(item => {
-                        return {value: item.code, text: item.year, checked: false};
+                        return {value: item.year, text: item.year, checked: false};
                 })
                 this.setState({yearList: data, isLoading: false});
             })
     };
 
+    setTransportType = e => {
+        this.setState({
+            transportTypeId: e.toString()
+        });
+    }
+
+    setProvider = e => {
+        this.setState({
+            dataProviderId: e.toString()
+        });
+    }
+
+    setOkud = e => {
+        this.setState({
+            dataOkudId: e.toString()
+        });
+    }
+
+    setParameter = e => {
+        this.setState({
+            parameterId: e.toString()
+        });
+    }
     
+    setYear = e => {
+        this.setState({
+            year: e.toString()
+        });
+    }
+    setQuarter = e => {
+        this.setState({
+            quarterId: e.toString()
+        });
+    }
 
 
     getData = () => {
@@ -304,80 +338,69 @@ export default class OperatorReportFactPivotPage extends React.Component {
         return (
             <MDBContainer fluid>
                 <MDBRow>
-                    <MDBCol md="12" className="mb-3">
+                    <MDBCol md="3" className="mb-3">
                         <MDBSelect searchId={'transportTypeId'}
                                    label="Вид транспорта"
                                    search={true}
                                    searchLabel={'Поиск'}
                                    options={this.state.transportTypeList}
-                                   getValue={this.handleChange}>
+                                   getValue={this.setTransportType}>
                         </MDBSelect>
                     </MDBCol>
-                </MDBRow>
-                <MDBRow>
-                    <MDBCol md="12" className="mb-3">
+                    <MDBCol md="3" className="mb-3">
                         <MDBSelect searchId={'dataProviderId'}
                                    label="Источник данных"
                                    search={true}
                                    searchLabel={'Поиск'}
                                    options={this.state.dataProviderList}
-                                   getValue={this.handleChange}>
+                                   getValue={this.setProvider}>
                         </MDBSelect>
                     </MDBCol>
-                </MDBRow>
-                <MDBRow>
-                    <MDBCol md="12" className="mb-3">
+                    <MDBCol md="3" className="mb-3">
                         <MDBSelect searchId={'okudId'}
                                    label="ОКУД"
                                    search={true}
                                    searchLabel={'Поиск'}
                                    options={this.state.okudList}
-                                   getValue={this.handleChange}>
+                                   getValue={this.setOkud}>
                         </MDBSelect>
                     </MDBCol>
+                    <MDBCol md="3" className="mb-3">
+                        <MDBBtn color="primary" type="none" onClick={this.filterData}>Получить данные</MDBBtn>
+                    </MDBCol>
                 </MDBRow>
-                <MDBRow>
-                    <MDBCol md="12" className="mb-3">
+                <MDBRow around={true}>
+                    <MDBCol md="3" className="mb-3">
                         <MDBSelect searchId={'parameterId'}
                                    label="Показатель"
                                    search={true}
                                    searchLabel={'Поиск'}
                                    options={this.state.parameterList}
-                                   getValue={this.handleChange}>
+                                   getValue={this.setParameter}>
                         </MDBSelect>
                     </MDBCol>
-                </MDBRow>
-                <MDBRow>
-                    <MDBCol md="12" className="mb-3">
+                    <MDBCol md="3" className="mb-3">
                         <MDBSelect searchId={'year'}
                                    label="Отчетный год"
                                    search={true}
                                    searchLabel={'Поиск'}
                                    options={this.state.yearList}
-                                   getValue={this.handleChange}>
+                                   getValue={this.setYear}>
                         </MDBSelect>
                     </MDBCol>
-                </MDBRow>
-                <MDBRow>
-                    <MDBCol md="12" className="mb-3">
+                    <MDBCol md="3" className="mb-3">
                         <MDBSelect searchId={'quarterId'}
                                    label="Отчетный квартал"
                                    search={true}
                                    searchLabel={'Поиск'}
                                    options={this.state.quarterList}
-                                   getValue={this.handleChange}>
+                                   getValue={this.setQuarter}>
                         </MDBSelect>
                     </MDBCol>
+                    <MDBCol md="3" className="mb-3">
+                        <MDBBtn color="primary" type="none" onClick={this.onReset}>Oчистить фильтры</MDBBtn>
+                    </MDBCol>
                 </MDBRow> 
-                <MDBRow around={true}>
-                    <MDBBtn color="primary" type="none" onClick={this.filterData}>
-                        Получить данные
-                    </MDBBtn>
-                    <MDBBtn color="primary" type="none" onClick={this.onReset}>
-                        Oчистить фильтры
-                    </MDBBtn>
-                </MDBRow>
-
                 <MDBRow center>
                     <MDBCol md={'12'} className='mx-auto'>
                         {isLoading && <MDBSpinner multicolor/>}
@@ -396,12 +419,12 @@ export default class OperatorReportFactPivotPage extends React.Component {
                             showRowTotals={false}
                             showBorders={true}
                             >
-                            <HeaderFilter
+                            {/* <HeaderFilter
                                 allowSearch={true}
                                 visible={true}
                                 width={300}
                                 height={400}
-                              />
+                              /> */}
                             <Export enabled={true} fileName="Фактические значения показателей"/>
                             <FieldChooser enabled={true}/>
                         </PivotGrid>}
