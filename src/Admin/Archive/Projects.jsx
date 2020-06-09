@@ -1,9 +1,13 @@
 import React from 'react';
-import {MDBBreadcrumb, MDBBreadcrumbItem, MDBContainer, MDBRow} from "mdbreact";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import { compose } from "redux";
+import { getParameterValues } from "@/_reducers/archive-reducer";
+import {MDBBreadcrumb, MDBBreadcrumbItem, MDBContainer, MDBRow, MDBCol, MDBSelect, MDBBtn} from "mdbreact";
 import TableContainer from "./common/TableContainer";
 import appAxios from "../../_services/appAxios";
 
-export default class AdminArchiveProjectsPage extends React.Component {
+class AdminArchiveProjectsPage extends React.Component {
 
     state = {
         page: 0,
@@ -104,4 +108,15 @@ export default class AdminArchiveProjectsPage extends React.Component {
             </MDBContainer>
         );
     }
+}
+
+let mapStateToProps = (state) => {
+  return {
+    parameterVals: state.archivePage.parameterVals,
+    isFetchingParameterData: state.archivePage.isFetchingParameterData,
+  };
 };
+
+export default compose(connect(mapStateToProps, {
+                                getParameterValues,
+                              }), withRouter )(AdminArchiveProjectsPage);

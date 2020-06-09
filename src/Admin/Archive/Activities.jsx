@@ -1,5 +1,9 @@
 import React from 'react';
-import {MDBBreadcrumb, MDBBreadcrumbItem, MDBContainer, MDBRow} from "mdbreact";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import { compose } from "redux";
+import { getParameterValues } from "@/_reducers/archive-reducer";
+import {MDBBreadcrumb, MDBBreadcrumbItem, MDBContainer, MDBRow, MDBCol, MDBSelect, MDBBtn} from "mdbreact";
 import TableContainer from "./common/TableContainer";
 import appAxios from "../../_services/appAxios";
 /* http://10.10.10.187:8080/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config#/i-1-resource
@@ -17,7 +21,7 @@ http://10.10.10.187:8080/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-co
 ну либо в swagger
 */
 
-export default class AdminArchiveActivitiesPage extends React.Component {
+class AdminArchiveActivitiesPage extends React.Component {
 
     state = {
         page: 0,
@@ -27,7 +31,7 @@ export default class AdminArchiveActivitiesPage extends React.Component {
     }
 
     componentDidMount() {
-        // this.getData();
+        this.getData();
     }
 
     getData = async () => {
@@ -97,4 +101,16 @@ export default class AdminArchiveActivitiesPage extends React.Component {
         </MDBContainer>
     );
   }
+}
+
+let mapStateToProps = (state) => {
+  return {
+    parameterVals: state.archivePage.parameterVals,
+    isFetchingParameterData: state.archivePage.isFetchingParameterData,
+  };
 };
+
+
+export default compose(connect(mapStateToProps, {
+                                getParameterValues,
+                              }), withRouter )(AdminArchiveActivitiesPage);

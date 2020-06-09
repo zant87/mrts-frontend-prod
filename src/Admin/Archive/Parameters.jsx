@@ -174,7 +174,7 @@ class AdminArchiveParametersPage extends React.Component {
 
     setOkud = e => {
         this.setState({
-            dataOkudId: e.toString()
+            okudId: e.toString()
         });
     }
 
@@ -223,7 +223,7 @@ class AdminArchiveParametersPage extends React.Component {
        this.getOkudList();
        this.getQuarterList();
        this.getDataYearList();
-       
+
     }
 
         /* year": 2017,
