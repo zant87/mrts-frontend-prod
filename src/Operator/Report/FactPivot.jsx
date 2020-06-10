@@ -17,19 +17,6 @@ export default class OperatorReportFactPivotPage extends React.Component {
      dataProviderIdRef = React.createRef();
      okudIdRef = React.createRef();
      parameterIdRef = React.createRef();
-
-
-    static propTypes = {
-      ControlledSelectOption: PropTypes.arrayOf(
-                                        PropTypes.shape({
-                                          checked: PropTypes.bool,
-                                          disabled: PropTypes.bool,
-                                          icon: PropTypes.string,
-                                          text: PropTypes.string,
-                                          value: PropTypes.string
-                                        }))
-    }
-
     /*
     options: PropTypes.arrayOf(
     PropTypes.shape({
@@ -192,6 +179,9 @@ export default class OperatorReportFactPivotPage extends React.Component {
         this.getTransportTypeList = this.getTransportTypeList.bind(this);
         this.getDataProviderList = this.getDataProviderList.bind(this);
         this.getParameterList = this.getParameterList.bind(this);
+        this.getQuarterList = this.getQuarterList.bind(this);
+        this.getDataYearList = this.getDataYearList.bind(this);
+        this.getOkudList = this.getOkudList.bind(this);
 
     }
 
@@ -211,7 +201,7 @@ export default class OperatorReportFactPivotPage extends React.Component {
         const { transportTypeId, dataProviderId, okudId, parameterId, year, quarterId, fields } = this.state;
 
        if (transportTypeId === '' && dataProviderId === '' && okudId === '' && parameterId === '' && year === '' && quarterId === '') {
-            console.log("GET ALL")
+            // console.log("GET ALL")
             this.getData();
         } else {
                 const url = `/views/k-5-s-all?transportTypeId.equals=` + transportTypeId + 
@@ -220,7 +210,6 @@ export default class OperatorReportFactPivotPage extends React.Component {
                                           `&parameterId.equals=` + parameterId +
                                           `&year.equals=` + year +
                                           `&quarterId.equals=` + quarterId
-
                 // console.log("k-5-s-all url: %s", url )
 
                 appAxios.get(url)
@@ -243,7 +232,7 @@ export default class OperatorReportFactPivotPage extends React.Component {
             .then(res => {
                 let selected;
                 const data = res.data.map(item => {
-                        return {value: ''+item.id, text: item.name, checked: false, icon: null, key: item.id};
+                        return {value: item.id.toString(), text: item.name.toString(), checked: false, icon: null, key: item.id};
                 })
                 this.setState({transportTypeList: data, isLoading: false});
             })
@@ -255,7 +244,7 @@ export default class OperatorReportFactPivotPage extends React.Component {
             .then(res => {
                 let selected;
                 const data = res.data.map(item => {
-                        return {value: ''+item.id, text: item.name, checked: false, icon: null, key: item.id};
+                        return {value: item.id.toString(), text: item.name.toString(), checked: false, icon: null, key: item.id};
                 })
                 this.setState({dataProviderList: data, isLoading: false});
             })
@@ -267,21 +256,11 @@ export default class OperatorReportFactPivotPage extends React.Component {
             .then(res => {
                 let selected;
                 const data = res.data.map(item => {
-                        return {value: ''+item.id, text: item.name, checked: false, icon: null, key: item.id};
+                        return {value: item.id.toString(), text: item.name.toString(), checked: false, icon: null, key: item.id};
                 })
                 this.setState({parameterList: data, isLoading: false});
             })
     };
-
-   /* PropTypes.arrayOf(
-        PropTypes.shape({
-          checked: PropTypes.bool,
-          disabled: PropTypes.bool,
-          icon: PropTypes.string,
-          text: PropTypes.string,
-          value: PropTypes.string
-        })
-      ) */
 
     getOkudList = () => {
         this.setState({ isLoading: true });
@@ -289,7 +268,7 @@ export default class OperatorReportFactPivotPage extends React.Component {
             .then(res => {
                 let selected;
                 const data = res.data.map(item => {
-                        return { value: ''+item.id, text: item.name, checked: false, icon: null, key: item.id};
+                        return { value: item.id.toString(), text: ''+item.name.toString(), checked: false, icon: null, key: item.id};
                 })
                 this.setState({okudList: data, isLoading: false});
             })
@@ -301,7 +280,7 @@ export default class OperatorReportFactPivotPage extends React.Component {
             .then(res => {
                 let selected;
                 const data = res.data.map(item => {
-                        return {value: ''+item.id, text: item.name, checked: false, icon: null, key: item.id};
+                        return {value: item.id.toString(), text: ''+item.name.toString(), checked: false, icon: null, key: item.id};
                 })
                 this.setState({quarterList: data, isLoading: false});
             })
@@ -313,7 +292,7 @@ export default class OperatorReportFactPivotPage extends React.Component {
             .then(res => {
                 let selected;
                 const data = res.data.map(item => {
-                        return {value: ''+item.year, text: item.year, checked: false, icon: null, key: item.id};
+                        return {value: item.year.toString(), text: ''+item.year.toString(), checked: false, icon: null, key: item.id};
                 })
                 this.setState({yearList: data, isLoading: false});
             })
@@ -397,28 +376,31 @@ export default class OperatorReportFactPivotPage extends React.Component {
             <MDBContainer fluid>
                 <MDBRow>
                     <MDBCol md="3" className="mb-3">
-                        <MDBSelect name="transportTypeIdSel" search searchId={'transportTypeId'}
+                        <MDBSelect id="transportTypeIdSel" search searchId={'transportTypeId'}
                                    label="Вид транспорта"
                                    search={true}
                                    searchLabel={'Поиск'}
+                                   selected=""
                                    options={this.state.transportTypeList}
                                    getValue={this.setTransportType}>
                         </MDBSelect>
                     </MDBCol>
                     <MDBCol md="3" className="mb-3">
-                        <MDBSelect ref={this.dataProviderIdRef} name="dataProviderIdSel" search searchId={'dataProviderId'}
+                        <MDBSelect ref={this.dataProviderIdRef} id="dataProviderIdSel" search searchId={'dataProviderId'}
                                    label="Источник данных"
                                    search={true}
                                    searchLabel={'Поиск'}
+                                   selected=""
                                    options={this.state.dataProviderList}
                                    getValue={e => this.setState({ dataProviderId: e})}>
                         </MDBSelect>
                     </MDBCol>
                     <MDBCol md="3" className="mb-3">
-                        <MDBSelect ref={this.okudIdRef} name="okudIdSel" search searchId={'okudId'}
+                        <MDBSelect ref={this.okudIdRef} id="okudIdSel" search searchId={'okudId'}
                                    label="ОКУД"
                                    search={true}
                                    searchLabel={'Поиск'}
+                                   selected=""
                                    options={this.state.okudList}
                                    getValue={e => this.setState({ okudId: e})}>
                         </MDBSelect>
@@ -433,6 +415,7 @@ export default class OperatorReportFactPivotPage extends React.Component {
                                    label="Показатель"
                                    search={true}
                                    searchLabel={'Поиск'}
+                                   selected=""
                                    options={this.state.parameterList}
                                    getValue={this.setParameter}>
                         </MDBSelect>
@@ -442,6 +425,7 @@ export default class OperatorReportFactPivotPage extends React.Component {
                                    label="Отчетный год"
                                    search={true}
                                    searchLabel={'Поиск'}
+                                   selected=""
                                    options={this.state.yearList}
                                    getValue={this.setYear}>
                         </MDBSelect>
@@ -451,6 +435,7 @@ export default class OperatorReportFactPivotPage extends React.Component {
                                    label="Отчетный квартал"
                                    search={true}
                                    searchLabel={'Поиск'}
+                                   selected=""
                                    options={this.state.quarterList}
                                    getValue={this.setQuarter}>
                         </MDBSelect>
