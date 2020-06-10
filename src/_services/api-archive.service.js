@@ -8,7 +8,7 @@ export const ArchiveAPI = {
 
 	getParameterData(transportTypeId = '', dataProviderId = '', okudId = '', parameterId = '', year = '', quarterId = '') {
 
-        let url = `/views/i-1-s?transportTypeId.equals=` + transportTypeId + 
+        let url = `/views/i-1-s-all?transportTypeId.equals=` + transportTypeId + 
                                           `&dataProviderId.equals=` + dataProviderId + 
                                           `&okudId.equals=` + okudId +
                                           `&parameterId.equals=` + parameterId +
@@ -25,7 +25,7 @@ export const ArchiveAPI = {
 
 	getIndicatorData(transportTypeId = '', scenarioId = '', okudId = '', indicatorId = '', year = '', quarterId = '', startDate = '', endDate = '') {
 
-        let url = `/views/i-2-s?transportTypeId.equals=` + transportTypeId + 
+        let url = `/views/i-2-s-all?transportTypeId.equals=` + transportTypeId + 
                                           `&scenarioId.equals=` + scenarioId + 
                                           `&okudId.equals=` + okudId +
                                           `&indicatorId.equals=` + indicatorId +
@@ -44,7 +44,7 @@ export const ArchiveAPI = {
 
 	getActivityData(transportTypeId = '', dataProviderId = '', okudId = '', parameterId = '', year = '', quarterId = '') {
 
-        let url = `/views/i-3-s?transportTypeId.equals=` + transportTypeId + 
+        let url = `/views/i-3-s-all?transportTypeId.equals=` + transportTypeId + 
                                           `&dataProviderId.equals=` + dataProviderId + 
                                           `&okudId.equals=` + okudId +
                                           `&parameterId.equals=` + parameterId +
@@ -61,7 +61,7 @@ export const ArchiveAPI = {
 
 	getProjectData(transportTypeId = '', dataProviderId = '', okudId = '', parameterId = '', year = '', quarterId = '') {
 
-        let url = `/views/i-4-s?transportTypeId.equals=` + transportTypeId + 
+        let url = `/views/i-4-s-all?transportTypeId.equals=` + transportTypeId + 
                                           `&dataProviderId.equals=` + dataProviderId + 
                                           `&okudId.equals=` + okudId +
                                           `&parameterId.equals=` + parameterId +

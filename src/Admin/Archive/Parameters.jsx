@@ -106,7 +106,7 @@ class AdminArchiveParametersPage extends React.Component {
             .then(res => {
                 let selected;
                 const data = res.data.map(item => {
-                        return {value: item.id, text: item.name, checked: false};
+                        return {value: item.id, text: item.code, checked: false};
                 })
                 this.setState({dataProviderList: data, isLoading: false});
             })
