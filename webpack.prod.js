@@ -93,28 +93,24 @@ const config = {
     ]
   },
   optimization: {
+    runtimeChunk: 'single',
     splitChunks: {
       chunks: 'all',
+      maxInitialRequests: Infinity,
+      minSize: 0,
       cacheGroups: {
+
         default: false,
         vendors: false,
 
-        // vendor chunk
         vendor: {
-          // name of the chunk
-          name: 'vendor',
-
-          // async + async chunks
-          chunks: 'all',
-
-          // import file path containing node_modules
-          test: /node_modules/,
-
-          // priority
-          priority: 20
+          test: /[\\/]node_modules[\\/]/,
+          name(module) {
+            const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+            return `npm.${packageName.replace('@', '')}`;
+          },
         },
 
-        // common chunk
         common: {
           name: 'common',
           minChunks: 2,
@@ -126,45 +122,13 @@ const config = {
       }
     }
   },
-  // optimization: {
-  //   runtimeChunk: true,
-  //   minimizer: [
-  //     new TerserPlugin({
-  //       cache: true,
-  //       parallel: true,
-  //       terserOptions: {
-  //         ecma: 6,
-  //         toplevel: true,
-  //         module: true,
-  //         beautify: false,
-  //         comments: false,
-  //         compress: {
-  //           warnings: false,
-  //           ecma: 6,
-  //           module: true,
-  //           toplevel: true
-  //         },
-  //         output: {
-  //           comments: false,
-  //           beautify: false,
-  //           indent_level: 2,
-  //           ecma: 6
-  //         },
-  //         mangle: {
-  //           keep_fnames: true,
-  //           module: true,
-  //           toplevel: true
-  //         }
-  //       }
-  //     })
-  //   ]
-  // },
   plugins: [
     new HtmlWebpackPlugin({
       template: "./src/index.html",
       inject: "body",
     }),
-    new AsyncChunkNames()
+    new AsyncChunkNames(),
+    new webpack.HashedModuleIdsPlugin()
   ],
   externals: {
     config: JSON.stringify({
