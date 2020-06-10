@@ -9,7 +9,7 @@ import { PropTypes, instanceOf } from 'prop-types';
 import PivotGridDataSource from 'devextreme/ui/pivot_grid/data_source';
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.light.css';
-import {MDBCol, MDBContainer, MDBRow, MDBSpinner, MDBSelect, MDBBtn} from "mdbreact";
+import {MDBCol, MDBContainer, MDBRow, MDBSpinner, MDBSelect, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter} from "mdbreact";
 import appAxios from "../../_services/appAxios";
 
 export default class OperatorReportFactPivotPage extends React.Component {
@@ -158,6 +158,9 @@ export default class OperatorReportFactPivotPage extends React.Component {
                         }],
                     isLoading: true,
                     dataSource: {},
+                    modal: false,
+
+                    searchBystr: '',
 
                     transportTypeId: '',
                     dataProviderId: '',
@@ -165,6 +168,13 @@ export default class OperatorReportFactPivotPage extends React.Component {
                     parameterId: '',
                     year: '',
                     quarterId: '',
+
+                    transportTypeText: '',
+                    dataProviderText: '',
+                    okudText: '',
+                    parameterText: '',
+                    yearText: '',
+                    quarterText: '',
 
                     transportTypeList: [],
                     dataProviderList: [], 
@@ -198,12 +208,18 @@ export default class OperatorReportFactPivotPage extends React.Component {
     filterData = () => {
         this.setState({isLoading: true});
 
-        const { transportTypeId, dataProviderId, okudId, parameterId, year, quarterId, fields } = this.state;
+        const { transportTypeId, dataProviderId, okudId, parameterId, year, quarterId, transportTypeText, dataProviderText, okudText, parameterText, yearText, quarterText, fields } = this.state;
+
+        this.toggle();
 
        if (transportTypeId === '' && dataProviderId === '' && okudId === '' && parameterId === '' && year === '' && quarterId === '') {
             // console.log("GET ALL")
             this.getData();
         } else {
+
+               this.setState({
+                  searchBystr: "Фильтр по: " + transportTypeText + " " + dataProviderText + " " + okudText + " " + parameterText + " " + yearText + " " + quarterText
+               });
                 const url = `/views/k-5-s-all?transportTypeId.equals=` + transportTypeId + 
                                           `&dataProviderId.equals=` + dataProviderId + 
                                           `&okudId.equals=` + okudId +
@@ -222,6 +238,9 @@ export default class OperatorReportFactPivotPage extends React.Component {
                             data: data, isLoading: false, 
                             dataSource: new PivotGridDataSource({ fields: fields, store: data })
                         });
+
+                        this.onReset();
+
                     });
        }
     };
@@ -358,8 +377,11 @@ export default class OperatorReportFactPivotPage extends React.Component {
             parameterId: '',
             year: '',
             quarterId: '',
-            dataSource: {},
+            // dataSource: {},
         });
+
+        
+
         this.getTransportTypeList();
         this.getDataProviderList();
         this.getParameterList();
@@ -368,82 +390,111 @@ export default class OperatorReportFactPivotPage extends React.Component {
         this.getDataYearList(); 
     }
 
+    toggle = () => {
+        this.setState({
+          modal: !this.state.modal
+        });
+      }
+
     render() {
 
         const {dataSource, isLoading} = this.state;
 
         return (
             <MDBContainer fluid>
-                <MDBRow>
-                    <MDBCol md="3" className="mb-3">
-                        <MDBSelect id="transportTypeIdSel" search searchId={'transportTypeId'}
-                                   label="Вид транспорта"
-                                   search={true}
-                                   searchLabel={'Поиск'}
-                                   selected=""
-                                   options={this.state.transportTypeList}
-                                   getValue={this.setTransportType}>
-                        </MDBSelect>
-                    </MDBCol>
-                    <MDBCol md="3" className="mb-3">
-                        <MDBSelect ref={this.dataProviderIdRef} id="dataProviderIdSel" search searchId={'dataProviderId'}
-                                   label="Источник данных"
-                                   search={true}
-                                   searchLabel={'Поиск'}
-                                   selected=""
-                                   options={this.state.dataProviderList}
-                                   getValue={e => this.setState({ dataProviderId: e})}>
-                        </MDBSelect>
-                    </MDBCol>
-                    <MDBCol md="3" className="mb-3">
-                        <MDBSelect ref={this.okudIdRef} id="okudIdSel" search searchId={'okudId'}
-                                   label="ОКУД"
-                                   search={true}
-                                   searchLabel={'Поиск'}
-                                   selected=""
-                                   options={this.state.okudList}
-                                   getValue={e => this.setState({ okudId: e})}>
-                        </MDBSelect>
-                    </MDBCol>
-                    <MDBCol md="3" className="mb-3">
-                        <MDBBtn color="primary" type="none" onClick={this.filterData}>Получить данные</MDBBtn>
-                    </MDBCol>
-                </MDBRow>
                 <MDBRow around={true}>
-                    <MDBCol md="3" className="mb-3">
-                        <MDBSelect ref={this.parameterIdRef} id="parameterIdSel" search searchId={'parameterId'}
-                                   label="Показатель"
-                                   search={true}
-                                   searchLabel={'Поиск'}
-                                   selected=""
-                                   options={this.state.parameterList}
-                                   getValue={this.setParameter}>
-                        </MDBSelect>
-                    </MDBCol>
-                    <MDBCol md="3" className="mb-3">
-                        <MDBSelect id="yearSel" search searchId={'year'}
-                                   label="Отчетный год"
-                                   search={true}
-                                   searchLabel={'Поиск'}
-                                   selected=""
-                                   options={this.state.yearList}
-                                   getValue={this.setYear}>
-                        </MDBSelect>
-                    </MDBCol>
-                    <MDBCol md="3" className="mb-3">
-                        <MDBSelect id="quarterIdSel" search searchId={'quarterId'}
-                                   label="Отчетный квартал"
-                                   search={true}
-                                   searchLabel={'Поиск'}
-                                   selected=""
-                                   options={this.state.quarterList}
-                                   getValue={this.setQuarter}>
-                        </MDBSelect>
-                    </MDBCol>
-                    <MDBCol md="3" className="mb-3">
-                        <MDBBtn color="primary" type="none" onClick={this.onReset}>Oчистить фильтры</MDBBtn>
-                    </MDBCol>
-                </MDBRow> 
+
+                </MDBRow>
+                <div className="text-right">
+                   {this.state.searchBystr} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<MDBBtn color="info" onClick={this.toggle}>Фильтры</MDBBtn>
+                </div>
+                <MDBModal isOpen={this.state.modal} toggle={this.toggle}  size="lg"  >
+                  <MDBModalHeader toggle={this.toggle}>&nbsp;&nbsp;&nbsp;&nbsp;Фактические значения показателей</MDBModalHeader>
+                  <MDBModalBody>
+                     <MDBRow around={true}>
+                            <MDBCol md="3" className="mb-3">
+                                <MDBSelect id="transportTypeIdSel" search searchId={'transportTypeId'}
+                                           label="Вид транспорта"
+                                           search={true}
+                                           searchLabel={'Поиск'}
+                                           selected=""
+                                           options={this.state.transportTypeList}
+                                           getTextContent={e => this.setState({ transportTypeText: e})}
+                                           getValue={this.setTransportType}>
+                                </MDBSelect>
+                            </MDBCol>
+                            <MDBCol md="3" className="mb-3">
+                                <MDBSelect ref={this.dataProviderIdRef} id="dataProviderIdSel" search searchId={'dataProviderId'}
+                                           label="Источник данных"
+                                           search={true}
+                                           searchLabel={'Поиск'}
+                                           selected=""
+                                           options={this.state.dataProviderList}
+                                           getTextContent={e => this.setState({ dataProviderText: e})}
+                                           getValue={e => this.setState({ dataProviderId: e})}>
+                                </MDBSelect>
+                            </MDBCol>
+                            <MDBCol md="3" className="mb-3">
+                                <MDBSelect ref={this.okudIdRef} id="okudIdSel" search searchId={'okudId'}
+                                           label="ОКУД"
+                                           search={true}
+                                           searchLabel={'Поиск'}
+                                           selected=""
+                                           options={this.state.okudList}
+                                           getTextContent={e => this.setState({ okudText: e})}
+                                           getValue={e => this.setState({ okudId: e})}>
+                                </MDBSelect>
+                            </MDBCol>
+                           {/* <MDBCol md="3" className="mb-3">
+                                <MDBBtn color="primary" type="none" onClick={this.filterData}>Получить данные</MDBBtn>
+                            </MDBCol> */}
+                        </MDBRow>
+                        <MDBRow around={true}>
+                            <MDBCol md="3" className="mb-3">
+                                <MDBSelect ref={this.parameterIdRef} id="parameterIdSel" search searchId={'parameterId'}
+                                           label="Показатель"
+                                           search={true}
+                                           searchLabel={'Поиск'}
+                                           selected=""
+                                           options={this.state.parameterList}
+                                           getTextContent={e => this.setState({ parameterText: e})}
+                                           getValue={this.setParameter}>
+                                </MDBSelect>
+                            </MDBCol>
+                            <MDBCol md="3" className="mb-3">
+                                <MDBSelect id="yearSel" search searchId={'year'}
+                                           label="Отчетный год"
+                                           search={true}
+                                           searchLabel={'Поиск'}
+                                           selected=""
+                                           options={this.state.yearList}
+                                           getTextContent={e => this.setState({ yearText: e})}
+                                           getValue={this.setYear}>
+                                </MDBSelect>
+                            </MDBCol>
+                            <MDBCol md="3" className="mb-3">
+                                <MDBSelect id="quarterIdSel" search searchId={'quarterId'}
+                                           label="Отчетный квартал"
+                                           search={true}
+                                           searchLabel={'Поиск'}
+                                           selected=""
+                                           options={this.state.quarterList}
+                                           getTextContent={e => this.setState({ quarterText: e})}
+                                           getValue={this.setQuarter}>
+                                </MDBSelect>
+                            </MDBCol>
+                            {/* <MDBCol md="3" className="mb-3">
+                                <MDBBtn color="primary" type="none" onClick={this.onReset}>Oчистить фильтры</MDBBtn>
+                            </MDBCol> */}
+                        </MDBRow> 
+
+                  </MDBModalBody>
+                  <MDBModalFooter>
+                    <MDBBtn color="secondary" onClick={this.toggle}>Закрыть</MDBBtn>
+                    <MDBBtn color="primary" onClick={this.filterData} >Получить данные</MDBBtn>
+                  </MDBModalFooter>
+                </MDBModal>
+                
                 <MDBRow center>
                     <MDBCol md={'12'} className='mx-auto'>
                         {isLoading && <MDBSpinner multicolor/>}
