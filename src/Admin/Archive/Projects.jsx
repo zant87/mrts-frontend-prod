@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { compose } from "redux";
 import { getParameterValues } from "@/_reducers/archive-reducer";
-import {MDBBreadcrumb, MDBBreadcrumbItem, MDBContainer, MDBRow, MDBCol, MDBSelect, MDBBtn} from "mdbreact";
+import {MDBBreadcrumb, MDBBreadcrumbItem, MDBContainer, MDBRow, MDBCol, MDBSelect, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter} from "mdbreact";
 import TableContainer from "./common/TableContainer";
 import appAxios from "../../_services/appAxios";
 
