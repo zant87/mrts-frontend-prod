@@ -2,6 +2,9 @@ import React from 'react';
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { compose } from "redux";
+
+import moment from "moment";
+
 import { getParameterValues } from "@/_reducers/archive-reducer";
 import {
   getTransportTypes,
@@ -10,7 +13,7 @@ import {
   getScenarios,
 } from "@/_reducers/dynamics-reducer";
 
-import {MDBBreadcrumb, MDBBreadcrumbItem, MDBContainer, MDBRow, MDBCol, MDBSelect, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter} from "mdbreact";
+import {MDBBreadcrumb, MDBBreadcrumbItem, MDBContainer, MDBRow, MDBCol, MDBSelect, MDBDatePicker, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter} from "mdbreact";
 import TableContainer from "./common/TableContainer";
 // import PivotContainer from "./PivotContainer";
 import appAxios from "../../_services/appAxios";
@@ -30,6 +33,9 @@ class AdminArchiveIndicatorsPage extends React.Component  {
         count: 0,
         data: [],
         isLoading: false,
+        modal: false,
+
+        date: "2019-12-31",
 
         transportTypeId: '',
         scenarioId: '',
@@ -37,15 +43,14 @@ class AdminArchiveIndicatorsPage extends React.Component  {
         indicatorId: '',
         year: '',
         quarterId: '',
+
         beginDate: '',
         endDate: '',
 
         transportTypeList: [],
         scenarioList: [], 
         indicatorList: [],
-        okudList: [],         
-        beginDateList: [], 
-        endDateList: [],
+
         yearList: [],  
         quarterList: [],
     }
@@ -54,15 +59,81 @@ class AdminArchiveIndicatorsPage extends React.Component  {
         // this.getData();
 
         this.props.getTransportTypes();
+
+        this.getIndicatorList();
+        this.getScenarioList();
+        this.getQuarterList();
+        this.getDataYearList();
+
+
+
         // this.props.getInds();
-        this.props.getYears();
-        this.props.getQuarters();
-        this.props.getScenarios();
+        // this.props.getYears();
+        // this.props.getQuarters();
+        // this.props.getScenarios();
     }
 
-    filterData = () => {
-        const { transportTypeId, scenarioId, okudId, indicatorId, year, quarterId, beginDate, endDate } = this.state;
+    // filterData = () => {
+       // const { transportTypeId, scenarioId, okudId, indicatorId, year, quarterId, beginDate, endDate } = this.state;
         // this.props.getParameterValues(transportTypeId, dataProviderId, okudId, parameterId, year, quarterId);
+    // }
+
+    getIndicatorList = () => {
+        this.setState({ isLoading: true });
+        appAxios.get(`/indicators`)
+            .then(res => {
+                let selected;
+                const data = res.data.map(item => {
+                        return {value: item.id, text: item.name, checked: false};
+                })
+                this.setState({indicatorList: data, isLoading: false});
+            })
+    };
+
+    getScenarioList = () => {
+        this.setState({ isLoading: true });
+        appAxios.get(`/scenarios`)
+            .then(res => {
+                let selected;
+                const data = res.data.map(item => {
+                        return {value: item.id, text: item.name, checked: false};
+                })
+                this.setState({scenarioList: data, isLoading: false});
+            })
+    };
+
+    getQuarterList = () => {
+        this.setState({ isLoading: true });
+        appAxios.get(`/nsi-quarters`)
+            .then(res => {
+                let selected;
+                const data = res.data.map(item => {
+                        return {value: item.id, text: item.name, checked: false};
+                })
+                this.setState({quarterList: data, isLoading: false});
+            })
+    };
+
+    getDataYearList = () => {
+        this.setState({ isLoading: true });
+        appAxios.get(`/nsi-years`)
+            .then(res => {
+                let selected;
+                const data = res.data.map(item => {
+                        return {value: item.year, text: item.year, checked: false};
+                })
+                this.setState({yearList: data, isLoading: false});
+            })
+    };
+
+    getBeginDate = (value) => {
+        const date = moment(value);
+        this.setState({ beginDate: date.format('YYYY-MM-DD')});
+    }
+
+    getEndDate = (value) => {
+        const date = moment(value);
+        this.setState({ endDate: date.format('YYYY-MM-DD')});
     }
 
     componentDidUpdate(prevProps) {
@@ -88,6 +159,7 @@ class AdminArchiveIndicatorsPage extends React.Component  {
                 this.setState({data: data, isLoading: false, count: count});
             });
     };
+
     setTransportType = e => {
         this.setState({
             transportTypeId: e.toString()
@@ -142,6 +214,33 @@ class AdminArchiveIndicatorsPage extends React.Component  {
        this.getDataYearList();*/
        
     }
+
+   toggle = () => {
+      this.setState({
+        modal: !this.state.modal
+      });
+    }
+
+    filterData = async () => {
+
+        const { transportTypeId, scenarioId, indicatorId, year, quarterId } = this.state;
+        this.setState({isLoading: true});
+        this.toggle();
+
+        appAxios.get(`/views/i-2-s-all?transportTypeId.equals=` + transportTypeId + 
+                                          `&scenarioId.equals=` + scenarioId + 
+                                          `&indicatorId.equals=` + indicatorId +
+                                          `&year.equals=` + year +
+                                          `&quarterId.equals=` + quarterId)
+            .then(res => {
+                console.log(res);
+                const count = Number(res.headers['x-total-count']);
+                const data = res.data;
+                this.setState({data: data, isLoading: false, count: count});
+
+                this.onReset();
+            });
+    };
 
     render() {
 
@@ -232,70 +331,95 @@ class AdminArchiveIndicatorsPage extends React.Component  {
                         <MDBBreadcrumbItem active>Архив расчета индикаторов ТС</MDBBreadcrumbItem>
                     </MDBBreadcrumb>
                 </MDBRow>
-                <MDBRow>
-                    <MDBCol md="3" className="mb-3">
-                        <MDBSelect searchId={'transportTypeId'}
-                                   label="Вид транспорта"
-                                   search={true}
-                                   searchLabel={'Поиск'}
-                                   options={transportTypes}
-                                   getValue={this.state.transportTypeList}>
-                        </MDBSelect>
-                    </MDBCol>
-                    <MDBCol md="3" className="mb-3">
-                        <MDBSelect searchId={'scenarioId'}
-                                   label="Сценарий"
-                                   search={true}
-                                   searchLabel={'Поиск'}
-                                   options={this.state.scenarioList}
-                                   getValue={this.setScenario}>
-                        </MDBSelect>
-                    </MDBCol>
-                    <MDBCol md="3" className="mb-3">
-                        <MDBSelect searchId={'okudId'}
-                                   label="ОКУД"
-                                   search={true}
-                                   searchLabel={'Поиск'}
-                                   options={this.state.okudList}
-                                   getValue={this.setOkud}>
-                        </MDBSelect>
-                    </MDBCol>
-                    <MDBCol md="3" className="mb-3">
-                        <MDBBtn color="primary" type="none" onClick={this.getParameterData}>Получить данные</MDBBtn>
-                    </MDBCol>
-                </MDBRow>
-                <MDBRow around={true}>
-                    <MDBCol md="3" className="mb-3">
-                        <MDBSelect searchId={'indicatorId'}
-                                   label="Показатель"
-                                   search={true}
-                                   searchLabel={'Поиск'}
-                                   options={this.state.indicatorList}
-                                   getValue={this.setIndicator}>
-                        </MDBSelect>
-                    </MDBCol>
-                    <MDBCol md="3" className="mb-3">
-                        <MDBSelect searchId={'year'}
-                                   label="Отчетный год"
-                                   search={true}
-                                   searchLabel={'Поиск'}
-                                   options={this.state.yearList}
-                                   getValue={this.setYear}>
-                        </MDBSelect>
-                    </MDBCol>
-                    <MDBCol md="3" className="mb-3">
-                        <MDBSelect searchId={'quarterId'}
-                                   label="Отчетный квартал"
-                                   search={true}
-                                   searchLabel={'Поиск'}
-                                   options={this.state.quarterList}
-                                   getValue={this.setQuarter}>
-                        </MDBSelect>
-                    </MDBCol>
-                    <MDBCol md="3" className="mb-3">
-                        <MDBBtn color="primary" type="none" onClick={this.onReset}>Oчистить фильтры</MDBBtn>
-                    </MDBCol>
-                </MDBRow>
+                <div className="text-right">
+                   {this.state.searchBystr} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<MDBBtn color="info" onClick={this.toggle}>Фильтры</MDBBtn>
+                </div>
+                <MDBModal isOpen={this.state.modal} toggle={this.toggle}  size="lg"  >
+                  <MDBModalHeader toggle={this.toggle}>&nbsp;&nbsp;&nbsp;&nbsp;Архив расчета индикаторов ТС</MDBModalHeader>
+                  <MDBModalBody>
+
+
+                      <MDBRow around={true}>
+                          <MDBCol md="3" className="mb-3">
+                              <MDBSelect searchId={'transportTypeId'}
+                                         label="Вид транспорта"
+                                         search={true}
+                                         searchLabel={'Поиск'}
+                                         options={transportTypes}
+                                         getValue={this.state.transportTypeList}>
+                              </MDBSelect>
+                          </MDBCol>
+                          <MDBCol md="3" className="mb-3">
+                              <MDBSelect searchId={'scenarioId'}
+                                         label="Сценарий"
+                                         search={true}
+                                         searchLabel={'Поиск'}
+                                         options={this.state.scenarioList}
+                                         getValue={this.setScenario}>
+                              </MDBSelect>
+                          </MDBCol>
+                          <MDBCol md="3" className="mb-3">
+                              <MDBSelect searchId={'indicatorId'}
+                                         label="Показатель"
+                                         search={true}
+                                         searchLabel={'Поиск'}
+                                         options={this.state.indicatorList}
+                                         getValue={this.setIndicator}>
+                              </MDBSelect>
+                          </MDBCol>
+                      </MDBRow>
+                      <MDBRow around={true}>
+                          <MDBCol md="2" className="mb-3">
+                              <label htmlFor='datepicker'>Начало периода</label>
+                              <MDBDatePicker getValue={this.getBeginDate}
+                                             format='YYYY-MM-DD'
+                                             locale={moment.locale('ru')}
+                                             okLabel='ОК'
+                                             name='beginDate'
+                                             keyboard={true}
+                                             invalidDateMessage='Неправильный формат даты'
+                                             valueDefault={new Date(this.state.date)}
+                                             cancelLabel='Отмена'/>
+                          </MDBCol>
+                          <MDBCol md="2" className="mb-3">
+                              <label htmlFor='datepicker'>Конец периода</label>
+                              <MDBDatePicker getValue={this.getEndDate}
+                                             format='YYYY-MM-DD'
+                                             locale={moment.locale('ru')}
+                                             okLabel='ОК'
+                                             name='endDate'
+                                             keyboard={true}
+                                             invalidDateMessage='Неправильный формат даты'
+                                             valueDefault={new Date(this.state.date)}
+                                             cancelLabel='Отмена'/>
+                          </MDBCol>
+                      </MDBRow>
+                      <MDBRow around={true}>
+                          <MDBCol md="2" className="mb-3">
+                              <MDBSelect searchId={'year'}
+                                         label="Отчетный год"
+                                         search={true}
+                                         searchLabel={'Поиск'}
+                                         options={this.state.yearList}
+                                         getValue={this.setYear}>
+                              </MDBSelect>
+                          </MDBCol>
+                          <MDBCol md="2" className="mb-3">
+                              <MDBSelect searchId={'quarterId'}
+                                         label="Отчетный квартал"
+                                         search={true}
+                                         searchLabel={'Поиск'}
+                                         options={this.state.quarterList}
+                                         getValue={this.setQuarter}>
+                              </MDBSelect>
+                          </MDBCol>
+                      </MDBRow>
+                      </MDBModalBody>
+                      <MDBModalFooter>
+                        <MDBBtn color="secondary" onClick={this.toggle}>Закрыть</MDBBtn>
+                        <MDBBtn color="primary" onClick={this.filterData} >Получить данные</MDBBtn>
+                      </MDBModalFooter>
+                    </MDBModal>
                 <MDBRow>
                    <TableContainer data={data} isLoading={isLoading} columns={columns} title={"Архив расчета индикаторов ТС"}/>  
                    {/* <PivotContainer pFields={pivotFields} pData={this.state.data} isPLoading={isLoading} title={"Архив расчета индикаторов ТС"}/>  */}

@@ -43,7 +43,7 @@ class AdminArchiveParametersPage extends React.Component {
                 searchBystr: '',
 
             }
-        // this.filterData = this.filterData.bind(this);
+        this.filterData = this.filterData.bind(this);
         this.getParameterData = this.getParameterData.bind(this);
         this.getData = this.getData.bind(this);
         this.onReset = this.onReset.bind(this);

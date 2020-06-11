@@ -3,7 +3,9 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { compose } from "redux";
 import { getParameterValues } from "@/_reducers/archive-reducer";
-import {MDBBreadcrumb, MDBBreadcrumbItem, MDBContainer, MDBRow, MDBCol, MDBSelect, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter} from "mdbreact";
+
+import moment from "moment";
+import {MDBBreadcrumb, MDBBreadcrumbItem, MDBContainer, MDBRow, MDBCol, MDBSelect, MDBDatePicker, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter} from "mdbreact";
 import TableContainer from "./common/TableContainer";
 import appAxios from "../../_services/appAxios";
 /* http://10.10.10.187:8080/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config#/i-1-resource
@@ -28,11 +30,69 @@ class AdminArchiveActivitiesPage extends React.Component {
         count: 0,
         data: [],
         isLoading: false,
+        modal: false,
+        date: "2019-12-31",
+
+
+        activityId: '',
+        documentTypeId: '',
+
+
+        year: '',
+        quarterId: '',
+
+        beginDate: '',
+        endDate: '',
+
+        quarterList: [],
+        yearList: [],
+        activityList: [],
+        documentTypeList: []
+
+
     }
 
     componentDidMount() {
-        this.getData();
+        // this.getData();
     }
+
+    onReset = () => {
+
+       this.setState({
+            activityId: '',
+            documentTypeId: '',
+            beginDate: '',
+            endDate: '',
+            year: '',
+            quarterId: '',
+       });
+       
+       this.getActivityList();
+       this.getDocumentTypeList();
+       this.getQuarterList();
+       this.getDataYearList();
+    }
+
+    filterData = async () => {
+
+        const { activityId, documentTypeId, beginDate, endDate, year, quarterId } = this.state;
+        this.setState({isLoading: true});
+        this.toggle();
+
+        appAxios.get(`/views/i-3-s-all?activityId.equals=` + activityId + 
+                                          `&activityDocumentTypeId.equals=` + documentTypeId + 
+                                          `&beginDate.equals=` + beginDate +
+                                          `&endDate.equals=` + endDate +
+                                          `&year.equals=` + year +
+                                          `&quarterId.equals=` + quarterId)
+            .then(res => {
+                console.log(res);
+                const count = Number(res.headers['x-total-count']);
+                const data = res.data;
+                this.setState({data: data, isLoading: false, count: count});
+                this.onReset();
+            });
+    };
 
     getData = async () => {
         this.setState({isLoading: true});
@@ -44,6 +104,71 @@ class AdminArchiveActivitiesPage extends React.Component {
                 this.setState({data: data, isLoading: false, count: count});
             });
     };
+
+     toggle = () => {
+        this.setState({
+          modal: !this.state.modal
+        });
+      }
+    
+
+    getActivityList = () => {
+        this.setState({ isLoading: true });
+        appAxios.get(`/activities`)
+            .then(res => {
+                let selected;
+                const data = res.data.map(item => {
+                        return {value: item.id, text: item.name, checked: false};
+                })
+                this.setState({activityList: data, isLoading: false});
+            })
+    };
+    
+    getDocumentTypeList = () => {
+        this.setState({ isLoading: true });
+        appAxios.get(`/document-types`)
+            .then(res => {
+                let selected;
+                const data = res.data.map(item => {
+                        return {value: item.id, text: item.name, checked: false};
+                })
+                this.setState({documentTypeList: data, isLoading: false});
+            })
+    };
+
+    getQuarterList = () => {
+        this.setState({ isLoading: true });
+        appAxios.get(`/nsi-quarters`)
+            .then(res => {
+                let selected;
+                const data = res.data.map(item => {
+                        return {value: item.id, text: item.name, checked: false};
+                })
+                this.setState({quarterList: data, isLoading: false});
+            })
+    };
+
+    getDataYearList = () => {
+        this.setState({ isLoading: true });
+        appAxios.get(`/nsi-years`)
+            .then(res => {
+                let selected;
+                const data = res.data.map(item => {
+                        return {value: item.year, text: item.year, checked: false};
+                })
+                this.setState({yearList: data, isLoading: false});
+            })
+    };
+
+    getBeginDate = (value) => {
+        const date = moment(value);
+        this.setState({ beginDate: date.format('YYYY-MM-DD')});
+    }
+
+    getEndDate = (value) => {
+        const date = moment(value);
+        this.setState({ endDate: date.format('YYYY-MM-DD')});
+    }
 
   render() {
 
@@ -95,6 +220,9 @@ class AdminArchiveActivitiesPage extends React.Component {
                     <MDBBreadcrumbItem active>Архив выполнения мероприятий по реализации ТС</MDBBreadcrumbItem>
                 </MDBBreadcrumb>
             </MDBRow>
+
+
+
             <MDBRow>
                <TableContainer data={this.state.data} isLoading={this.state.isLoading} columns={columns} title={"Архив выполнения мероприятий по реализации ТС"}/> 
             </MDBRow>
