@@ -1,13 +1,12 @@
-import React from "react";
-import {MDBBtn, MDBCol, MDBInput, MDBRow, toast} from "mdbreact";
+import React from 'react';
+import {MDBBtn, MDBCol, MDBInput, MDBRow, MDBSelect, toast} from "mdbreact";
 import appAxios from "../../_services/appAxios";
-import 'moment/locale/ru';
 
-export default class AdminLoadingFromMDDPage extends React.Component {
+export default class AdminLoadingFromGIBDDPage extends React.Component {
 
     state = {
-        start: 2014,
-        end: 2015,
+        startYear: 2014,
+        endYear: 2015,
         isLoading: false
     };
 
@@ -18,47 +17,42 @@ export default class AdminLoadingFromMDDPage extends React.Component {
         };
 
         appAxios({
-            url: `/import/monitoring`,
+            url: `/import/gibdd`,
             method: 'POST',
             data: responseData
         }).then((response) => {
             if (response.data > 0)
-                toast.success(`Выполнена синхронизация с ФЗ МДД с кодом ${response.data}`, {
+                toast.success(`Выполнена синхронизация с ГИБДД с кодом ${response.data}`, {
                     closeButton: false
                 })
             else
-                toast.error(`Ошибка синхронизации с ФЗ МДД с кодом ${response.data}`, {
+                toast.error(`Ошибка синхронизации с ГИБДД с кодом ${response.data}`, {
                     closeButton: false
                 });
         }).catch(function (error) {
             console.log(error);
-            toast.error(`Ошибка синхронизации с ФЗ МДД без кода`, {
+            toast.error(`Ошибка синхронизации с ГИБДД без кода`, {
                 closeButton: false
             });
         });
     }
 
-    onChangeHandler = event => {
-        this.setState({[event.target.name]: event.target.value});
-        console.log(this.state);
-    };
-
     render() {
-        return(
+        return (
             <MDBCol md='8' className='mx-auto my-5'>
 
-                <h2 className='text-center my-2'>Синхронизация с ФЗ "Мониторинг Дорожных Фондов" </h2>
+                <h2 className='text-center my-2'>Синхронизация с ГИБДД </h2>
 
                 <MDBRow>
                     <MDBCol md="12" className="mb-3">
-                        <MDBInput label="Год начала" value={this.state.start} type="number" name="start"
+                        <MDBInput label="Год начала" value={this.state.startYear} type="number" name="start"
                                   onChange={this.onChangeHandler}/>
                     </MDBCol>
                 </MDBRow>
 
                 <MDBRow>
                     <MDBCol md="12" className="mb-3">
-                        <MDBInput label="Год окончания" value={this.state.end} type="number" name="end"
+                        <MDBInput label="Год окончания" value={this.state.endYear} type="number" name="end"
                                   onChange={this.onChangeHandler}/>
                     </MDBCol>
                 </MDBRow>
@@ -69,7 +63,6 @@ export default class AdminLoadingFromMDDPage extends React.Component {
                     </MDBBtn>
                 </MDBRow>
             </MDBCol>
-        )
+        );
     }
-
-}
+};

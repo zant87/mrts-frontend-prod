@@ -76,6 +76,7 @@ import OperatorReportFactTabsPage from "../Operator/Report/FactTabs";
 import OperatorReportFinancingTabsPage from "../Operator/Report/FinancingTabs";
 import OperatorReportAppropriationsTabsPage from "../Operator/Report/AppropriationsTabs";
 import OperatorReportExtraBudgetTabsPage from "../Operator/Report/ExtraBudgetTabs";
+import AdminLoadingFromGIBDDPage from "../Admin/Loading/FromGIBDD";
 
 const AsyncAdminStructureNavigation = loadable({
     loader: () => import("../Admin/Structure/Navigation"),
@@ -268,7 +269,10 @@ export const AppRoutes = () => {
             <PrivateRoute exact path="/admin/loading/fromMDD" roles={Role.Admin} component={AsyncAdminLoadingFromMDDPage} />
             <PrivateRoute exact path="/admin/loading/fromMSTK" roles={Role.Admin} component={AsyncAdminLoadingFromMSTKPage} />
             <PrivateRoute exact path="/admin/loading/fromSDMX" roles={Role.Admin} component={AsyncAdminLoadingFromSDMXPage} />
-            <PrivateRoute exact path="/admin/loading/fromXLSX" roles={Role.Admin} component={AsyncAdminLoadingFromXLSXPage} />
+            <PrivateRoute exact path="/admin/loading/fromXLSX" roles={Role.Admin}
+                          component={AsyncAdminLoadingFromXLSXPage}/>
+            <PrivateRoute exact path="/admin/loading/fromGIBDD" roles={Role.Admin}
+                          component={AdminLoadingFromGIBDDPage}/>
             <PrivateRoute exact path="/admin/loading/fromCSV" roles={Role.Admin} component={AsyncAdminLoadingCSVPage}/>
             <PrivateRoute exact path="/admin/loading/reports" roles={Role.Admin}
                           component={AsyncAdminLoadingReportsPage}/>

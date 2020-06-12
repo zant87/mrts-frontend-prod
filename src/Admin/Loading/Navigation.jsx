@@ -24,17 +24,18 @@ const Navigation = () => {
                                 <strong className='indigo-text'>Загрузка из АС</strong>
                             </h5>
                             <ul className='list-unstyled example-components-list mt-4'>
-                                <NavLink to='/admin/loading/fromEMISS' title='Загрузка из ЕМИСС' />
-                                <NavLink to='/admin/loading/fromMDD' title='Загрузка из ФЗ Мониторинг Дорожных Фондов'/>
-                                <NavLink to='/admin/loading/fromMSTK' title='Загрузка из ФЗ МСТК'/>
+                                <NavLink to='/admin/loading/fromEMISS' title='Синхронизация с ЕМИСС'/>
+                                <NavLink to='/admin/loading/fromMDD' title='Синхронизация с ФЗ МДД'/>
+                                <NavLink to='/admin/loading/fromMSTK' title='Синхронизация с ФЗ МСТК'/>
+                                <NavLink to='/admin/loading/fromGIBDD' title='Синхронизация с ГИБДД'/>
                             </ul>
                             <h5 className='mt-5 grey-text'>
                                 <strong className='indigo-text'>Загрузка из файлов</strong>
                             </h5>
                             <ul className='list-unstyled example-components-list mt-4'>
-                                <NavLink to='/admin/loading/fromSDMX' title='Загрузка из SDMX'/>
+                                {/*<NavLink to='/admin/loading/fromSDMX' title='Загрузка из SDMX'/>*/}
                                 <NavLink to='/admin/loading/fromXLSX' title='Загрузка из XLSX'/>
-                                <NavLink to='/admin/loading/fromCSV'  title='Загрузка из CSV' />
+                                {/*<NavLink to='/admin/loading/fromCSV'  title='Загрузка из CSV' />*/}
                             </ul>
                         </MDBJumbotron>
                     </MDBCol>
