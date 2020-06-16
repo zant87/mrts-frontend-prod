@@ -19,8 +19,6 @@ import AdminArchiveParametersPage from "@/Admin/Archive/Parameters";
 import AdminArchiveIndicatorsPage from "@/Admin/Archive/Indicators";
 import AdminArchiveProjectsPage from "@/Admin/Archive/Projects";
 import AdminArchiveActivitiesPage from "@/Admin/Archive/Activities";
-import { Route } from "react-router-dom";
-import { LoginPage } from "@/Common/LoginPage";
 import AnalystParametersPage from "@/Analyst/Parameters/ParametersContainer";
 import AnalystIndicatorsPage from "@/Analyst/Indicators/IndicatorsContainer";
 import AnalystLevelsPage from "@/Analyst/Levels/LevelsContainer";
@@ -38,11 +36,7 @@ import OperatorControlActivitiesPage from "@/Operator/Control/Activities";
 import OperatorControlProjectsPage from "@/Operator/Control/Projects";
 import OperatorControlResourcesPage from "@/Operator/Control/Resources";
 import OperatorReportNavigation from "@/Operator/Report/Navigation";
-import OperatorReportFactPage from "@/Operator/Report/Fact";
 import OperatorReportActivitiesPage from "@/Operator/Report/Activities";
-import OperatorReportFinancingPage from "@/Operator/Report/Financing";
-import OperatorReportAppropriationsPage from "@/Operator/Report/Appropriations";
-import OperatorReportExtraBudgetPage from "@/Operator/Report/ExtraBudget";
 import OperatorReportSourcesPage from "@/Operator/Report/Sources";
 import OperatorPlanResourcesEditPage from "../Operator/Plan/ResourcesEdit";
 import OperatorPlanIndicatorsEditPage from "../Operator/Plan/IndicatorsEdit";
@@ -70,8 +64,6 @@ import OperatorCalculationLevelsPage from "../Operator/Calculation/Levels";
 import OperatorCalculationNavigation from "@/Operator/Calculation/Navigation";
 import loadable from "react-loadable";
 import SwaggerPage from "./Swagger";
-import OperatorReportDataGridPage from "../Operator/Report/DataGrid";
-import OperatorReportFactPivotPage from "../Operator/Report/FactPivot";
 import OperatorReportFactTabsPage from "../Operator/Report/FactTabs";
 import OperatorReportFinancingTabsPage from "../Operator/Report/FinancingTabs";
 import OperatorReportAppropriationsTabsPage from "../Operator/Report/AppropriationsTabs";
@@ -238,12 +230,6 @@ const AsyncOperatorPlanIndicatorsEditPage = loadable({
     loading: OperatorPlanIndicatorsEditPage,
 });
 
-/*
-
-
-
- */
-
 export const AppRoutes = () => {
     return (
         <Fragment>
@@ -359,12 +345,6 @@ export const AppRoutes = () => {
             <PrivateRoute exact path="/operator/report/sources" roles={Role.Operator}
                           component={OperatorReportSourcesPage}/>
 
-            {/*Тест DevExtreme*/}
-            {/*<PrivateRoute exact path="/operator/report/grid" roles={Role.Operator}*/}
-            {/*              component={OperatorReportDataGridPage}/>*/}
-            {/*<PrivateRoute exact path="/operator/report/pivot" roles={Role.Operator}*/}
-            {/*              component={OperatorReportFactPivotPage}/>*/}
-
             {/*Calculation - Отчетные показатели */}
             <PrivateRoute exact path="/operator/calculation" roles={Role.Operator}
                           component={AsyncOperatorCalculationNavigation}/>
@@ -381,7 +361,6 @@ export const AppRoutes = () => {
             <PrivateRoute exact path="/analyst" component={HomePage} />
             <PrivateRoute exact path="/admin" component={HomePage} />
             <PrivateRoute exact path="/swagger" component={SwaggerPage} />
-            {/*<Route path="/login" component={LoginPage} />*/}
         </Fragment>
     );
 };
