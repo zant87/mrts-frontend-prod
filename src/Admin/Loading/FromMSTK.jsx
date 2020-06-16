@@ -5,8 +5,8 @@ import appAxios from "../../_services/appAxios";
 export default class AdminLoadingFromMSTKPage extends React.Component {
 
     state = {
-        startYear: 2014,
-        endYear: 2015,
+        start: 2014,
+        end: 2015,
         isLoading: false
     };
 
@@ -37,6 +37,11 @@ export default class AdminLoadingFromMSTKPage extends React.Component {
         });
     }
 
+    onChangeHandler = event => {
+        this.setState({[event.target.name]: event.target.value});
+        console.log(this.state);
+    };
+
     render() {
         return (
             <MDBCol md='8' className='mx-auto my-5'>
@@ -45,14 +50,14 @@ export default class AdminLoadingFromMSTKPage extends React.Component {
 
                 <MDBRow>
                     <MDBCol md="12" className="mb-3">
-                        <MDBInput label="Год начала" value={this.state.startYear} type="number" name="start"
+                        <MDBInput label="Год начала" value={this.state.start} type="number" name="start"
                                   onChange={this.onChangeHandler}/>
                     </MDBCol>
                 </MDBRow>
 
                 <MDBRow>
                     <MDBCol md="12" className="mb-3">
-                        <MDBInput label="Год окончания" value={this.state.endYear} type="number" name="end"
+                        <MDBInput label="Год окончания" value={this.state.end} type="number" name="end"
                                   onChange={this.onChangeHandler}/>
                     </MDBCol>
                 </MDBRow>

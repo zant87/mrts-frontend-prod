@@ -5,15 +5,16 @@ import appAxios from "../../_services/appAxios";
 export default class AdminLoadingFromGIBDDPage extends React.Component {
 
     state = {
-        startYear: 2014,
-        endYear: 2015,
+        start: 2014,
+        end: 2015,
         isLoading: false
     };
 
     doImport = async () => {
+
         const responseData = {
-            startYear: this.state.startYear,
-            endYear: this.state.endYear,
+            startYear: this.state.start,
+            endYear: this.state.end,
         };
 
         appAxios({
@@ -21,7 +22,7 @@ export default class AdminLoadingFromGIBDDPage extends React.Component {
             method: 'POST',
             data: responseData
         }).then((response) => {
-            if (response.data > 0)
+            if (response.data >= 0)
                 toast.success(`Выполнена синхронизация с ГИБДД с кодом ${response.data}`, {
                     closeButton: false
                 })
@@ -37,6 +38,11 @@ export default class AdminLoadingFromGIBDDPage extends React.Component {
         });
     }
 
+    onChangeHandler = event => {
+        this.setState({[event.target.name]: event.target.value});
+        console.log(this.state);
+    };
+
     render() {
         return (
             <MDBCol md='8' className='mx-auto my-5'>
@@ -45,14 +51,14 @@ export default class AdminLoadingFromGIBDDPage extends React.Component {
 
                 <MDBRow>
                     <MDBCol md="12" className="mb-3">
-                        <MDBInput label="Год начала" value={this.state.startYear} type="number" name="start"
+                        <MDBInput label="Год начала" value={this.state.start} type="number" name="start"
                                   onChange={this.onChangeHandler}/>
                     </MDBCol>
                 </MDBRow>
 
                 <MDBRow>
                     <MDBCol md="12" className="mb-3">
-                        <MDBInput label="Год окончания" value={this.state.endYear} type="number" name="end"
+                        <MDBInput label="Год окончания" value={this.state.end} type="number" name="end"
                                   onChange={this.onChangeHandler}/>
                     </MDBCol>
                 </MDBRow>

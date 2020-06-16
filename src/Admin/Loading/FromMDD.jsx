@@ -12,9 +12,10 @@ export default class AdminLoadingFromMDDPage extends React.Component {
     };
 
     doImport = async () => {
+
         const responseData = {
-            startYear: this.state.startYear,
-            endYear: this.state.endYear,
+            startYear: this.state.start,
+            endYear: this.state.end,
         };
 
         appAxios({
@@ -36,6 +37,7 @@ export default class AdminLoadingFromMDDPage extends React.Component {
                 closeButton: false
             });
         });
+
     }
 
     onChangeHandler = event => {
