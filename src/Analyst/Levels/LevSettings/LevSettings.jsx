@@ -92,7 +92,13 @@ class LevSettings extends React.Component {
       quarter = this.selectedQuarterIdRef.current.value;
     }
     if (selectedIndsArr.length != 0) {
-      this.props.getLevValues(selectedIndsArr, frequencyLevId, scenarioId, year, quarter);
+      this.props.getLevValues(
+        selectedIndsArr,
+        frequencyLevId,
+        scenarioId,
+        year,
+        quarter
+      );
     }
     //debugger;
     //alert(this.selectedIndsRef.current.state.selectValue);
@@ -125,7 +131,9 @@ class LevSettings extends React.Component {
     }
 
     if (this.props.transportTypes) {
-      transportTypes = this.props.transportTypes.sort((a, b) => (a.name > b.name ? 1 : -1));
+      transportTypes = this.props.transportTypes.sort((a, b) =>
+        a.name > b.name ? 1 : -1
+      );
     }
 
     if (this.props.years) {
@@ -140,14 +148,18 @@ class LevSettings extends React.Component {
 
     //inds = this.props.inds.sort((a, b) => (a.code > b.code ? 1 : -1));
 
-    inds = this.props.inds.sort((a, b) => (a.code.replace("IND_", "") > b.code.replace("IND_", "") ? 1 : -1));
+    inds = this.props.inds.sort((a, b) =>
+      a.code.replace("IND_", "") > b.code.replace("IND_", "") ? 1 : -1
+    );
 
     if (this.props.goalId !== null) {
       inds = inds.filter((x) => x.goalId == this.props.goalId);
     }
 
     if (this.props.transportTypeId != "0") {
-      inds = inds.filter((x) => x.transportTypeId == this.props.transportTypeId);
+      inds = inds.filter(
+        (x) => x.transportTypeId == this.props.transportTypeId
+      );
     }
 
     // if (this.props.searchQuery != null) {
@@ -225,7 +237,13 @@ class LevSettings extends React.Component {
         <MDBCard style={{ width: "100%" }}>
           <MDBCardHeader color="special-color">
             Уровни достижения
-            <MDBPopover placement="bottom" clickable id="popper" domElement popover>
+            <MDBPopover
+              placement="bottom"
+              clickable
+              id="popper"
+              domElement
+              popover
+            >
               <div className="special-color mt-1 float-right">
                 <MDBIcon
                   //onClick={this.toggle}
@@ -240,10 +258,18 @@ class LevSettings extends React.Component {
                   <span style={{ color: "#000000" }}>Справка</span>
                 </MDBPopoverHeader>
                 <MDBPopoverBody>
-                  <span style={{ color: "#000000", textAlign: "justify", fontSize: "14px" }}>
-                    Уровень достижения индикаторов выражается в процентном соотношении фактического значения индикатора к прогнозному (по
-                    базовому или инновационному сценарию) на заданный период. Лепестковая диаграмма уровней достижения строится для
-                    выбранной цели или по выбранным индикаторам.
+                  <span
+                    style={{
+                      color: "#000000",
+                      textAlign: "justify",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Уровень достижения индикаторов выражается в процентном
+                    соотношении фактического значения индикатора к прогнозному
+                    (по базовому или инновационному сценарию) на заданный
+                    период. Лепестковая диаграмма уровней достижения строится
+                    для выбранной цели или по выбранным индикаторам.
                   </span>
                 </MDBPopoverBody>
               </div>
@@ -272,7 +298,10 @@ class LevSettings extends React.Component {
               <MDBRow>
                 <MDBCol size="6" style={{ padding: "7px" }}>
                   <div style={{}}>
-                    <select onChange={this.onSelectGoal} className="browser-default custom-select custom-select-md ">
+                    <select
+                      onChange={this.onSelectGoal}
+                      className="browser-default custom-select custom-select-md "
+                    >
                       {this.props.goals
                         ? goals.map((item) =>
                             item.id == this.props.goalId ? (
@@ -289,7 +318,10 @@ class LevSettings extends React.Component {
                 </MDBCol>
                 <MDBCol size="6" style={{ padding: "7px" }}>
                   <div style={{}}>
-                    <select onChange={this.onSelectTransportType} className="browser-default custom-select custom-select-md">
+                    <select
+                      onChange={this.onSelectTransportType}
+                      className="browser-default custom-select custom-select-md"
+                    >
                       <option value="0">Все виды транспорта</option>
                       {this.props.transportTypes
                         ? transportTypes.map((item) =>
@@ -442,7 +474,11 @@ class LevSettings extends React.Component {
                   </select>
                 </div>
               ) : null}
-              <MDBBtn color="primary" onClick={this.onSaveFilters} type="submit">
+              <MDBBtn
+                color="primary"
+                onClick={this.onSaveFilters}
+                type="submit"
+              >
                 Построить отчет
               </MDBBtn>
             </form>
