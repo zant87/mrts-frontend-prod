@@ -57,7 +57,7 @@ export default class OperatorPlanResourcesEditPage extends React.Component {
 
     render() {
         return (
-            <MDBCol md='8' className='mx-auto my-5'>
+            <MDBCol md='8' className='mx-auto my-3'>
                 <h2 className='text-center my-2'>Редактирование ресурсного обеспечения ТС (план)</h2>
                 <MDBRow>
                     <MDBCol md="12" className="mb-3">
@@ -66,7 +66,8 @@ export default class OperatorPlanResourcesEditPage extends React.Component {
                 </MDBRow>
                 <MDBRow>
                     <MDBCol md="12" className="mb-3">
-                        <MDBInput label="Редакция ТС" value={this.state.transportStrategyCode} disabled={true} type="text"/>
+                        <MDBInput label="Редакция ТС" value={this.state.transportStrategyCode} disabled={true}
+                                  type="text"/>
                     </MDBCol>
                 </MDBRow>
                 <MDBRow>

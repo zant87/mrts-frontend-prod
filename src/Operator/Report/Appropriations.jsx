@@ -44,7 +44,7 @@ export default class OperatorReportAppropriationsPage extends React.Component {
         return (
             <MDBContainer fluid>
                 <MDBRow center>
-                    <MDBCol md={'12'} className='mx-auto'>
+                    <MDBCol md={'12'} className='mx-auto my-3'>
                         <MaterialTable
                             title="Бюджетные ассигнования в рамках программ развития транспорта"
                             columns={columns}

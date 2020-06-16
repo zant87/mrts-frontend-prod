@@ -11,7 +11,7 @@ const Navigation = () => {
     return (
         <MDBContainer>
             <MDBRow>
-                <MDBCol md='10' className='mt-5 mx-auto'>
+                <MDBCol md='10' className='my-3 mx-auto'>
                     <MDBJumbotron>
                         <h1 className='text-center'>Отчетные показатели</h1>
                         <ul className='list-unstyled example-components-list mt-5'>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {MDBBreadcrumb, MDBBreadcrumbItem, MDBContainer, MDBRow} from "mdbreact";
+import {MDBBreadcrumb, MDBBreadcrumbItem, MDBCol, MDBContainer, MDBRow} from "mdbreact";
 import TableContainer from "./common/TableContainer";
 import appAxios from "../../_services/appAxios";
 
@@ -30,15 +30,15 @@ export default class AdminArchiveProjectsPage extends React.Component {
     render() {
 
 
-         const columns = [
+        const columns = [
             {field: 'id', title: '#', filtering: false, editable: 'never'},
             {field: 'year', title: 'Отчетный год', filtering: true, editable: 'never'},
             {field: 'quarterName', title: 'Отчетный квартал', filtering: true, editable: 'never'},
 
             {field: 'projectName', title: 'Имя проекта', filtering: true, editable: 'never'},
 
-            {field: 'planBeginYear', title: 'Год начала', filtering: true },
-            {field: 'planEndYear', title: 'Год окончания', filtering: true },
+            {field: 'planBeginYear', title: 'Год начала', filtering: true},
+            {field: 'planEndYear', title: 'Год окончания', filtering: true},
 
             {field: 'planCost', title: 'План', filtering: true, editable: 'never'},
             {field: 'reportFactCost', title: 'Отчетный факт', filtering: true, editable: 'never'},
@@ -88,20 +88,9 @@ export default class AdminArchiveProjectsPage extends React.Component {
             "projectReportId": 53
             */
 
-
         return (
-            <MDBContainer fluid>
-                <MDBRow className='mt-5'>
-                    <MDBBreadcrumb>
-                        <MDBBreadcrumbItem>Главная</MDBBreadcrumbItem>
-                        <MDBBreadcrumbItem>Архив</MDBBreadcrumbItem>
-                        <MDBBreadcrumbItem active>Архив выполнения крупных инвестиционных проектов</MDBBreadcrumbItem>
-                    </MDBBreadcrumb>
-                </MDBRow>
-                <MDBRow>
-                   <TableContainer data={this.state.data} isLoading={this.state.isLoading} columns={columns} title={"Архив выполнения крупных инвестиционных проектов"}/> 
-                </MDBRow>
-            </MDBContainer>
+            <TableContainer data={this.state.data} isLoading={this.state.isLoading} columns={columns}
+                            title={"Архив выполнения крупных инвестиционных проектов"}/>
         );
     }
 };

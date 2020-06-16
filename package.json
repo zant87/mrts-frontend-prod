@@ -24,7 +24,7 @@
     "history": "^4.10.1",
     "js-base64": "^2.5.2",
     "material-table": "^1.59.0",
-    "mdbreact": "./mdbreact-4.24.0.tgz",
+    "mdbreact": "./mdbreact-4.27.0.tgz",
     "mui-datatables": "^2.14.0",
     "react": "^16.13.0",
     "react-cookies": "^0.1.1",

@@ -1,5 +1,5 @@
 import React from 'react';
-import {MDBBreadcrumb, MDBBreadcrumbItem, MDBContainer, MDBRow} from "mdbreact";
+import {MDBBreadcrumb, MDBBreadcrumbItem, MDBCol, MDBContainer, MDBRow} from "mdbreact";
 import TableContainer from "./common/TableContainer";
 import appAxios from "../../_services/appAxios";
 /* http://10.10.10.187:8080/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config#/i-1-resource
@@ -41,9 +41,9 @@ export default class AdminArchiveActivitiesPage extends React.Component {
             });
     };
 
-  render() {
+    render() {
 
-    const columns = [
+        const columns = [
             {field: 'id', title: '#', filtering: false, editable: 'never'},
             {field: 'year', title: 'Отчетный год', filtering: true, editable: 'never'},
             {field: 'quarterName', title: 'Отчетный квартал', filtering: true, editable: 'never'},
@@ -59,7 +59,7 @@ export default class AdminArchiveActivitiesPage extends React.Component {
         ];
 
         const { data, isLoading } = this.state;
-        
+
         /*id": 1,
             "transportStrategyCode": "VER_12_05_2018",
             "year": 2018,
@@ -82,19 +82,9 @@ export default class AdminArchiveActivitiesPage extends React.Component {
             "activityId": 199
         */
 
-    return (
-        <MDBContainer fluid>
-            <MDBRow className='mt-5'>
-                <MDBBreadcrumb>
-                    <MDBBreadcrumbItem>Главная</MDBBreadcrumbItem>
-                    <MDBBreadcrumbItem>Архив</MDBBreadcrumbItem>
-                    <MDBBreadcrumbItem active>Архив выполнения мероприятий по реализации ТС</MDBBreadcrumbItem>
-                </MDBBreadcrumb>
-            </MDBRow>
-            <MDBRow>
-               <TableContainer data={this.state.data} isLoading={this.state.isLoading} columns={columns} title={"Архив выполнения мероприятий по реализации ТС"}/> 
-            </MDBRow>
-        </MDBContainer>
-    );
-  }
+        return (
+            <TableContainer data={this.state.data} isLoading={this.state.isLoading} columns={columns}
+                            title={"Архив выполнения мероприятий по реализации ТС"}/>
+        );
+    }
 };

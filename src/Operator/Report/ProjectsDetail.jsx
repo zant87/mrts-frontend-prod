@@ -1,10 +1,12 @@
 import React from 'react';
-import {MDBCol, MDBContainer, MDBRow, MDBSpinner} from "mdbreact";
+import {MDBCol, MDBContainer, MDBRow, MDBSpinner, toast} from "mdbreact";
 import MUIDataTable from "mui-datatables";
 import {labels} from "../../_components/TableTextLabels";
 import CustomToolbarSelect from "../../_components/CustomToolbarSelect";
 import appAxios from "../../_services/appAxios";
 import ButtonUpdateColumn from "../../_components/ButtonUpdateColumn";
+import MaterialTable from "material-table";
+import {ruLocalization} from "../../_components/MaterialTableLocalization";
 
 export default class OperatorReportProjectsDetailPage extends React.Component {
 
@@ -20,10 +22,9 @@ export default class OperatorReportProjectsDetailPage extends React.Component {
         this.getData();
     };
 
-    getData = () => {
-        this.setState({ isLoading: true });
-        // appAxios.get(`/views/k-7-details?sort=id,desc`)
-        appAxios.get(`/views/k-7-details?sort=id,desc&size=2000`)
+    getData = async () => {
+        this.setState({isLoading: true});
+        appAxios.get(`/views/k-7-details-all`)
             .then(res => {
                 const count = Number(res.headers['x-total-count']);
                 const data = res.data;
@@ -31,85 +32,72 @@ export default class OperatorReportProjectsDetailPage extends React.Component {
             });
     };
 
-    onChangePage = (page, numberOfRows) => {
-        this.setState({
-            isLoading: true,
-        });
-
-        appAxios.get(`/views/k-7-details?page=${page}&size=${numberOfRows}&sort=id,desc`)
-            .then(res => {
-                const count = Number(res.headers['x-total-count']);
-                const data = res.data;
-                this.setState({data: data, isLoading: false, count: count, page: page, rowsPerPage: numberOfRows});
-            });
-    };
-
     render() {
 
         const columns = [
-            { name: 'yearNumber', label: 'Отчетный год'},
-            { name: 'projectCode', label: 'Обозначение проекта' },
-            { name: 'projectName', label: 'Содержание проекта' },
-            { name: 'costTypename', label: 'Вид расходов'},
-            { name: 'fundSourceName', label: 'Источник финансирования', options: {filter: false}},
-            { name: 'plan', label: 'Предусмотрено на год', options: { filter: false } },
-            { name: 'spent', label: 'Освоено на год', options: { filter: false } },
-            { name: 'fact', label: 'Кассовые расходы за год', options: { filter: false } },
-            { name: 'documentId', label: 'documentId', options: {display: 'excluded', filter: false}},
-            { name: 'projectId', label: 'projectId', options: {display: 'excluded', filter: false}},
-            { name: 'id', label: 'id', options: {display: 'excluded', filter: false}},
-            { name: "",
-                options: {
-                    filter: false,
-                    sort: false,
-                    empty: true,
-                    customBodyRender: (value, tableMeta, updateValue) => {
-                        return (
-                            <ButtonUpdateColumn rowData = {tableMeta.rowData}/>
-                        );
-                    }
-                }
-            },
+            {field: 'yearNumber', title: 'Отчетный год', editable: false},
+            {field: 'projectCode', title: 'Обозначение проекта', editable: false},
+            {field: 'projectName', title: 'Содержание проекта', editable: false},
+            {field: 'costTypename', title: 'Вид расходов', editable: false},
+            {field: 'fundSourceName', title: 'Источник финансирования', editable: false},
+            {field: 'plan', title: 'Предусмотрено на год'},
+            {field: 'spent', title: 'Освоено на год'},
+            {field: 'fact', title: 'Кассовые расходы за год'},
         ];
 
-        const { data, page, count, isLoading } = this.state;
-
-        const options = {
-            // serverSide: true,
-            // count: count,
-            // page: page,
-            rowsPerPage: 20,
-            rowsPerPageOptions: [20, 50, 100, 1000, 2500, 5000],
-            textLabels: labels,
-            sortFilterList: false,
-            print: false,
-            selectableRowsOnClick: false,
-            selectableRows: 'none',
-            // onTableChange: (action, tableState) => {
-            //     switch (action) {
-            //         case 'changePage':
-            //             this.onChangePage(tableState.page, tableState.rowsPerPage);
-            //             break;
-            //     }
-            // },
-            // onChangeRowsPerPage: (numberOfRows) => {
-            //     this.onChangePage(this.state.page, numberOfRows);
-            // },
-            customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
-                <CustomToolbarSelect selectedRows={selectedRows} displayData={displayData} setSelectedRows={setSelectedRows} />
-            ),
-        };
+        const tableRef = React.createRef();
+        const {data, isLoading} = this.state;
 
         return (
             <MDBContainer fluid>
                 <MDBRow center>
-                    <MDBCol md={'12'} className='my-5 mx-auto'>
-                        {isLoading && <MDBSpinner multicolor />}
-                        <MUIDataTable
-                            title={"Финансирование проектов ТС (detail)"}
-                            data={data}
+                    <MDBCol md={'12'} className='my-3 mx-auto'>
+                        <MaterialTable
+                            title="Финансирование проектов ТС (detail)"
                             columns={columns}
-                            options={options}
+                            tableRef={tableRef}
+                            data={data}
+                            isLoading={isLoading}
+                            localization={ruLocalization}
+                            editable={{
+                                onRowUpdate: (newData, oldData) =>
+                                    new Promise((resolve, reject) => {
+                                        setTimeout(() => {
+                                            const dataUpdate = [...data];
+                                            const index = dataUpdate.findIndex(item => item.id === oldData.id);
+
+                                            newData.value = (newData.value !== null) ? newData.value : 0;
+                                            dataUpdate[index] = newData;
+
+                                            console.log(newData);
+
+                                            appAxios.get(`/views/k-7-details/update?pID=${newData.id}&pDoc=${newData.documentId}&pPlan=${newData.plan}&pSpent=${newData.spent}&pFact=${newData.fact}`)
+                                                .then(res => {
+                                                    const data = res.data;
+                                                    this.setState({result: data, isLoading: false});
+                                                    toast.success(`Обновили данные документа №${data}`, {
+                                                        closeButton: false
+                                                    });
+                                                }).catch(function (error) {
+                                                console.log(error);
+                                                toast.error(`Ошибка при обновлении документа`, {
+                                                    closeButton: false
+                                                });
+                                            });
+
+                                            this.setState({data: dataUpdate});
+
+                                            resolve();
+                                        }, 6000)
+                                    }),
+                            }}
+                            options={{
+                                actionsColumnIndex: 999,
+                                search: true,
+                                pageSize: 20,
+                                pageSizeOptions: [20, 50, 100],
+                                filtering: true
+                            }}
                         />
                     </MDBCol>
                 </MDBRow>

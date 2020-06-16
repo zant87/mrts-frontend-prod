@@ -1,5 +1,5 @@
 import React from 'react';
-import {MDBBreadcrumb, MDBBreadcrumbItem, MDBContainer, MDBRow} from "mdbreact";
+import {MDBBreadcrumb, MDBBreadcrumbItem, MDBCol, MDBContainer, MDBRow} from "mdbreact";
 import TableContainer from "./common/TableContainer";
 import appAxios from "../../_services/appAxios";
 
@@ -28,28 +28,28 @@ export default class AdminArchiveParametersPage extends React.Component {
     };
 
 
-        /* year": 2017,
-        "quarterName": "I квартал",
-        "okudCode": "0615096",
-        "okudName": "1-море",
-        "parameterCode": "МТ_ОТПРАВЛЕНО_ГРУЗОВ_СЕВЕР",
-        "parameterName": "Отправлено грузов в районы Крайнего Севера и приравненные к ним местности (на морском транспорте)",
-        "transportTypeName": "Морской транспорт",
-        "dataProviderCode": "Росморречфлот",
-        "beginDate": "2020-04-05",
-        "endDate": "2099-12-31",
-        "value": 473,
-        "okudId": 12,
-        "parameterId": 37,
-        "transportTypeId": 17,
-        "dataProviderId": 24,
-        "quarterId": 1,
-        "okeiId":
-        */ 
+    /* year": 2017,
+    "quarterName": "I квартал",
+    "okudCode": "0615096",
+    "okudName": "1-море",
+    "parameterCode": "МТ_ОТПРАВЛЕНО_ГРУЗОВ_СЕВЕР",
+    "parameterName": "Отправлено грузов в районы Крайнего Севера и приравненные к ним местности (на морском транспорте)",
+    "transportTypeName": "Морской транспорт",
+    "dataProviderCode": "Росморречфлот",
+    "beginDate": "2020-04-05",
+    "endDate": "2099-12-31",
+    "value": 473,
+    "okudId": 12,
+    "parameterId": 37,
+    "transportTypeId": 17,
+    "dataProviderId": 24,
+    "quarterId": 1,
+    "okeiId":
+    */
 
-   render() {
+    render() {
 
-     const columns = [
+        const columns = [
             {field: 'id', title: '#', filtering: false, editable: 'never'},
             {field: 'year', title: 'Отчетный год', filtering: true, editable: 'never'},
             {field: 'quarterName', title: 'Отчетный квартал', filtering: true, editable: 'never'},
@@ -57,25 +57,15 @@ export default class AdminArchiveParametersPage extends React.Component {
             {field: 'parameterName', title: 'Показатель', filtering: true, editable: 'never'},
             {field: 'transportTypeName', title: 'Тип транспорта', filtering: true, editable: 'never'},
             {field: 'dataProviderCode', title: 'Источник', filtering: true, editable: 'never'},
-            {field: 'value', title: 'Значение показателя', filtering: true, editable: 'never' },
+            {field: 'value', title: 'Значение показателя', filtering: true, editable: 'never'},
         ];
 
-        const { data, isLoading } = this.state;
+        const {data, isLoading} = this.state;
 
-    return (
-        <MDBContainer fluid>
-            <MDBRow className='mt-5'>
-                <MDBBreadcrumb>
-                    <MDBBreadcrumbItem>Главная</MDBBreadcrumbItem>
-                    <MDBBreadcrumbItem>Архив</MDBBreadcrumbItem>
-                    <MDBBreadcrumbItem active>Архив показателей для расчета индикаторов ТС</MDBBreadcrumbItem>
-                </MDBBreadcrumb>
-            </MDBRow>
-            <MDBRow>
-               <TableContainer data={this.state.data} isLoading={this.state.isLoading} columns={columns} title={"Архив показателей для расчета индикаторов ТС"}/> 
-            </MDBRow>
-        </MDBContainer>
-    );
-  }
+        return (
+            <TableContainer data={this.state.data} isLoading={this.state.isLoading} columns={columns}
+                            title={"Архив показателей для расчета индикаторов ТС"}/>
+        );
+    }
 };
 

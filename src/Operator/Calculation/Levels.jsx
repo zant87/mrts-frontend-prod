@@ -49,9 +49,8 @@ export default class OperatorCalculationLevelsPage extends React.Component {
     render() {
 
         return (
-            <MDBCol md='8' className='mx-auto my-5'>
-                <h2 className='text-center my-5'>Расчет уровней и динамики достижения индикаторов</h2>
-
+            <MDBCol md='8' className='mx-auto my-3'>
+                <h2 className='text-center my-3'>Расчет уровней и динамики достижения индикаторов</h2>
                 <MDBRow>
                     <MDBCol md="4" className="mb-3">
                         <label htmlFor='datepicker'>Дата документа</label>
@@ -61,6 +60,7 @@ export default class OperatorCalculationLevelsPage extends React.Component {
                                        okLabel='ОК'
                                        name='documentDate'
                                        keyboard={true}
+                                       outline
                                        invalidDateMessage='Неправильный формат даты'
                                        valueDefault={new Date(this.state.date)}
                                        cancelLabel='Отмена'/>

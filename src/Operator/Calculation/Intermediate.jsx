@@ -4,7 +4,7 @@ import {MDBBreadcrumb, MDBBreadcrumbItem, MDBContainer, MDBRow} from "mdbreact";
 const OperatorCalculationIntermediatePage = () => {
     return (
         <MDBContainer>
-            <MDBRow className='mt-5'>
+            <MDBRow className='my-3'>
                 <MDBBreadcrumb>
                     <MDBBreadcrumbItem>Главная</MDBBreadcrumbItem>
                     <MDBBreadcrumbItem>Контроль</MDBBreadcrumbItem>

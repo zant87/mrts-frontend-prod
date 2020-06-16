@@ -24,25 +24,25 @@ class OperatorReportFinancingTabsPage extends React.Component {
         return (
             <MDBContainer fluid>
                 <MDBRow between>
-                    <MDBCol md={'12'} className='my-5 mx-auto'>
-                        <MDBNav className="nav-tabs mt-5 special-color" tabs color="blue-grey">
+                    <MDBCol md={'12'} className='my-0 mx-auto'>
+                        <MDBNav className="nav-tabs special-color my-3" tabs>
                             <MDBNavItem>
                                 <MDBNavLink link to="#" active={this.state.activeItemJustified === "1"}
                                             onClick={this.toggleJustified("1")} role="tab">
-                                    <MDBIcon icon="table" size="1x" />&nbsp;&nbsp;Корректировка
+                                    <MDBIcon icon="table" size="1x"/>&nbsp;&nbsp;Корректировка
                                 </MDBNavLink>
                             </MDBNavItem>
                             <MDBNavItem>
                                 <MDBNavLink link to="#" active={this.state.activeItemJustified === "2"}
                                             onClick={this.toggleJustified("2")} role="tab">
-                                    <MDBIcon icon="tablet-alt" size="1x" />&nbsp;&nbsp;Просмотр
+                                    <MDBIcon icon="tablet-alt" size="1x"/>&nbsp;&nbsp;Просмотр
                                 </MDBNavLink>
                             </MDBNavItem>
                         </MDBNav>
                     </MDBCol>
                 </MDBRow>
                 <MDBRow center>
-                    <MDBCol md={'12'} className='mb-5 mx-auto'>
+                    <MDBCol md={'12'} className='my-3 mx-auto'>
                         <MDBTabContent
                             className="card"
                             activeItem={this.state.activeItemJustified}>

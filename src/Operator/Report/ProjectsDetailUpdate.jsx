@@ -59,7 +59,7 @@ export default class OperatorReportProjectsDetailUpdatePage extends React.Compon
 
     render() {
         return(
-            <MDBCol md='8' className='mx-auto my-5'>
+            <MDBCol md='8' className='mx-auto my-3'>
 
                 <h2 className='text-center my-2'>Обновление документа</h2>
 

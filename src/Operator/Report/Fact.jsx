@@ -49,7 +49,7 @@ export default class OperatorReportFactPage extends React.Component {
 
             <MDBContainer fluid>
                 <MDBRow center>
-                    <MDBCol md={'12'} className='mx-auto'>
+                    <MDBCol md={'12'} className='mx-auto my-3'>
                         <MaterialTable
                             title="Фактические значения показателей"
                             columns={columns}

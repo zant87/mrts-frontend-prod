@@ -195,54 +195,73 @@ K10
 
                 <MDBRow>
                     <MDBCol md="4" className="mb-3">
-                        <MDBSelect label="Версия ТС"
-                                   search={true}
-                                   searchLabel={'Поиск'}
-                                   options={this.state.transportStrategyList}
-                                   getValue={this.setTransportStrategy}>
-                        </MDBSelect>
+
+                        <form>
+                            <MDBSelect
+                                search={true}
+                                options={this.state.transportStrategyList}
+                                searchLabel={'Поиск'}
+                                outline
+                                label='Версия ТС'
+                                getValue={this.setTransportStrategy}
+                            />
+                        </form>
+
                     </MDBCol>
 
                     <MDBCol md="4" className="mb-3">
-                        <MDBSelect label="Квартал"
-                                   search={true}
-                                   searchLabel={'Поиск'}
-                                   options={this.state.quarterList}
-                                   getValue={this.setQuarter}>
-                        </MDBSelect>
+                        <form>
+                            <MDBSelect label="Квартал"
+                                       search={true}
+                                       searchLabel={'Поиск'}
+                                       outline
+                                       options={this.state.quarterList}
+                                       getValue={this.setQuarter}>
+                            </MDBSelect>
+                        </form>
                     </MDBCol>
 
                     <MDBCol md="4" className="mb-3">
-                        <MDBSelect label="Год"
-                                   search={true}
-                                   searchLabel={'Поиск'}
-                                   options={this.state.yearList}
-                                   getValue={this.setYear}>
-                        </MDBSelect>
+                        <form>
+                            <MDBSelect label="Год"
+                                       search={true}
+                                       searchLabel={'Поиск'}
+                                       outline
+                                       options={this.state.yearList}
+                                       getValue={this.setYear}>
+                            </MDBSelect>
+                        </form>
                     </MDBCol>
                 </MDBRow>
 
                 <MDBRow>
                     <MDBCol md="12" className="mb-3">
-                        <MDBSelect label="Вид документа"
-                                   search={true}
-                                   searchLabel={'Поиск'}
-                                   options={this.state.documentTypeList}
-                                   getValue={this.setDocumentType}>
-                        </MDBSelect>
+                        <form>
+                            <MDBSelect label="Вид документа"
+                                       search={true}
+                                       searchLabel={'Поиск'}
+                                       outline
+                                       options={this.state.documentTypeList}
+                                       getValue={this.setDocumentType}>
+                            </MDBSelect>
+                        </form>
                     </MDBCol>
                 </MDBRow>
 
                 {this.state.documentTypeSelected && (
                     <MDBRow middle={true}>
                         <MDBCol md="10" className="mb-3">
-                            <MDBSelect label="Документ основание"
-                                       search={true}
-                                       searchLabel={'Поиск'}
-                                       options={this.state.documentList}
-                                       getValue={this.setDocument}>
-                            </MDBSelect>
+                            <form>
+                                <MDBSelect label="Документ основание"
+                                           search={true}
+                                           searchLabel={'Поиск'}
+                                           outline
+                                           options={this.state.documentList}
+                                           getValue={this.setDocument}>
+                                </MDBSelect>
+                            </form>
                         </MDBCol>
+
                         <MDBCol md="2" className="mb-3" middle={true}>
                             <MDBBtn color="primary" type="none" onClick={this.doCreateDocument}  className='py-3'>
                                 Создать

@@ -48,7 +48,7 @@ export default class OperatorPlanResourcesPage extends React.Component {
         return (
             <MDBContainer fluid>
                 <MDBRow center>
-                    <MDBCol md={'12'} className='my-5 mx-auto'>
+                    <MDBCol md={'12'} className='my-3 mx-auto'>
                         <MaterialTable
                             title="Ресурсное обеспечение ТС (план)"
                             columns={columns}

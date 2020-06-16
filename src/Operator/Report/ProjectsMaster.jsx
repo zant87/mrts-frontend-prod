@@ -1,10 +1,8 @@
 import React from 'react';
-import {MDBCol, MDBContainer, MDBRow, MDBSpinner} from "mdbreact";
-import MUIDataTable from "mui-datatables";
-import {labels} from "../../_components/TableTextLabels";
-import CustomToolbarSelect from "../../_components/CustomToolbarSelect";
+import {MDBCol, MDBContainer, MDBRow, toast} from "mdbreact";
 import appAxios from "../../_services/appAxios";
-import ButtonUpdateColumn from "../../_components/ButtonUpdateColumn";
+import MaterialTable from "material-table";
+import {ruLocalization} from "../../_components/MaterialTableLocalization";
 
 export default class OperatorReportProjectsMasterPage extends React.Component {
 
@@ -20,10 +18,9 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
         this.getData();
     };
 
-    getData = () => {
-        this.setState({ isLoading: true });
-        // appAxios.get(`/views/k-7-masters?sort=id,desc`)
-        appAxios.get(`/views/k-7-masters?sort=id,desc&size=2000`)
+    getData = async () => {
+        this.setState({isLoading: true});
+        appAxios.get(`/views/k-7-masters-all`)
             .then(res => {
                 const count = Number(res.headers['x-total-count']);
                 const data = res.data;
@@ -31,77 +28,74 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
             });
     };
 
-    onChangePage = (page, numberOfRows) => {
-        this.setState({
-            isLoading: true,
-        });
-
-        appAxios.get(`/views/k-7-masters?page=${page}&size=${numberOfRows}&sort=id,desc`)
-            .then(res => {
-                const count = Number(res.headers['x-total-count']);
-                const data = res.data;
-                this.setState({data: data, isLoading: false, count: count, page: page, rowsPerPage: numberOfRows});
-            });
-    };
-
     render() {
 
         const columns = [
-            { name: 'yearNumber', label: 'Отчетный год' },
-            { name: 'projectCode', label: 'Обозначение проекта' },
-            { name: 'projectName', label: 'Содержание проекта' },
-            { name: 'done', label: 'Уровень технической готовности' },
-            { name: 'planBeginYear', label: 'Сроки реализации плановые' },
-            { name: 'factStarted', label: 'Начало фактической реализации' },
-            { name: 'factFinished', label: 'Конец фактической реализации' },
-            { name: 'realPlanCost', label: 'Общие затраты (плановые)', options: { filter: false } },
-            { name: 'fact', label: 'Общие затраты (факт)', options: { filter: false } },
-            { name: 'description', label: 'Фактические результаты', options: { filter: false } },
-            { name: 'documentId', label: 'documentId', options: {display: 'excluded', filter: false}},
-            { name: 'projectId', label: 'projectId', options: {display: 'excluded', filter: false}},
-            { name: 'id', label: 'id', options: {display: 'excluded', filter: false}},
-            { name: "",
-                options: {
-                    filter: false,
-                    sort: false,
-                    empty: true,
-                    customBodyRender: (value, tableMeta, updateValue) => {
-                        return (
-                            <ButtonUpdateColumn rowData = {tableMeta.rowData}/>
-                        );
-                    }
-                }
-            },
+            {field: 'yearNumber', title: 'Отчетный год', editable: 'never'},
+            {field: 'projectCode', title: 'Обозначение проекта', editable: 'never'},
+            {field: 'projectName', title: 'Содержание проекта', editable: 'never'},
+            {field: 'done', title: 'Уровень технической готовности', editable: 'never'},
+            {field: 'planBeginYear', title: 'Сроки реализации плановые', editable: 'never'},
+            {field: 'factStarted', title: 'Начало фактической реализации', editable: 'never'},
+            {field: 'factFinished', title: 'Конец фактической реализации', editable: 'never'},
+            {field: 'realPlanCost', title: 'Общие затраты (плановые)', filtering: false},
+            {field: 'fact', title: 'Общие затраты (факт)', filtering: false},
+            {field: 'description', title: 'Фактические результаты'},
         ];
 
-        const { data, page, count, isLoading } = this.state;
-
-        const options = {
-            // serverSide: true,
-            // count: count,
-            // page: page,
-            rowsPerPage: 20,
-            rowsPerPageOptions: [20, 50, 100, 1000, 2500, 5000],
-            textLabels: labels,
-            sortFilterList: false,
-            print: false,
-            selectableRowsOnClick: false,
-            selectableRows: 'none',
-            customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
-                <CustomToolbarSelect selectedRows={selectedRows} displayData={displayData} setSelectedRows={setSelectedRows} />
-            ),
-        };
+        const tableRef = React.createRef();
+        const {data, isLoading} = this.state;
 
         return (
             <MDBContainer fluid>
                 <MDBRow center>
-                    <MDBCol md={'12'} className='my-5 mx-auto'>
-                        {isLoading && <MDBSpinner multicolor />}
-                        <MUIDataTable
-                            title={"Выполнение крупных инвестиционных проектов (master)"}
-                            data={data}
+                    <MDBCol md={'12'} className='my-3 mx-auto'>
+                        <MaterialTable
+                            title="Выполнение крупных инвестиционных проектов (master)"
                             columns={columns}
-                            options={options}
+                            tableRef={tableRef}
+                            data={data}
+                            isLoading={isLoading}
+                            localization={ruLocalization}
+                            editable={{
+                                onRowUpdate: (newData, oldData) =>
+                                    new Promise((resolve, reject) => {
+                                        setTimeout(() => {
+                                            const dataUpdate = [...data];
+                                            const index = dataUpdate.findIndex(item => item.id === oldData.id);
+
+                                            newData.value = (newData.value !== null) ? newData.value : 0;
+                                            dataUpdate[index] = newData;
+
+                                            console.log(newData);
+
+                                            appAxios.get(`/views/k-7-masters/update?pID=${newData.id}&pDoc=${newData.documentId}&pIdProject=${newData.projectId}&pFactStarted=${newData.factStarted}&pFactFinished=${newData.factFinished}&pDone=${newData.done}&pRptDescription=${newData.description}`)
+                                                .then(res => {
+                                                    const data = res.data;
+                                                    this.setState({result: data, isLoading: false});
+                                                    toast.success(`Обновили данные документа №${data}`, {
+                                                        closeButton: false
+                                                    });
+                                                }).catch(function (error) {
+                                                console.log(error);
+                                                toast.error(`Ошибка при обновлении документа`, {
+                                                    closeButton: false
+                                                });
+                                            });
+
+                                            this.setState({data: dataUpdate});
+
+                                            resolve();
+                                        }, 6000)
+                                    }),
+                            }}
+                            options={{
+                                actionsColumnIndex: 999,
+                                search: true,
+                                pageSize: 20,
+                                pageSizeOptions: [20, 50, 100],
+                                filtering: true
+                            }}
                         />
                     </MDBCol>
                 </MDBRow>

@@ -94,15 +94,15 @@ export default class OperatorCalculationValuesPage extends React.Component {
     render() {
 
         return (
-            <MDBCol md='8' className='mx-auto my-5'>
-                <h2 className='text-center my-2'>Расчет значений индикаторов за отчетный период</h2>
-
+            <MDBCol md='8' className='mx-auto my-3'>
+                <h2 className='text-center my-3'>Расчет значений индикаторов за отчетный период</h2>
                 <MDBRow>
                     <MDBCol md="12" className="mb-3">
                         <MDBSelect searchId={'algorithm'}
                                    label="Алгоритм"
                                    search={true}
                                    searchLabel={'Поиск'}
+                                   outline
                                    options={this.state.algorithmList}
                                    getValue={this.setAlgorithm}>
                         </MDBSelect>
@@ -114,6 +114,7 @@ export default class OperatorCalculationValuesPage extends React.Component {
                         <MDBSelect searchId={'provider'}
                                    label="Источник данных"
                                    search={true}
+                                   outline
                                    searchLabel={'Поиск'}
                                    options={this.state.providerList}
                                    getValue={this.setProvider}>
@@ -130,6 +131,7 @@ export default class OperatorCalculationValuesPage extends React.Component {
                                        okLabel='ОК'
                                        name='documentDate'
                                        keyboard={true}
+                                       outline
                                        invalidDateMessage='Неправильный формат даты'
                                        valueDefault={new Date(this.state.date)}
                                        cancelLabel='Отмена'/>

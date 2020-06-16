@@ -43,7 +43,7 @@ export default class OperatorReportExtraBudgetPage extends React.Component {
         return (
             <MDBContainer fluid>
                 <MDBRow center>
-                    <MDBCol md={'12'} className='mx-auto'>
+                    <MDBCol md={'12'} className='mx-auto my-3'>
                         <MaterialTable
                             title="Объемы привлечения внебюджетных средств"
                             columns={columns}

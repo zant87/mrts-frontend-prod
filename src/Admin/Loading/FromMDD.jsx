@@ -53,14 +53,14 @@ export default class AdminLoadingFromMDDPage extends React.Component {
 
                 <MDBRow>
                     <MDBCol md="12" className="mb-3">
-                        <MDBInput label="Год начала" value={this.state.start} type="number" name="start"
+                        <MDBInput label="Год начала" value={this.state.start} type="number" name="start" outline
                                   onChange={this.onChangeHandler}/>
                     </MDBCol>
                 </MDBRow>
 
                 <MDBRow>
                     <MDBCol md="12" className="mb-3">
-                        <MDBInput label="Год окончания" value={this.state.end} type="number" name="end"
+                        <MDBInput label="Год окончания" value={this.state.end} type="number" name="end" outline
                                   onChange={this.onChangeHandler}/>
                     </MDBCol>
                 </MDBRow>
