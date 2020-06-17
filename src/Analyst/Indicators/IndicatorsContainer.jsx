@@ -31,7 +31,13 @@ class IndicatorsContainer extends React.Component {
     let indId = this.props.match.params.indId;
 
     if (indId) {
-      this.props.getIndValues(indId, this.props.frequencyId, this.props.indsYearStart, this.props.indsYearEnd, this.props.indsQuarterId);
+      this.props.getIndValues(
+        indId,
+        this.props.frequencyId,
+        this.props.indsYearStart,
+        this.props.indsYearEnd,
+        this.props.indsQuarterId
+      );
       //debugger;
     }
   }
@@ -40,7 +46,13 @@ class IndicatorsContainer extends React.Component {
     let indId = this.props.match.params.indId;
     if (indId !== prevProps.match.params.indId) {
       if (indId) {
-        this.props.getIndValues(indId, this.props.frequencyId, this.props.indsYearStart, this.props.indsYearEnd, this.props.indsQuarterId);
+        this.props.getIndValues(
+          indId,
+          this.props.frequencyId,
+          this.props.indsYearStart,
+          this.props.indsYearEnd,
+          this.props.indsQuarterId
+        );
         // debugger;
       }
     }
@@ -55,14 +67,24 @@ class IndicatorsContainer extends React.Component {
       this.props.setIndsQuarterId(quarterId);
     }
     if (indId) {
-      this.props.getIndValues(indId, frequencyId, yearStart, yearEnd, quarterId);
+      this.props.getIndValues(
+        indId,
+        frequencyId,
+        yearStart,
+        yearEnd,
+        quarterId
+      );
     }
   };
 
   render() {
     return (
       <div>
-        <Indicators indsPage={this.props} onFilterChanged={this.onFilterChanged} />;
+        <Indicators
+          indsPage={this.props}
+          onFilterChanged={this.onFilterChanged}
+        />
+        ;
       </div>
     );
   }

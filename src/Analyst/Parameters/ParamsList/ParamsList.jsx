@@ -82,7 +82,13 @@ class ParamsList extends React.Component {
       quarterId = this.setQuarter.current.value;
     }
 
-    this.props.onFilterChanged(freq, yearStart, yearEnd, quarterId, selectedFormsArr);
+    this.props.onFilterChanged(
+      freq,
+      yearStart,
+      yearEnd,
+      quarterId,
+      selectedFormsArr
+    );
     this.toggle();
   };
 
@@ -92,7 +98,11 @@ class ParamsList extends React.Component {
     let newForms = [];
 
     if (this.props.forms) {
-      forms = this.props.forms.sort().map((item) => ({ text: item.okudName, value: item.id, checked: true }));
+      forms = this.props.forms.sort().map((item) => ({
+        text: item.okudName,
+        value: item.id,
+        checked: true,
+      }));
       if (this.props.checkedFormId != null) {
         let checkedFormId = this.props.checkedFormId;
         //console.log(checkedFormId);
@@ -104,7 +114,11 @@ class ParamsList extends React.Component {
             }
           });
 
-          newForms.push({ text: form.okudName, value: form.id, checked: checked });
+          newForms.push({
+            text: form.okudName,
+            value: form.id,
+            checked: checked,
+          });
         });
         console.log(newForms);
       }
@@ -114,17 +128,32 @@ class ParamsList extends React.Component {
 
     if (this.props.transportTypeId != "0") {
       //debugger;
-      params = params.filter((x) => x.transportTypeId == this.props.transportTypeId);
+      params = params.filter(
+        (x) => x.transportTypeId == this.props.transportTypeId
+      );
     }
 
     if (this.props.searchQuery != null) {
-      params = params.filter((x) => x.parameterName.trim().toLowerCase().includes(this.props.searchQuery.trim().toLowerCase()));
+      params = params.filter((x) =>
+        x.parameterName
+          .trim()
+          .toLowerCase()
+          .includes(this.props.searchQuery.trim().toLowerCase())
+      );
     }
 
     return (
       <MDBCol lg="3" className="list h-100" style={{ marginBottom: "10px" }}>
-        <MDBModal isOpen={this.state.modal} toggle={this.toggle} centered animation="top" style={{ overflow: "scroll" }}>
-          <MDBModalHeader toggle={this.toggle}>Настройка отображения данных</MDBModalHeader>
+        <MDBModal
+          isOpen={this.state.modal}
+          toggle={this.toggle}
+          centered
+          animation="top"
+          style={{ overflow: "scroll" }}
+        >
+          <MDBModalHeader toggle={this.toggle}>
+            Настройка отображения данных
+          </MDBModalHeader>
           <MDBModalBody>
             <MDBContainer className="mt-2">
               <div style={{ marginBottom: "20px", clear: "left" }}>
@@ -144,12 +173,12 @@ class ParamsList extends React.Component {
                   outline="true"
                   multiple
                   search
-                  searchLabel="Поиск форм"
+                  //searchLabel="Поиск форм"
                   options={this.props.forms ? forms : null}
                   //selected="Выберите индикаторы"
                   selectAll
                   selectAllLabel="Выберите все"
-                  selectAllValue={null}
+                  selectAllValue=""
                   //focusShadow="inset 0px 10px 0px 0px"
                   //getValue={this.selectedForms}
                   required

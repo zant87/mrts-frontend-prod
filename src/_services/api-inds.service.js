@@ -43,7 +43,7 @@ export const IndsAPI = {
         "&quarterId.equals=" +
         quarterId;
     }
-    //console.log(url);
+    console.log(url);
     return instance.get(url).then((response) => {
       if (response.data.length == 0) {
         return null;
