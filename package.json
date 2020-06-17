@@ -1,6 +1,7 @@
 {
   "name": "mrts-frontend",
-  "version": "0.1.0",
+  "version": "0.8.0",
+  "homepage": "/app/",
   "scripts": {
     "build": "npm run webpack:prod:main",
     "start": "npm run webpack:dev",
