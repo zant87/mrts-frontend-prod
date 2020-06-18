@@ -3,18 +3,11 @@ import { MDBFooter, MDBRow, MDBContainer } from "mdbreact";
 
 export const Footer = () => {
   return (
-    <MDBRow className="pt-3 mt-3">
-        {/* <MDBFooter color="dark" className="font-small pb-1 mt-0 text-center">
-        <MDBContainer fluid style={{ color: "#828282" }}>
-          <p className=" mb-0 py-3 text-center">
-            &copy; {new Date().getFullYear()} <a href="http://www.geogracom.com"> ООО ГЕОГРАКОМ </a>
-          </p>
-        </MDBContainer>
-      </MDBFooter> */}
+    <MDBRow>
         <MDBFooter
             color="white"
             //color="special-color"
-            className="fixed-bottom text-center">
+            className="fixed-bottom text-center mt-3">
             <p
                 className="mb-0 "
                 style={{

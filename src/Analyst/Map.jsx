@@ -160,7 +160,7 @@ class AnalystMapPage extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <div className="webmap my-5" ref={this.mapRef}/>
+                <div className="webmap" ref={this.mapRef}/>
             </React.Fragment>
         );
     }
