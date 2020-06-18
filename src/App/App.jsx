@@ -181,7 +181,7 @@ class App extends React.Component {
                       </MDBSideNavItem>
                       <MDBSideNavItem>
                         <MDBSideNavLink to='/analyst/report'>
-                          Отчет перед правительством
+                          Отчет перед Правительством
                         </MDBSideNavLink>
                       </MDBSideNavItem>
                       <MDBSideNavItem>
@@ -265,7 +265,7 @@ class App extends React.Component {
                         </MDBSideNavItem>
                         <MDBSideNavItem>
                           <MDBSideNavLink to='/admin/loading/fromMDD'>
-                            Синхронизация с ФЗ МДД
+                            Синхронизация с ФЗ МДФ
                           </MDBSideNavLink>
                         </MDBSideNavItem>
                         <MDBSideNavItem>
@@ -437,7 +437,8 @@ class App extends React.Component {
                     <div onClick={this.handleToggleClickA}
                          key="sideNavToggleA"
                          className='mr-3'>
-                      <MDBIcon icon="bars" size="2x" className='amber-text'/>
+                      <img src={MintransLogo} className='logo' alt='Герб'/>
+                      {/*<MDBIcon icon="bars" size="2x" className='amber-text'/>*/}
                     </div>
                   </MDBNavItem>
                   <MDBNavItem className="white-text" style={{paddingTop: 5}}>
@@ -470,6 +471,11 @@ class App extends React.Component {
                       </span>
                     </MDBTooltip>
                   </MDBNavItem>
+                  <MDBNavItem>
+                    <MDBNavLink to='/'>
+                      <MDBIcon icon="home"/> {" "}
+                    </MDBNavLink>
+                  </MDBNavItem>
                   {isAdmin && (
                       <React.Fragment>
                         <MDBNavItem>
@@ -498,7 +504,7 @@ class App extends React.Component {
                       <React.Fragment>
                         <MDBNavItem>
                           <a className="nav-link" onClick={(e) => this.setLayout(Layouts.operatorPlan)}>
-                            Плановые показатели
+                            План
                           </a>
                         </MDBNavItem>
                         <MDBNavItem>
@@ -508,7 +514,7 @@ class App extends React.Component {
                         </MDBNavItem>
                         <MDBNavItem>
                           <a className="nav-link" onClick={(e) => this.setLayout(Layouts.operatorReport)}>
-                            Отчетные показатели
+                            Отчет
                           </a>
                         </MDBNavItem>
                         <MDBNavItem>
@@ -535,7 +541,7 @@ class App extends React.Component {
                   )}
                   {isDevMode && (
                       <MDBNavItem>
-                        <a className="nav-link" href="#">
+                        <a className="nav-link">
                           <MDBIcon icon="sign-out-alt" className="d-inline-inline mr-1"/>
                           <div className="d-none d-xl-inline">Выход</div>
                         </a>
