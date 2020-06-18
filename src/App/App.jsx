@@ -443,6 +443,7 @@ class App extends React.Component {
                   </MDBNavItem>
                   <MDBNavItem className="white-text" style={{paddingTop: 5}}>
                     <div className='d-none d-xl-inline'>Мониторинг реализации транспортной стратегии -</div>
+                    {' '}
                     {isAnalyst && (<div className='d-none d-lg-inline'>АРМ Аналитика</div>)}
                     {isAdmin && (<div className='d-none d-lg-inline'>АРМ Администратора</div>)}
                     {isOperator && (<div className='d-none d-lg-inline'>АРМ Оператора</div>)}
