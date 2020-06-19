@@ -170,6 +170,30 @@ class AdminArchiveActivitiesPage extends React.Component {
         this.setState({ endDate: date.format('YYYY-MM-DD')});
     }
 
+    setDocumentType = e => {
+        this.setState({
+            documentTypeId: e.toString()
+        });
+    }
+
+    setActivity = e => {
+        this.setState({
+            activityId: e.toString()
+        });
+    }
+    
+    setYear = e => {
+        this.setState({
+            year: e.toString()
+        });
+    }
+
+    setQuarter = e => {
+        this.setState({
+            quarterId: e.toString()
+        });
+    }
+
   render() {
 
     const columns = [
@@ -220,9 +244,86 @@ class AdminArchiveActivitiesPage extends React.Component {
                     <MDBBreadcrumbItem active>Архив выполнения мероприятий по реализации ТС</MDBBreadcrumbItem>
                 </MDBBreadcrumb>
             </MDBRow>
+            <div className="text-right">
+                   {this.state.searchBystr} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<MDBBtn color="info" onClick={this.toggle}>Фильтры</MDBBtn>
+                </div>
+                <MDBModal isOpen={this.state.modal} toggle={this.toggle}  size="lg"  >
+                  <MDBModalHeader toggle={this.toggle}>&nbsp;&nbsp;&nbsp;&nbsp;Архив выполнения мероприятий по реализации ТС</MDBModalHeader>
+                  <MDBModalBody>
 
 
-
+                      <MDBRow around={true}>
+                          <MDBCol md="4" className="mb-2">
+                              <MDBSelect searchId={'documentTypeId'}
+                                         label="Тип документа"
+                                         search={true}
+                                         searchLabel={'Поиск'}
+                                         options={this.state.documentTypeList}
+                                         getValue={this.setDocumentType}>
+                              </MDBSelect>
+                          </MDBCol>
+                          <MDBCol md="4" className="mb-2">
+                              <MDBSelect searchId={'activityId'}
+                                         label="Мероприятие"
+                                         search={true}
+                                         searchLabel={'Поиск'}
+                                         options={this.state.activityList}
+                                         getValue={this.setActivity}>
+                              </MDBSelect>
+                          </MDBCol>
+                      </MDBRow>
+                      <MDBRow around={true}>
+                          <MDBCol md="4" className="mb-3">
+                              <label htmlFor='datepicker'>Начало периода</label>
+                              <MDBDatePicker getValue={this.getBeginDate}
+                                             format='YYYY-MM-DD'
+                                             locale={moment.locale('ru')}
+                                             okLabel='ОК'
+                                             name='beginDate'
+                                             keyboard={true}
+                                             invalidDateMessage='Неправильный формат даты'
+                                             valueDefault={new Date(this.state.date)}
+                                             cancelLabel='Отмена'/>
+                          </MDBCol>
+                          <MDBCol md="4" className="mb-3">
+                              <label htmlFor='datepicker'>Конец периода</label>
+                              <MDBDatePicker getValue={this.getEndDate}
+                                             format='YYYY-MM-DD'
+                                             locale={moment.locale('ru')}
+                                             okLabel='ОК'
+                                             name='endDate'
+                                             keyboard={true}
+                                             invalidDateMessage='Неправильный формат даты'
+                                             valueDefault={new Date(this.state.date)}
+                                             cancelLabel='Отмена'/>
+                          </MDBCol>
+                      </MDBRow>
+                      <MDBRow around={true}>
+                          <MDBCol md="2" className="mb-2">
+                              <MDBSelect searchId={'year'}
+                                         label="Отчетный год"
+                                         search={true}
+                                         searchLabel={'Поиск'}
+                                         options={this.state.yearList}
+                                         getValue={this.setYear}>
+                              </MDBSelect>
+                          </MDBCol>
+                          <MDBCol md="2" className="mb-2">
+                              <MDBSelect searchId={'quarterId'}
+                                         label="Отчетный квартал"
+                                         search={true}
+                                         searchLabel={'Поиск'}
+                                         options={this.state.quarterList}
+                                         getValue={this.setQuarter}>
+                              </MDBSelect>
+                          </MDBCol>
+                      </MDBRow>
+                      </MDBModalBody>
+                      <MDBModalFooter>
+                        <MDBBtn color="secondary" onClick={this.toggle}>Закрыть</MDBBtn>
+                        <MDBBtn color="primary" onClick={this.filterData} >Получить данные</MDBBtn>
+                      </MDBModalFooter>
+                    </MDBModal>
             <MDBRow>
                <TableContainer data={this.state.data} isLoading={this.state.isLoading} columns={columns} title={"Архив выполнения мероприятий по реализации ТС"}/> 
             </MDBRow>

@@ -138,6 +138,18 @@ class AdminArchiveProjectsPage extends React.Component {
         this.setState({ endDate: date.format('YYYY-MM-DD')});
     }
 
+    setYear = e => {
+        this.setState({
+            year: e.toString()
+        });
+    }
+    
+    setQuarter = e => {
+        this.setState({
+            quarterId: e.toString()
+        });
+    }
+
     render() {
 
 
