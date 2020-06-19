@@ -11,7 +11,7 @@ const SET_TRANSPORT_TYPE_ID = "SET_TRANSPORT_TYPE_ID";
 const SET_GOAL_ID = "SET_GOAL_ID";
 const SET_SEARCH_QUERY = "SET_SEARCH_QUERY";
 const SET_FREQUENCIES = "SET_FREQUENCIES";
-const SET_FREQUENCY_ID = "SET_FREQUENCY_ID";
+const SET_IND_FREQUENCY_ID = "SET_IND_FREQUENCY_ID";
 const SET_IND_ID = "SET_IND_ID";
 const SET_QUARTERS = "SET_QUARTERS";
 const SET_INDS_QUARTER_ID = "SET_INDS_QUARTER_ID";
@@ -32,7 +32,7 @@ let initialState = {
   searchQuery: null,
   transportTypeId: "0",
   frequencies: null,
-  frequencyId: 1,
+  indFrequencyId: 1,
   quarters: null,
   indsQuarterId: null,
   years: null,
@@ -103,10 +103,10 @@ const indsReducer = (state = initialState, action) => {
         ...state,
         frequencies: action.frequencies,
       };
-    case SET_FREQUENCY_ID:
+    case SET_IND_FREQUENCY_ID:
       return {
         ...state,
-        frequencyId: action.frequencyId,
+        indFrequencyId: action.indFrequencyId,
       };
     case SET_QUARTERS:
       return {
@@ -174,9 +174,9 @@ export const setFrequencies = (frequencies) => ({
   frequencies,
 });
 
-export const setFrequencyId = (frequencyId) => ({
-  type: SET_FREQUENCY_ID,
-  frequencyId,
+export const setIndFrequencyId = (indFrequencyId) => ({
+  type: SET_IND_FREQUENCY_ID,
+  indFrequencyId,
 });
 export const setQuarters = (quarters) => ({
   type: SET_QUARTERS,
@@ -216,7 +216,7 @@ export const getInds = () => {
 
 export const getIndValues = (
   indId,
-  frequencyId,
+  indFrequencyId,
   yearStart,
   yearEnd,
   quarterId
@@ -224,13 +224,17 @@ export const getIndValues = (
   return (dispatch) => {
     dispatch(toogleIsFetchingIndData(true));
     dispatch(setIndId(indId));
-    IndsAPI.getIndData(indId, frequencyId, yearStart, yearEnd, quarterId).then(
-      (data) => {
-        dispatch(setIndValues(data));
-        dispatch(toogleIsFetchingIndData(false));
-      }
-    );
-    dispatch(setFrequencyId(frequencyId));
+    IndsAPI.getIndData(
+      indId,
+      indFrequencyId,
+      yearStart,
+      yearEnd,
+      quarterId
+    ).then((data) => {
+      dispatch(setIndValues(data));
+      dispatch(toogleIsFetchingIndData(false));
+    });
+    dispatch(setIndFrequencyId(indFrequencyId));
     dispatch(setIndsYearStart(yearStart));
     dispatch(setIndsYearEnd(yearEnd));
     dispatch(setIndsQuarterId(quarterId));

@@ -12,6 +12,7 @@ export const IndsAPI = {
       return response.data;
     });
   },
+
   getIndData(
     indId,
     frequencyId = 1,

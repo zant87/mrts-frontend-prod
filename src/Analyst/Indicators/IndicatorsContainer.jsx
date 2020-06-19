@@ -10,7 +10,7 @@ import {
   setSearchQuery,
   setTransportTypeId,
   getFrequencies,
-  setFrequencyId,
+  setIndFrequencyId,
   getYears,
   getQuarters,
   setIndsQuarterId,
@@ -33,7 +33,7 @@ class IndicatorsContainer extends React.Component {
     if (indId) {
       this.props.getIndValues(
         indId,
-        this.props.frequencyId,
+        this.props.indFrequencyId,
         this.props.indsYearStart,
         this.props.indsYearEnd,
         this.props.indsQuarterId
@@ -48,7 +48,7 @@ class IndicatorsContainer extends React.Component {
       if (indId) {
         this.props.getIndValues(
           indId,
-          this.props.frequencyId,
+          this.props.indFrequencyId,
           this.props.indsYearStart,
           this.props.indsYearEnd,
           this.props.indsQuarterId
@@ -58,9 +58,9 @@ class IndicatorsContainer extends React.Component {
     }
   }
 
-  onFilterChanged = (frequencyId, yearStart, yearEnd, quarterId) => {
+  onFilterChanged = (indFrequencyId, yearStart, yearEnd, quarterId) => {
     let indId = this.props.match.params.indId;
-    this.props.setFrequencyId(frequencyId);
+    this.props.setIndFrequencyId(indFrequencyId);
     this.props.setIndsYearStart(yearStart);
     this.props.setIndsYearEnd(yearEnd);
     if (quarterId != null) {
@@ -69,7 +69,7 @@ class IndicatorsContainer extends React.Component {
     if (indId) {
       this.props.getIndValues(
         indId,
-        frequencyId,
+        indFrequencyId,
         yearStart,
         yearEnd,
         quarterId
@@ -104,7 +104,7 @@ let mapStateToProps = (state) => {
     searchQuery: state.indsPage.searchQuery,
     transportTypeId: state.indsPage.transportTypeId,
     frequencies: state.indsPage.frequencies,
-    frequencyId: state.indsPage.frequencyId,
+    indFrequencyId: state.indsPage.indFrequencyId,
     quarters: state.indsPage.quarters,
     indsQuarterId: state.indsPage.indsQuarterId,
     years: state.indsPage.years,
@@ -123,7 +123,7 @@ export default compose(
     setSearchQuery,
     setTransportTypeId,
     getFrequencies,
-    setFrequencyId,
+    setIndFrequencyId,
     getYears,
     getQuarters,
     setIndsQuarterId,

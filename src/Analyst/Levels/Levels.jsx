@@ -28,9 +28,9 @@ let Levels = (props) => {
           years={props.levelsPage.years}
           year={props.levelsPage.year}
           quarters={props.levelsPage.quarters}
-          quarterId={props.levelsPage.quarterId}
+          levQuarterId={props.levelsPage.levQuarterId}
           setYear={props.levelsPage.year}
-          setQuarterId={props.levelsPage.setQuarterId}
+          setLevQuarterId={props.levelsPage.setLevQuarterId}
           scenarios={props.levelsPage.scenarios}
           scenarioId={props.levelsPage.scenarioId}
           setScenarioId={props.levelsPage.setScenarioId}
@@ -40,6 +40,7 @@ let Levels = (props) => {
           levVals={props.levelsPage.levVals}
           isFetchingLevData={props.levelsPage.isFetchingLevData}
           frequencyLevId={props.levelsPage.frequencyLevId}
+          year={props.levelsPage.year}
         />
       </MDBRow>
     </div>

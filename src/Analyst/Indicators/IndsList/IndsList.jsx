@@ -28,14 +28,14 @@ class IndsList extends React.Component {
   state = {
     modal: false,
     radio: 2,
-    frequencyId: this.props.frequencyId,
+    indFrequencyId: this.props.indFrequencyId,
   };
 
   setFrequency = React.createRef();
   setYearStart = React.createRef();
   setYearEnd = React.createRef();
   setQuarter = React.createRef();
-  frequencyId = null;
+  indFrequencyId = null;
 
   toggle = () => {
     this.setState({
@@ -51,7 +51,7 @@ class IndsList extends React.Component {
 
   onSelectFrequency = (e) => {
     this.setState({
-      frequencyId: this.setFrequency.current.value,
+      indFrequencyId: this.setFrequency.current.value,
     });
   };
 
@@ -115,7 +115,7 @@ class IndsList extends React.Component {
                 >
                   {this.props.frequencies
                     ? this.props.frequencies.map((item) =>
-                        this.props.frequencyId == item.id ? (
+                        this.props.indFrequencyId == item.id ? (
                           <option value={item.id} selected>
                             {item.name}
                           </option>
@@ -126,7 +126,7 @@ class IndsList extends React.Component {
                     : null}
                 </select>
               </div>
-              {this.state.frequencyId == 2 ? (
+              {this.state.indFrequencyId == 2 ? (
                 <div className="form-group">
                   <label htmlFor="quarterform">
                     <strong>Выберите квартал</strong>

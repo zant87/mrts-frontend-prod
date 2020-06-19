@@ -62,7 +62,7 @@ const ParamsTable = (props) => {
     //-----------Заполнение data.column для MDBDataTable
     years.map((year) =>
       //--------Если годовые значения
-      props.frequencyId == 1
+      props.paramFrequencyId == 1
         ? data.columns.push({
             label: year.split("-")[0],
             field: year.split("-")[0],
@@ -81,7 +81,7 @@ const ParamsTable = (props) => {
 
     rows = {};
     //------------Если годовые значения
-    if (props.frequencyId == 1) {
+    if (props.paramFrequencyId == 1) {
       years.forEach((year) => {
         rows[year.split("-")[0]] = paramsval
           .filter((val, i, arr) => {
@@ -142,6 +142,18 @@ const ParamsTable = (props) => {
                 <MDBCardText>
                   {props.paramVals ? (
                     <div>
+                      <div style={{ fontSize: "12px" }}>
+                        Заданный период:{" "}
+                        {props.paramYearStart + "-" + props.paramYearEnd}
+                        {props.paramFrequencyId == 2
+                          ? " ( " +
+                            props.paramVals[0].quarterLabel.substr(
+                              0,
+                              props.paramVals[0].quarterLabel.length - 5
+                            ) +
+                            " )"
+                          : ""}
+                      </div>
                       <ExportXLSX
                         csvData={data.rows}
                         fileName={"exportParams"}
@@ -164,6 +176,7 @@ const ParamsTable = (props) => {
                         scrollX
                         striped
                         theadTextWhite
+                        searching={false}
                         // infoLabel={["Показано с", "по", "из", "записей"]}
                         // entriesLabel="Выводить по"
                         //theadColor="blue-grey lighten-5"

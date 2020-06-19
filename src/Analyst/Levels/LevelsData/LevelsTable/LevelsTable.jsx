@@ -78,7 +78,13 @@ const LevelsTable = (props) => {
               >
                 {props.levVals ? (
                   <div>
-                    Уровни достижения за {levVals[0].quarterLabel} г. <br />
+                    Уровни достижения за{" "}
+                    {props.levVals[0].year +
+                      " г. " +
+                      (props.frequencyLevId == 2
+                        ? "( " + props.levVals[0].quarterLabel + " )"
+                        : "")}{" "}
+                    <br />
                     <br />
                     Цель: {props.levVals[0].goalName} <br />
                     Сценарий: {props.levVals[0].scenarioName} <br />

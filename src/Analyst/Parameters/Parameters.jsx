@@ -21,8 +21,8 @@ let Parameters = (props) => {
           transportTypeId={props.paramsPage.transportTypeId}
           setTransportTypeId={props.paramsPage.setTransportTypeId}
           frequencies={props.paramsPage.frequencies}
-          setFrequencyId={props.paramsPage.setFrequencyId}
-          frequencyId={props.paramsPage.frequencyId}
+          setParamFrequencyId={props.paramsPage.setParamFrequencyId}
+          paramFrequencyId={props.paramsPage.paramFrequencyId}
           onFilterChanged={props.onFilterChanged}
           forms={props.paramsPage.forms}
           checkedFormId={props.paramsPage.checkedFormId}
@@ -38,7 +38,9 @@ let Parameters = (props) => {
         <ParamData
           paramVals={props.paramsPage.paramVals}
           isFetchingParamData={props.paramsPage.isFetchingParamData}
-          frequencyId={props.paramsPage.frequencyId}
+          paramFrequencyId={props.paramsPage.paramFrequencyId}
+          paramYearStart={props.paramsPage.paramYearStart}
+          paramYearEnd={props.paramsPage.paramYearEnd}
         />
         <ParamsInfo
           paramVals={props.paramsPage.paramVals}

@@ -1,5 +1,12 @@
 import React from "react";
-import { MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText } from "mdbreact";
+import {
+  MDBRow,
+  MDBCol,
+  MDBCard,
+  MDBCardBody,
+  MDBCardTitle,
+  MDBCardText,
+} from "mdbreact";
 import ReactEcharts from "echarts-for-react";
 import s from "./DynamicsChart.module.css";
 import Preloader from "@/Common/Preloader/Preloader";
@@ -16,7 +23,9 @@ let DynamicsChart = (props) => {
     let okeiName = "";
 
     if (props.dynVals) {
-      dynVals = props.dynVals.sort((a, b) => (a.indicatorCode > b.indicatorCode ? 1 : -1));
+      dynVals = props.dynVals.sort((a, b) =>
+        a.indicatorCode > b.indicatorCode ? 1 : -1
+      );
 
       dynVals.forEach((item) => {
         //debugger;
@@ -39,7 +48,10 @@ let DynamicsChart = (props) => {
           },
         },
         label: {
-          formatter: item.currentLevel > 100 ? "{c} % (Достигнут)" : "{c} % (Не достигнут)",
+          formatter:
+            item.currentLevel > 100
+              ? "{c} % (Достигнут)"
+              : "{c} % (Не достигнут)",
           position: item.dynamic < 0 ? "left" : "right",
         },
       }));
@@ -57,7 +69,9 @@ let DynamicsChart = (props) => {
       },
 
       legend: {
-        data: ["Динамика уровня достижения за " + dynVals[0].quarterLabel + " г."],
+        data: [
+          "Динамика уровня достижения за " + dynVals[0].quarterLabel + " г.",
+        ],
       },
       grid: {
         // left: '3%',
@@ -147,7 +161,8 @@ let DynamicsChart = (props) => {
       ],
       series: [
         {
-          name: "Динамика уровня достижения за " + dynVals[0].quarterLabel + " г.",
+          name:
+            "Динамика уровня достижения за " + dynVals[0].quarterLabel + " г.",
           type: "bar",
           label: {
             show: true,
@@ -195,7 +210,16 @@ let DynamicsChart = (props) => {
                 textTransform: "uppercase",
               }}
             >
-              {props.dynVals ? "Динамика уровней достижения за " + props.dynVals[0].quarterLabel + " г." : <div>Нет данных</div>}
+              {props.dynVals ? (
+                "Динамика уровней достижения за " +
+                props.dynVals[0].year +
+                " г. " +
+                (props.frequencyDynId == 2
+                  ? "( " + props.dynVals[0].quarterLabel + " )"
+                  : "")
+              ) : (
+                <div>Нет данных</div>
+              )}
             </MDBCardTitle>
             {props.isFetchingDynData ? (
               <Preloader />

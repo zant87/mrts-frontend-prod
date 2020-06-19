@@ -56,7 +56,7 @@ export const ParamsAPI = {
         "&quarterId.equals=" +
         quarter;
     }
-    //console.log(url);
+    console.log(url);
 
     return instance.get(url).then((response) => {
       if (response.data.length == 0) {

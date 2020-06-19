@@ -8,7 +8,7 @@ import {
   setSearchQuery,
   setTransportTypeId,
   getFrequencies,
-  setFrequencyId,
+  setParamFrequencyId,
   getForms,
   getYears,
   getQuarters,
@@ -32,7 +32,13 @@ class ParametersContainer extends React.Component {
     let paramId = this.props.match.params.paramId;
 
     if (paramId) {
-      this.props.getParamValues(paramId, this.props.frequencyId, this.props.paramYearStart, this.props.paramYearEnd, this.props.quarterId);
+      this.props.getParamValues(
+        paramId,
+        this.props.paramFrequencyId,
+        this.props.paramYearStart,
+        this.props.paramYearEnd,
+        this.props.paramQuarterId
+      );
     }
   }
 
@@ -42,33 +48,50 @@ class ParametersContainer extends React.Component {
       if (paramId) {
         this.props.getParamValues(
           paramId,
-          this.props.frequencyId,
+          this.props.paramFrequencyId,
           this.props.paramYearStart,
           this.props.paramYearEnd,
-          this.props.quarterId
+          this.props.paramQuarterId
         );
       }
     }
   }
 
-  onFilterChanged = (frequencyId, yearStart, yearEnd, quarterId, selectedFormId) => {
+  onFilterChanged = (
+    paramFrequencyId,
+    yearStart,
+    yearEnd,
+    quarterId,
+    selectedFormId
+  ) => {
     this.props.getParams(selectedFormId);
-    this.props.setFrequencyId(frequencyId);
+    this.props.setParamFrequencyId(paramFrequencyId);
     this.props.setParamYearStart(yearStart);
     this.props.setParamYearEnd(yearEnd);
     if (quarterId != null) {
+      //debugger;
       this.props.setParamQuarterId(quarterId);
     }
     let paramId = this.props.match.params.paramId;
     if (paramId) {
-      this.props.getParamValues(paramId, frequencyId, yearStart, yearEnd, quarterId);
+      this.props.getParamValues(
+        paramId,
+        paramFrequencyId,
+        yearStart,
+        yearEnd,
+        quarterId
+      );
     }
   };
 
   render() {
     return (
       <div>
-        <Parameters paramsPage={this.props} onFilterChanged={this.onFilterChanged} />;
+        <Parameters
+          paramsPage={this.props}
+          onFilterChanged={this.onFilterChanged}
+        />
+        ;
       </div>
     );
   }
@@ -86,7 +109,7 @@ let mapStateToProps = (state) => {
     searchQuery: state.paramsPage.searchQuery,
     transportTypeId: state.paramsPage.transportTypeId,
     frequencies: state.paramsPage.frequencies,
-    frequencyId: state.paramsPage.frequencyId,
+    paramFrequencyId: state.paramsPage.paramFrequencyId,
     forms: state.paramsPage.forms,
     checkedFormId: state.paramsPage.checkedFormId,
     quarters: state.paramsPage.quarters,
@@ -105,7 +128,7 @@ export default compose(
     setSearchQuery,
     setTransportTypeId,
     getFrequencies,
-    setFrequencyId,
+    setParamFrequencyId,
     getForms,
     getYears,
     getQuarters,

@@ -70,7 +70,7 @@ class LevSettings extends React.Component {
 
   onSelectQuarter = (e) => {
     let quarterId = e.target.value;
-    this.props.setQuarterId(quarterId);
+    this.props.setLevQuarterId(quarterId);
   };
 
   onSelectScenario = (e) => {
@@ -462,7 +462,7 @@ class LevSettings extends React.Component {
                   >
                     {this.props.quarters
                       ? this.props.quarters.map((item) =>
-                          this.props.quarterId == item.id ? (
+                          this.props.levQuarterId == item.id ? (
                             <option value={item.code} selected>
                               {item.name}
                             </option>
