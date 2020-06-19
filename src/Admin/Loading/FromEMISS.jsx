@@ -11,6 +11,7 @@ export default class AdminLoadingFromEMISSPage extends React.Component {
     };
 
     doImport = async () => {
+
         const responseData = {
             startYear: this.state.start,
             endYear: this.state.end,

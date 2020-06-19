@@ -110,7 +110,6 @@ const config = {
             return `npm.${packageName.replace('@', '')}`;
           },
         },
-
         common: {
           name: 'common',
           minChunks: 2,

@@ -560,6 +560,8 @@ class App extends React.Component {
               </MDBNavbar>
               <main style={mainStyle}>
                 <MDBContainer fluid className="mt-1 mb-5">
+                  <ToastContainer position="top-right" autoClose={3000} closeButton={false} newestOnTop={false}
+                                  rtl={false}></ToastContainer>
                   <AppRoutes/>
                 </MDBContainer>
               </main>

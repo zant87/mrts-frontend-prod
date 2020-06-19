@@ -1,5 +1,6 @@
-#Build
+# Build
 dist
+dist.zip
 
 # Logs
 logs
