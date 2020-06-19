@@ -92,7 +92,12 @@ const DynamicsTable = (props) => {
               >
                 {props.dynVals ? (
                   <div>
-                    Динамика уровня достижения за {dynVals[0].quarterLabel} г.{" "}
+                    Динамика уровней достижения индикаторов за{" "}
+                    {props.dynVals[0].year +
+                      " г. " +
+                      (props.frequencyDynId == 2
+                        ? "( " + props.dynVals[0].quarterLabel + " )"
+                        : "")}
                     <br />
                     <br />
                     Цель: {props.dynVals[0].goalName} <br />

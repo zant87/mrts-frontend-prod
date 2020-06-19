@@ -54,7 +54,7 @@ const IndsTable = (props) => {
     data = {
       columns: [
         {
-          label: "Тип значения / Год, " + okeiName,
+          label: "Тип значения / Год, " + indsval[0].okeiName,
           field: "valueTypeName",
           sort: "asc",
           width: 250,
@@ -66,7 +66,7 @@ const IndsTable = (props) => {
     //-----------Заполнение data.column для MDBDataTable
     years.map((year) =>
       //--------Если годовые значения
-      props.frequencyId == 1
+      props.indFrequencyId == 1
         ? data.columns.push({
             label: year.split("-")[0],
             field: year.split("-")[0],
@@ -86,7 +86,7 @@ const IndsTable = (props) => {
       rows = {};
       rows.valueTypeName = scen;
       //------------Если годовые значения
-      if (props.frequencyId == 1) {
+      if (props.indFrequencyId == 1) {
         years.forEach((year) => {
           rows[year.split("-")[0]] = indsval
             .filter((val, i, arr) => {
@@ -120,7 +120,7 @@ const IndsTable = (props) => {
     });
 
     data.rows = rowsarr;
-    console.log(data.rows);
+    //console.log(data.rows);
   }
 
   return (
@@ -151,12 +151,20 @@ const IndsTable = (props) => {
                 <MDBCardText>
                   {props.indVals ? (
                     <div>
+                      <div style={{ fontSize: "12px", marginBottom: "10px" }}>
+                        Заданный период:{" "}
+                        {props.indsYearStart + "-" + props.indsYearEnd}
+                        {props.indFrequencyId == 2
+                          ? " ( " + props.indVals[0].quarterName + " )"
+                          : ""}
+                      </div>
                       <ExportXLSX csvData={data.rows} fileName={"exportInds"} />
                       {/* <ExportToCSV columns={data.columns} data={data.rows} color="deep-orange" size="sm">
                         <MDBIcon icon="file-export" className="mr-1" /> Экспорт в CSV
                       </ExportToCSV> */}
 
                       <MDBDataTable
+                        //style={{ marginTop: "20px" }}
                         //info={false}
                         //filter="valueTypeName"
                         displayEntries={false}
@@ -164,6 +172,7 @@ const IndsTable = (props) => {
                         scrollX
                         striped
                         theadTextWhite
+                        searching={false}
                         // infoLabel={["Показано с", "по", "из", "записей"]}
                         // entriesLabel="Выводить по"
                         //theadColor="blue-grey lighten-5"

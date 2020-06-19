@@ -11,10 +11,10 @@ const SET_TRANSPORT_TYPE_ID = "SET_TRANSPORT_TYPE_ID";
 const SET_GOAL_ID = "SET_GOAL_ID";
 const SET_SEARCH_QUERY = "SET_SEARCH_QUERY";
 const SET_FREQUENCIES = "SET_FREQUENCIES";
-const SET_FREQUENCY_ID = "SET_FREQUENCY_ID";
-const SET_YEAR = "SET_YEAR";
+const SET_LEV_FREQUENCY_ID = "SET_LEV_FREQUENCY_ID";
+const SET_LEV_YEAR = "SET_LEV_YEAR";
 const SET_YEARS = "SET_YEARS";
-const SET_QUARTER_ID = "SET_QUARTER_ID";
+const SET_LEV_QUARTER_ID = "SET_LEV_QUARTER_ID";
 const SET_QUARTERS = "SET_QUARTERS";
 const SET_SCENARIOS = "SET_SCENARIOS";
 const SET_SCENARIO_ID = "SET_SCENARIO_ID";
@@ -35,7 +35,7 @@ let initialState = {
   years: null,
   year: 2016,
   quarters: null,
-  quarterId: null,
+  levQuarterId: null,
   scenarios: null,
   scenarioId: null,
 };
@@ -99,12 +99,12 @@ const levelsReducer = (state = initialState, action) => {
         ...state,
         frequencies: action.frequencies,
       };
-    case SET_FREQUENCY_ID:
+    case SET_LEV_FREQUENCY_ID:
       return {
         ...state,
         frequencyLevId: action.frequencyLevId,
       };
-    case SET_YEAR:
+    case SET_LEV_YEAR:
       return {
         ...state,
         year: action.year,
@@ -114,10 +114,10 @@ const levelsReducer = (state = initialState, action) => {
         ...state,
         years: action.years,
       };
-    case SET_QUARTER_ID:
+    case SET_LEV_QUARTER_ID:
       return {
         ...state,
-        quarterId: action.quarterId,
+        levQuarterId: action.levQuarterId,
       };
     case SET_QUARTERS:
       return {
@@ -177,12 +177,12 @@ export const setFrequencies = (frequencies) => ({
 });
 
 export const setFrequencyId = (frequencyLevId) => ({
-  type: SET_FREQUENCY_ID,
+  type: SET_LEV_FREQUENCY_ID,
   frequencyLevId,
 });
 
 export const setYear = (year) => ({
-  type: SET_YEAR,
+  type: SET_LEV_YEAR,
   year,
 });
 
@@ -191,9 +191,9 @@ export const setYears = (years) => ({
   years,
 });
 
-export const setQuarterId = (quarterId) => ({
-  type: SET_QUARTER_ID,
-  quarterId,
+export const setLevQuarterId = (levQuarterId) => ({
+  type: SET_LEV_QUARTER_ID,
+  levQuarterId,
 });
 
 export const setQuarters = (quarters) => ({
@@ -247,7 +247,7 @@ export const getLevValues = (
     dispatch(setFrequencyId(frequencyLevId));
     dispatch(setYear(year));
     if (quarter) {
-      dispatch(setQuarterId(quarter));
+      dispatch(setLevQuarterId(quarter));
     }
   };
 };

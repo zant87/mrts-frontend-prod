@@ -1,5 +1,12 @@
 import React from "react";
-import { MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText } from "mdbreact";
+import {
+  MDBRow,
+  MDBCol,
+  MDBCard,
+  MDBCardBody,
+  MDBCardTitle,
+  MDBCardText,
+} from "mdbreact";
 import ReactEcharts from "echarts-for-react";
 
 import s from "./ParamsChart.module.css";
@@ -19,7 +26,9 @@ let ParamsChart = (props) => {
     let okeiName = "";
 
     if (props.paramVals) {
-      paramsval = props.paramVals.sort((a, b) => (a.parameterDate > b.parameterDate ? 1 : -1));
+      paramsval = props.paramVals.sort((a, b) =>
+        a.parameterDate > b.parameterDate ? 1 : -1
+      );
 
       paramsval.forEach((item) => {
         years.push(item.parameterDate);
@@ -27,7 +36,9 @@ let ParamsChart = (props) => {
         //okeiName = item.okeiName;
       });
 
-      years = paramsval.map((item) => item.parameterDate).filter((item, i, arr) => arr.indexOf(item) === i);
+      years = paramsval
+        .map((item) => item.parameterDate)
+        .filter((item, i, arr) => arr.indexOf(item) === i);
 
       // --------------------------Объект series для графика------------------
       chartparamsvals = {
@@ -67,10 +78,14 @@ let ParamsChart = (props) => {
         ),
       };
 
-      if (props.frequencyId == 1) {
-        years = years.filter((item, i, arr) => arr.indexOf(item) === i).map((i) => i.split("-")[0]);
+      if (props.paramFrequencyId == 1) {
+        years = years
+          .filter((item, i, arr) => arr.indexOf(item) === i)
+          .map((i) => i.split("-")[0]);
       } else {
-        years = years.filter((item, i, arr) => arr.indexOf(item) === i).map((i) => i);
+        years = years
+          .filter((item, i, arr) => arr.indexOf(item) === i)
+          .map((i) => i);
       }
     }
 
@@ -226,13 +241,39 @@ let ParamsChart = (props) => {
                 textTransform: "uppercase",
               }}
             >
-              {props.paramVals ? props.paramVals[0].parameterName : <div>Нет данных</div>}
+              {props.paramVals ? (
+                props.paramVals[0].parameterName
+              ) : (
+                <div>Нет данных</div>
+              )}
             </MDBCardTitle>
             {props.isFetchingParamData ? (
               <Preloader />
             ) : (
               <MDBCardText className="m-0 p-0">
-                {props.paramVals ? <ReactEcharts ref={echarts_react} option={getOption()} className={s.chart} /> : <div>Нет данных</div>}
+                {props.paramVals ? (
+                  <div>
+                    <div style={{ fontSize: "12px" }}>
+                      Заданный период:{" "}
+                      {props.paramYearStart + "-" + props.paramYearEnd}
+                      {props.paramFrequencyId == 2
+                        ? " ( " +
+                          props.paramVals[0].quarterLabel.substr(
+                            0,
+                            props.paramVals[0].quarterLabel.length - 5
+                          ) +
+                          " )"
+                        : ""}
+                    </div>
+                    <ReactEcharts
+                      ref={echarts_react}
+                      option={getOption()}
+                      className={s.chart}
+                    />
+                  </div>
+                ) : (
+                  <div>Нет данных</div>
+                )}
               </MDBCardText>
             )}
           </MDBCardBody>

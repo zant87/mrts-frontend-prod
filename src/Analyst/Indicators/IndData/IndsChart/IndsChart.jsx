@@ -78,7 +78,7 @@ let IndsChart = (props) => {
       }));
       //console.log(chartindsvals);
       //years = indsval.map(item => item.indicatorDate.split("-")[0]).filter((item, i, arr) => arr.indexOf(item) === i);
-      if (props.frequencyId == 1) {
+      if (props.indFrequencyId == 1) {
         years = years
           .filter((item, i, arr) => arr.indexOf(item) === i)
           .map((i) => i.split("-")[0]);
@@ -277,11 +277,21 @@ let IndsChart = (props) => {
             ) : (
               <MDBCardText className="m-0 p-0">
                 {props.indVals ? (
-                  <ReactEcharts
-                    ref={echarts_react}
-                    option={getOption()}
-                    className={s.chart}
-                  />
+                  <div>
+                    <div style={{ fontSize: "12px" }}>
+                      Заданный период:{" "}
+                      {props.indsYearStart + "-" + props.indsYearEnd}
+                      {props.indFrequencyId == 2
+                        ? " ( " + props.indVals[0].quarterName + " )"
+                        : ""}
+                    </div>
+
+                    <ReactEcharts
+                      ref={echarts_react}
+                      option={getOption()}
+                      className={s.chart}
+                    />
+                  </div>
                 ) : (
                   <div>Нет данных</div>
                 )}

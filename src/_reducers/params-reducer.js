@@ -9,7 +9,7 @@ const SET_TRANSPORT_TYPES = "SET_TRANSPORT_TYPES";
 const SET_TRANSPORT_TYPE_ID = "SET_TRANSPORT_TYPE_ID";
 const SET_SEARCH_QUERY = "SET_SEARCH_QUERY";
 const SET_FREQUENCIES = "SET_FREQUENCIES";
-const SET_FREQUENCY_ID = "SET_FREQUENCY_ID";
+const SET_PARAM_FREQUENCY_ID = "SET_PARAM_FREQUENCY_ID";
 const SET_PARAM_ID = "SET_PARAM_ID";
 const SET_FORMS = "SET_FORMS";
 const SET_CHECKED_FORM_ID = "SET_CHECKED_FORM_ID";
@@ -30,7 +30,7 @@ let initialState = {
   searchQuery: null,
   transportTypeId: "0",
   frequencies: null,
-  frequencyId: 1,
+  paramFrequencyId: 1,
   forms: null,
   checkedFormId: null,
   quarters: null,
@@ -93,10 +93,10 @@ const paramsReducer = (state = initialState, action) => {
         ...state,
         frequencies: action.frequencies,
       };
-    case SET_FREQUENCY_ID:
+    case SET_PARAM_FREQUENCY_ID:
       return {
         ...state,
-        frequencyId: action.frequencyId,
+        paramFrequencyId: action.paramFrequencyId,
       };
 
     case SET_FORMS:
@@ -177,9 +177,9 @@ export const setFrequencies = (frequencies) => ({
   frequencies,
 });
 
-export const setFrequencyId = (frequencyId) => ({
-  type: SET_FREQUENCY_ID,
-  frequencyId,
+export const setParamFrequencyId = (paramFrequencyId) => ({
+  type: SET_PARAM_FREQUENCY_ID,
+  paramFrequencyId,
 });
 
 export const setForms = (forms) => ({
@@ -229,11 +229,23 @@ export const getParams = (checkedFormsId) => {
   };
 };
 
-export const getParamValues = (paramId, frequencyId, yearStart, yearEnd, quarterId) => {
+export const getParamValues = (
+  paramId,
+  paramFrequencyId,
+  yearStart,
+  yearEnd,
+  quarterId
+) => {
   return (dispatch) => {
     dispatch(toogleIsFetchingParamData(true));
     dispatch(setParamId(paramId));
-    ParamsAPI.getParamData(paramId, frequencyId, yearStart, yearEnd, quarterId).then((data) => {
+    ParamsAPI.getParamData(
+      paramId,
+      paramFrequencyId,
+      yearStart,
+      yearEnd,
+      quarterId
+    ).then((data) => {
       dispatch(setParamValues(data));
       dispatch(toogleIsFetchingParamData(false));
     });
@@ -243,7 +255,7 @@ export const getParamValues = (paramId, frequencyId, yearStart, yearEnd, quarter
     // if (quarterId != null) {
     //   dispatch(setParamQuarterId(quarterId));
     // }
-    dispatch(setFrequencyId(frequencyId));
+    dispatch(setParamFrequencyId(paramFrequencyId));
   };
 };
 

@@ -11,7 +11,9 @@ const ParamsSettings = (props) => {
   let transportTypes = null;
 
   if (props.transportTypes) {
-    transportTypes = props.transportTypes.sort((a, b) => (a.name > b.name ? 1 : -1));
+    transportTypes = props.transportTypes.sort((a, b) =>
+      a.name > b.name ? 1 : -1
+    );
   }
 
   let onSelectTransportType = (e) => {
@@ -29,7 +31,10 @@ const ParamsSettings = (props) => {
       {/* <MDBSelect multiple options={options} selected="Choose your option" selectAll outline /> */}
 
       <div style={{ marginBottom: "20px" }}>
-        <select onChange={onSelectTransportType} className="browser-default custom-select custom-select-sm">
+        <select
+          onChange={onSelectTransportType}
+          className="browser-default custom-select custom-select-sm"
+        >
           <option value="0">Все виды транспорта</option>
           {props.transportTypes
             ? transportTypes.map((item) =>

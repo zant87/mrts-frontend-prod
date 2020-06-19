@@ -26,14 +26,14 @@ class ParamsList extends React.Component {
   state = {
     modal: false,
     radio: 2,
-    frequencyId: null,
+    paramFrequencyId: this.props.paramFrequencyId,
   };
 
   setFrequency = React.createRef();
   setYearStart = React.createRef();
   setYearEnd = React.createRef();
   setQuarter = React.createRef();
-  frequencyId = null;
+  paramFrequencyId = null;
   selectedFormsRef = React.createRef();
   selectedForms = [];
 
@@ -51,12 +51,12 @@ class ParamsList extends React.Component {
 
   onSelectFrequency = (e) => {
     this.setState({
-      frequencyId: this.setFrequency.current.value,
+      paramFrequencyId: this.setFrequency.current.value,
     });
-    //this.frequencyId = e.target.value;
+    //this.paramFrequencyId = e.target.value;
     //debugger;
-    //this.frequencyId = this.setFrequency.current.value;
-    //this.props.setFrequencyId(frequencyId);
+    //this.paramFrequencyId = this.setFrequency.current.value;
+    //this.props.setparamFrequencyId(paramFrequencyId);
   };
 
   // onSelectQuarter = (e) => {
@@ -79,6 +79,7 @@ class ParamsList extends React.Component {
     let selectedFormsArr = this.selectedFormsRef.current.state.selectValue;
     //debugger;
     if (this.setQuarter.current != null) {
+      //debugger;
       quarterId = this.setQuarter.current.value;
     }
 
@@ -98,11 +99,15 @@ class ParamsList extends React.Component {
     let newForms = [];
 
     if (this.props.forms) {
-      forms = this.props.forms.sort().map((item) => ({
-        text: item.okudName,
-        value: item.id,
-        checked: true,
-      }));
+      forms = this.props.forms.sort().map((item) => {
+        if (item.okudName != null)
+          return {
+            text: item.okudName,
+            value: item.id,
+            checked: true,
+          };
+      });
+      //console.log(forms);
       if (this.props.checkedFormId != null) {
         let checkedFormId = this.props.checkedFormId;
         //console.log(checkedFormId);
@@ -120,7 +125,7 @@ class ParamsList extends React.Component {
             checked: checked,
           });
         });
-        console.log(newForms);
+        //console.log(newForms);
       }
     }
 
@@ -173,7 +178,7 @@ class ParamsList extends React.Component {
                   outline="true"
                   multiple
                   search
-                  //searchLabel="Поиск форм"
+                  searchLabel="Поиск форм"
                   options={this.props.forms ? forms : null}
                   //selected="Выберите индикаторы"
                   selectAll
@@ -198,7 +203,7 @@ class ParamsList extends React.Component {
                 >
                   {this.props.frequencies
                     ? this.props.frequencies.map((item) =>
-                        this.props.frequencyId == item.id ? (
+                        this.props.paramFrequencyId == item.id ? (
                           <option value={item.id} selected>
                             {item.name}
                           </option>
@@ -209,7 +214,7 @@ class ParamsList extends React.Component {
                     : null}
                 </select>
               </div>
-              {this.state.frequencyId == 2 ? (
+              {this.state.paramFrequencyId == 2 ? (
                 <div className="form-group">
                   <label htmlFor="quarterform">
                     <strong>Выберите квартал</strong>

@@ -65,14 +65,18 @@ class IndData extends React.Component {
             <IndsChart
               indVals={this.props.indVals}
               isFetchingIndData={this.props.isFetchingIndData}
-              frequencyId={this.props.frequencyId}
+              indFrequencyId={this.props.indFrequencyId}
+              indsYearStart={this.props.indsYearStart}
+              indsYearEnd={this.props.indsYearEnd}
             />
           </MDBTabPane>
           <MDBTabPane tabId="2" role="tabpanel">
             <IndsTable
               indVals={this.props.indVals}
               isFetchingIndData={this.props.isFetchingIndData}
-              frequencyId={this.props.frequencyId}
+              indFrequencyId={this.props.indFrequencyId}
+              indsYearStart={this.props.indsYearStart}
+              indsYearEnd={this.props.indsYearEnd}
             />
           </MDBTabPane>
         </MDBTabContent>

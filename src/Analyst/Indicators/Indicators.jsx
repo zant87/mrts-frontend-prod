@@ -24,8 +24,8 @@ let Indicators = (props) => {
           transportTypeId={props.indsPage.transportTypeId}
           setTransportTypeId={props.indsPage.setTransportTypeId}
           frequencies={props.indsPage.frequencies}
-          setFrequencyId={props.indsPage.setFrequencyId}
-          frequencyId={props.indsPage.frequencyId}
+          setIndFrequencyId={props.indsPage.setIndFrequencyId}
+          indFrequencyId={props.indsPage.indFrequencyId}
           onFilterChanged={props.onFilterChanged}
           quarters={props.indsPage.quarters}
           indsQuarterId={props.indsPage.indsQuarterId}
@@ -37,7 +37,9 @@ let Indicators = (props) => {
         <IndData
           indVals={props.indsPage.indVals}
           isFetchingIndData={props.indsPage.isFetchingIndData}
-          frequencyId={props.indsPage.frequencyId}
+          indFrequencyId={props.indsPage.indFrequencyId}
+          indsYearStart={props.indsPage.indsYearStart}
+          indsYearEnd={props.indsPage.indsYearEnd}
         />
         <IndsInfo
           indVals={props.indsPage.indVals}
