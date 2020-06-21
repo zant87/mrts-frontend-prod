@@ -46,6 +46,8 @@ class AdminArchiveActivitiesPage extends React.Component {
 
         quarterList: [],
         yearList: [],
+
+
         activityList: [],
         documentTypeList: []
 
@@ -54,6 +56,11 @@ class AdminArchiveActivitiesPage extends React.Component {
 
     componentDidMount() {
         // this.getData();
+
+        this.getActivityList();
+        this.getDocumentTypeList();
+        this.getQuarterList();
+        this.getDataYearList();
     }
 
     onReset = () => {
@@ -80,7 +87,7 @@ class AdminArchiveActivitiesPage extends React.Component {
         this.toggle();
 
         appAxios.get(`/views/i-3-s-all?activityId.equals=` + activityId + 
-                                          `&activityDocumentTypeId.equals=` + documentTypeId + 
+                                          `&activityDocumentTypeId.equals=` + documentTypeId +                                           
                                           `&beginDate.equals=` + beginDate +
                                           `&endDate.equals=` + endDate +
                                           `&year.equals=` + year +
@@ -253,7 +260,7 @@ class AdminArchiveActivitiesPage extends React.Component {
 
 
                       <MDBRow around={true}>
-                          <MDBCol md="4" className="mb-2">
+                          <MDBCol md="4" className="mb-4">
                               <MDBSelect searchId={'documentTypeId'}
                                          label="Тип документа"
                                          search={true}
@@ -262,7 +269,7 @@ class AdminArchiveActivitiesPage extends React.Component {
                                          getValue={this.setDocumentType}>
                               </MDBSelect>
                           </MDBCol>
-                          <MDBCol md="4" className="mb-2">
+                          <MDBCol md="4" className="mb-4">
                               <MDBSelect searchId={'activityId'}
                                          label="Мероприятие"
                                          search={true}
@@ -273,7 +280,7 @@ class AdminArchiveActivitiesPage extends React.Component {
                           </MDBCol>
                       </MDBRow>
                       <MDBRow around={true}>
-                          <MDBCol md="4" className="mb-3">
+                          <MDBCol md="4" className="mb-4">
                               <label htmlFor='datepicker'>Начало периода</label>
                               <MDBDatePicker getValue={this.getBeginDate}
                                              format='YYYY-MM-DD'
@@ -285,7 +292,7 @@ class AdminArchiveActivitiesPage extends React.Component {
                                              valueDefault={new Date(this.state.date)}
                                              cancelLabel='Отмена'/>
                           </MDBCol>
-                          <MDBCol md="4" className="mb-3">
+                          <MDBCol md="4" className="mb-4">
                               <label htmlFor='datepicker'>Конец периода</label>
                               <MDBDatePicker getValue={this.getEndDate}
                                              format='YYYY-MM-DD'
@@ -299,7 +306,7 @@ class AdminArchiveActivitiesPage extends React.Component {
                           </MDBCol>
                       </MDBRow>
                       <MDBRow around={true}>
-                          <MDBCol md="2" className="mb-2">
+                          <MDBCol md="4" className="mb-4">
                               <MDBSelect searchId={'year'}
                                          label="Отчетный год"
                                          search={true}
@@ -308,7 +315,7 @@ class AdminArchiveActivitiesPage extends React.Component {
                                          getValue={this.setYear}>
                               </MDBSelect>
                           </MDBCol>
-                          <MDBCol md="2" className="mb-2">
+                          <MDBCol md="4" className="mb-4">
                               <MDBSelect searchId={'quarterId'}
                                          label="Отчетный квартал"
                                          search={true}

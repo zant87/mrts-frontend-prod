@@ -200,9 +200,11 @@ class AdminArchiveIndicatorsPage extends React.Component  {
        this.setState({
             transportTypeId: '',
             scenarioId: '',
-            okudId: '',
             indicatorId: '',
             year: '',
+
+            beginDate: '',
+            endDate: '',
             quarterId: '',
             data: [],
        });
@@ -231,7 +233,9 @@ class AdminArchiveIndicatorsPage extends React.Component  {
                                           `&scenarioId.equals=` + scenarioId + 
                                           `&indicatorId.equals=` + indicatorId +
                                           `&year.equals=` + year +
-                                          `&quarterId.equals=` + quarterId)
+                                          `&quarterId.equals=` + quarterId + 
+                                          `&beginDate.equals=` + beginDate + 
+                                          `&endDate.equals=` + endDate )
             .then(res => {
                 console.log(res);
                 const count = Number(res.headers['x-total-count']);

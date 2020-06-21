@@ -22,11 +22,11 @@ class AdminArchiveProjectsPage extends React.Component {
         projectId: '',
         planBeginYear: '',
         planEndYear: '',
-        year: '',
-        quarterId: '',
-
         beginDate: '',
         endDate: '',
+
+        year: '',
+        quarterId: '',
 
         projectList: [],
         yearList: [],
@@ -34,7 +34,11 @@ class AdminArchiveProjectsPage extends React.Component {
     }
 
     componentDidMount() {
-        this.getData();
+        // this.getData();
+
+        this.getProjectList();
+        this.getQuarterList();
+        this.getDataYearList();
     }
 
     onReset = () => {
@@ -150,6 +154,24 @@ class AdminArchiveProjectsPage extends React.Component {
         });
     }
 
+    setProject = e => {
+        this.setState({
+            projectId: e.toString()
+        });
+    }
+
+    setBeginYear = e => {
+        this.setState({
+            planBeginYear: e.toString()
+        });
+    }
+
+    setEndYear = e => {
+        this.setState({
+            planEndYear: e.toString()
+        });
+    }
+
     render() {
 
 
@@ -221,6 +243,99 @@ class AdminArchiveProjectsPage extends React.Component {
                         <MDBBreadcrumbItem active>Архив выполнения крупных инвестиционных проектов</MDBBreadcrumbItem>
                     </MDBBreadcrumb>
                 </MDBRow>
+                 <div className="text-right">
+                   {this.state.searchBystr} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<MDBBtn color="info" onClick={this.toggle}>Фильтры</MDBBtn>
+                </div>
+                <MDBModal isOpen={this.state.modal} toggle={this.toggle}  size="lg"  >
+                  <MDBModalHeader toggle={this.toggle}>&nbsp;&nbsp;&nbsp;&nbsp;Архив выполнения крупных инвестиционных проектов</MDBModalHeader>
+                  <MDBModalBody>
+                      <MDBRow around={true}>
+                          <MDBCol md="8" className="mb-8">
+                              <MDBSelect searchId={'projectId'}
+                                         label="Имя проекта"
+                                         search={true}
+                                         searchLabel={'Поиск'}
+                                         options={this.state.projectList}
+                                         getValue={this.setProject}>
+                              </MDBSelect>
+                          </MDBCol>
+                      </MDBRow>
+                      <MDBRow around={true}>
+                          <MDBCol md="4" className="mb-4">
+                              <MDBSelect searchId={'planBeginYear'}
+                                         label="Год начала"
+                                         search={true}
+                                         searchLabel={'Поиск'}
+                                         options={this.state.yearList}
+                                         getValue={this.setBeginYear}>
+                              </MDBSelect>
+                          </MDBCol>
+                          <MDBCol md="4" className="mb-4">
+                              <MDBSelect searchId={'planEndYear'}
+                                         label="Год окончания"
+                                         search={true}
+                                         searchLabel={'Поиск'}
+                                         options={this.state.yearList}
+                                         getValue={this.setEndYear}>
+                              </MDBSelect>
+                          </MDBCol>
+                      </MDBRow>
+                      <MDBRow around={true}>
+                          <MDBCol md="4" className="mb-4">
+                              <label htmlFor='datepicker'>Начало периода</label>
+                              <MDBDatePicker getValue={this.getBeginDate}
+                                             format='YYYY-MM-DD'
+                                             locale={moment.locale('ru')}
+                                             okLabel='ОК'
+                                             name='beginDate'
+                                             keyboard={true}
+                                             invalidDateMessage='Неправильный формат даты'
+                                             valueDefault={new Date(this.state.date)}
+                                             cancelLabel='Отмена'/>
+                          </MDBCol>
+                          <MDBCol md="4" className="mb-4">
+                              <label htmlFor='datepicker'>Конец периода</label>
+                              <MDBDatePicker getValue={this.getEndDate}
+                                             format='YYYY-MM-DD'
+                                             locale={moment.locale('ru')}
+                                             okLabel='ОК'
+                                             name='endDate'
+                                             keyboard={true}
+                                             invalidDateMessage='Неправильный формат даты'
+                                             valueDefault={new Date(this.state.date)}
+                                             cancelLabel='Отмена'/>
+                          </MDBCol>
+                      </MDBRow>
+                      <MDBRow around={true}>
+                          <MDBCol md="4" className="mb-4">
+                              <MDBSelect searchId={'year'}
+                                         label="Отчетный год"
+                                         search={true}
+                                         searchLabel={'Поиск'}
+                                         options={this.state.yearList}
+                                         getValue={this.setYear}>
+                              </MDBSelect>
+                          </MDBCol>
+                          <MDBCol md="4" className="mb-4">
+                              <MDBSelect searchId={'quarterId'}
+                                         label="Отчетный квартал"
+                                         search={true}
+                                         searchLabel={'Поиск'}
+                                         options={this.state.quarterList}
+                                         getValue={this.setQuarter}>
+                              </MDBSelect>
+                          </MDBCol>
+                      </MDBRow>
+                      </MDBModalBody>
+                      <MDBModalFooter>
+                        <MDBBtn color="secondary" onClick={this.toggle}>Закрыть</MDBBtn>
+                        <MDBBtn color="primary" onClick={this.filterData} >Получить данные</MDBBtn>
+                      </MDBModalFooter>
+                    </MDBModal>
+
+
+
+
                 <MDBRow>
                    <TableContainer data={this.state.data} isLoading={this.state.isLoading} columns={columns} title={"Архив выполнения крупных инвестиционных проектов"}/> 
                 </MDBRow>
