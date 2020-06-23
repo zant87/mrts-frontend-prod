@@ -1,23 +1,13 @@
 import Axios from 'axios';
 
+// const CancelToken = Axios.CancelToken;
+// export let cancel;
+
 const appAxios = Axios.create({
     baseURL: "/api/",
+    // cancelToken: new CancelToken(function (c) {
+    //     cancel = c;
+    // }),
 });
-
-// appAxios.interceptors.request.use(
-//     async function(options) {
-//         const token = await AuthToken.get();
-//
-//         if (token) {
-//             options.headers['Authorization'] = `Bearer ${token}`;
-//         }
-//
-//         return options;
-//     },
-//     function(error) {
-//         console.log('Request error: ', error);
-//         return Promise.reject(error);
-//     },
-// );
 
 export default appAxios;
