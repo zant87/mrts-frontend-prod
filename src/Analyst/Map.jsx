@@ -44,11 +44,11 @@ class AnalystMapPage extends React.Component {
                             {
                                 id: 23, title: 'Внутренний водный транспорт', visible: false, sublayers:
                                     [
-                                        {id: 25, title: 'Водные пути', visible: false, popupTemplate: RiversTemplate},
+                                        {id: 25, title: 'Водные пути', visible: true, popupTemplate: RiversTemplate},
                                         {
                                             id: 24,
                                             title: 'Речные порты',
-                                            visible: false,
+                                            visible: true,
                                             popupTemplate: RiverPortsTemplate
                                         },
                                     ]
@@ -104,13 +104,13 @@ class AnalystMapPage extends React.Component {
                                                     {
                                                         id: 14,
                                                         title: 'Линейные объекты (Дорожное хозяйство)',
-                                                        visible: false,
+                                                        visible: true,
                                                         popupTemplate: ProjectsTemplate
                                                     },
                                                     {
                                                         id: 13,
                                                         title: 'Точечные объекты (Дорожное хозяйство)',
-                                                        visible: false,
+                                                        visible: true,
                                                         popupTemplate: ProjectsTemplate
                                                     },
                                                 ]
@@ -121,13 +121,13 @@ class AnalystMapPage extends React.Component {
                                                     {
                                                         id: 11,
                                                         title: 'Линейные объекты',
-                                                        visible: false,
+                                                        visible: true,
                                                         popupTemplate: ProjectsTemplate
                                                     },
                                                     {
                                                         id: 10,
                                                         title: 'Точечные объекты',
-                                                        visible: false,
+                                                        visible: true,
                                                         popupTemplate: ProjectsTemplate
                                                     },
                                                 ]
