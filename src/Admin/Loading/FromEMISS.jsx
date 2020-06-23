@@ -1,13 +1,13 @@
 import React from 'react';
 import {MDBBtn, MDBCol, MDBInput, MDBRow, toast} from "mdbreact";
-import appAxios from "../../_services/appAxios";
+import appAxios, {cancel} from "../../_services/appAxios";
 
 export default class AdminLoadingFromEMISSPage extends React.Component {
 
     state = {
         start: 2014,
         end: 2015,
-        isLoading: false
+        isLoading: false,
     };
 
     doImport = async () => {
@@ -20,7 +20,7 @@ export default class AdminLoadingFromEMISSPage extends React.Component {
         appAxios({
             url: `/import/emiss`,
             method: 'POST',
-            data: responseData
+            data: responseData,
         }).then((response) => {
             if (response.data >= 0)
                 toast.success(`Выполнена синхронизация с ЕМИСС с кодом ${response.data}`, {

@@ -1,5 +1,5 @@
 import React from 'react';
-import {MDBContainer, MDBRow, MDBFileInput, MDBBtn, toast, MDBCol, MDBSelect} from "mdbreact";
+import {MDBContainer, MDBRow, MDBFileInput, MDBBtn, toast, MDBCol, MDBSelect, MDBSpinner} from "mdbreact";
 import appAxios from "../../_services/appAxios";
 
 export default class AdminLoadingFromXLSXPage extends React.Component {
@@ -81,7 +81,8 @@ export default class AdminLoadingFromXLSXPage extends React.Component {
                     </MDBCol>
                 </MDBRow>
                 <MDBRow center>
-                    <MDBBtn color="success" onClick={this.fileUpload}>Загрузка</MDBBtn>
+                    <MDBCol middle={true}>{this.state.isLoading && <MDBSpinner multicolor small={true}/>}</MDBCol>
+                    <MDBCol><MDBBtn color="success" onClick={this.fileUpload}>Загрузка</MDBBtn></MDBCol>
                 </MDBRow>
             </MDBContainer>
         );
