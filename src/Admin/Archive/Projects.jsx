@@ -244,7 +244,7 @@ class AdminArchiveProjectsPage extends React.Component {
                         <MDBBreadcrumbItem>Архив</MDBBreadcrumbItem>
                         <MDBBreadcrumbItem active>Архив выполнения крупных инвестиционных проектов</MDBBreadcrumbItem>
                     </MDBBreadcrumb>
-                </MDBRow>3
+                </MDBRow>
                  <div className="text-right">
                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<MDBBtn color="info" onClick={this.toggle}>Фильтры</MDBBtn>
                 </div>
@@ -252,7 +252,7 @@ class AdminArchiveProjectsPage extends React.Component {
                   <MDBModalHeader toggle={this.toggle}>&nbsp;&nbsp;&nbsp;&nbsp;Архив выполнения крупных инвестиционных проектов</MDBModalHeader>
                   <MDBModalBody>
                       <MDBRow around={true}>
-                          <MDBCol md="8" className="mb-8">
+                          <MDBCol md="9" className="mb-9">
                               <MDBSelect searchId={'projectId'}
                                          label="Имя проекта"
                                          search={true}
@@ -272,6 +272,7 @@ class AdminArchiveProjectsPage extends React.Component {
                                          getValue={this.setBeginYear}>
                               </MDBSelect>
                           </MDBCol>
+                          <MDBCol md="1" className="mb-1"></MDBCol>
                           <MDBCol md="4" className="mb-4">
                               <MDBSelect searchId={'planEndYear'}
                                          label="Год окончания"
@@ -295,6 +296,7 @@ class AdminArchiveProjectsPage extends React.Component {
                                              valueDefault={new Date(this.state.date)}
                                              cancelLabel='Отмена'/>
                           </MDBCol>
+                          <MDBCol md="1" className="mb-1"></MDBCol>
                           <MDBCol md="4" className="mb-4">
                               <label htmlFor='datepicker'>Конец периода</label>
                               <MDBDatePicker getValue={this.getEndDate}
@@ -318,6 +320,7 @@ class AdminArchiveProjectsPage extends React.Component {
                                          getValue={this.setYear}>
                               </MDBSelect>
                           </MDBCol>
+                          <MDBCol md="1" className="mb-1"></MDBCol>
                           <MDBCol md="4" className="mb-4">
                               <MDBSelect searchId={'quarterId'}
                                          label="Отчетный квартал"

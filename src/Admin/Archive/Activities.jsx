@@ -292,6 +292,7 @@ class AdminArchiveActivitiesPage extends React.Component {
                                              valueDefault={new Date(this.state.date)}
                                              cancelLabel='Отмена'/>
                           </MDBCol>
+                          <MDBCol md="1" className="mb-1"></MDBCol>
                           <MDBCol md="4" className="mb-4">
                               <label htmlFor='datepicker'>Конец периода</label>
                               <MDBDatePicker getValue={this.getEndDate}
@@ -315,6 +316,7 @@ class AdminArchiveActivitiesPage extends React.Component {
                                          getValue={this.setYear}>
                               </MDBSelect>
                           </MDBCol>
+                          <MDBCol md="1" className="mb-1"></MDBCol>
                           <MDBCol md="4" className="mb-4">
                               <MDBSelect searchId={'quarterId'}
                                          label="Отчетный квартал"
