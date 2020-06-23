@@ -34,7 +34,7 @@ class AdminArchiveProjectsPage extends React.Component {
     }
 
     componentDidMount() {
-        // this.getData();
+        this.getData();
 
         this.getProjectList();
         this.getQuarterList();
@@ -60,13 +60,15 @@ class AdminArchiveProjectsPage extends React.Component {
 
     filterData = async () => {
 
-        const { projectId, planBeginYear, planEndYear, year, quarterId } = this.state;
+        const { projectId, planBeginYear, planEndYear, year, quarterId, beginDate, endDate } = this.state;
         this.setState({isLoading: true});
         this.toggle();
 
         appAxios.get(`/views/i-4-s-all?projectId.equals=` + projectId + 
                                           `&planBeginYear.equals=` + planBeginYear + 
                                           `&planEndYear.equals=` + planEndYear +
+                                          `&beginDate.equals=` + beginDate +
+                                          `&endDate.equals=` + endDate +
                                           `&year.equals=` + year +
                                           `&quarterId.equals=` + quarterId)
             .then(res => {
@@ -242,9 +244,9 @@ class AdminArchiveProjectsPage extends React.Component {
                         <MDBBreadcrumbItem>Архив</MDBBreadcrumbItem>
                         <MDBBreadcrumbItem active>Архив выполнения крупных инвестиционных проектов</MDBBreadcrumbItem>
                     </MDBBreadcrumb>
-                </MDBRow>
+                </MDBRow>3
                  <div className="text-right">
-                   {this.state.searchBystr} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<MDBBtn color="info" onClick={this.toggle}>Фильтры</MDBBtn>
+                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<MDBBtn color="info" onClick={this.toggle}>Фильтры</MDBBtn>
                 </div>
                 <MDBModal isOpen={this.state.modal} toggle={this.toggle}  size="lg"  >
                   <MDBModalHeader toggle={this.toggle}>&nbsp;&nbsp;&nbsp;&nbsp;Архив выполнения крупных инвестиционных проектов</MDBModalHeader>

@@ -252,7 +252,7 @@ class AdminArchiveActivitiesPage extends React.Component {
                 </MDBBreadcrumb>
             </MDBRow>
             <div className="text-right">
-                   {this.state.searchBystr} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<MDBBtn color="info" onClick={this.toggle}>Фильтры</MDBBtn>
+                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<MDBBtn color="info" onClick={this.toggle}>Фильтры</MDBBtn>
                 </div>
                 <MDBModal isOpen={this.state.modal} toggle={this.toggle}  size="lg"  >
                   <MDBModalHeader toggle={this.toggle}>&nbsp;&nbsp;&nbsp;&nbsp;Архив выполнения мероприятий по реализации ТС</MDBModalHeader>

@@ -56,7 +56,7 @@ class AdminArchiveIndicatorsPage extends React.Component  {
     }
 
     componentDidMount() {
-        // this.getData();
+        this.getData();
 
         this.props.getTransportTypes();
 
@@ -64,8 +64,6 @@ class AdminArchiveIndicatorsPage extends React.Component  {
         this.getScenarioList();
         this.getQuarterList();
         this.getDataYearList();
-
-
 
         // this.props.getInds();
         // this.props.getYears();
@@ -206,15 +204,11 @@ class AdminArchiveIndicatorsPage extends React.Component  {
             beginDate: '',
             endDate: '',
             quarterId: '',
-            data: [],
        });
-       /*this.getTransportTypeList();
-       this.getDataProviderList();
-       this.getParameterList();
-       this.getOkudList();
+       this.getIndicatorList();
+       this.getScenarioList();
        this.getQuarterList();
-       this.getDataYearList();*/
-       
+       this.getDataYearList();
     }
 
    toggle = () => {
@@ -225,7 +219,7 @@ class AdminArchiveIndicatorsPage extends React.Component  {
 
     filterData = async () => {
 
-        const { transportTypeId, scenarioId, indicatorId, year, quarterId } = this.state;
+        const { transportTypeId, scenarioId, indicatorId, year, quarterId, beginDate, endDate} = this.state;
         this.setState({isLoading: true});
         this.toggle();
 
@@ -258,7 +252,7 @@ class AdminArchiveIndicatorsPage extends React.Component  {
 
             {field: 'scenarioName', title: 'Сценарий', filtering: true, editable: 'never'},
             {field: 'okeiCode', title: 'ОКЕИ', filtering: true, editable: 'never'},
-            {field: 'transportTypeName', title: 'Тип транспорта', filtering: true, editable: 'never'},
+            {field: 'transportTypeName', title: 'Вид транспорта', filtering: true, editable: 'never'},
 
             {field: 'beginDate', title: 'Начало периода', filtering: true },
             {field: 'endDate', title: 'Конец периода', filtering: true },
@@ -336,7 +330,7 @@ class AdminArchiveIndicatorsPage extends React.Component  {
                     </MDBBreadcrumb>
                 </MDBRow>
                 <div className="text-right">
-                   {this.state.searchBystr} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<MDBBtn color="info" onClick={this.toggle}>Фильтры</MDBBtn>
+                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<MDBBtn color="info" onClick={this.toggle}>Фильтры</MDBBtn>
                 </div>
                 <MDBModal isOpen={this.state.modal} toggle={this.toggle}  size="lg"  >
                   <MDBModalHeader toggle={this.toggle}>&nbsp;&nbsp;&nbsp;&nbsp;Архив расчета индикаторов ТС</MDBModalHeader>
@@ -373,7 +367,7 @@ class AdminArchiveIndicatorsPage extends React.Component  {
                           </MDBCol>
                       </MDBRow>
                       <MDBRow around={true}>
-                          <MDBCol md="2" className="mb-3">
+                          <MDBCol md="4" className="mb-4">
                               <label htmlFor='datepicker'>Начало периода</label>
                               <MDBDatePicker getValue={this.getBeginDate}
                                              format='YYYY-MM-DD'
@@ -385,7 +379,7 @@ class AdminArchiveIndicatorsPage extends React.Component  {
                                              valueDefault={new Date(this.state.date)}
                                              cancelLabel='Отмена'/>
                           </MDBCol>
-                          <MDBCol md="2" className="mb-3">
+                          <MDBCol md="4" className="mb-4">
                               <label htmlFor='datepicker'>Конец периода</label>
                               <MDBDatePicker getValue={this.getEndDate}
                                              format='YYYY-MM-DD'
@@ -399,7 +393,7 @@ class AdminArchiveIndicatorsPage extends React.Component  {
                           </MDBCol>
                       </MDBRow>
                       <MDBRow around={true}>
-                          <MDBCol md="2" className="mb-3">
+                          <MDBCol md="4" className="mb-4">
                               <MDBSelect searchId={'year'}
                                          label="Отчетный год"
                                          search={true}
@@ -408,7 +402,7 @@ class AdminArchiveIndicatorsPage extends React.Component  {
                                          getValue={this.setYear}>
                               </MDBSelect>
                           </MDBCol>
-                          <MDBCol md="2" className="mb-3">
+                          <MDBCol md="4" className="mb-4">
                               <MDBSelect searchId={'quarterId'}
                                          label="Отчетный квартал"
                                          search={true}

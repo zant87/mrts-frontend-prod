@@ -276,7 +276,7 @@ class AdminArchiveParametersPage extends React.Component {
             {field: 'quarterName', title: 'Отчетный квартал', filtering: true, editable: 'never'},
             {field: 'okudName', title: 'ОКУД', filtering: true, editable: 'never'},
             {field: 'parameterName', title: 'Показатель', filtering: true, editable: 'never'},
-            {field: 'transportTypeName', title: 'Тип транспорта', filtering: true, editable: 'never'},
+            {field: 'transportTypeName', title: 'Вид транспорта', filtering: true, editable: 'never'},
             {field: 'dataProviderCode', title: 'Источник', filtering: true, editable: 'never'},
             {field: 'value', title: 'Значение показателя', filtering: true, editable: 'never' },
         ];
@@ -294,7 +294,7 @@ class AdminArchiveParametersPage extends React.Component {
                 </MDBBreadcrumb>
             </MDBRow>
             <div className="text-right">
-                   {this.state.searchBystr} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<MDBBtn color="info" onClick={this.toggle}>Фильтры</MDBBtn>
+                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<MDBBtn color="info" onClick={this.toggle}>Фильтры</MDBBtn>
                 </div>
                 <MDBModal isOpen={this.state.modal} toggle={this.toggle}  size="lg"  >
                   <MDBModalHeader toggle={this.toggle}>&nbsp;&nbsp;&nbsp;&nbsp;Архив показателей для расчета индикаторов ТС</MDBModalHeader>
