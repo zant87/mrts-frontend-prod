@@ -21,13 +21,14 @@ class AnalystMapPage extends React.Component {
     componentDidMount() {
         loadModules([
             'esri/Map', 'esri/views/MapView',
-            'esri/layers/MapImageLayer', 'esri/widgets/LayerList', 'esri/widgets/Legend'
+            'esri/layers/MapImageLayer', 'esri/widgets/LayerList',
+            'esri/widgets/Legend',
         ], {css: true})
             .then(([ArcGISMap, MapView, MapImageLayer, LayerList, Legend]) => {
 
                 const base = new MapImageLayer({
                     url: "https://agoracle.asutk.ru/arcgis/rest/services/TS_projects/MapServer",
-                    title: 'МРТС',
+                    title: 'Мониторинг Реализации Транспортной Стратегии',
                     sublayers:
                         [
                             {
@@ -197,43 +198,24 @@ class AnalystMapPage extends React.Component {
                     map: map,
                     center: [37, 55],
                     zoom: 12,
+                    navigation: {
+                        mouseWheelZoomEnabled: false
+                    }
                 });
 
-                const legend = new Legend({
-                    view: view,
-                    // layerInfos: [
-                    //     {
-                    //
-                    //         title: "NY Educational Attainment"
-                    //     }
-                    // ]
+                view.when(() => {
+                    const legend = new Legend({
+                        view: view,
+                    });
+                    view.ui.add(legend, "bottom-right");
                 });
 
-                view.ui.add(legend, "bottom-right");
-
-                view.when(function () {
+                view.when(() => {
                     const layerList = new LayerList({
-                        view: view
+                        view: view,
                     });
                     view.ui.add(layerList, "bottom-left");
                 });
-
-                // view.when(function () {
-                //     const layerList = new LayerList({
-                //         view: view,
-                //         listItemCreatedFunction: function (event) {
-                //             const item = event.item;
-                //             if (item.layer.type !== "group") {
-                //                 item.panel = {
-                //                     content: "legend",
-                //                     open: false
-                //                 };
-                //             }
-                //         }
-                //     });
-                //
-                //     view.ui.add(layerList, "bottom-right");
-                // });
             });
     }
 
