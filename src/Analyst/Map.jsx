@@ -194,6 +194,7 @@ class AnalystMapPage extends React.Component {
                 });
 
                 const view = new MapView({
+                    // container: "webmap",
                     container: this.mapRef.current,
                     map: map,
                     center: [37, 55],
@@ -228,7 +229,7 @@ class AnalystMapPage extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <div className="webmap" ref={this.mapRef}/>
+                <div className="webmap mb-1" ref={this.mapRef}/>
             </React.Fragment>
         );
     }
