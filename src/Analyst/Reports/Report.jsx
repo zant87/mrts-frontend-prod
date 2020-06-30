@@ -169,7 +169,7 @@ class AnalystReportPage extends React.Component {
     }
     if (this.state.report.type === 5) {
       //http://localhost:8080/api/reports/m24/download?format=DOCX&start=2020&label=true
-      reportUrl = `reports/${this.state.report.value}/download?format=${this.state.reportFormat}&start=${this.state.start}&label=${this.state.labeling}`;
+      reportUrl = `reports/${this.state.report.value}/download?format=${this.state.reportFormat}&year=${this.state.start}&label=${this.state.labeling}`;
       reportName = `report_${this.state.report.value}_${this.state.start}.${this.state.reportFormat}`;
     }
 
