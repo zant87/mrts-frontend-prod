@@ -25,9 +25,6 @@ class HomePage extends React.Component {
                 <MDBRow center>
                     <h2>ИНФОРМАЦИОННО-АНАЛИТИЧЕСКАЯ СИСТЕМА РЕГУЛИРОВАНИЯ НА ТРАНСПОРТЕ</h2>
                 </MDBRow>
-                {/*<MDBRow center>*/}
-                {/*    <p>ИНФОРМАЦИОННЫЙ ПОРТАЛ</p>*/}
-                {/*</MDBRow>*/}
                 <MDBRow center>
                     <img src={MintransLogo}/>
                 </MDBRow>
