@@ -93,7 +93,7 @@ class AnalystReportPage extends React.Component {
     const filter = this.state.quarters.filter((quarter) => quarter.code === event.toString())[0];
     if (filter) {
       console.log('Quarter = ', filter);
-      this.setState({quarter: this.state.quarters.filter((quarter) => quarter.code === event.toString())[0]});
+      this.setState({quarter: filter});
     } else {
       this.setState({quarter: null});
     }
@@ -262,109 +262,115 @@ class AnalystReportPage extends React.Component {
                     />
                   </MDBCol>
                 </MDBRow>
-                {this.state.report.type === 1 && (
-                    <MDBRow>
-                      <MDBCol md="12" className="mb-3">
-                        <MDBSelect
-                            className="my-2"
-                            options={this.state.goalsSelectList}
-                            search={true}
-                            searchLabel="Поиск по целям"
-                            getValue={this.setGoal}
-                            selected="Выберите цель"
-                            outline
-                            required
-                            label="Наименование цели"
-                        />
-                      </MDBCol>
-                    </MDBRow>
-                )}
-                {this.state.report.type === 1 && (
-                    <MDBRow>
-                      <MDBCol md="12" className="mb-3">
-                        <MDBSelect
-                            className="my-2"
-                            options={this.state.scenariosSelectList}
-                            search={true}
-                            searchLabel="Поиск по сценариям"
-                            getValue={this.setScenario}
-                            selected="Выберите сценарий"
-                            outline
-                            required
-                            label="Наименование сценария"
-                        />
-                      </MDBCol>
-                    </MDBRow>
-                )}
-                {this.state.report.type <= 2 && (
-                    <MDBRow>
-                      <MDBCol md="12" className="mb-3">
-                        <MDBSelect
-                            className="my-2"
-                            options={this.state.quartersSelectList}
-                            search={true}
-                            searchLabel="Поиск по кварталам"
-                            getValue={this.setQuarter}
-                            selected="Выберите квартал"
-                            outline
-                            required
-                            label="Наименование квартала"
-                        />
-                      </MDBCol>
-                    </MDBRow>
-                )}
-                {this.state.report.type >= 0 && (
-                    <MDBRow>
-                      <MDBCol>
-                        <MDBInput label="Начальный год" value={this.state.start} type="number" name="start" outline
-                                  id='startInput'
-                                  onChange={this.onChangeHandler} required>
-                          <div className='invalid-feedback'>
-                            Введите корректный начальный год
-                          </div>
-                        </MDBInput>
-                      </MDBCol>
-                    </MDBRow>
-                )}
-                {this.state.report.type === 4 && (
-                    <MDBRow>
-                      <MDBCol>
-                        <MDBInput label="Конечный год" value={this.state.end} type="number" name="end" id='endInput'
+                {this.state.report && (
+                    <React.Fragment>
+                      {this.state.report.type === 1 && (
+                          <MDBRow>
+                            <MDBCol md="12" className="mb-3">
+                              <MDBSelect
+                                  className="my-2"
+                                  options={this.state.goalsSelectList}
+                                  search={true}
+                                  searchLabel="Поиск по целям"
+                                  getValue={this.setGoal}
+                                  selected="Выберите цель"
                                   outline
-                                  onChange={this.onChangeHandler} required>
-                          <div className='invalid-feedback'>
-                            Введите корректный конечный год
-                          </div>
-                        </MDBInput>
-                      </MDBCol>
-                    </MDBRow>
+                                  required
+                                  label="Наименование цели"
+                              />
+                            </MDBCol>
+                          </MDBRow>
+                      )}
+                      {this.state.report.type === 1 && (
+                          <MDBRow>
+                            <MDBCol md="12" className="mb-3">
+                              <MDBSelect
+                                  className="my-2"
+                                  options={this.state.scenariosSelectList}
+                                  search={true}
+                                  searchLabel="Поиск по сценариям"
+                                  getValue={this.setScenario}
+                                  selected="Выберите сценарий"
+                                  outline
+                                  required
+                                  label="Наименование сценария"
+                              />
+                            </MDBCol>
+                          </MDBRow>
+                      )}
+                      {this.state.report.type <= 2 && (
+                          <MDBRow>
+                            <MDBCol md="12" className="mb-3">
+                              <MDBSelect
+                                  className="my-2"
+                                  options={this.state.quartersSelectList}
+                                  search={true}
+                                  searchLabel="Поиск по кварталам"
+                                  getValue={this.setQuarter}
+                                  selected="Выберите квартал"
+                                  outline
+                                  required
+                                  label="Наименование квартала"
+                              />
+                            </MDBCol>
+                          </MDBRow>
+                      )}
+                      {this.state.report.type >= 0 && (
+                          <MDBRow>
+                            <MDBCol>
+                              <MDBInput label="Начальный год" value={this.state.start} type="number" name="start"
+                                        outline
+                                        id='startInput'
+                                        onChange={this.onChangeHandler} required>
+                                <div className='invalid-feedback'>
+                                  Введите корректный начальный год
+                                </div>
+                              </MDBInput>
+                            </MDBCol>
+                          </MDBRow>
+                      )}
+                      {this.state.report.type === 4 && (
+                          <MDBRow>
+                            <MDBCol>
+                              <MDBInput label="Конечный год" value={this.state.end} type="number" name="end"
+                                        id='endInput'
+                                        outline
+                                        onChange={this.onChangeHandler} required>
+                                <div className='invalid-feedback'>
+                                  Введите корректный конечный год
+                                </div>
+                              </MDBInput>
+                            </MDBCol>
+                          </MDBRow>
+                      )}
+                      <MDBRow center middle between className="text-center">
+                        {this.state.report.type === 4 || this.state.report.type === 5 && (
+                            <MDBCol middle>
+                              <MDBInput
+                                  type="checkbox"
+                                  value="conditions"
+                                  id="checkInput"
+                                  name='labeling'
+                                  label="Подписи значений рядов данных"
+                                  onClick={this.onChangeLabelHandler}>
+                              </MDBInput>
+                            </MDBCol>
+                        )}
+                        {this.state.report.type >= 0 && (
+                            <MDBCol middle>
+                              <MDBBtn color="primary" type="submit">
+                                Скачать
+                              </MDBBtn>
+                            </MDBCol>
+                        )}
+                        {this.state.report.type >= 0 && (
+                            <MDBCol middle>
+                              {this.state.isDownloading && <MDBSpinner multicolor small={true}/>}
+                            </MDBCol>
+                        )}
+                      </MDBRow>
+                    </React.Fragment>
                 )}
-                <MDBRow center middle between className="text-center">
-                  {this.state.report.type === 4 || this.state.report.type === 5 && (
-                      <MDBCol middle>
-                        <MDBInput
-                            type="checkbox"
-                            value="conditions"
-                            id="checkInput"
-                            name='labeling'
-                            label="Подписи значений рядов данных"
-                            onClick={this.onChangeLabelHandler}>
-                        </MDBInput>
-                      </MDBCol>
-                  )}
-                  {this.state.report.type >= 0 && (
-                      <MDBCol middle>
-                        <MDBBtn color="primary" type="submit">
-                          Скачать
-                        </MDBBtn>
-                      </MDBCol>
-                  )}
-                  {this.state.report.type >= 0 && (
-                      <MDBCol middle>
-                        {this.state.isDownloading && <MDBSpinner multicolor small={true}/>}
-                      </MDBCol>
-                  )}
-                </MDBRow>
               </form>
           )}
         </MDBCol>
