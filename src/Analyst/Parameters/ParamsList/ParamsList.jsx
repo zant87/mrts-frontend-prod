@@ -149,13 +149,7 @@ class ParamsList extends React.Component {
 
     return (
       <MDBCol lg="3" className="list h-100" style={{ marginBottom: "10px" }}>
-        <MDBModal
-          isOpen={this.state.modal}
-          toggle={this.toggle}
-          centered
-          animation="top"
-          style={{ overflow: "scroll" }}
-        >
+        <MDBModal isOpen={this.state.modal} toggle={this.toggle} centered>
           <MDBModalHeader toggle={this.toggle}>
             Настройка отображения данных
           </MDBModalHeader>
