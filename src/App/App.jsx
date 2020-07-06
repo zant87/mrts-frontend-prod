@@ -437,8 +437,8 @@ class App extends React.Component {
                     <div onClick={this.handleToggleClickA}
                          key="sideNavToggleA"
                          className='mr-3'>
-                      <img src={MintransLogo} className='logo' alt='Герб'/>
-                      {/*<MDBIcon icon="bars" size="2x" className='amber-text'/>*/}
+                      {/*<img src={MintransLogo} className='logo' alt='Герб'/>*/}
+                      <MDBIcon icon="bars" size="2x" className='amber-text'/>
                     </div>
                   </MDBNavItem>
                   <MDBNavItem className="white-text" style={{paddingTop: 5}}>
