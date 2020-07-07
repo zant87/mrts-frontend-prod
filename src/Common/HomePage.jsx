@@ -20,12 +20,7 @@ class HomePage extends React.Component {
     }
     render() {
 
-        // console.log('User is', this.state.currentUser);
-        // console.log('Role is', this.state.currentUserRole);
-
         return (
-
-
             <React.Fragment>
                 <MDBRow center>
                     <h1>{this.state.currentUser.fullname}!</h1>

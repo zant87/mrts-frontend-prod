@@ -3,7 +3,7 @@ import {MDBCol, MDBContainer, MDBRow} from "mdbreact";
 import appAxios from "../../_services/appAxios";
 import MaterialTable from "material-table";
 
-export default class AdminIndicatorsPage extends React.Component {
+export default class AdminStructureIndicatorsPage extends React.Component {
 
     state = {
         data: [],

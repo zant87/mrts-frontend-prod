@@ -204,8 +204,19 @@ class App extends React.Component {
                         </MDBSideNavLink>
                       </MDBSideNavItem>
                       <MDBSideNavItem>
-                        <MDBSideNavLink to='/admin/structure/params'>
-                          Показатели для расчета индикаторов
+                        <MDBSideNavLink to='/admin/structure/properties'>
+                          Показатели шаблонов проектов
+                        </MDBSideNavLink>
+                      </MDBSideNavItem>
+                      <MDBSideNavItem>
+                        <MDBSideNavLink to='/admin/structure/templates'>
+                          Шаблоны карточки проектов
+                        </MDBSideNavLink>
+                      </MDBSideNavItem>
+                      {/*/admin/structure/templates-items*/}
+                      <MDBSideNavItem>
+                        <MDBSideNavLink to='/admin/structure/templates-items'>
+                          Элементы карточки проектов
                         </MDBSideNavLink>
                       </MDBSideNavItem>
                     </MDBSideNavNav>

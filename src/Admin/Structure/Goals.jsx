@@ -6,7 +6,7 @@ import {labels} from "../../_components/TableTextLabels";
 import appAxios from "../../_services/appAxios";
 import MaterialTable from "material-table";
 
-export default class AdminGoalsPage extends React.Component {
+export default class AdminStructureGoalsPage extends React.Component {
 
     state = {
         data: [],
