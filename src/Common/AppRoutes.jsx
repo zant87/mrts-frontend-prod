@@ -72,6 +72,7 @@ import AdminLoadingFromGIBDDPage from "../Admin/Loading/FromGIBDD";
 import AdminStructurePropertiesPage from "../Admin/Structure/Properties";
 import AdminStructureTemplatesPage from "../Admin/Structure/Templates";
 import AdminStructureTemplateItemsPage from "../Admin/Structure/TemplateItems";
+import AdminStructureProjectsExtensionPage from "../Admin/Structure/ProjectsExtension";
 
 const AsyncAdminStructureNavigation = loadable({
     loader: () => import("../Admin/Structure/Navigation"),
@@ -249,6 +250,8 @@ export const AppRoutes = () => {
                           component={AdminStructureTemplatesPage}/>
             <PrivateRoute exact path="/admin/structure/templates-items" roles={Role.Admin}
                           component={AdminStructureTemplateItemsPage}/>
+            <PrivateRoute exact path="/admin/structure/projects-ext" roles={Role.Admin}
+                          component={AdminStructureProjectsExtensionPage}/>
 
             {/*Control - Настройка контроля*/}
             <PrivateRoute exact path="/admin/control" roles={Role.Admin} component={AsyncAdminControlNavigation}/>

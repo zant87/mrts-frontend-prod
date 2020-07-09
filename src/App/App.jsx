@@ -219,6 +219,12 @@ class App extends React.Component {
                           Элементы карточки проектов
                         </MDBSideNavLink>
                       </MDBSideNavItem>
+                      {/*/admin/structure/projects-ext*/}
+                      <MDBSideNavItem>
+                        <MDBSideNavLink to='/admin/structure/projects-ext'>
+                          Отчеты по проектам
+                        </MDBSideNavLink>
+                      </MDBSideNavItem>
                     </MDBSideNavNav>
                 )}
                 {layout === Layouts.adminControl && (
