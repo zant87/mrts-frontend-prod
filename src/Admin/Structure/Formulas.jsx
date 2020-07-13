@@ -68,7 +68,8 @@ export default class AdminStructureFormulasPage extends React.Component {
                                 pageSize: 20,
                                 pageSizeOptions: [20, 50, 100],
                                 actionsColumnIndex: 999,
-                                filtering: true
+                                filtering: true,
+                                search: false
                             }}
                             actions={[
                                 {
