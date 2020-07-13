@@ -225,6 +225,12 @@ class App extends React.Component {
                           Отчеты по проектам
                         </MDBSideNavLink>
                       </MDBSideNavItem>
+                      {/*/admin/structure/formulas*/}
+                      <MDBSideNavItem>
+                        <MDBSideNavLink to='/admin/structure/formulas'>
+                          Формулы расчета индикаторов
+                        </MDBSideNavLink>
+                      </MDBSideNavItem>
                     </MDBSideNavNav>
                 )}
                 {layout === Layouts.adminControl && (

@@ -73,6 +73,8 @@ import AdminStructurePropertiesPage from "../Admin/Structure/Properties";
 import AdminStructureTemplatesPage from "../Admin/Structure/Templates";
 import AdminStructureTemplateItemsPage from "../Admin/Structure/TemplateItems";
 import AdminStructureProjectsExtensionPage from "../Admin/Structure/ProjectsExtension";
+import AdminStructureFormulasPage from "../Admin/Structure/Formulas";
+import AdminStructureFormulasEditPage from "../Admin/Structure/FormualsEdit";
 
 const AsyncAdminStructureNavigation = loadable({
     loader: () => import("../Admin/Structure/Navigation"),
@@ -252,6 +254,10 @@ export const AppRoutes = () => {
                           component={AdminStructureTemplateItemsPage}/>
             <PrivateRoute exact path="/admin/structure/projects-ext" roles={Role.Admin}
                           component={AdminStructureProjectsExtensionPage}/>
+            <PrivateRoute exact path="/admin/structure/formulas" roles={Role.Admin}
+                          component={AdminStructureFormulasPage}/>
+            <PrivateRoute exact path="/admin/structure/formulas/:id" roles={Role.Admin}
+                          component={AdminStructureFormulasEditPage}/>
 
             {/*Control - Настройка контроля*/}
             <PrivateRoute exact path="/admin/control" roles={Role.Admin} component={AsyncAdminControlNavigation}/>
