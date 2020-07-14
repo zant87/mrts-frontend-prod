@@ -157,7 +157,10 @@ export default class OperatorReportProjectsMasterEditPage extends React.Componen
                 {this.state.project && (
                     <MDBRow>
                         <MDBCol md="12" className="mb-3">
-                            <MDBInput outline label="Выполнение проекта" value={this.state.done} type="number"/>
+                            <MDBInput outline label="Выполнение проекта"
+                                      onChange={this.onChangeHandler}
+                                      name='done'
+                                      value={this.state.done} type="number"/>
                         </MDBCol>
                     </MDBRow>
                 )}
@@ -168,11 +171,17 @@ export default class OperatorReportProjectsMasterEditPage extends React.Componen
                         </MDBRow>
                         <MDBRow>
                             <MDBCol className="mb-3">
-                                <MDBInput outline label="Плановая стоимость, млрд." value={this.state.planCost}
+                                <MDBInput outline label="Плановая стоимость, млрд."
+                                          onChange={this.onChangeHandler}
+                                          name='planCost'
+                                          value={this.state.planCost}
                                           type="number"/>
                             </MDBCol>
                             <MDBCol className="mb-3">
-                                <MDBInput outline label="Фактическая стоимость, млрд." value={this.state.fact}
+                                <MDBInput outline label="Фактическая стоимость, млрд."
+                                          onChange={this.onChangeHandler}
+                                          name='fact'
+                                          value={this.state.fact}
                                           type="number"/>
                             </MDBCol>
                         </MDBRow>
@@ -181,7 +190,11 @@ export default class OperatorReportProjectsMasterEditPage extends React.Componen
                 {this.state.project && (
                     <MDBRow>
                         <MDBCol md="12" className="mb-3">
-                            <MDBInput label="Описание проекта" value={this.state.description} rows="5" type="textarea"/>
+                            <MDBInput label="Описание проекта"
+                                      onChange={this.onChangeHandler}
+                                      name='description'
+                                      value={this.state.description}
+                                      rows="5" type="textarea"/>
                         </MDBCol>
                     </MDBRow>
                 )}
