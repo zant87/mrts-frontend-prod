@@ -3,6 +3,7 @@ import {MDBCol, MDBContainer, MDBRow, toast} from "mdbreact";
 import appAxios from "../../_services/appAxios";
 import MaterialTable from "material-table";
 import {ruLocalization} from "../../_components/MaterialTableLocalization";
+import {history} from "@/_helpers";
 
 export default class OperatorReportProjectsMasterPage extends React.Component {
 
@@ -57,45 +58,55 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
                             data={data}
                             isLoading={isLoading}
                             localization={ruLocalization}
-                            editable={{
-                                onRowUpdate: (newData, oldData) =>
-                                    new Promise((resolve, reject) => {
-                                        setTimeout(() => {
-                                            const dataUpdate = [...data];
-                                            const index = dataUpdate.findIndex(item => item.id === oldData.id);
-
-                                            newData.value = (newData.value !== null) ? newData.value : 0;
-                                            dataUpdate[index] = newData;
-
-                                            console.log(newData);
-
-                                            appAxios.get(`/views/k-7-masters/update?pID=${newData.id}&pDoc=${newData.documentId}&pIdProject=${newData.projectId}&pFactStarted=${newData.factStarted}&pFactFinished=${newData.factFinished}&pDone=${newData.done}&pRptDescription=${newData.description}`)
-                                                .then(res => {
-                                                    const data = res.data;
-                                                    this.setState({result: data, isLoading: false});
-                                                    toast.success(`Обновили данные документа №${data}`, {
-                                                        closeButton: false
-                                                    });
-                                                }).catch(function (error) {
-                                                console.log(error);
-                                                toast.error(`Ошибка при обновлении документа`, {
-                                                    closeButton: false
-                                                });
-                                            });
-
-                                            this.setState({data: dataUpdate});
-
-                                            resolve();
-                                        }, 6000)
-                                    }),
-                            }}
+                            // editable={{
+                            //     onRowUpdate: (newData, oldData) =>
+                            //         new Promise((resolve, reject) => {
+                            //             setTimeout(() => {
+                            //                 const dataUpdate = [...data];
+                            //                 const index = dataUpdate.findIndex(item => item.id === oldData.id);
+                            //
+                            //                 newData.value = (newData.value !== null) ? newData.value : 0;
+                            //                 dataUpdate[index] = newData;
+                            //
+                            //                 console.log(newData);
+                            //
+                            //                 appAxios.get(`/views/k-7-masters/update?pID=${newData.id}&pDoc=${newData.documentId}&pIdProject=${newData.projectId}&pFactStarted=${newData.factStarted}&pFactFinished=${newData.factFinished}&pDone=${newData.done}&pRptDescription=${newData.description}`)
+                            //                     .then(res => {
+                            //                         const data = res.data;
+                            //                         this.setState({result: data, isLoading: false});
+                            //                         toast.success(`Обновили данные документа №${data}`, {
+                            //                             closeButton: false
+                            //                         });
+                            //                     }).catch(function (error) {
+                            //                     console.log(error);
+                            //                     toast.error(`Ошибка при обновлении документа`, {
+                            //                         closeButton: false
+                            //                     });
+                            //                 });
+                            //
+                            //                 this.setState({data: dataUpdate});
+                            //
+                            //                 resolve();
+                            //             }, 6000)
+                            //         }),
+                            // }}
                             options={{
                                 actionsColumnIndex: 999,
-                                search: true,
+                                search: false,
                                 pageSize: 20,
                                 pageSizeOptions: [20, 50, 100],
                                 filtering: true
                             }}
+                            actions={[
+                                {
+                                    icon: 'edit',
+                                    tooltip: 'Редактировать',
+                                    onClick: (event, rowData) => {
+                                        console.log(`Посылаем в форму редактирования URL: ${history.location.pathname}/${rowData.id}`);
+                                        history.push(`${history.location.pathname}/${rowData.id}`, rowData);
+                                    }
+                                }
+                            ]}
                         />
                     </MDBCol>
                 </MDBRow>

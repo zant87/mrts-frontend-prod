@@ -12,6 +12,7 @@ export default class AdminStructureFormulasEditPage extends React.Component {
 
     constructor(props) {
         super(props);
+        console.log(props);
         this.state = this.props.location.state;
     }
 

@@ -27,12 +27,12 @@ export default class OperatorReportActivitiesPage extends React.Component {
             });
     };
 
-
     render() {
 
         const columns = [
             {field: 'activityReportId', title: '#', editable: 'never', filtering: false},
-            {field: 'activityName', title: 'Наименование мероприятия', editable: 'never'},
+            {field: 'activityCode', title: 'Код мероприятия', editable: 'never'},
+            {field: 'executor', title: 'Исполнитель', editable: 'never'},
             {field: 'documentType', title: 'Вид документа', editable: 'never'},
             {field: 'activityDescription', title: 'Содержание мероприятия', editable: 'never'},
             {field: 'yearNumber', title: 'Отчетный год', editable: 'never'},

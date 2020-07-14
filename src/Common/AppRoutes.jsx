@@ -75,6 +75,7 @@ import AdminStructureTemplateItemsPage from "../Admin/Structure/TemplateItems";
 import AdminStructureProjectsExtensionPage from "../Admin/Structure/ProjectsExtension";
 import AdminStructureFormulasPage from "../Admin/Structure/Formulas";
 import AdminStructureFormulasEditPage from "../Admin/Structure/FormualsEdit";
+import OperatorReportProjectsMasterEditPage from "../Operator/Report/ProjectsMasterEdit";
 
 const AsyncAdminStructureNavigation = loadable({
     loader: () => import("../Admin/Structure/Navigation"),
@@ -345,7 +346,7 @@ export const AppRoutes = () => {
             <PrivateRoute exact path="/operator/report/projects_master" roles={Role.Operator}
                           component={OperatorReportProjectsMasterPage}/>
             <PrivateRoute exact path="/operator/report/projects_master/:id" roles={Role.Operator}
-                          component={OperatorReportProjectsMasterUpdatePage}/>
+                          component={OperatorReportProjectsMasterEditPage}/>
 
             <PrivateRoute exact path="/operator/report/projects_detail" roles={Role.Operator}
                           component={OperatorReportProjectsDetailPage}/>

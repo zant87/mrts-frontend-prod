@@ -1,14 +1,20 @@
 import React from 'react';
 import {MDBCol, MDBContainer, MDBRow, toast} from "mdbreact";
 import appAxios from "../../_services/appAxios";
-import Axios from "axios";
 import MaterialTable from "material-table";
 import {ruLocalization} from "../../_components/MaterialTableLocalization";
 import {history} from "@/_helpers";
 
 export default class AdminStructureFormulasPage extends React.Component {
 
-    async componentDidMount() {
+    state = {
+        page: 0,
+        size: 20,
+        filter: '',
+        url: ''
+    };
+
+    componentDidMount() {
     }
 
     render() {
