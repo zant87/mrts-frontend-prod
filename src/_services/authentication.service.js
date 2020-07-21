@@ -6,7 +6,7 @@ import {history} from "@/_helpers";
 import config from 'config';
 
 if (!config.isLocalDeployment) {
-    console.log('Production Mode Is On');
+    console.log('Production Mode Is Off');
 } else {
     console.log('Development Mode Is On');
 
@@ -20,6 +20,7 @@ if (!config.isLocalDeployment) {
     };
 
     let cookies = cookie.select(/ser/g);
+    console.log(cookies);
 
     if (Object.entries(cookies).length === 0) {
         console.log('Setting Development Mode Cookies');

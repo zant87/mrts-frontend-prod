@@ -18,6 +18,9 @@ export default class OperatorReportProjectsMasterEditPage extends React.Componen
         this.state = this.props.location.state;
     }
 
+    //mts_project_report
+    //mts_project_res - по projectId, idDoc,
+    //v_k_7_detail
     getProject = () => appAxios.get(`projects/${this.state.projectId}`).catch(err => null);
     getDocument = () => appAxios.get(`documents/${this.state.documentId}`).catch(err => null);
     getProjectsExt = () => appAxios.get(`project-extendeds?projectId.equals=${this.state.projectId}`).catch(err => null);
@@ -124,13 +127,15 @@ export default class OperatorReportProjectsMasterEditPage extends React.Componen
                                 <MDBRow>
                                     <MDBCol>
                                         <MDBInput outline label="Начало плановое" onChange={this.onChangeHandler}
-                                                  name='planBeginYear' value={this.state.planBeginYear} type="number"/>
+                                                  name='planBeginYear' value={this.state.planBeginYear} disabled={true}
+                                                  type="number"/>
                                     </MDBCol>
                                 </MDBRow>
                                 <MDBRow>
                                     <MDBCol>
                                         <MDBInput outline label="Окончание плановое" onChange={this.onChangeHandler}
-                                                  name='planEndYear' value={this.state.planEndYear} type="number"/>
+                                                  name='planEndYear' value={this.state.planEndYear} disabled={true}
+                                                  type="number"/>
                                     </MDBCol>
                                 </MDBRow>
                             </MDBCol>
@@ -171,8 +176,9 @@ export default class OperatorReportProjectsMasterEditPage extends React.Componen
                         </MDBRow>
                         <MDBRow>
                             <MDBCol className="mb-3">
-                                <MDBInput outline label="Плановая стоимость, млрд."
+                                <MDBInput outline label="Плановая стоимость, млрд. руб."
                                           onChange={this.onChangeHandler}
+                                          disabled={true}
                                           name='planCost'
                                           value={this.state.planCost}
                                           type="number"/>

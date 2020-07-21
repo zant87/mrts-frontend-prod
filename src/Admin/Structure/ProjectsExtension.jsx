@@ -1,186 +1,127 @@
 import React from 'react';
-import {MDBCol, MDBContainer, MDBRow, toast} from "mdbreact";
+import {MDBCol, MDBContainer, MDBModal, MDBModalBody, MDBModalHeader, MDBRow, toast} from "mdbreact";
 import appAxios from "../../_services/appAxios";
-import Axios from "axios";
 import MaterialTable from "material-table";
 import {ruLocalization} from "../../_components/MaterialTableLocalization";
+import TableContainer from "../../_components/TableContainer";
+import ProjectsExtensionEdit from "./ProjectsExtensionEdit";
+import Axios from "axios";
 
 export default class AdminStructureProjectsExtensionPage extends React.Component {
 
     state = {
-        data: [],
-        isLoading: true
-    };
+        modal: false,
+        row: {},
+        action: '',
+        projects: {},
+        properties: {},
+        documents: {},
+        initialized: false
+    }
 
     getProjects = () => appAxios.get(`projects`).catch(err => null);
     getProperties = () => appAxios.get(`user-properties`).catch(err => null);
     getDocuments = () => appAxios.get(`documents`).catch(err => null);
-    getProjectsExt = () => appAxios.get(`project-extendeds`).catch(err => null);
 
     async componentDidMount() {
         try {
-            const [rProjects, rProperties, rDocuments, rProjectsExt] = await Axios.all([this.getProjects(), this.getProperties(), this.getDocuments(), this.getProjectsExt()]);
-
-            const rProjectsList = rProjects.data.map(item => {
-                return {id: item.id, name: item.name};
-            });
-
-            const rProjectsListMod = rProjectsList.reduce(function (acc, cur, i) {
-                acc[cur.id] = cur.name;
-                return acc;
-            }, {});
-
-            const rPropertiesList = rProperties.data.map(item => {
-                return {id: item.id, name: item.name};
-            });
-
-            const rPropertiesListMod = rPropertiesList.reduce(function (acc, cur, i) {
-                acc[cur.id] = cur.name;
-                return acc;
-            }, {});
-
-            const rDocumentsList = rDocuments.data.map(item => {
-                return {id: item.id, name: item.name};
-            });
-
-            const rDocumentsListMod = rDocumentsList.reduce(function (acc, cur, i) {
-                acc[cur.id] = cur.name;
-                return acc;
-            }, {});
+            const [rProjects, rProperties, rDocuments] = await Axios.all([this.getProjects(), this.getProperties(), this.getDocuments()]);
 
             this.setState(
                 {
                     projects: rProjects.data,
-                    projectsList: rProjectsListMod,
                     properties: rProperties.data,
-                    propertiesList: rPropertiesListMod,
                     documents: rDocuments.data,
-                    documentsList: rDocumentsListMod,
-                    data: rProjectsExt.data,
-                    isLoading: false,
-
+                    initialized: true
                 }
             );
+
         } catch (err) {
             console.log(err.message);
         }
     }
 
+    toggleModal = (rowData, action) => {
+        this.setState({
+            modal: !this.state.modal,
+            row: rowData,
+            action: action
+        });
+    }
+
     render() {
 
         const columns = [
-            {field: 'id', title: '#', filtering: false, editable: 'never'},
-            {field: 'projectId', title: 'Проект', lookup: this.state.projectsList},
+            {field: 'id', title: '#', filtering: false},
+            {field: 'projectName', title: 'Проект', filtering: true},
+            {field: 'userPropertyName', title: 'Свойство', filtering: true},
+            {field: 'documentName', title: 'Документ', filtering: true},
+            {field: 'documentDate', title: 'Дата документа', type: 'date', filtering: false},
+            {field: 'numberValue', title: 'Числовое значение', filtering: false},
+            {field: 'stringValue', title: 'Строковое значение', filtering: false},
+        ]
 
-            {field: 'userPropertyId', title: 'Свойство', lookup: this.state.propertiesList},
-
-            {field: 'documentId', title: 'Документ', lookup: this.state.documentsList},
-            {field: 'documentDate', title: 'Дата документа', type: 'date'},
-
-            {field: 'numberValue', title: 'Числовое значение'},
-            {field: 'stringValue', title: 'Строковое значение'},
+        const actions = [
+            {
+                icon: 'edit',
+                tooltip: 'Редактировать',
+                onClick: (event, rowData) => {
+                    if (this.state.initialized) this.toggleModal(rowData, 'edit');
+                }
+            },
+            {
+                icon: 'delete',
+                tooltip: 'Удалить',
+                onClick: (event, rowData) => {
+                    appAxios({
+                        url: `project-extendeds/${rowData.id}`,
+                        method: 'DELETE',
+                    }).then((response) => {
+                        const message = response.headers["x-mrts-backend-params"];
+                        toast.success(`Удалена запись с ID ${message}`, {
+                            closeButton: false
+                        });
+                        tableRef.current.onQueryChange();
+                    });
+                }
+            },
+            {
+                icon: 'add',
+                tooltip: 'Добавить',
+                isFreeAction: true,
+                onClick: (event, rowData) => {
+                    if (this.state.initialized) this.toggleModal(rowData, 'add');
+                }
+            }
         ];
 
-        console.log(this.state);
-
-        const {data, isLoading} = this.state;
         const tableRef = React.createRef();
 
         return (
-            <MDBContainer fluid>
-                <MDBRow center>
-                    <MDBCol md={'12'} className='my-2 mx-auto'>
-                        <MaterialTable
-                            title="Отчет по проекту"
-                            columns={columns}
-                            tableRef={tableRef}
-                            data={data}
-                            isLoading={isLoading}
-                            tableLayout={'fixed'}
-                            localization={ruLocalization}
-                            options={{
-                                search: false,
-                                pageSize: 20,
-                                pageSizeOptions: [20, 50, 100],
-                                actionsColumnIndex: 999,
-                            }}
-                            editable={{
-                                onRowAdd: newData =>
-                                    new Promise((resolve, reject) => {
-                                        setTimeout(() => {
-                                            const dataNew = [...data];
-
-                                            const responseData = newData;
-
-                                            appAxios({
-                                                url: `project-extendeds`,
-                                                method: 'POST',
-                                                data: responseData
-                                            }).then((response) => {
-                                                const message = response.headers["x-mrts-backend-params"];
-                                                toast.success(`Успешно добавлена запись с ID ${message}`, {
-                                                    closeButton: false
-                                                });
-                                                newData.id = message;
-                                                dataNew.push(newData);
-                                                this.setState({data: dataNew});
-                                            });
-
-                                            resolve();
-                                        }, 1000)
-                                    }),
-                                onRowUpdate: (newData, oldData) =>
-                                    new Promise((resolve, reject) => {
-                                        setTimeout(() => {
-                                            const dataUpdate = [...data];
-                                            const index = dataUpdate.findIndex(item => item.id === oldData.id);
-                                            dataUpdate[index] = newData;
-
-                                            const responseData = newData;
-
-                                            appAxios({
-                                                url: `project-extendeds`,
-                                                method: 'PUT',
-                                                data: responseData
-                                            }).then((response) => {
-                                                const message = response.headers["x-mrts-backend-params"];
-                                                toast.success(`Успешно обновлена запись с ID ${message}`, {
-                                                    closeButton: false
-                                                });
-                                            });
-
-                                            this.setState({data: dataUpdate});
-                                            resolve();
-                                        }, 1000)
-                                    }),
-                                onRowDelete: oldData =>
-                                    new Promise((resolve, reject) => {
-                                        setTimeout(() => {
-
-                                            const dataDelete = [...data];
-                                            const index = dataDelete.findIndex(item => item.id === oldData.id);
-
-                                            appAxios({
-                                                url: `project-extendeds/${oldData.id}`,
-                                                method: 'DELETE',
-                                            }).then((response) => {
-                                                const message = response.headers["x-mrts-backend-params"];
-                                                toast.success(`Удалена запись с ID ${message}`, {
-                                                    closeButton: false
-                                                });
-                                            });
-
-                                            dataDelete.splice(index, 1);
-
-                                            this.setState({data: dataDelete});
-                                            resolve();
-                                        }, 1000)
-                                    }),
-                            }}
-                        />
-                    </MDBCol>
-                </MDBRow>
-            </MDBContainer>
+            <React.Fragment>
+                <TableContainer
+                    columns={columns}
+                    title={'Отчет по проекту'}
+                    baseUrl={'project-extendeds-page'}
+                    actions={actions}
+                    tableRef={tableRef}
+                    loadAll={true}
+                />
+                <MDBContainer>
+                    <MDBModal isOpen={this.state.modal} toggle={this.toggleModal} backdrop={false} size="fluid">
+                        <MDBModalHeader toggle={this.toggleModal}>Форма редактирования</MDBModalHeader>
+                        <MDBModalBody>
+                            <ProjectsExtensionEdit
+                                data={this.state.row}
+                                action={this.state.action}
+                                projects={this.state.projects}
+                                documents={this.state.documents}
+                                properties={this.state.properties}
+                            />
+                        </MDBModalBody>
+                    </MDBModal>
+                </MDBContainer>
+            </React.Fragment>
         )
     }
 }

@@ -21,7 +21,7 @@ export const ruLocalization = {
         actions: 'Действия'
     },
     body: {
-        emptyDataSourceMessage: 'Записи отсутствуют',
+        emptyDataSourceMessage: 'Записи отсутствуют, либо необходимо применить фильтр',
         cancelTooltip: 'Отмена',
         saveTooltip: 'Сохранить',
         editTooltip: 'Редактировать',

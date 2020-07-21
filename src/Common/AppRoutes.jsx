@@ -2,7 +2,6 @@ import React, { Fragment } from "react";
 import { PrivateRoute } from "@/_components";
 import HomePage from "@/Common/HomePage";
 import { Role } from "@/_helpers";
-import AdminStructureNavigation from "@/Admin/Structure/Navigation";
 import AdminGoalsPage from "@/Admin/Structure/Goals";
 import AdminIndicatorsPage from "@/Admin/Structure/Indicators";
 import AdminParametersPage from "@/Admin/Structure/Parameters";
@@ -76,11 +75,6 @@ import AdminStructureProjectsExtensionPage from "../Admin/Structure/ProjectsExte
 import AdminStructureFormulasPage from "../Admin/Structure/Formulas";
 import AdminStructureFormulasEditPage from "../Admin/Structure/FormualsEdit";
 import OperatorReportProjectsMasterEditPage from "../Operator/Report/ProjectsMasterEdit";
-
-const AsyncAdminStructureNavigation = loadable({
-    loader: () => import("../Admin/Structure/Navigation"),
-    loading: AdminStructureNavigation,
-});
 
 const AsyncAdminStructureGoalsPage = loadable({
     loader: () => import("../Admin/Structure/Goals"),
@@ -242,7 +236,6 @@ export const AppRoutes = () => {
         <Fragment>
             {/* Администратор*/}
             {/*Structure - Настройка структуры*/}
-            <PrivateRoute exact path="/admin/structure" roles={Role.Admin} component={AsyncAdminStructureNavigation}/>
             <PrivateRoute exact path="/admin/structure/goals" roles={Role.Admin}
                           component={AsyncAdminStructureGoalsPage}/>
             <PrivateRoute exact path="/admin/structure/indicators" roles={Role.Admin}

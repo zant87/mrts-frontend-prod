@@ -31,7 +31,6 @@ export default class OperatorPlanActivitiesPage extends React.Component {
             });
     };
 
-
     render() {
 
         const columns = [
