@@ -13,7 +13,6 @@ import AdminExecutorsByActivitiesPage from "@/Admin/Control/ExecutorsByActivitie
 import AdminExecutorsByProjectsPage from "@/Admin/Control/ExecutorsByProjects";
 import AdminExecutorsByResourcesPage from "@/Admin/Control/ExecutorsByResources";
 import AdminLoadingNavigation from "@/Admin/Loading/Navigation";
-import AdminArchiveNavigation from "@/Admin/Archive/Navigation";
 import AdminArchiveParametersPage from "@/Admin/Archive/Parameters";
 import AdminArchiveIndicatorsPage from "@/Admin/Archive/Indicators";
 import AdminArchiveProjectsPage from "@/Admin/Archive/Projects";
@@ -73,7 +72,7 @@ import AdminStructureTemplatesPage from "../Admin/Structure/Templates";
 import AdminStructureTemplateItemsPage from "../Admin/Structure/TemplateItems";
 import AdminStructureProjectsExtensionPage from "../Admin/Structure/ProjectsExtension";
 import AdminStructureFormulasPage from "../Admin/Structure/Formulas";
-import AdminStructureFormulasEditPage from "../Admin/Structure/FormualsEdit";
+import AdminStructureFormulasEditPage from "../Admin/Structure/FormulaEdit";
 import OperatorReportProjectsMasterEditPage from "../Operator/Report/ProjectsMasterEdit";
 
 const AsyncAdminStructureGoalsPage = loadable({
@@ -285,7 +284,6 @@ export const AppRoutes = () => {
             {/*AdminLoadingDocumentPage*/}
 
             {/*Archive - Архив */}
-            <PrivateRoute exact path="/admin/archive" roles={Role.Admin} component={AdminArchiveNavigation} />
             <PrivateRoute exact path="/admin/archive/parameters" roles={Role.Admin} component={AdminArchiveParametersPage} />
             <PrivateRoute exact path="/admin/archive/indicators" roles={Role.Admin} component={AdminArchiveIndicatorsPage} />
             <PrivateRoute exact path="/admin/archive/activities" roles={Role.Admin} component={AdminArchiveActivitiesPage} />

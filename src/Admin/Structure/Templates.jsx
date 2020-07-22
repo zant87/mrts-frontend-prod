@@ -1,40 +1,31 @@
 import React from 'react';
-import {MDBCol, MDBContainer, MDBRow, toast} from "mdbreact";
+import {MDBCol, MDBContainer, MDBModal, MDBModalBody, MDBModalHeader, MDBRow, toast} from "mdbreact";
 import appAxios from "../../_services/appAxios";
 import Axios from "axios";
-import MaterialTable from "material-table";
-import {ruLocalization} from "../../_components/MaterialTableLocalization";
+import TableContainer from "../../_components/TableContainer";
+import TemplateEdit from "./TemplateEdit";
 
 export default class AdminStructureTemplatesPage extends React.Component {
 
     state = {
-        data: [],
-        isLoading: true,
-        projects: []
-    };
+        modal: false,
+        row: {},
+        action: '',
+        projects: {},
+        initialized: false
+    }
 
     getProjects = () => appAxios.get(`projects`).catch(err => null);
-    getTemplates = () => appAxios.get(`project-templates`).catch(err => null);
 
     async componentDidMount() {
         try {
-            const [rProjects, rTemplates] = await Axios.all([this.getProjects(), this.getTemplates()]);
 
-            const rProjectsList = rProjects.data.map(item => {
-                return {id: item.id, name: item.name};
-            });
-
-            const rProjectsListMod = rProjectsList.reduce(function (acc, cur, i) {
-                acc[cur.id] = cur.name;
-                return acc;
-            }, {});
+            const [rProjects] = await Axios.all([this.getProjects()]);
 
             this.setState(
                 {
                     projects: rProjects.data,
-                    data: rTemplates.data,
-                    isLoading: false,
-                    projectsList: rProjectsListMod
+                    initialized: true,
                 }
             );
         } catch (err) {
@@ -42,117 +33,87 @@ export default class AdminStructureTemplatesPage extends React.Component {
         }
     }
 
+    tableRef = React.createRef();
+
+    toggleModal = (rowData, action) => {
+        console.log(rowData);
+        this.setState({
+            modal: !this.state.modal,
+            row: rowData,
+            action: action
+        });
+    }
+
     render() {
 
         const columns = [
             {field: 'id', title: '#', filtering: false, editable: 'never'},
-            {field: 'code', title: 'Код'},
-            {field: 'name', title: 'Наименование'},
-            {field: 'description', title: 'Описание'},
-            {field: 'beginDate', title: 'Начало', type: 'date'},
-            {field: 'endDate', title: 'Конец', type: 'date'},
-            {field: 'projectId', title: 'Проект', lookup: this.state.projectsList},
+            {field: 'projectName', title: 'Проект', filtering: true},
+            {field: 'code', title: 'Код', filtering: true},
+            {field: 'name', title: 'Наименование', filtering: true},
+            {field: 'description', title: 'Описание', filtering: true},
+            {field: 'beginDate', title: 'Начало', type: 'date', filtering: false},
+            {field: 'endDate', title: 'Конец', type: 'date', filtering: false},
         ];
 
-        console.log(this.state);
-
-        const {data, isLoading} = this.state;
-        const tableRef = React.createRef();
+        const actions = [
+            {
+                icon: 'edit',
+                tooltip: 'Редактировать',
+                onClick: (event, rowData) => {
+                    if (this.state.initialized) this.toggleModal(rowData, 'edit');
+                }
+            },
+            {
+                icon: 'delete',
+                tooltip: 'Удалить',
+                onClick: (event, rowData) => {
+                    appAxios({
+                        url: `project-templates/${rowData.id}`,
+                        method: 'DELETE',
+                    }).then((response) => {
+                        const message = response.headers["x-mrts-backend-params"];
+                        toast.success(`Удалена запись с ID ${message}`, {
+                            closeButton: false
+                        });
+                        this.tableRef.current.onQueryChange();
+                    });
+                }
+            },
+            {
+                icon: 'add',
+                tooltip: 'Добавить',
+                isFreeAction: true,
+                onClick: (event, rowData) => {
+                    if (this.state.initialized) this.toggleModal(rowData, 'add');
+                }
+            }
+        ];
 
         return (
-            <MDBContainer fluid>
-                <MDBRow center>
-                    <MDBCol md={'12'} className='my-2 mx-auto'>
-                        <MaterialTable
-                            title="Шаблоны карточки проектов"
-                            columns={columns}
-                            tableRef={tableRef}
-                            data={data}
-                            isLoading={isLoading}
-                            localization={ruLocalization}
-                            options={{
-                                search: false,
-                                pageSize: 20,
-                                pageSizeOptions: [20, 50, 100],
-                                actionsColumnIndex: 999,
-                            }}
-                            editable={{
-                                onRowAdd: newData =>
-                                    new Promise((resolve, reject) => {
-                                        setTimeout(() => {
-                                            const dataNew = [...data];
-
-                                            const responseData = newData;
-
-                                            appAxios({
-                                                url: `project-templates`,
-                                                method: 'POST',
-                                                data: responseData
-                                            }).then((response) => {
-                                                const message = response.headers["x-mrts-backend-params"];
-                                                toast.success(`Успешно добавлена запись с ID ${message}`, {
-                                                    closeButton: false
-                                                });
-                                                newData.id = message;
-                                                dataNew.push(newData);
-                                                this.setState({data: dataNew});
-                                            });
-
-                                            resolve();
-                                        }, 1000)
-                                    }),
-                                onRowUpdate: (newData, oldData) =>
-                                    new Promise((resolve, reject) => {
-                                        setTimeout(() => {
-                                            const dataUpdate = [...data];
-                                            const index = dataUpdate.findIndex(item => item.id === oldData.id);
-                                            dataUpdate[index] = newData;
-
-                                            const responseData = newData;
-
-                                            appAxios({
-                                                url: `project-templates`,
-                                                method: 'PUT',
-                                                data: responseData
-                                            }).then((response) => {
-                                                const message = response.headers["x-mrts-backend-params"];
-                                                toast.success(`Успешно обновлена запись с ID ${message}`, {
-                                                    closeButton: false
-                                                });
-                                            });
-
-                                            this.setState({data: dataUpdate});
-                                            resolve();
-                                        }, 1000)
-                                    }),
-                                onRowDelete: oldData =>
-                                    new Promise((resolve, reject) => {
-                                        setTimeout(() => {
-
-                                            const dataDelete = [...data];
-                                            const index = dataDelete.findIndex(item => item.id === oldData.id);
-
-                                            appAxios({
-                                                url: `project-templates/${oldData.id}`,
-                                                method: 'DELETE',
-                                            }).then((response) => {
-                                                const message = response.headers["x-mrts-backend-params"];
-                                                toast.success(`Удалена запись с ID ${message}`, {
-                                                    closeButton: false
-                                                });
-                                            });
-
-                                            dataDelete.splice(index, 1);
-
-                                            this.setState({data: dataDelete});
-                                            resolve();
-                                        }, 1000)
-                                    }),
-                            }}
-                        />
-                    </MDBCol>
-                </MDBRow>
-            </MDBContainer>
+            <React.Fragment>
+                <TableContainer
+                    columns={columns}
+                    title={'Шаблоны карточки проектов'}
+                    baseUrl={'project-templates-page'}
+                    loadAll={true}
+                    tableRef={this.tableRef}
+                    actions={actions}
+                />
+                <MDBContainer>
+                    <MDBModal isOpen={this.state.modal} toggle={this.toggleModal} backdrop={false} size="lg">
+                        <MDBModalHeader toggle={this.toggleModal}>Форма редактирования</MDBModalHeader>
+                        <MDBModalBody>
+                            <TemplateEdit
+                                data={this.state.row}
+                                action={this.state.action}
+                                projects={this.state.projects}
+                                tableRef={this.tableRef}
+                            />
+                        </MDBModalBody>
+                    </MDBModal>
+                </MDBContainer>
+            </React.Fragment>
         )
     }
 }

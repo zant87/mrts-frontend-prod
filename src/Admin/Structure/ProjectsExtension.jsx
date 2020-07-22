@@ -4,7 +4,7 @@ import appAxios from "../../_services/appAxios";
 import MaterialTable from "material-table";
 import {ruLocalization} from "../../_components/MaterialTableLocalization";
 import TableContainer from "../../_components/TableContainer";
-import ProjectsExtensionEdit from "./ProjectsExtensionEdit";
+import ProjectExtensionEdit from "./ProjectExtensionEdit";
 import Axios from "axios";
 
 export default class AdminStructureProjectsExtensionPage extends React.Component {
@@ -18,6 +18,8 @@ export default class AdminStructureProjectsExtensionPage extends React.Component
         documents: {},
         initialized: false
     }
+
+    tableRef = React.createRef();
 
     getProjects = () => appAxios.get(`projects`).catch(err => null);
     getProperties = () => appAxios.get(`user-properties`).catch(err => null);
@@ -81,7 +83,7 @@ export default class AdminStructureProjectsExtensionPage extends React.Component
                         toast.success(`Удалена запись с ID ${message}`, {
                             closeButton: false
                         });
-                        tableRef.current.onQueryChange();
+                        this.tableRef.current.onQueryChange();
                     });
                 }
             },
@@ -95,8 +97,6 @@ export default class AdminStructureProjectsExtensionPage extends React.Component
             }
         ];
 
-        const tableRef = React.createRef();
-
         return (
             <React.Fragment>
                 <TableContainer
@@ -104,19 +104,20 @@ export default class AdminStructureProjectsExtensionPage extends React.Component
                     title={'Отчет по проекту'}
                     baseUrl={'project-extendeds-page'}
                     actions={actions}
-                    tableRef={tableRef}
+                    tableRef={this.tableRef}
                     loadAll={true}
                 />
                 <MDBContainer>
-                    <MDBModal isOpen={this.state.modal} toggle={this.toggleModal} backdrop={false} size="fluid">
+                    <MDBModal isOpen={this.state.modal} toggle={this.toggleModal} backdrop={false} size="lg">
                         <MDBModalHeader toggle={this.toggleModal}>Форма редактирования</MDBModalHeader>
                         <MDBModalBody>
-                            <ProjectsExtensionEdit
+                            <ProjectExtensionEdit
                                 data={this.state.row}
                                 action={this.state.action}
                                 projects={this.state.projects}
                                 documents={this.state.documents}
                                 properties={this.state.properties}
+                                tableRef={this.tableRef}
                             />
                         </MDBModalBody>
                     </MDBModal>

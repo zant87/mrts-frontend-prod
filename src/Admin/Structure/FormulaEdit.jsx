@@ -3,23 +3,14 @@ import {MDBBtn, MDBCol, MDBInput, MDBRow, toast, MDBScrollbar, MDBContainer} fro
 import appAxios from "../../_services/appAxios";
 import "../../scrollbar.css";
 
-export default class AdminStructureFormulasEditPage extends React.Component {
-
-    state = {
-        data: {},
-        isLoading: false
-    };
+export default class AdminStructureFormulaEditPage extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log(props);
         this.state = this.props.data;
     }
 
-    componentDidMount() {
-    };
-
-    doSave = () => {
+    doSave = (e) => {
         const responseData = this.state;
 
         appAxios({
@@ -28,24 +19,21 @@ export default class AdminStructureFormulasEditPage extends React.Component {
             data: responseData
         }).then((response) => {
             const message = response.headers["x-mrts-backend-params"];
-            toast.success(`Успешно обновлена запись с ID ${message}`, {
-                closeButton: false
-            });
+            toast.success(`Успешно обновлена запись с ID ${message}`, {closeButton: false});
+            this.props.tableRef.current.onQueryChange();
         });
     }
 
-    onChangeHandler = event => {
-        this.setState({[event.target.name]: event.target.value});
-        console.log(this.state);
+    onChangeHandler = e => {
+        this.setState({[e.target.name]: e.target.value});
     };
 
     render() {
 
-        console.log(this.state);
-
         return (
             <MDBContainer>
                 <div className="scrollbar my-1 mx-auto" style={{maxHeight: '600px'}}>
+
                     <MDBInput label="#" value={this.state.id} disabled={true} type="number" outline={true}/>
 
                     <MDBInput label="Тип транспорта" value={this.state.transportTypeName}
@@ -58,9 +46,9 @@ export default class AdminStructureFormulasEditPage extends React.Component {
                               type="textarea" rows={3} outline={true}/>
 
                     <MDBInput type="textarea" label="Формула" value={this.state.formula} rows={3}
-                              onChange={this.onChangeHandler} name='formula' outline={true}/>
+                              onChange={e => this.onChangeHandler(e)} name='formula' outline={true}/>
 
-                    <MDBBtn color="primary" type="none" onClick={this.doSave}>
+                    <MDBBtn color="primary" type="none" onClick={e => this.doSave(e)}>
                         Сохранить
                     </MDBBtn>
                 </div>

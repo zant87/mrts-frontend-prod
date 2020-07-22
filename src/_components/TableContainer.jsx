@@ -7,7 +7,6 @@ import {ruLocalization} from "./MaterialTableLocalization";
 export default class TableContainer extends React.Component {
 
     constructor(props) {
-        console.log(props);
         super(props);
     }
 
@@ -22,10 +21,8 @@ export default class TableContainer extends React.Component {
         };
 
         const loadAll = this.props.loadAll ? this.props.loadAll : false;
-        const filterMinimalLength = this.props.filterMinimalLength ? this.props.filterMinimalLength : 4;
-
-        //const tableRef = React.createRef();
-        const tableRef = this.props.tableRef ? this.props.tableRef : false;
+        const filterMinimalLength = this.props.filterMinimalLength ? this.props.filterMinimalLength : 3;
+        const tableRef = this.props.tableRef ? this.props.tableRef : React.createRef();
 
         return (
             <MDBContainer fluid>
@@ -34,7 +31,7 @@ export default class TableContainer extends React.Component {
                         <MaterialTable
                             title={this.props.title}
                             columns={this.props.columns}
-                            tableRef={this.props.tableRef}
+                            tableRef={tableRef}
                             localization={ruLocalization}
                             options={options}
                             actions={this.props.actions}

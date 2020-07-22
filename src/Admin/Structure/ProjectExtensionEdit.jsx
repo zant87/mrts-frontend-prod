@@ -40,51 +40,44 @@ export default class AdminStructureProjectsExtensionEditPage extends React.Compo
             }
         );
 
-        this.state.data = this.props.data;
-        this.state.stringValue = this.props.data.stringValue;
-        this.state.numberValue = this.props.data.numberValue;
-        this.state.tableRef = this.props.tableRef;
+        this.state.id = props.data.id;
+        this.state.projectId = props.data.projectId;
+        this.state.documentId = props.data.documentId;
+        this.state.userPropertyId = props.data.userPropertyId;
+        this.state.stringValue = props.data.stringValue;
+        this.state.numberValue = props.data.numberValue;
+
     }
 
     setProject = event => {
-        console.log(event);
-        let data = this.state.data;
-        data.projectId = event;
-        this.setState({data: data});
+        console.log('projectId =', event[0]);
+        this.setState({projectId: event[0]});
     }
 
     setDocument = event => {
-        console.log(event);
-        let data = this.state.data;
-        data.documentid = event;
-        this.setState({data: data});
+        console.log('documentId =', event[0]);
+        this.setState({documentId: event[0]});
     }
 
     setProperty = event => {
-        console.log(event);
-        let data = this.state.data;
-        data.userPropertyId = event;
-        this.setState({data: data});
+        console.log('userPropertyId =', event[0]);
+        this.setState({userPropertyId: event[0]});
     }
 
-    componentDidMount() {
-
-        console.log('State in componentDidMount =', this.state);
-
-    }
-
-    doSave = () => {
+    doSave = (e) => {
 
         if (this.props.action === 'edit') {
 
             const responseData = {
-                id: this.props.data.id,
+                id: this.state.id,
                 projectId: this.state.projectId,
                 documentId: this.state.documentId,
-                propertiesId: this.state.propertiesId,
+                userPropertyId: this.state.userPropertyId,
                 stringValue: this.state.stringValue,
                 numberValue: this.state.numberValue
             };
+
+            console.log(responseData);
 
             appAxios({
                 url: `project-extendeds`,
@@ -95,15 +88,19 @@ export default class AdminStructureProjectsExtensionEditPage extends React.Compo
                 toast.success(`Успешно обновлена запись с ID ${message}`, {
                     closeButton: false
                 });
+                this.props.tableRef.current.onQueryChange();
             });
         } else {
+
             const responseData = {
                 projectId: this.state.projectId,
                 documentId: this.state.documentId,
-                propertiesId: this.state.propertiesId,
+                userPropertyId: this.state.userPropertyId,
                 stringValue: this.state.stringValue,
                 numberValue: this.state.numberValue
             };
+
+            console.log(responseData);
 
             appAxios({
                 url: `project-extendeds`,
@@ -114,46 +111,18 @@ export default class AdminStructureProjectsExtensionEditPage extends React.Compo
                 toast.success(`Успешно добавлена запись с ID ${message}`, {
                     closeButton: false
                 });
-                // newData.id = message;
-                // dataNew.push(newData);
-                // this.setState({data: dataNew});
+                this.props.tableRef.current.onQueryChange();
             });
+
         }
-
-        // let method = this.props.action === 'edit'? 'PUT' : 'POST';
-        //
-        // const responseData = {
-        //     id: this.state.id,
-        //     formula: this.state.formula
-        // };
-        //
-        // // const responseData = {
-        // //     id: this.state.id,
-        // //     formula: this.state.formula
-        // // };
-        // //
-        // // appAxios({
-        // //     url: `indicators`,
-        // //     method: 'PUT',
-        // //     data: responseData
-        // // }).then((response) => {
-        // //     const message = response.headers["x-mrts-backend-params"];
-        // //     toast.success(`Успешно обновлена запись с ID ${message}`, {
-        // //         closeButton: false
-        // //     });
-        // // });
-
     }
 
-    onChangeHandler = event => {
-        this.setState({[event.target.name]: event.target.value});
+    onChangeHandler = e => {
+        this.setState({[e.target.name]: e.target.value});
         console.log(this.state);
     };
 
     render() {
-
-        console.log('Props in render =', this.props);
-        console.log('State in render =', this.state);
 
         return (
             <MDBContainer>
@@ -187,7 +156,7 @@ export default class AdminStructureProjectsExtensionEditPage extends React.Compo
                     <MDBInput label="Числовое значение"
                               value={this.state.numberValue}
                               outline={true}
-                              onChange={this.onChangeHandler}
+                              onChange={e => this.onChangeHandler(e)}
                               name="numberValue"
                               type="number"
                     />
@@ -196,11 +165,11 @@ export default class AdminStructureProjectsExtensionEditPage extends React.Compo
                               value={this.state.stringValue}
                               outline={true}
                               name="stringValue"
-                              onChange={this.onChangeHandler}
+                              onChange={e => this.onChangeHandler(e)}
                               type="text"
                     />
 
-                    <MDBBtn color="primary" type="none" onClick={this.doSave}>
+                    <MDBBtn color="primary" type="none" onClick={e => this.doSave(e)}>
                         Сохранить
                     </MDBBtn>
                 </div>
