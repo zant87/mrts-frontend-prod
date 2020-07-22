@@ -22,7 +22,6 @@ import AnalystIndicatorsPage from "@/Analyst/Indicators/IndicatorsContainer";
 import AnalystLevelsPage from "@/Analyst/Levels/LevelsContainer";
 import AnalystDynamicsPage from "@/Analyst/Dynamics/DynamicsContainer";
 import AnalystMapPage from "@/Analyst/Map";
-import OperatorPlanNavigation from "@/Operator/Plan/Navigation";
 import OperatorPlanActivitiesPage from "@/Operator/Plan/Activities";
 import OperatorPlanProjectsPage from "@/Operator/Plan/Projects";
 import OperatorPlanIndicatorsPage from "@/Operator/Plan/Indicators";
@@ -195,11 +194,6 @@ const AsyncOperatorCalculationLevelsPage = loadable({
     loading: OperatorCalculationLevelsPage,
 });
 
-const AsyncOperatorPlanNavigation = loadable({
-    loader: () => import("../Operator/Plan/Navigation"),
-    loading: OperatorPlanNavigation,
-});
-
 const AsyncOperatorPlanActivitiesPage = loadable({
     loader: () => import("../Operator/Plan/Activities"),
     loading: OperatorPlanActivitiesPage,
@@ -300,7 +294,6 @@ export const AppRoutes = () => {
 
             {/* Оператор */}
             {/*Plan - Плановые показатели */}
-            <PrivateRoute exact path="/operator/plan" roles={Role.Operator} component={AsyncOperatorPlanNavigation} />
             <PrivateRoute exact path="/operator/plan/activities" roles={Role.Operator} component={AsyncOperatorPlanActivitiesPage} />
             <PrivateRoute exact path="/operator/plan/projects" roles={Role.Operator} component={AsyncOperatorPlanProjectsPage} />
             <PrivateRoute exact path="/operator/plan/indicators" roles={Role.Operator} component={AsyncOperatorPlanIndicatorsPage} />

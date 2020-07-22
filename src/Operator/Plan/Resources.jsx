@@ -1,102 +1,74 @@
-import React, {Fragment} from 'react';
-import {MDBCol, MDBContainer, MDBRow, toast} from "mdbreact";
-import appAxios from "../../_services/appAxios";
-import MaterialTable from "material-table";
-import {ruLocalization} from "../../_components/MaterialTableLocalization";
+import React from 'react';
+import {MDBContainer, MDBModal, MDBModalBody, MDBModalHeader, toast} from "mdbreact";
+import TableContainer from "../../_components/TableContainer";
+import ResourcesEdit from "./ResourcesEdit";
 
 export default class OperatorPlanResourcesPage extends React.Component {
 
     state = {
-        page: 0,
-        count: 0,
-        data: [],
-        isLoading: false,
-    };
+        modal: false,
+        row: {},
+        action: '',
+        initialized: true
+    }
 
-    componentDidMount() {
-        this.getData();
-    };
+    tableRef = React.createRef();
 
-    getData = async () => {
-        this.setState({isLoading: true});
-        appAxios.get(`/views/k-4-s-all`)
-            .then(res => {
-                console.log(res.headers);
-                const count = Number(res.headers['x-total-count']);
-                const data = res.data;
-                this.setState({data: data, isLoading: false, count: count});
-            });
-    };
+    toggleModal = (rowData, action) => {
+        this.setState({
+            modal: !this.state.modal,
+            row: rowData,
+            action: action
+        });
+    }
 
     render() {
 
         const columns = [
-            {field: 'id', title: '#', filtering: false, editable: 'never'},
-            {field: 'transportStrategyCode', title: 'Редакция ТС', editable: 'never'},
-            {field: 'scenarioName', title: 'Вариант реализации стратегии', editable: 'never'},
-            {field: 'costTypeName', title: 'Вид вложений', editable: 'never'},
-            {field: 'directionName', title: 'Направление вложений', editable: 'never'},
-            {field: 'fundingSourceName', title: 'Источник финансирования', editable: 'never'},
-            {field: 'stageName', title: 'Период реализации стратегии', editable: 'never'},
+            {field: 'id', title: '#', filtering: false},
+            {field: 'transportStrategyCode', title: 'Редакция ТС'},
+            {field: 'scenarioName', title: 'Вариант реализации стратегии'},
+            {field: 'costTypeName', title: 'Вид вложений'},
+            {field: 'directionName', title: 'Направление вложений'},
+            {field: 'fundingSourceName', title: 'Источник финансирования'},
+            {field: 'stageName', title: 'Период реализации стратегии', filtering: false},
             {field: 'planingMin', title: 'Минимальное ресурсное обеспечение, млрд. руб.', filtering: false},
             {field: 'planingMax', title: 'Максимальное ресурсное обеспечение, млрд. руб.', filtering: false},
         ];
 
-        const tableRef = React.createRef();
-        const {data, isLoading} = this.state;
+        const actions = [
+            {
+                icon: 'edit',
+                tooltip: 'Редактировать',
+                onClick: (event, rowData) => {
+                    if (this.state.initialized) this.toggleModal(rowData, 'edit');
+                }
+            }
+        ];
 
         return (
-            <MDBContainer fluid>
-                <MDBRow center>
-                    <MDBCol md={'12'} className='my-3 mx-auto'>
-                        <MaterialTable
-                            title="Ресурсное обеспечение ТС (план)"
-                            columns={columns}
-                            tableRef={tableRef}
-                            data={data}
-                            isLoading={isLoading}
-                            localization={ruLocalization}
-                            editable={{
-                                onRowUpdate: (newData, oldData) =>
-                                    new Promise((resolve, reject) => {
-                                        setTimeout(() => {
-                                            const dataUpdate = [...data];
-                                            const index = dataUpdate.findIndex(item => item.id === oldData.id);
-                                            dataUpdate[index] = newData;
-                                            this.setState({data: dataUpdate});
+            <React.Fragment>
+                <TableContainer
+                    columns={columns}
+                    title={'Ресурсное обеспечение ТС (план)'}
+                    baseUrl={'views/k-4-s'}
+                    actions={actions}
+                    tableRef={this.tableRef}
+                    loadAll={true}
+                />
+                <MDBContainer>
+                    <MDBModal isOpen={this.state.modal} toggle={this.toggleModal} backdrop={false} size="lg">
+                        <MDBModalHeader toggle={this.toggleModal}>Форма редактирования</MDBModalHeader>
+                        <MDBModalBody>
+                            <ResourcesEdit
+                                data={this.state.row}
+                                tableRef={this.tableRef}
+                            />
+                        </MDBModalBody>
+                    </MDBModal>
+                </MDBContainer>
+            </React.Fragment>
 
-                                            const responseData = {
-                                                id: newData.id,
-                                                planingMax: newData.planingMax,
-                                                planingMin: newData.planingMin
-                                            };
-
-                                            appAxios({
-                                                url: `views/k-4-s`,
-                                                method: 'PUT',
-                                                data: responseData
-                                            }).then((response) => {
-                                                const message = response.headers["x-mrts-backend-params"];
-                                                toast.success(`Успешно обновлена запись с ID ${message}`, {
-                                                    closeButton: false
-                                                });
-                                            });
-
-                                            resolve();
-                                        }, 1000)
-                                    }),
-                            }}
-                            options={{
-                                actionsColumnIndex: 999,
-                                search: true,
-                                pageSize: 20,
-                                pageSizeOptions: [20, 50, 100],
-                                filtering: true
-                            }}
-                        />
-                    </MDBCol>
-                </MDBRow>
-            </MDBContainer>
         )
     }
 };

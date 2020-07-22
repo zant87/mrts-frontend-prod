@@ -1,68 +1,41 @@
 import React from "react";
-import { MDBBtn, MDBCol, MDBInput, MDBRow, MDBSelect, toast } from "mdbreact";
+import {MDBBtn, MDBCol, MDBInput, MDBRow, toast, MDBScrollbar, MDBContainer, MDBSelect} from "mdbreact";
 import appAxios from "../../_services/appAxios";
-import axios from "axios";
+import "../../scrollbar.css";
 
 export default class OperatorPlanIndicatorsEditPage extends React.Component {
 
     state = {
-        id: 0,
-        transportStrategyCode: "",
-        scenarioName: "",
-        goalName: "",
-        indicatorName: "",
-        transportTypeName: "",
-        indicatorDate: "",
-        indicatorValueId: 0,
-        okeiList: [],
-        okeiId: 0,
-        okeiName: "",
-        value: 0.0,
-        isLoading: false
+        initialized: false,
     };
 
     constructor(props) {
+
         super(props);
-        this.state = {
-            id: this.props.location.state[0],
-            transportStrategyCode: this.props.location.state[1],
-            scenarioName: this.props.location.state[2],
-            goalName: this.props.location.state[3],
-            indicatorName: this.props.location.state[4],
-            transportTypeName: this.props.location.state[5],
-            indicatorDate: this.props.location.state[6],
-            okeiId: this.props.location.state[7],
-            okeiName: this.props.location.state[8],
-            value: this.props.location.state[9],
-            indicatorValueId: this.props.location.state[10],
-            okeiList: [],
-            isLoading: false
-        };
+        console.log('Props in constructor =', props);
+
+        this.state.okeis = props.okeis.map(item => {
+                if (item.id === props.data.okeiId) {
+                    return {value: item.id, text: item.name, checked: true};
+                } else {
+                    return {value: item.id, text: item.name, checked: false};
+                }
+            }
+        );
+
+        this.state.id = props.data.id;
+        this.state.transportStrategyCode = props.data.transportStrategyCode;
+        this.state.scenarioName = props.data.scenarioName;
+        this.state.goalName = props.data.goalName;
+        this.state.indicatorName = props.data.indicatorName;
+        this.state.transportTypeName = props.data.transportTypeName;
+        this.state.indicatorDate = props.data.indicatorDate;
+        this.state.okeiId = props.data.okeiId;
+        this.state.value = props.data.value;
+        this.state.indicatorValueId = props.data.indicatorValueId;
     }
 
-    componentDidMount() {
-        this.getOkeiList(this.state.okeiId);
-        console.log(this.state);
-    };
-
-    getOkeiList = (okeiId) => {
-        this.setState({ isLoading: true });
-        axios.get(`/api/nsi-okeis`)
-            .then(res => {
-                const data = res.data.map(item => {
-                    if (item.id === okeiId){
-                        return {value: item.id, text: item.name, checked: true};
-                    }
-                    else{
-                        return {value: item.id, text: item.name, checked: false};
-                    }
-                });
-                console.log(data);
-                this.setState({okeiList: data, isLoading: false});
-            });
-    };
-
-    setOkeiElement = event => {
+    setOkei = event => {
         console.log(event);
         this.setState({okeiId: event.toString()})
     }
@@ -71,8 +44,13 @@ export default class OperatorPlanIndicatorsEditPage extends React.Component {
         this.setState({[event.target.name]: Number(event.target.value)});
     };
 
-    doSave = () => {
-        const responseData = {id: this.state.id, okeiId: this.state.okeiId, indicatorValueId: this.state.indicatorValueId, value: this.state.value};
+    doSave = (e) => {
+        const responseData = {
+            id: this.state.id,
+            okeiId: this.state.okeiId,
+            indicatorValueId: this.state.indicatorValueId,
+            value: this.state.value
+        };
         console.log(responseData);
         appAxios({
             url: `views/k-1-s`,
@@ -83,78 +61,36 @@ export default class OperatorPlanIndicatorsEditPage extends React.Component {
             toast.success(`Успешно обновлена запись с ID ${message}`, {
                 closeButton: false
             });
+            this.props.tableRef.current.onQueryChange();
         });
-    };
-
-    doBack = () => {
-        history.back();
     };
 
     render() {
 
         return (
-            <MDBCol md='8' className='mx-auto my-3'>
-                <h2 className='text-center my-2'>Редактирование индикатора ТС по цели и задаче (план)</h2>
-                <MDBRow>
-                    <MDBCol md="12" className="mb-3">
-                        <MDBInput label="#" value={this.state.id} disabled={true} type="number"/>
-                    </MDBCol>
-                </MDBRow>
-                <MDBRow>
-                    <MDBCol md="12" className="mb-3">
-                        <MDBInput label="Редакция ТС" value={this.state.transportStrategyCode} disabled={true}
-                                  type="text"/>
-                    </MDBCol>
-                </MDBRow>
-                <MDBRow>
-                    <MDBCol md="12" className="mb-3">
-                        <MDBInput label="Вариант реализации стратегии" value={this.state.scenarioName} disabled={true} type="text"/>
-                    </MDBCol>
-                </MDBRow>
-                <MDBRow>
-                    <MDBCol md="12" className="mb-3">
-                        <MDBInput label="Цель" value={this.state.goalName} disabled={true} type="text"/>
-                    </MDBCol>
-                </MDBRow>
-                <MDBRow>
-                    <MDBCol md="12" className="mb-3">
-                        <MDBInput label="Индикатор" value={this.state.indicatorName} disabled={true} type="text"/>
-                    </MDBCol>
-                </MDBRow>
-                <MDBRow>
-                    <MDBCol md="12" className="mb-3">
-                        <MDBInput label="Вид транспорта" value={this.state.transportTypeName} disabled={true} type="text"/>
-                    </MDBCol>
-                </MDBRow>
-                <MDBRow>
-                    <MDBCol md="12" className="mb-3">
-                        <MDBInput label="Этап реализации стратегии" value={this.state.indicatorDate} disabled={true} type="text"/>
-                    </MDBCol>
-                </MDBRow>
-                <MDBRow>
-                    <MDBCol md="12" className="mb-3">
-                        <MDBInput label="Значение индикатора" value={this.state.value} type="number" name="value" onChange={this.onChangeHandler}/>
-                    </MDBCol>
-                </MDBRow>
-                <MDBRow>
-                    <MDBCol md="12" className="mb-3">
-                        <MDBSelect label="Единица измерения"
-                                   search={true}
-                                   searchLabel={'Поиск'}
-                                   options={this.state.okeiList}
-                                   getValue={this.setOkeiElement}>
-                        </MDBSelect>
-                    </MDBCol>
-                </MDBRow>
-                <MDBRow>
-                    <MDBBtn color="primary" type="none" onClick={this.doSave}>
+            <MDBContainer>
+                <div className="scrollbar my-1 mx-auto" style={{minHeight: '600px', maxHeight: '600px'}}>
+
+                    <MDBInput label="#" value={this.state.id} disabled={true} type="number"/>
+                    <MDBInput label="Редакция ТС" value={this.state.transportStrategyCode} type="textarea"/>
+                    <MDBInput label="Вариант реализации стратегии" value={this.state.scenarioName} type="textarea"/>
+                    <MDBInput label="Цель" value={this.state.goalName} type="textarea"/>
+                    <MDBInput label="Индикатор" value={this.state.indicatorName} type="textarea"/>
+                    <MDBInput label="Вид транспорта" value={this.state.transportTypeName} type="textarea"/>
+                    <MDBInput label="Этап реализации стратегии" value={this.state.indicatorDate} type="textarea"/>
+                    <MDBInput label="Значение индикатора" value={this.state.value} type="number" name="value"
+                              onChange={e => this.onChangeHandler(e)}/>
+                    <MDBSelect label="Единица измерения"
+                               search={true}
+                               searchLabel={'Поиск'}
+                               options={this.state.okeis}
+                               getValue={e => this.setOkei(e)}>
+                    </MDBSelect>
+                    <MDBBtn color="primary" type="none" onClick={e => this.doSave(e)}>
                         Сохранить
                     </MDBBtn>
-                    <MDBBtn color="info" type="none" onClick={this.doBack}>
-                        Назад
-                    </MDBBtn>
-                </MDBRow>
-            </MDBCol>
+                </div>
+            </MDBContainer>
         );
     }
 }

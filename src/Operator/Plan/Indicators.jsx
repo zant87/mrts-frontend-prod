@@ -1,120 +1,95 @@
 import React from 'react';
-import {MDBCol, MDBContainer, MDBRow, toast} from "mdbreact";
 import appAxios from "../../_services/appAxios";
-import MaterialTable from "material-table";
-import {ruLocalization} from "../../_components/MaterialTableLocalization";
+import TableContainer from "../../_components/TableContainer";
+import {MDBContainer, MDBModal, MDBModalBody, MDBModalHeader} from "mdbreact";
+import Axios from "axios";
+import IndicatorsEdit from "./IndicatorsEdit";
 
 export default class OperatorPlanIndicatorsPage extends React.Component {
 
     state = {
-        page: 0,
-        count: 0,
-        data: [],
-        isLoading: false,
-        okeiList: []
-    };
+        modal: false,
+        row: {},
+        action: '',
+        okeis: {},
+        initialized: false
+    }
 
-    componentDidMount() {
-        this.getData();
-        this.getOkeiList();
-    };
+    getOkeis = () => appAxios.get(`nsi-okeis`).catch(err => null);
+    tableRef = React.createRef();
 
-    getData = async () => {
-        this.setState({isLoading: true});
-        appAxios.get(`/views/k-1-s-all`)
-            .then(res => {
-                console.log(res.headers);
-                const count = Number(res.headers['x-total-count']);
-                const data = res.data;
-                this.setState({data: data, isLoading: false, count: count});
-            });
-    };
+    async componentDidMount() {
+        try {
+            const [rOkeis] = await Axios.all([this.getOkeis()]);
 
-    getOkeiList = async () => {
-        appAxios.get(`/nsi-okeis`)
-            .then(res => {
-                const data = res.data.map(item => {
-                    return {id: item.id, name: item.name};
-                })
-                const mod_data = data.reduce(function (acc, cur, i) {
-                    acc[cur.id] = cur.name;
-                    return acc;
-                }, {});
-                console.log(data);
-                console.log(mod_data);
-                this.setState({okeiList: mod_data});
-            });
+            this.setState(
+                {
+                    okeis: rOkeis.data,
+                    initialized: true
+                }
+            );
+
+        } catch (err) {
+            console.log(err.message);
+        }
+    }
+
+    toggleModal = (rowData, action) => {
+        this.setState({
+            modal: !this.state.modal,
+            row: rowData,
+            action: action
+        });
     }
 
     render() {
 
         const columns = [
-            {field: 'id', title: '#', filtering: false, editable: 'never'},
-            {field: 'transportStrategyCode', title: 'Редакция ТС', editable: 'never'},
-            {field: 'scenarioName', title: 'Вариант реализации стратегии', editable: 'never'},
-            {field: 'goalName', title: 'Цель', editable: 'never'},
-            {field: 'indicatorName', title: 'Индикатор', editable: 'never'},
-            {field: 'transportTypeName', title: 'Вид транспорта', editable: 'never'},
-            {field: 'indicatorDate', title: 'Этап реализации стратегии', editable: 'never'},
-            {field: 'okeiId', title: 'Единица измерения', lookup: this.state.okeiList},
+            {field: 'id', title: '#', filtering: false},
+            {field: 'transportStrategyCode', title: 'Редакция ТС'},
+            {field: 'scenarioName', title: 'Вариант реализации стратегии'},
+            {field: 'goalName', title: 'Цель'},
+            {field: 'indicatorName', title: 'Индикатор'},
+            {field: 'transportTypeName', title: 'Вид транспорта'},
+            {field: 'indicatorDate', title: 'Этап реализации стратегии', type: 'date', filtering: false},
+            {field: 'okeiName', title: 'Единица измерения'},
             {field: 'value', title: 'Значение индикатора', filtering: false},
         ];
 
-        const {data, isLoading} = this.state;
-        const tableRef = React.createRef();
+        const actions = [
+            {
+                icon: 'edit',
+                tooltip: 'Редактировать',
+                onClick: (event, rowData) => {
+                    if (this.state.initialized) this.toggleModal(rowData, 'edit');
+                }
+            }
+        ];
 
         return (
-            <MDBContainer fluid>
-                <MDBRow center>
-                    <MDBCol md={'12'} className='my-3 mx-auto'>
-                        <MaterialTable
-                            title="Индикаторы ТС по целям и задачам (план)"
-                            columns={columns}
-                            tableRef={tableRef}
-                            data={data}
-                            isLoading={isLoading}
-                            localization={ruLocalization}
-                            editable={{
-                                onRowUpdate: (newData, oldData) =>
-                                    new Promise((resolve, reject) => {
-                                        setTimeout(() => {
-                                            const dataUpdate = [...data];
-                                            const index = dataUpdate.findIndex(item => item.id === oldData.id);
-                                            dataUpdate[index] = newData;
-                                            this.setState({data: dataUpdate});
-
-                                            const responseData = {
-                                                id: newData.id, okeiId: newData.okeiId,
-                                                indicatorValueId: newData.indicatorValueId, value: newData.value
-                                            };
-
-                                            console.log(responseData);
-                                            appAxios({
-                                                url: `views/k-1-s`,
-                                                method: 'PUT',
-                                                data: responseData
-                                            }).then((response) => {
-                                                const message = response.headers["x-mrts-backend-params"];
-                                                toast.success(`Успешно обновлена запись с ID ${message}`, {
-                                                    closeButton: false
-                                                });
-                                            });
-
-                                            resolve();
-                                        }, 1000)
-                                    }),
-                            }}
-                            options={{
-                                actionsColumnIndex: 999,
-                                search: true,
-                                pageSize: 20,
-                                pageSizeOptions: [20, 50, 100],
-                                filtering: true
-                            }}
-                        />
-                    </MDBCol>
-                </MDBRow>
-            </MDBContainer>
+            <React.Fragment>
+                <TableContainer
+                    columns={columns}
+                    title={'Индикаторы ТС по целям и задачам (план)'}
+                    baseUrl={'views/k-1-s'}
+                    actions={actions}
+                    tableRef={this.tableRef}
+                    loadAll={true}
+                />
+                <MDBContainer>
+                    <MDBModal isOpen={this.state.modal} toggle={this.toggleModal} backdrop={false} size="lg">
+                        <MDBModalHeader toggle={this.toggleModal}>Форма редактирования</MDBModalHeader>
+                        <MDBModalBody>
+                            <IndicatorsEdit
+                                data={this.state.row}
+                                okeis={this.state.okeis}
+                                action={this.state.action}
+                                tableRef={this.tableRef}
+                            />
+                        </MDBModalBody>
+                    </MDBModal>
+                </MDBContainer>
+            </React.Fragment>
         )
     }
 };

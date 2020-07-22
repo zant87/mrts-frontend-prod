@@ -1,35 +1,7 @@
 import React from 'react';
-import {MDBCol, MDBContainer, MDBRow, MDBSpinner, toast, ToastContainer} from "mdbreact";
-import MUIDataTable from "mui-datatables";
-import axios from 'axios';
-import {labels} from "../../_components/TableTextLabels";
-import MaterialTable from "material-table";
-import {ruLocalization} from "../../_components/MaterialTableLocalization";
-import appAxios from "../../_services/appAxios";
+import TableContainer from "../../_components/TableContainer";
 
 export default class OperatorPlanActivitiesPage extends React.Component {
-
-    state = {
-        page: 0,
-        count: 0,
-        data: [],
-        isLoading: false,
-    };
-
-    componentDidMount() {
-        this.getData();
-    };
-
-    getData = async () => {
-        this.setState({isLoading: true});
-        axios.get(`/api/views/k-2-s-all`)
-            .then(res => {
-                console.log(res.headers);
-                const count = Number(res.headers['x-total-count']);
-                const data = res.data;
-                this.setState({data: data, isLoading: false, count: count});
-            });
-    };
 
     render() {
 
@@ -40,34 +12,19 @@ export default class OperatorPlanActivitiesPage extends React.Component {
             {field: 'activityCode', title: 'Обозначение мероприятия'},
             {field: 'activityDescription', title: 'Содержание мероприятия'},
             {field: 'documentType', title: 'Вид документа'},
-            {field: 'yearBegin', title: 'Начало реализации'},
-            {field: 'yearEnd', title: 'Конец реализации'},
+            {field: 'yearBegin', title: 'Начало реализации', filtering: false},
+            {field: 'yearEnd', title: 'Конец реализации', filtering: false},
         ];
 
-        const tableRef = React.createRef();
-        const {data, isLoading} = this.state;
-
         return (
-            <MDBContainer fluid>
-                <MDBRow center>
-                    <MDBCol md={'12'} className='my-3 mx-auto'>
-                        <MaterialTable
-                            title="Мероприятия по реализации ТС"
-                            columns={columns}
-                            tableRef={tableRef}
-                            data={data}
-                            isLoading={isLoading}
-                            localization={ruLocalization}
-                            options={{
-                                search: true,
-                                pageSize: 20,
-                                pageSizeOptions: [20, 50, 100],
-                                filtering: true
-                            }}
-                        />
-                </MDBCol>
-            </MDBRow>
-        </MDBContainer>
+            <React.Fragment>
+                <TableContainer
+                    columns={columns}
+                    title={'Мероприятия по реализации ТС'}
+                    baseUrl={'views/k-2-s'}
+                    loadAll={true}
+                />
+            </React.Fragment>
         )
     }
 };

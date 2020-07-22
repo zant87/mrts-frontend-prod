@@ -5,39 +5,31 @@ import appAxios from "../../_services/appAxios";
 export default class OperatorPlanResourcesEditPage extends React.Component {
 
     state = {
-        id: 0,
-        transportStrategyCode: "",
-        scenarioName: "",
-        costTypeCode: "",
-        directionName: "",
-        fundingSourceName: "",
-        stageName: "",
-        planingMin: 0.0,
-        planingMax: 0.0,
-        isLoading: false
+        initialized: false,
     };
 
-    componentDidMount() {
-        this.setState(
-            {
-                id: this.props.location.state[0],
-                transportStrategyCode: this.props.location.state[1],
-                scenarioName: this.props.location.state[2],
-                costTypeCode: this.props.location.state[3],
-                directionName: this.props.location.state[4],
-                fundingSourceName: this.props.location.state[5],
-                stageName: this.props.location.state[6],
-                planingMin: this.props.location.state[7],
-                planingMax: this.props.location.state[8],
-            }
-        );
-    };
+    constructor(props) {
+
+        super(props);
+        console.log('Props in constructor =', props);
+
+        this.state.id = props.data.id;
+        this.state.transportStrategyCode = props.data.transportStrategyCode;
+        this.state.scenarioName = props.data.scenarioName;
+        this.state.costTypeCode = props.data.costTypeCode;
+        this.state.directionName = props.data.directionName;
+        this.state.fundingSourceName = props.data.fundingSourceName;
+        this.state.stageName = props.data.stageName;
+        this.state.planingMin = props.data.planingMin;
+        this.state.planingMax = props.data.planingMax;
+
+    }
 
     onChangeHandler = event => {
         this.setState({[event.target.name]: Number(event.target.value)});
     };
 
-    doSave = () => {
+    doSave = (e) => {
         const responseData = {id: this.state.id, planingMax: this.state.planingMax, planingMin: this.state.planingMin};
         appAxios({
             url: `views/k-4-s`,
@@ -48,72 +40,30 @@ export default class OperatorPlanResourcesEditPage extends React.Component {
             toast.success(`Успешно обновлена запись с ID ${message}`, {
                 closeButton: false
             });
+            this.props.tableRef.current.onQueryChange();
         });
-    };
-
-    doBack = () => {
-        history.back();
     };
 
     render() {
         return (
-            <MDBCol md='8' className='mx-auto my-3'>
-                <h2 className='text-center my-2'>Редактирование ресурсного обеспечения ТС (план)</h2>
-                <MDBRow>
-                    <MDBCol md="12" className="mb-3">
-                        <MDBInput label="#" value={this.state.id} disabled={true} type="number"/>
-                    </MDBCol>
-                </MDBRow>
-                <MDBRow>
-                    <MDBCol md="12" className="mb-3">
-                        <MDBInput label="Редакция ТС" value={this.state.transportStrategyCode} disabled={true}
-                                  type="text"/>
-                    </MDBCol>
-                </MDBRow>
-                <MDBRow>
-                    <MDBCol md="12" className="mb-3">
-                        <MDBInput label="Вариант реализации стратегии" value={this.state.scenarioName} disabled={true} type="text"/>
-                    </MDBCol>
-                </MDBRow>
-                <MDBRow>
-                    <MDBCol md="12" className="mb-3">
-                        <MDBInput label="Вид вложений" value={this.state.costTypeCode} disabled={true} type="text"/>
-                    </MDBCol>
-                </MDBRow>
-                <MDBRow>
-                    <MDBCol md="12" className="mb-3">
-                        <MDBInput label="Направление вложений" value={this.state.directionName} disabled={true} type="text"/>
-                    </MDBCol>
-                </MDBRow>
-                <MDBRow>
-                    <MDBCol md="12" className="mb-3">
-                        <MDBInput label="Источник финансирования" value={this.state.fundingSourceName} disabled={true} type="text"/>
-                    </MDBCol>
-                </MDBRow>
-                <MDBRow>
-                    <MDBCol md="12" className="mb-3">
-                        <MDBInput label="Период реализации стратегии" value={this.state.stageName} disabled={true} type="text"/>
-                    </MDBCol>
-                </MDBRow>
-                <MDBRow>
-                    <MDBCol md="12" className="mb-3">
-                        <MDBInput label="Минимальное ресурсное обеспечение, млрд. руб." value={this.state.planingMin} type="number" name="planingMin" onChange={this.onChangeHandler}/>
-                    </MDBCol>
-                </MDBRow>
-                <MDBRow>
-                    <MDBCol md="12" className="mb-3">
-                        <MDBInput label="Максимальное ресурсное обеспечение, млрд. руб." value={this.state.planingMax} name="planingMax" type="number" onChange={this.onChangeHandler}/>
-                    </MDBCol>
-                </MDBRow>
-                <MDBRow>
-                    <MDBBtn color="primary" type="none" onClick={this.doSave}>
+            <MDBContainer>
+                <div className="scrollbar my-1 mx-auto" style={{minHeight: '600px', maxHeight: '600px'}}>
+                    <MDBInput label="#" value={this.state.id} type="number"/>
+                    <MDBInput label="Редакция ТС" value={this.state.transportStrategyCode} type="textarea"/>
+                    <MDBInput label="Вариант реализации стратегии" value={this.state.scenarioName} type="textarea"/>
+                    <MDBInput label="Вид вложений" value={this.state.costTypeCode} type="textarea"/>
+                    <MDBInput label="Направление вложений" value={this.state.directionName} type="textarea"/>
+                    <MDBInput label="Источник финансирования" value={this.state.fundingSourceName} type="textarea"/>
+                    <MDBInput label="Период реализации стратегии" value={this.state.stageName} type="textarea"/>
+                    <MDBInput label="Минимальное ресурсное обеспечение, млрд. руб." value={this.state.planingMin}
+                              type="number" name="planingMin" onChange={e => this.onChangeHandler(e)}/>
+                    <MDBInput label="Максимальное ресурсное обеспечение, млрд. руб." value={this.state.planingMax}
+                              name="planingMax" type="number" onChange={e => this.onChangeHandler(e)}/>
+                    <MDBBtn color="primary" type="none" onClick={e => this.doSave(e)}>
                         Сохранить
                     </MDBBtn>
-                    <MDBBtn color="info" type="none" onClick={this.doBack}>
-                        Назад
-                    </MDBBtn>
-                </MDBRow>
-            </MDBCol>
+                </div>
+            </MDBContainer>
         );
     }
 }
