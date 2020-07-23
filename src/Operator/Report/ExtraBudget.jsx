@@ -1,94 +1,74 @@
-import React from 'react';
-import {MDBCol, MDBContainer, MDBRow, toast} from "mdbreact";
-import appAxios from "../../_services/appAxios";
-import MaterialTable from "material-table";
-import {ruLocalization} from "../../_components/MaterialTableLocalization";
+import React, {Component} from "react";
+import {
+    MDBContainer,
+    MDBRow,
+    MDBCol,
+    MDBTabPane,
+    MDBTabContent,
+    MDBNav,
+    MDBNavItem,
+    MDBNavLink,
+    MDBIcon
+} from "mdbreact";
+import OperatorReportExtraBudgetTablePage from "./ExtraBudget/ExtraBudgetTable";
+import OperatorReportExtraBudgetPivotPage from "./ExtraBudget/ExtraBudgetPivot";
 
-export default class OperatorReportExtraBudgetPage extends React.Component {
+class OperatorReportExtraBudgetTabsPage extends React.Component {
 
     state = {
-        page: 0,
-        count: 0,
-        data: [],
-        isLoading: false,
-    };
+        activeItemJustified: "1"
+    }
 
-    componentDidMount() {
-        this.getData();
-    };
-
-    getData = async () => {
-        this.setState({isLoading: true});
-        appAxios.get(`/views/k-10-s-all`)
-            .then(res => {
-                const count = Number(res.headers['x-total-count']);
-                const data = res.data;
-                this.setState({data: data, isLoading: false, count: count});
+    toggleJustified = tab => e => {
+        if (this.state.activeItemJustified !== tab) {
+            this.setState({
+                activeItemJustified: tab
             });
+        }
     };
 
     render() {
-
-        const columns = [
-            {field: 'year', title: 'Отчетный год', editable: 'never'},
-            {field: 'directionName', title: 'Направление расходов', editable: 'never'},
-            {field: 'costTypeName', title: 'Вид расходов', editable: 'never'},
-            {field: 'fact', title: 'Фактические объемы исполнения, млн. руб.'},
-            {field: 'plan', title: 'Плановые объемы исполнения, млн. руб.'}
-        ];
-
-        const {data, page, count, isLoading} = this.state;
-        const tableRef = React.createRef();
-
         return (
             <MDBContainer fluid>
+                <MDBRow between>
+                    <MDBCol md={'12'} className='my-0 mx-auto'>
+                        <MDBNav className="nav-tabs special-color my-3" tabs>
+                            <MDBNavItem>
+                                <MDBNavLink link to="#" active={this.state.activeItemJustified === "1"}
+                                            onClick={this.toggleJustified("1")} role="tab">
+                                    <MDBIcon icon="table" size="1x"/>&nbsp;&nbsp;Корректировка
+                                </MDBNavLink>
+                            </MDBNavItem>
+                            <MDBNavItem>
+                                <MDBNavLink link to="#" active={this.state.activeItemJustified === "2"}
+                                            onClick={this.toggleJustified("2")} role="tab">
+                                    <MDBIcon icon="tablet-alt" size="1x"/>&nbsp;&nbsp;Просмотр
+                                </MDBNavLink>
+                            </MDBNavItem>
+                        </MDBNav>
+                    </MDBCol>
+                </MDBRow>
                 <MDBRow center>
-                    <MDBCol md={'12'} className='mx-auto my-3'>
-                        <MaterialTable
-                            title="Объемы привлечения внебюджетных средств"
-                            columns={columns}
-                            tableRef={tableRef}
-                            data={data}
-                            isLoading={isLoading}
-                            localization={ruLocalization}
-                            editable={{
-                                onRowUpdate: (newData, oldData) =>
-                                    new Promise((resolve, reject) => {
-                                        setTimeout(() => {
-                                            const dataUpdate = [...data];
-                                            const index = dataUpdate.findIndex(item => item.id === oldData.id);
-
-                                            newData.plan = (newData.plan !== null) ? newData.plan : 0;
-                                            newData.fact = (newData.fact !== null) ? newData.fact : 0;
-                                            dataUpdate[index] = newData;
-
-                                            this.setState({data: dataUpdate});
-
-                                            appAxios({
-                                                url: `/views/k-10-s/update?pID=${newData.id}&pDoc=${newData.documentId}&pPlan=${newData.plan}&pFact=${newData.fact}`,
-                                                method: 'GET'
-                                            }).then((response) => {
-                                                const message = response.headers["x-mrts-backend-params"];
-                                                toast.success(`Успешно обновлена запись с ID ${newData.id}`, {
-                                                    closeButton: false
-                                                });
-                                            });
-
-                                            resolve();
-                                        }, 1000)
-                                    }),
-                            }}
-                            options={{
-                                actionsColumnIndex: 999,
-                                search: true,
-                                pageSize: 20,
-                                pageSizeOptions: [20, 50, 100],
-                                filtering: true
-                            }}
-                        />
+                    <MDBCol md={'12'} className='my-3 mx-auto'>
+                        <MDBTabContent
+                            className="card"
+                            activeItem={this.state.activeItemJustified}>
+                            <MDBTabPane tabId="1" role="tabpanel">
+                                {this.state.activeItemJustified === "1" && (
+                                    <OperatorReportExtraBudgetTablePage/>
+                                )}
+                            </MDBTabPane>
+                            <MDBTabPane tabId="2" role="tabpanel">
+                                {this.state.activeItemJustified === "2" && (
+                                    <OperatorReportExtraBudgetPivotPage/>
+                                )}
+                            </MDBTabPane>
+                        </MDBTabContent>
                     </MDBCol>
                 </MDBRow>
             </MDBContainer>
         );
     }
 }
+
+export default OperatorReportExtraBudgetTabsPage;

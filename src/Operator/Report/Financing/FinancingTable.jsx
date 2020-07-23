@@ -1,21 +1,18 @@
 import React from 'react';
-import TableContainer from "../../_components/TableContainer";
-import {MDBContainer, MDBModal, MDBModalBody, MDBModalHeader} from "mdbreact";
-import ActivitiyEdit from "./Activities/ActivitiyEdit";
+import {MDBCol, MDBContainer, MDBModal, MDBModalBody, MDBModalHeader, MDBRow, MDBSpinner, toast} from "mdbreact";
+import TableContainer from "../../../_components/TableContainer";
+import FinancingEdit from "./FinancingEdit";
 
-export default class OperatorReportActivitiesPage extends React.Component {
+export default class OperatorReportFinancingPage extends React.Component {
 
     state = {
         modal: false,
         row: {},
         action: '',
         initialized: true
-    };
-
-    tableRef = React.createRef();
+    }
 
     toggleModal = (rowData, action) => {
-        console.log(rowData);
         this.setState({
             modal: !this.state.modal,
             row: rowData,
@@ -23,24 +20,25 @@ export default class OperatorReportActivitiesPage extends React.Component {
         });
     }
 
+    tableRef = React.createRef();
+
     render() {
 
+
         const columns = [
-            {field: 'activityReportId', title: '#', filtering: false},
-            {field: 'activityCode', title: 'Код мероприятия', filtering: false},
-            {field: 'executor', title: 'Исполнитель'},
-            {field: 'documentType', title: 'Вид документа'},
-            {field: 'activityDescription', title: 'Содержание мероприятия'},
-            {field: 'yearNumber', title: 'Отчетный год'},
-            {field: 'quarterName', title: 'Отчетный квартал', filtering: false},
-            {field: 'reportDescription', title: 'Описание'},
+            {field: 'year', title: 'Отчетный год', filtering: false},
+            {field: 'expenditureName', title: 'Направление расходов'},
+            {field: 'plan', title: 'Запланировано, млн. руб.', filtering: false},
+            {field: 'fact', title: 'Кассовое исполнение, млн. руб.', filtering: false},
         ];
+
 
         const actions = [
             {
                 icon: 'edit',
                 tooltip: 'Редактировать',
                 onClick: (event, rowData) => {
+                    console.log(rowData);
                     if (this.state.initialized) this.toggleModal(rowData, 'edit');
                 }
             },
@@ -50,8 +48,8 @@ export default class OperatorReportActivitiesPage extends React.Component {
             <React.Fragment>
                 <TableContainer
                     columns={columns}
-                    title={'Отчет по проекту'}
-                    baseUrl={'views/k-6-s'}
+                    title={'Бюджетное финансирование транспорта'}
+                    baseUrl={'views/k-8-s'}
                     actions={actions}
                     tableRef={this.tableRef}
                     loadAll={true}
@@ -60,7 +58,7 @@ export default class OperatorReportActivitiesPage extends React.Component {
                     <MDBModal isOpen={this.state.modal} toggle={this.toggleModal} backdrop={false} size="lg">
                         <MDBModalHeader toggle={this.toggleModal}>Форма редактирования</MDBModalHeader>
                         <MDBModalBody>
-                            <ActivitiyEdit
+                            <FinancingEdit
                                 data={this.state.row}
                                 action={this.state.action}
                                 tableRef={this.tableRef}
@@ -68,7 +66,6 @@ export default class OperatorReportActivitiesPage extends React.Component {
                         </MDBModalBody>
                     </MDBModal>
                 </MDBContainer>
-
             </React.Fragment>
         );
     }

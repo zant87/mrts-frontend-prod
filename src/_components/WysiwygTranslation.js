@@ -1,0 +1,21 @@
+export const ruTranslations = {
+    paragraph: 'Параграф',
+    heading: 'Заголовок',
+    preformatted: 'Преформат',
+    bold: 'Полужирный',
+    italic: 'Курсив',
+    strikeThrough: 'Зачеркнутый',
+    underline: 'Подчеркнутый',
+    textcolor: 'Цвет',
+    justifyLeft: 'Выровнять по левому краю',
+    justifyCenter: 'Выровнять по центру',
+    justifyRight: 'Выровнять по правому краю',
+    justifyFull: 'Выровнять по ширине',
+    insertlink: 'Вставить ссылку',
+    insertpicture: 'Вставить рисунок',
+    insertUnorderedList: 'Маркированный список',
+    insertOrderedList: 'Циферный список',
+    enterurl: 'Введите ссылку',
+    imageurl: 'Введите рисунок',
+    showHTML: 'Показать HTML'
+}

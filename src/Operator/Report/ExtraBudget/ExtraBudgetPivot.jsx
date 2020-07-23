@@ -7,7 +7,7 @@ import PivotGridDataSource from 'devextreme/ui/pivot_grid/data_source';
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.light.css';
 import {MDBCol, MDBContainer, MDBRow, MDBSpinner} from "mdbreact";
-import appAxios from "../../_services/appAxios";
+import appAxios from "../../../_services/appAxios";
 
 export default class OperatorReportExtraBudgetPivotPage extends React.Component {
 

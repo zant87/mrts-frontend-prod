@@ -26,19 +26,16 @@ import OperatorPlanActivitiesPage from "@/Operator/Plan/Activities";
 import OperatorPlanProjectsPage from "@/Operator/Plan/Projects";
 import OperatorPlanIndicatorsPage from "@/Operator/Plan/Indicators";
 import OperatorPlanResourcesPage from "@/Operator/Plan/Resources";
-import OperatorControlNavigation from "@/Operator/Control/Navigation";
 import OperatorControlIndicatorsPage from "@/Operator/Control/Indicators";
 import OperatorControlCompletionPage from "@/Operator/Control/Completion";
 import OperatorControlActivitiesPage from "@/Operator/Control/Activities";
 import OperatorControlProjectsPage from "@/Operator/Control/Projects";
 import OperatorControlResourcesPage from "@/Operator/Control/Resources";
-import OperatorReportNavigation from "@/Operator/Report/Navigation";
 import OperatorReportActivitiesPage from "@/Operator/Report/Activities";
 import OperatorReportSourcesPage from "@/Operator/Report/Sources";
 import OperatorPlanResourcesEditPage from "../Operator/Plan/ResourcesEdit";
 import OperatorPlanIndicatorsEditPage from "../Operator/Plan/IndicatorsEdit";
 import AnalystReportPage from "../Analyst/Reports/Report";
-import OperatorReportFactEditPage from "../Operator/Report/FactEdit";
 import AdminLoadingDocumentPage from "../Admin/Loading/Document";
 import AdminLoadingReportsPage from "../Admin/Loading/Reports";
 import AdminLoadingCSVPage from "../Admin/Loading/FromCSV";
@@ -47,24 +44,22 @@ import AdminLoadingFromEMISSPage from "../Admin/Loading/FromEMISS";
 import AdminLoadingFromMDDPage from "../Admin/Loading/FromMDD";
 import AdminLoadingFromMSTKPage from "../Admin/Loading/FromMSTK";
 import AdminLoadingFromSDMXPage from "../Admin/Loading/FromSDMX";
-import OperatorReportActivitiesUpdatePage from "../Operator/Report/ActivitiesUpdate";
 import OperatorReportProjectsMasterPage from "../Operator/Report/ProjectsMaster";
 import OperatorReportProjectsDetailPage from "../Operator/Report/ProjectsDetail";
-import OperatorReportProjectsMasterUpdatePage from "../Operator/Report/ProjectsMasterUpdate";
 import OperatorReportProjectsDetailUpdatePage from "../Operator/Report/ProjectsDetailUpdate";
-import OperatorReportFinancingUpdatePage from "../Operator/Report/FinancingUpdate";
-import OperatorReportAppropriationsUpdatePage from "../Operator/Report/AppropriationsUpdate";
-import OperatorReportExtraBudgetUpdatePage from "../Operator/Report/ExtraBudgetUpdate";
+import OperatorReportFinancingUpdatePage from "../Operator/Report/Financing/FinancingEdit";
+import OperatorReportAppropriationsUpdatePage from "../Operator/Report/Appropriations/AppropriationsEdit";
+import OperatorReportExtraBudgetUpdatePage from "../Operator/Report/ExtraBudget/ExtraBudgetEdit";
 import OperatorCalculationIntermediatePage from "../Operator/Calculation/Intermediate";
 import OperatorCalculationValuesPage from "../Operator/Calculation/Values";
 import OperatorCalculationLevelsPage from "../Operator/Calculation/Levels";
 import OperatorCalculationNavigation from "@/Operator/Calculation/Navigation";
 import loadable from "react-loadable";
 import SwaggerPage from "./Swagger";
-import OperatorReportFactTabsPage from "../Operator/Report/FactTabs";
-import OperatorReportFinancingTabsPage from "../Operator/Report/FinancingTabs";
-import OperatorReportAppropriationsTabsPage from "../Operator/Report/AppropriationsTabs";
-import OperatorReportExtraBudgetTabsPage from "../Operator/Report/ExtraBudgetTabs";
+import OperatorReportFactPage from "../Operator/Report/Fact";
+import OperatorReportFinancingTabsPage from "../Operator/Report/Financing";
+import OperatorReportAppropriationsTabsPage from "../Operator/Report/Appropriations";
+import OperatorReportExtraBudgetTabsPage from "../Operator/Report/ExtraBudget";
 import AdminLoadingFromGIBDDPage from "../Admin/Loading/FromGIBDD";
 import AdminStructurePropertiesPage from "../Admin/Structure/Properties";
 import AdminStructureTemplatesPage from "../Admin/Structure/Templates";
@@ -87,11 +82,6 @@ const AsyncAdminStructureIndicatorsPage = loadable({
 const AsyncAdminStructureParametersPage = loadable({
     loader: () => import("../Admin/Structure/Parameters"),
     loading: AdminParametersPage,
-});
-
-const AsyncAdminControlNavigation = loadable({
-    loader: () => import("../Admin/Control/Navigation"),
-    loading: AdminControlNavigation,
 });
 
 const AsyncAdminControlExecutorsPage = loadable({
@@ -247,7 +237,7 @@ export const AppRoutes = () => {
                           component={AdminStructureFormulasEditPage}/>
 
             {/*Control - Настройка контроля*/}
-            <PrivateRoute exact path="/admin/control" roles={Role.Admin} component={AsyncAdminControlNavigation}/>
+            {/*<PrivateRoute exact path="/admin/control" roles={Role.Admin} component={AsyncAdminControlNavigation}/>*/}
             <PrivateRoute exact path="/admin/control/executors" roles={Role.Admin}
                           component={AsyncAdminControlExecutorsPage}/>
             <PrivateRoute exact path="/admin/control/executorsByIndicator" roles={Role.Admin}
@@ -302,7 +292,6 @@ export const AppRoutes = () => {
             <PrivateRoute exact path="/operator/plan/indicators/:id" roles={Role.Operator} component={AsyncOperatorPlanIndicatorsEditPage} />
 
             {/*Control - Контроль */}
-            <PrivateRoute exact path="/operator/control" roles={Role.Operator} component={OperatorControlNavigation}/>
             <PrivateRoute exact path="/operator/control/indicators" roles={Role.Operator}
                           component={OperatorControlIndicatorsPage}/>
             <PrivateRoute exact path="/operator/control/completion" roles={Role.Operator}
@@ -315,17 +304,17 @@ export const AppRoutes = () => {
                           component={OperatorControlResourcesPage}/>
 
             {/*Report - Отчетные показатели */}
-            <PrivateRoute exact path="/operator/report" roles={Role.Operator} component={OperatorReportNavigation}/>
+            {/*<PrivateRoute exact path="/operator/report" roles={Role.Operator} component={OperatorReportNavigation}/>*/}
             <PrivateRoute exact path="/operator/report/fact" roles={Role.Operator}
-                          component={OperatorReportFactTabsPage}/>
+                          component={OperatorReportFactPage}/>
             {/*<PrivateRoute exact path="/operator/report/fact" roles={Role.Operator} component={OperatorReportFactPage} />*/}
-            <PrivateRoute exact path="/operator/report/fact/:id" roles={Role.Operator}
-                          component={OperatorReportFactEditPage}/>
+            {/*<PrivateRoute exact path="/operator/report/fact/:id" roles={Role.Operator}*/}
+            {/*              component={OperatorReportFactEditPage}/>*/}
 
             <PrivateRoute exact path="/operator/report/activities" roles={Role.Operator}
                           component={OperatorReportActivitiesPage}/>
-            <PrivateRoute exact path="/operator/report/activities/:id" roles={Role.Operator}
-                          component={OperatorReportActivitiesUpdatePage}/>
+            {/*<PrivateRoute exact path="/operator/report/activities/:id" roles={Role.Operator}*/}
+            {/*              component={OperatorReportActivitiesUpdatePage}/>*/}
 
             <PrivateRoute exact path="/operator/report/projects_master" roles={Role.Operator}
                           component={OperatorReportProjectsMasterPage}/>

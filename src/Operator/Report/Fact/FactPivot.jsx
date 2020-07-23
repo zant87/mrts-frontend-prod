@@ -9,8 +9,19 @@ import { PropTypes, instanceOf } from 'prop-types';
 import PivotGridDataSource from 'devextreme/ui/pivot_grid/data_source';
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.light.css';
-import {MDBCol, MDBContainer, MDBRow, MDBSpinner, MDBSelect, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter} from "mdbreact";
-import appAxios from "../../_services/appAxios";
+import {
+    MDBCol,
+    MDBContainer,
+    MDBRow,
+    MDBSpinner,
+    MDBSelect,
+    MDBBtn,
+    MDBModal,
+    MDBModalBody,
+    MDBModalHeader,
+    MDBModalFooter
+} from "mdbreact";
+import appAxios from "../../../_services/appAxios";
 
 export default class OperatorReportFactPivotPage extends React.Component {
 
