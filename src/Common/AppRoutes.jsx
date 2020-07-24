@@ -67,7 +67,7 @@ import AdminStructureTemplateItemsPage from "../Admin/Structure/TemplateItems";
 import AdminStructureProjectsExtensionPage from "../Admin/Structure/ProjectsExtension";
 import AdminStructureFormulasPage from "../Admin/Structure/Formulas";
 import AdminStructureFormulasEditPage from "../Admin/Structure/FormulaEdit";
-import OperatorReportProjectsMasterEditPage from "../Operator/Report/ProjectsMasterEdit";
+import OperatorReportProjectsMasterEditPage from "../Operator/Report/ProjectsMaster/ProjectsMasterEdit";
 
 const AsyncAdminStructureGoalsPage = loadable({
     loader: () => import("../Admin/Structure/Goals"),
