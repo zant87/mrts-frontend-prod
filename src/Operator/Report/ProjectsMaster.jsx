@@ -64,7 +64,7 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
                     loadAll={true}
                 />
                 <MDBContainer>
-                    <MDBModal isOpen={this.state.modal} toggle={this.toggleModal} backdrop={false} size="lg">
+                    <MDBModal isOpen={this.state.modal} toggle={this.toggleModal} backdrop={false} size="fluid">
                         <MDBModalHeader toggle={this.toggleModal}>Форма редактирования</MDBModalHeader>
                         <MDBModalBody>
                             <ProjectsMasterEdit

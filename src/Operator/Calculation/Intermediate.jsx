@@ -2,6 +2,7 @@ import React from 'react';
 import {MDBBreadcrumb, MDBBreadcrumbItem, MDBContainer, MDBRow} from "mdbreact";
 
 const OperatorCalculationIntermediatePage = () => {
+
     return (
         <MDBContainer>
             <MDBRow className='my-3'>
@@ -16,6 +17,7 @@ const OperatorCalculationIntermediatePage = () => {
             </MDBRow>
         </MDBContainer>
     );
+
 };
 
 export default OperatorCalculationIntermediatePage;

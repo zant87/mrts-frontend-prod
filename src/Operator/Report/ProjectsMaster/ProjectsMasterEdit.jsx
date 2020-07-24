@@ -85,136 +85,109 @@ export default class OperatorReportProjectsMasterEditPage extends React.Componen
     render() {
 
         return (
-            <MDBContainer>
-                <div className="scrollbar my-1 mx-auto" style={{minHeight: '600px', maxHeight: '600px'}}>
-
-                    <MDBRow center>
-                        <h2 className='text-center my-2'>Редактирование крупных инвестиционных проектов</h2>
-                    </MDBRow>
+            <div className="scrollbar my-1 mx-auto" style={{minHeight: '600px', maxHeight: '600px'}}>
+                {this.state.project && (
+                    <MDBInput outline label="Проект" value={this.state.project.name} disabled={true}
+                              type="text"/>
+                )}
+                {this.state.document && (
+                    <MDBInput outline label="Отчетный год" value={this.state.document.yearYear}
+                              disabled={true}
+                              type="number"/>
+                )}
+                <React.Fragment>
                     {this.state.project && (
-                        <MDBRow around>
-                            <MDBCol md="12" className="mb-3">
-                                <MDBInput outline label="Проект" value={this.state.project.name} disabled={true}
-                                          type="text"/>
+                        <MDBRow center>
+                            <MDBCol className="mb-3">
+                                <MDBRow center>
+                                    <h5>Плановые сроки реализации проекта</h5>
+                                </MDBRow>
+                                <MDBRow>
+                                    <MDBCol>
+                                        <MDBInput outline label="Начало плановое" onChange={this.onChangeHandler}
+                                                  name='planBeginYear' value={this.state.planBeginYear}
+                                                  disabled={true}
+                                                  type="number"/>
+                                    </MDBCol>
+                                </MDBRow>
+                                <MDBRow>
+                                    <MDBCol>
+                                        <MDBInput outline label="Окончание плановое" onChange={this.onChangeHandler}
+                                                  name='planEndYear' value={this.state.planEndYear} disabled={true}
+                                                  type="number"/>
+                                    </MDBCol>
+                                </MDBRow>
+                            </MDBCol>
+                            <MDBCol className="mb-3">
+                                <MDBRow center>
+                                    <h5>Фактические сроки реализации проекта</h5>
+                                </MDBRow>
+                                <MDBRow>
+                                    <MDBCol>
+                                        <MDBInput outline label="Начало фактическое" onChange={this.onChangeHandler}
+                                                  name='factStarted' value={this.state.factStarted} type="number"/>
+                                    </MDBCol>
+                                </MDBRow>
+                                <MDBRow>
+                                    <MDBCol>
+                                        <MDBInput outline label="Конец фактический" onChange={this.onChangeHandler}
+                                                  name='factFinished' value={this.state.factFinished}
+                                                  type="number"/>
+                                    </MDBCol>
+                                </MDBRow>
                             </MDBCol>
                         </MDBRow>
                     )}
-                    {this.state.document && (
-                        <MDBRow around>
-                            <MDBCol md="12" className="mb-3">
-                                <MDBInput outline label="Отчетный год" value={this.state.document.yearYear}
+                </React.Fragment>
+                {this.state.project && (
+                    <MDBInput outline label="Выполнение проекта"
+                              onChange={this.onChangeHandler}
+                              name='done'
+                              value={this.state.done} type="number"/>
+                )}
+                {this.state.project && (
+                    <React.Fragment>
+                        <MDBRow center>
+                            <h5>Финансирование проекта</h5>
+                        </MDBRow>
+                        <MDBRow>
+                            <MDBCol className="mb-3">
+                                <MDBInput outline label="Плановая стоимость, млрд. руб."
+                                          name='planCost'
                                           disabled={true}
+                                          value={this.state.planCost}
+                                          type="number"/>
+                            </MDBCol>
+                            <MDBCol className="mb-3">
+                                <MDBInput outline label="Фактическая стоимость, млрд."
+                                          name='fact'
+                                          disabled={true}
+                                          value={this.state.fact}
                                           type="number"/>
                             </MDBCol>
                         </MDBRow>
-                    )}
-                    <React.Fragment>
-                        {this.state.project && (
-                            <MDBRow center>
-                                <MDBCol className="mb-3">
-                                    <MDBRow center>
-                                        <h5>Плановые сроки реализации проекта</h5>
-                                    </MDBRow>
-                                    <MDBRow>
-                                        <MDBCol>
-                                            <MDBInput outline label="Начало плановое" onChange={this.onChangeHandler}
-                                                      name='planBeginYear' value={this.state.planBeginYear}
-                                                      disabled={true}
-                                                      type="number"/>
-                                        </MDBCol>
-                                    </MDBRow>
-                                    <MDBRow>
-                                        <MDBCol>
-                                            <MDBInput outline label="Окончание плановое" onChange={this.onChangeHandler}
-                                                      name='planEndYear' value={this.state.planEndYear} disabled={true}
-                                                      type="number"/>
-                                        </MDBCol>
-                                    </MDBRow>
-                                </MDBCol>
-                                <MDBCol className="mb-3">
-                                    <MDBRow center>
-                                        <h5>Фактические сроки реализации проекта</h5>
-                                    </MDBRow>
-                                    <MDBRow>
-                                        <MDBCol>
-                                            <MDBInput outline label="Начало фактическое" onChange={this.onChangeHandler}
-                                                      name='factStarted' value={this.state.factStarted} type="number"/>
-                                        </MDBCol>
-                                    </MDBRow>
-                                    <MDBRow>
-                                        <MDBCol>
-                                            <MDBInput outline label="Конец фактический" onChange={this.onChangeHandler}
-                                                      name='factFinished' value={this.state.factFinished}
-                                                      type="number"/>
-                                        </MDBCol>
-                                    </MDBRow>
-                                </MDBCol>
-                            </MDBRow>
-                        )}
                     </React.Fragment>
-                    {this.state.project && (
-                        <MDBRow>
-                            <MDBCol md="12" className="mb-3">
-                                <MDBInput outline label="Выполнение проекта"
-                                          onChange={this.onChangeHandler}
-                                          name='done'
-                                          value={this.state.done} type="number"/>
-                            </MDBCol>
-                        </MDBRow>
-                    )}
-                    {this.state.project && (
-                        <React.Fragment>
-                            <MDBRow center>
-                                <h5>Финансирование проекта</h5>
-                            </MDBRow>
-                            <MDBRow>
-                                <MDBCol className="mb-3">
-                                    <MDBInput outline label="Плановая стоимость, млрд. руб."
-                                              onChange={this.onChangeHandler}
-                                              disabled={true}
-                                              name='planCost'
-                                              value={this.state.planCost}
-                                              type="number"/>
-                                </MDBCol>
-                                <MDBCol className="mb-3">
-                                    <MDBInput outline label="Фактическая стоимость, млрд."
-                                              onChange={this.onChangeHandler}
-                                              name='fact'
-                                              value={this.state.fact}
-                                              type="number"/>
-                                </MDBCol>
-                            </MDBRow>
-                        </React.Fragment>
-                    )}
-                    {this.state.project && (
-                        <MDBRow>
-                            <MDBCol md="12" className="mb-3">
-                                <MDBInput label="Описание проекта"
-                                          onChange={this.onChangeHandler}
-                                          name='description'
-                                          value={this.state.description}
-                                          rows="5" type="textarea"/>
-                            </MDBCol>
-                        </MDBRow>
-                    )}
-                    <MDBRow center className="mb-3">
-                        <MDBCol md={'12'} className='my-2 mx-auto'>
-                            <ProjectExtTable projectId={this.state.projectId} documentId={this.state.documentId}/>
-                        </MDBCol>
-                    </MDBRow>
-                    <MDBRow center className="mb-3">
-                        <MDBCol md={'12'} className='my-2 mx-auto'>
-                            <ProjectResTable projectId={this.state.projectId} documentId={this.state.documentId}/>
-                        </MDBCol>
-                    </MDBRow>
-                    <MDBRow around>
-                        <MDBBtn color="primary" type="none" onClick={this.doSave}>
-                            Сохранить
-                        </MDBBtn>
-                    </MDBRow>
-                </div>
-            </MDBContainer>
+                )}
+                {this.state.project && (
 
+                    <MDBInput label="Описание проекта"
+                              onChange={this.onChangeHandler}
+                              name='description'
+                              value={this.state.description}
+                              rows="5" type="textarea"/>
+
+                )}
+
+                <ProjectExtTable projectId={this.state.projectId} documentId={this.state.documentId}/>
+                <ProjectResTable projectId={this.state.projectId} documentId={this.state.documentId}/>
+
+                <MDBRow around className='mt-2'>
+                    <MDBBtn color="primary" type="none" onClick={this.doSave}>
+                        Сохранить
+                    </MDBBtn>
+                </MDBRow>
+
+            </div>
         );
     }
 }

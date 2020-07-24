@@ -46,7 +46,7 @@ import AdminLoadingFromMSTKPage from "../Admin/Loading/FromMSTK";
 import AdminLoadingFromSDMXPage from "../Admin/Loading/FromSDMX";
 import OperatorReportProjectsMasterPage from "../Operator/Report/ProjectsMaster";
 import OperatorReportProjectsDetailPage from "../Operator/Report/ProjectsDetail";
-import OperatorReportProjectsDetailUpdatePage from "../Operator/Report/ProjectsDetailUpdate";
+import OperatorReportProjectsDetailUpdatePage from "../Operator/Report/ProjectsDetail/ProjectsDetailUpdate";
 import OperatorReportFinancingUpdatePage from "../Operator/Report/Financing/FinancingEdit";
 import OperatorReportAppropriationsUpdatePage from "../Operator/Report/Appropriations/AppropriationsEdit";
 import OperatorReportExtraBudgetUpdatePage from "../Operator/Report/ExtraBudget/ExtraBudgetEdit";

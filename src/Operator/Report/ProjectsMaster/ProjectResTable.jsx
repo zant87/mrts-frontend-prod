@@ -39,6 +39,7 @@ export default class OperatorReportProjectsResTable extends React.Component {
     render() {
 
         const columnsProjectsRes = [
+            {field: 'fundingName', title: 'Направление бюджета'},
             {field: 'plan', title: 'План', type: 'number'},
             {field: 'spent', title: 'Потрачено', type: 'number'},
             {field: 'fact', title: 'Факт', type: 'number'},
@@ -64,37 +65,37 @@ export default class OperatorReportProjectsResTable extends React.Component {
                     paging: false
                 }}
                 editable={{
-                    onRowAdd: newData =>
-                        new Promise((resolve, reject) => {
-                            setTimeout(() => {
-
-                                const dataNew = [...projectsRes];
-
-                                const responseData = {
-                                    documentId: this.props.documentId,
-                                    projectId: this.props.projectId,
-                                    plan: newData.plan,
-                                    fact: newData.fact,
-                                    spent: newData.spent,
-                                };
-
-                                appAxios({
-                                    url: `project-resources`,
-                                    method: 'POST',
-                                    data: responseData
-                                }).then((response) => {
-                                    const message = response.headers["x-mrts-backend-params"];
-                                    toast.success(`Успешно добавлена запись с ID ${message}`, {
-                                        closeButton: false
-                                    });
-                                    newData.id = message;
-                                    dataNew.push(newData);
-                                    this.setState({projectsRes: dataNew});
-                                });
-
-                                resolve();
-                            }, 1000)
-                        }),
+                    // onRowAdd: newData =>
+                    //     new Promise((resolve, reject) => {
+                    //         setTimeout(() => {
+                    //
+                    //             const dataNew = [...projectsRes];
+                    //
+                    //             const responseData = {
+                    //                 documentId: this.props.documentId,
+                    //                 projectId: this.props.projectId,
+                    //                 plan: newData.plan,
+                    //                 fact: newData.fact,
+                    //                 spent: newData.spent,
+                    //             };
+                    //
+                    //             appAxios({
+                    //                 url: `project-resources`,
+                    //                 method: 'POST',
+                    //                 data: responseData
+                    //             }).then((response) => {
+                    //                 const message = response.headers["x-mrts-backend-params"];
+                    //                 toast.success(`Успешно добавлена запись с ID ${message}`, {
+                    //                     closeButton: false
+                    //                 });
+                    //                 newData.id = message;
+                    //                 dataNew.push(newData);
+                    //                 this.setState({projectsRes: dataNew});
+                    //             });
+                    //
+                    //             resolve();
+                    //         }, 1000)
+                    //     }),
                     onRowUpdate: (newData, oldData) =>
                         new Promise((resolve, reject) => {
                             setTimeout(() => {
@@ -119,29 +120,29 @@ export default class OperatorReportProjectsResTable extends React.Component {
                                 resolve();
                             }, 1000)
                         }),
-                    onRowDelete: oldData =>
-                        new Promise((resolve, reject) => {
-                            setTimeout(() => {
-
-                                const dataDelete = [...projectsRes];
-                                const index = dataDelete.findIndex(item => item.id === oldData.id);
-
-                                appAxios({
-                                    url: `project-resources/${oldData.id}`,
-                                    method: 'DELETE',
-                                }).then((response) => {
-                                    const message = response.headers["x-mrts-backend-params"];
-                                    toast.success(`Удалена запись с ID ${message}`, {
-                                        closeButton: false
-                                    });
-                                });
-
-                                dataDelete.splice(index, 1);
-
-                                this.setState({projectsRes: dataDelete});
-                                resolve();
-                            }, 1000)
-                        }),
+                    // onRowDelete: oldData =>
+                    //     new Promise((resolve, reject) => {
+                    //         setTimeout(() => {
+                    //
+                    //             const dataDelete = [...projectsRes];
+                    //             const index = dataDelete.findIndex(item => item.id === oldData.id);
+                    //
+                    //             appAxios({
+                    //                 url: `project-resources/${oldData.id}`,
+                    //                 method: 'DELETE',
+                    //             }).then((response) => {
+                    //                 const message = response.headers["x-mrts-backend-params"];
+                    //                 toast.success(`Удалена запись с ID ${message}`, {
+                    //                     closeButton: false
+                    //                 });
+                    //             });
+                    //
+                    //             dataDelete.splice(index, 1);
+                    //
+                    //             this.setState({projectsRes: dataDelete});
+                    //             resolve();
+                    //         }, 1000)
+                    //     }),
                 }}
             />
         );
