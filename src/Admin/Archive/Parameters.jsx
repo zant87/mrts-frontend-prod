@@ -6,14 +6,15 @@ export default class AdminArchiveParametersPage extends React.Component {
     render() {
 
         const columns = [
-            {field: 'id', title: '#', filtering: false, editable: 'never'},
-            {field: 'year', title: 'Отчетный год', filtering: false, editable: 'never'},
-            {field: 'quarterName', title: 'Отчетный квартал', filtering: true, editable: 'never'},
-            {field: 'okudName', title: 'ОКУД', filtering: true, editable: 'never'},
-            {field: 'parameterName', title: 'Показатель', filtering: true, editable: 'never'},
-            {field: 'transportTypeName', title: 'Вид транспорта', filtering: true, editable: 'never'},
-            {field: 'dataProviderCode', title: 'Источник', filtering: true, editable: 'never'},
-            {field: 'value', title: 'Значение показателя', filtering: false, editable: 'never'},
+            {field: 'id', title: '#', filtering: false},
+            {field: 'year', title: 'Отчетный год', filtering: false},
+            {field: 'quarterName', title: 'Отчетный квартал', filtering: true},
+            {field: 'okudName', title: 'ОКУД', filtering: true},
+            {field: 'parameterName', title: 'Показатель', filtering: true},
+            {field: 'transportTypeName', title: 'Вид транспорта', filtering: true},
+            {field: 'dataProviderCode', title: 'Источник', filtering: true},
+            {field: 'value', title: 'Значение показателя', filtering: false},
+            {field: 'okeiName', title: 'Единица измерений'},
         ];
 
     return (
