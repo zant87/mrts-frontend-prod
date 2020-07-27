@@ -1,10 +1,7 @@
 import React from "react";
-import {MDBBtn, MDBCol, MDBContainer, MDBInput, MDBRow, MDBSelect, toast} from "mdbreact";
+import {MDBBtn, MDBCol, MDBInput, MDBRow, toast} from "mdbreact";
 import appAxios from "../../../_services/appAxios";
-import axios from "axios";
 import Axios from "axios";
-import MaterialTable from "material-table";
-import {ruLocalization} from "../../../_components/MaterialTableLocalization";
 import ProjectExtTable from "./ProjectExtTable";
 import ProjectResTable from "./ProjectResTable";
 
@@ -85,7 +82,7 @@ export default class OperatorReportProjectsMasterEditPage extends React.Componen
     render() {
 
         return (
-            <div className="scrollbar my-1 mx-auto" style={{minHeight: '600px', maxHeight: '600px'}}>
+            <div className="scrollbar my-1 mx-auto" style={{maxHeight: '85vh'}}>
                 {this.state.project && (
                     <MDBInput outline label="Проект" value={this.state.project.name} disabled={true}
                               type="text"/>

@@ -14,6 +14,7 @@ const OperatorCalculationIntermediatePage = () => {
             </MDBRow>
             <MDBRow>
                 <h1>Расчет промежуточных значений индикаторов</h1>
+                <h1>SP_INTERPOLATE_FORECAST</h1>
             </MDBRow>
         </MDBContainer>
     );
