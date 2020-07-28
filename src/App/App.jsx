@@ -407,31 +407,31 @@ class App extends React.Component {
                           Выполнение крупных проектов
                         </MDBSideNavLink>
                       </MDBSideNavItem>
-                      <MDBSideNavItem>
-                        <MDBSideNavLink to='/operator/report/projects_detail'>
-                          Финансирование проектов
-                        </MDBSideNavLink>
-                      </MDBSideNavItem>
-                      <MDBSideNavItem>
-                        <MDBSideNavLink to='/operator/report/financing'>
-                          Бюджетное финансирование транспорта
-                        </MDBSideNavLink>
-                      </MDBSideNavItem>
+                      {/*<MDBSideNavItem>*/}
+                      {/*  <MDBSideNavLink to='/operator/report/projects_detail'>*/}
+                      {/*    Финансирование проектов*/}
+                      {/*  </MDBSideNavLink>*/}
+                      {/*</MDBSideNavItem>*/}
+                      {/*<MDBSideNavItem>*/}
+                      {/*  <MDBSideNavLink to='/operator/report/financing'>*/}
+                      {/*    Бюджетное финансирование транспорта*/}
+                      {/*  </MDBSideNavLink>*/}
+                      {/*</MDBSideNavItem>*/}
                       <MDBSideNavItem>
                         <MDBSideNavLink to='/operator/report/appropriations'>
                           Бюджетные ассигнования
                         </MDBSideNavLink>
                       </MDBSideNavItem>
-                      <MDBSideNavItem>
-                        <MDBSideNavLink to='/operator/report/extrabudget'>
-                          Объемы внебюджетных средств
-                        </MDBSideNavLink>
-                      </MDBSideNavItem>
-                      <MDBSideNavItem>
-                        <MDBSideNavLink to='/operator/report/sources'>
-                          Источники финансирования
-                        </MDBSideNavLink>
-                      </MDBSideNavItem>
+                      {/*<MDBSideNavItem>*/}
+                      {/*  <MDBSideNavLink to='/operator/report/extrabudget'>*/}
+                      {/*    Объемы внебюджетных средств*/}
+                      {/*  </MDBSideNavLink>*/}
+                      {/*</MDBSideNavItem>*/}
+                      {/*<MDBSideNavItem>*/}
+                      {/*  <MDBSideNavLink to='/operator/report/sources'>*/}
+                      {/*    Источники финансирования*/}
+                      {/*  </MDBSideNavLink>*/}
+                      {/*</MDBSideNavItem>*/}
                     </MDBSideNavNav>
                 )}
                 {layout === Layouts.operatorCalculation && (
