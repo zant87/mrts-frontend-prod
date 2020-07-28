@@ -1,24 +1,49 @@
-import React from 'react';
-import {MDBBreadcrumb, MDBBreadcrumbItem, MDBContainer, MDBRow} from "mdbreact";
+//OperatorCalculationValuesPage
+import React from "react";
+import {MDBBtn, MDBCol, MDBDatePicker, MDBInput, MDBRow, MDBSelect, toast} from "mdbreact";
+import moment from "moment";
+import appAxios from "../../_services/appAxios";
 
-const OperatorCalculationIntermediatePage = () => {
+export default class OperatorCalculationIntermediatePage extends React.Component {
 
-    return (
-        <MDBContainer>
-            <MDBRow className='my-3'>
-                <MDBBreadcrumb>
-                    <MDBBreadcrumbItem>Главная</MDBBreadcrumbItem>
-                    <MDBBreadcrumbItem>Контроль</MDBBreadcrumbItem>
-                    <MDBBreadcrumbItem active>Расчет промежуточных значений индикаторов</MDBBreadcrumbItem>
-                </MDBBreadcrumb>
-            </MDBRow>
-            <MDBRow>
-                <h1>Расчет промежуточных значений индикаторов</h1>
-                <h1>SP_INTERPOLATE_FORECAST</h1>
-            </MDBRow>
-        </MDBContainer>
-    );
+    doCalculate = () => {
 
-};
+        console.log(this.state);
 
-export default OperatorCalculationIntermediatePage;
+        this.setState({isLoading: true});
+        const url = `/calculation/interpolate`;
+
+        console.log(url);
+
+        appAxios.get(url)
+            .then(res => {
+                console.log(res.data);
+                const data = res.data;
+                this.setState({result: data, isLoading: false});
+                toast.success(`Успешно выполнена интерполяция`, {
+                    closeButton: false
+                });
+            }).catch(function (error) {
+            console.log(error);
+            toast.error(`Ошибка при выполнении интерполяции`, {
+                closeButton: false
+            });
+        });
+    };
+
+    render() {
+
+        return (
+            <MDBCol md='8' className='mx-auto my-3'>
+                <h2 className='text-center my-3'>Расчет промежуточных значений индикаторов</h2>
+
+                <MDBRow between={true}>
+                    <MDBBtn color="primary" type="none" onClick={this.doCalculate}>
+                        Раcсчитать
+                    </MDBBtn>
+                </MDBRow>
+
+            </MDBCol>
+        );
+    }
+}
