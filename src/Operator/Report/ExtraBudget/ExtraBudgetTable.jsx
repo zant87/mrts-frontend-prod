@@ -27,12 +27,16 @@ export default class OperatorReportExtraBudgetTablePage extends React.Component 
 
         const columns = [
             {field: 'id', title: '#', filtering: false, type: 'number'},
-            {field: 'year', title: 'Отчетный год', filtering: false, type: 'number'},
+            {field: 'year', title: 'Отчетный год', type: 'number'},
             {field: 'directionName', title: 'Направление расходов', editable: 'never'},
             {field: 'costTypeName', title: 'Вид расходов', editable: 'never'},
             {field: 'fact', title: 'Фактические объемы исполнения, млн. руб.', filtering: false, type: 'number'},
             {field: 'plan', title: 'Плановые объемы исполнения, млн. руб.', filtering: false, type: 'number'}
         ];
+
+        const filtersList = {
+            'year': 'equals'
+        };
 
         const actions = [
             {
@@ -51,6 +55,7 @@ export default class OperatorReportExtraBudgetTablePage extends React.Component 
                     title={'Объемы привлечения внебюджетных средств'}
                     baseUrl={'views/k-10-s'}
                     actions={actions}
+                    filtersList={filtersList}
                     tableRef={this.tableRef}
                     loadAll={true}
                 />

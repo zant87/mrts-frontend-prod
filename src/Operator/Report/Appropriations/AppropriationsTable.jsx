@@ -26,7 +26,7 @@ export default class OperatorReportAppropriationsPage extends React.Component {
     render() {
 
         const columns = [
-            {field: 'year', title: 'Отчетный год', filtering: false},
+            {field: 'year', title: 'Отчетный год'},
             {field: 'directionName', title: 'Направление расходов'},
             {field: 'fundingName', title: 'Источник финансирования'},
             {field: 'costTypeName', title: 'Вид расходов'},
@@ -44,6 +44,10 @@ export default class OperatorReportAppropriationsPage extends React.Component {
             },
         ];
 
+        const filtersList = {
+            'year': 'equals'
+        };
+
         return (
             <React.Fragment>
                 <TableContainer
@@ -51,6 +55,7 @@ export default class OperatorReportAppropriationsPage extends React.Component {
                     title={'Бюджетные ассигнования в рамках программ развития транспорта'}
                     baseUrl={'views/k-9-s'}
                     actions={actions}
+                    filtersList={filtersList}
                     tableRef={this.tableRef}
                     loadAll={true}
                 />

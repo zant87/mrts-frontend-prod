@@ -7,7 +7,7 @@ export default class AdminArchiveIndicatorsPage extends React.Component {
 
         const columns = [
             {field: 'id', title: '#', filtering: false},
-            {field: 'year', title: 'Отчетный год', filtering: false},
+            {field: 'year', title: 'Отчетный год'},
             {field: 'quarterName', title: 'Отчетный квартал', filtering: false},
             {field: 'indicatorName', title: 'Показатель', filtering: true},
             {field: 'scenarioName', title: 'Сценарий', filtering: true},
@@ -18,12 +18,17 @@ export default class AdminArchiveIndicatorsPage extends React.Component {
             {field: 'value', title: 'Значение показателя', filtering: false},
         ];
 
+        const filtersList = {
+            'year': 'equals'
+        };
+
         return (
             <React.Fragment>
                 <TableContainer
                     columns={columns}
                     title={'Архив расчета индикаторов ТС'}
                     baseUrl={'views/i-2-s'}
+                    filtersList={filtersList}
                     loadAll={true}
                 />
             </React.Fragment>

@@ -14,7 +14,7 @@ export default class OperatorReportProjectsDetailPage extends React.Component {
     render() {
 
         const columns = [
-            {field: 'yearNumber', title: 'Отчетный год', editable: false, filtering: false},
+            {field: 'yearNumber', title: 'Отчетный год'},
             {field: 'projectCode', title: 'Обозначение проекта', editable: false},
             {field: 'projectName', title: 'Содержание проекта', editable: false},
             {field: 'costTypename', title: 'Вид расходов', editable: false},
@@ -24,12 +24,17 @@ export default class OperatorReportProjectsDetailPage extends React.Component {
             {field: 'fact', title: 'Кассовые расходы за год', filtering: false},
         ];
 
+        const filtersList = {
+            'yearNumber': 'equals'
+        };
+
         return (
             <React.Fragment>
                 <TableContainer
                     columns={columns}
                     title={'Финансирование проектов ТС (detail)'}
                     baseUrl={'views/k-7-details'}
+                    filtersList={filtersList}
                     loadAll={true}
                 />
             </React.Fragment>

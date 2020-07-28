@@ -26,7 +26,7 @@ export default class OperatorReportFinancingPage extends React.Component {
 
 
         const columns = [
-            {field: 'year', title: 'Отчетный год', filtering: false},
+            {field: 'year', title: 'Отчетный год'},
             {field: 'expenditureName', title: 'Направление расходов'},
             {field: 'plan', title: 'Запланировано, млн. руб.', filtering: false},
             {field: 'fact', title: 'Кассовое исполнение, млн. руб.', filtering: false},
@@ -44,6 +44,10 @@ export default class OperatorReportFinancingPage extends React.Component {
             },
         ];
 
+        const filtersList = {
+            'year': 'equals'
+        };
+
         return (
             <React.Fragment>
                 <TableContainer
@@ -51,6 +55,7 @@ export default class OperatorReportFinancingPage extends React.Component {
                     title={'Бюджетное финансирование транспорта'}
                     baseUrl={'views/k-8-s'}
                     actions={actions}
+                    filtersList={filtersList}
                     tableRef={this.tableRef}
                     loadAll={true}
                 />

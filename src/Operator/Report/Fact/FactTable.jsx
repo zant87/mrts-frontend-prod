@@ -30,7 +30,7 @@ export default class OperatorReportFactPage extends React.Component {
             {field: 'transportTypeName', title: 'Вид транспорта'},
             {field: 'formCode', title: 'Форма'},
             {field: 'parameterName', title: 'Показатель'},
-            {field: 'year', title: 'Отчетный год', filtering: false},
+            {field: 'year', title: 'Отчетный год'},
             {field: 'quarterName', title: 'Отчетный квартал', filtering: false},
             {field: 'okeiName', title: 'Единица измерения'},
             {field: 'value', title: 'Значение показателя', filtering: false},
@@ -46,6 +46,10 @@ export default class OperatorReportFactPage extends React.Component {
             },
         ];
 
+        const filtersList = {
+            'year': 'equals'
+        };
+
         return (
             <React.Fragment>
                 <TableContainer
@@ -54,6 +58,7 @@ export default class OperatorReportFactPage extends React.Component {
                     baseUrl={'views/k-5-s'}
                     actions={actions}
                     tableRef={this.tableRef}
+                    filtersList={filtersList}
                     loadAll={true}
                 />
                 <MDBContainer>

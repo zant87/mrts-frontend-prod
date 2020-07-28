@@ -41,7 +41,7 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
         ];
 
         const columns = [
-            {field: 'yearNumber', title: 'Отчетный год', filtering: false},
+            {field: 'yearNumber', title: 'Отчетный год'},
             {field: 'projectCode', title: 'Обозначение проекта'},
             {field: 'projectName', title: 'Содержание проекта'},
             {field: 'done', title: 'Уровень технической готовности', filtering: false},
@@ -53,11 +53,16 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
             {field: 'description', title: 'Фактические результаты'},
         ];
 
+        const filtersList = {
+            'yearNumber': 'equals'
+        };
+
         return (
             <React.Fragment>
                 <TableContainer
                     columns={columns}
                     title={'Выполнение крупных инвестиционных проектов (master)'}
+                    filtersList={filtersList}
                     baseUrl={'views/k-7-masters'}
                     actions={actions}
                     tableRef={this.tableRef}

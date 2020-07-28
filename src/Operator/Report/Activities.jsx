@@ -46,6 +46,10 @@ export default class OperatorReportActivitiesPage extends React.Component {
             },
         ];
 
+        const filtersList = {
+            'yearNumber': 'equals'
+        };
+
         return (
             <React.Fragment>
                 <TableContainer
@@ -53,6 +57,7 @@ export default class OperatorReportActivitiesPage extends React.Component {
                     title={'Отчет по проекту'}
                     baseUrl={'views/k-6-s'}
                     actions={actions}
+                    filtersList={filtersList}
                     tableRef={this.tableRef}
                     loadAll={true}
                 />

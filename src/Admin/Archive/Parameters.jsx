@@ -7,7 +7,7 @@ export default class AdminArchiveParametersPage extends React.Component {
 
         const columns = [
             {field: 'id', title: '#', filtering: false},
-            {field: 'year', title: 'Отчетный год', filtering: false},
+            {field: 'year', title: 'Отчетный год'},
             {field: 'quarterName', title: 'Отчетный квартал', filtering: true},
             {field: 'okudName', title: 'ОКУД', filtering: true},
             {field: 'parameterName', title: 'Показатель', filtering: true},
@@ -17,15 +17,19 @@ export default class AdminArchiveParametersPage extends React.Component {
             {field: 'okeiName', title: 'Единица измерений'},
         ];
 
-    return (
-        <React.Fragment>
-            <TableContainer
-                columns={columns}
-                title={'Архив показателей для расчета индикаторов ТС'}
-                baseUrl={'views/i-1-s'}
-                loadAll={true}
-            />
-        </React.Fragment>
+        const filtersList = {
+            'year': 'equals'
+        };
+
+        return (
+            <React.Fragment>
+                <TableContainer
+                    columns={columns}
+                    title={'Архив показателей для расчета индикаторов ТС'}
+                    baseUrl={'views/i-1-s'}
+                    loadAll={true}
+                />
+            </React.Fragment>
     );
   }
 }

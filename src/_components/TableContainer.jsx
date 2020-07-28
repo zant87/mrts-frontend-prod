@@ -23,6 +23,7 @@ export default class TableContainer extends React.Component {
         const loadAll = this.props.loadAll ? this.props.loadAll : false;
         const filterMinimalLength = this.props.filterMinimalLength ? this.props.filterMinimalLength : 3;
         const tableRef = this.props.tableRef ? this.props.tableRef : React.createRef();
+        const filtersList = this.props.filtersList ? this.props.filtersList : null;
 
         return (
             <MDBContainer fluid>
@@ -38,7 +39,8 @@ export default class TableContainer extends React.Component {
                             data={query =>
                                 new Promise((resolve, reject) => {
 
-                                        console.log('Параметры запроса', query);
+                                    console.log('Параметры запроса', query);
+                                    console.log('Фильтры', filtersList);
 
                                         let url = `/${this.props.baseUrl}?page=${query.page}&size=${query.pageSize}`;
                                         let filtersEnabled = false;
@@ -50,7 +52,13 @@ export default class TableContainer extends React.Component {
                                         if (query.filters.length > 0) {
                                             query.filters.forEach(element => {
                                                 if (element.value.length >= filterMinimalLength) {
-                                                    url += `&${element.column.field}.contains=${element.value}`;
+
+                                                    if (filtersList) {
+                                                        console.log(element.column.field, 'filter is', filtersList[element.column.field]);
+                                                        url += `&${element.column.field}.${filtersList[element.column.field]}=${element.value}`;
+                                                    } else {
+                                                        url += `&${element.column.field}.contains=${element.value}`;
+                                                    }
                                                     filtersEnabled = true;
                                                 }
                                             });

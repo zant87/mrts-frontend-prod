@@ -7,11 +7,11 @@ export default class AdminArchiveProjectsPage extends React.Component {
 
         const columns = [
             {field: 'id', title: '#', filtering: false, editable: 'never'},
-            {field: 'year', title: 'Отчетный год', filtering: false, editable: 'never'},
+            {field: 'year', title: 'Отчетный год'},
             {field: 'quarterName', title: 'Отчетный квартал', filtering: true, editable: 'never'},
             {field: 'projectName', title: 'Имя проекта', filtering: true, editable: 'never'},
-            {field: 'planBeginYear', title: 'Год начала', filtering: false},
-            {field: 'planEndYear', title: 'Год окончания', filtering: false},
+            {field: 'planBeginYear', title: 'Год начала'},
+            {field: 'planEndYear', title: 'Год окончания'},
             {field: 'planCost', title: 'План', filtering: false, editable: 'never'},
             {field: 'reportFactCost', title: 'Отчетный факт', filtering: false, editable: 'never'},
             {field: 'factCost', title: 'Факт', filtering: false, editable: 'never'},
@@ -19,12 +19,19 @@ export default class AdminArchiveProjectsPage extends React.Component {
             {field: 'endDate', title: 'Конец периода', filtering: false, type: 'date'},
         ];
 
+        const filtersList = {
+            'year': 'equals',
+            'planBeginYear': 'equals',
+            'planEndYear': 'equals'
+        };
+
         return (
             <React.Fragment>
                 <TableContainer
                     columns={columns}
                     title={'Архив выполнения крупных инвестиционных проектов'}
                     baseUrl={'views/i-4-s'}
+                    filtersList={filtersList}
                     loadAll={true}
                 />
             </React.Fragment>
