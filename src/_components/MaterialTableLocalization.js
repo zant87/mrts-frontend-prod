@@ -15,7 +15,9 @@ export const ruLocalization = {
     toolbar: {
         nRowsSelected: '{0} строк выбрано',
         searchTooltip: 'Поиск',
-        searchPlaceholder: 'Поиск...'
+        searchPlaceholder: 'Поиск...',
+        addRemoveColumns: 'Выбор столбцов',
+        showColumnsTitle: 'Выбор столбцов'
     },
     header: {
         actions: 'Действия'

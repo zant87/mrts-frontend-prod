@@ -17,7 +17,8 @@ export default class TableContainer extends React.Component {
             pageSizeOptions: [20, 50, 100],
             actionsColumnIndex: 999,
             filtering: true,
-            search: false
+            search: false,
+            columnsButton: true
         };
 
         const loadAll = this.props.loadAll ? this.props.loadAll : false;
