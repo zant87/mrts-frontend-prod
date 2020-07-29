@@ -1,43 +1,38 @@
 import React from 'react';
-import MUIDataTable from "mui-datatables";
-import { MDBCol, MDBContainer, MDBRow, MDBSpinner } from "mdbreact";
-import { labels } from "../../_components/TableTextLabels";
+import TableContainer from "../../_components/TableContainer";
 
 export default class OperatorControlIndicatorsPage extends React.Component {
 
-    state = {
-        page: 0,
-        count: 0,
-        data: [],
-        rowsPerPage: 20,
-        isLoading: false,
-    };
-
     render() {
 
-        const options = {
-            textLabels: labels,
-            sortFilterList: false,
-            selectableRowsOnClick: true,
-            selectableRows: 'none',
+        const columns = [
+            {field: 'id', title: '#', filtering: false},
+            {field: 'transportStrategyName', title: 'Редакция ТС'},
+            {field: 'goalName', title: 'Цель'},
+            {field: 'goalDescription', title: 'Описание цели'},
+            {field: 'indicatorCode', title: 'Код индикатора'},
+            {field: 'indicatorDescription', title: 'Описание индикатора'},
+            {field: 'year', title: 'Отчетный год', type: 'number'},
+            {field: 'quarterName', title: 'Отчетный квартал'},
+            {field: 'missing', title: 'Перечень отсутствующих параметров'},
+            {field: 'control', title: 'Полнота исходных данных', type: 'number', filtering: false},
+        ];
+
+        const filtersList = {
+            'year': 'equals',
+            'control': 'equals'
         };
 
-        const { data, page, count, isLoading } = this.state;
-
         return (
-            <MDBContainer fluid>
-                <MDBRow center>
-                    <MDBCol md={'12'} className='my-5 mx-auto'>
-                        {isLoading && <MDBSpinner multicolor />}
-                        <MUIDataTable
-                            title={"Контроль поступления и согласования данных по показателям для расчета индикаторов ТС"}
-                            // data={data}
-                            // columns={columns}
-                            options={options}
-                        />
-                    </MDBCol>
-                </MDBRow>
-            </MDBContainer>
+            <React.Fragment>
+                <TableContainer
+                    columns={columns}
+                    title={'Контроль выполнения и согласования расчета индикаторов ТС'}
+                    baseUrl={'views/control-inticator-inputs'}
+                    filtersList={filtersList}
+                    loadAll={true}
+                />
+            </React.Fragment>
         )
     }
 };
