@@ -1,21 +1,43 @@
 import React from 'react';
-import {MDBBreadcrumb, MDBBreadcrumbItem, MDBContainer, MDBRow} from "mdbreact";
+import TableContainer from "../../_components/TableContainer";
 
-const OperatorControlProjectsPage = () => {
-    return (
-        <MDBContainer>
-            <MDBRow className='mt-5'>
-                <MDBBreadcrumb>
-                    <MDBBreadcrumbItem>Главная</MDBBreadcrumbItem>
-                    <MDBBreadcrumbItem>Контроль</MDBBreadcrumbItem>
-                    <MDBBreadcrumbItem active>Контроль поступления и согласования данных по выполнению крупных инвестиционных проектов</MDBBreadcrumbItem>
-                </MDBBreadcrumb>
-            </MDBRow>
-            <MDBRow>
-                <h1>Контроль поступления и согласования данных по выполнению крупных инвестиционных проектов</h1>
-            </MDBRow>
-        </MDBContainer>
-    );
+export default class OperatorControlProjectsPage extends React.Component {
+
+    render() {
+
+        const columns = [
+            {field: 'id', title: '#', filtering: false},
+            {field: 'scenarioName', title: 'Сценарий'},
+            {field: 'projectName', title: 'Наименование проекта'},
+            {field: 'projectNum', title: 'Номер проекта', filtering: false},
+            {field: 'beginYear', title: 'Начало выполнения проекта'},
+            {field: 'endYear', title: 'Окончание выполнения проекта'},
+            {field: 'year', title: 'Отчетный год'},
+            {field: 'controlReport', title: 'Наличие отчета по мероприятию', type: 'number'},
+            {field: 'controlResidual', title: 'Наличие отчета по мероприятию', type: 'number'},
+        ];
+
+        const filtersList = {
+            'year': 'equals',
+            'beginYear': 'equals',
+            'endYear': 'equals',
+            'controlReport': 'equals',
+            'controlResidual': 'equals'
+        };
+
+        const filterMinimalLength = 1;
+
+        return (
+            <React.Fragment>
+                <TableContainer
+                    columns={columns}
+                    title={'Контроль поступления и согласования данных по выполнению крупных инвестиционных проектов'}
+                    baseUrl={'views/control-project-reports'}
+                    filtersList={filtersList}
+                    filterMinimalLength={filterMinimalLength}
+                    loadAll={true}
+                />
+            </React.Fragment>
+        )
+    }
 };
-
-export default OperatorControlProjectsPage;

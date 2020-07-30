@@ -1,43 +1,40 @@
 import React from 'react';
-import MUIDataTable from "mui-datatables";
-import { MDBCol, MDBContainer, MDBRow, MDBSpinner } from "mdbreact";
-import { labels } from "../../_components/TableTextLabels";
+import TableContainer from "../../_components/TableContainer";
 
 export default class OperatorControlActivitiesPage extends React.Component {
 
-    state = {
-        page: 0,
-        count: 0,
-        data: [],
-        rowsPerPage: 20,
-        isLoading: false,
-    };
-
     render() {
 
-        const options = {
-            textLabels: labels,
-            sortFilterList: false,
-            selectableRowsOnClick: true,
-            selectableRows: 'none',
+        const columns = [
+            {field: 'id', title: '#', filtering: false},
+            {field: 'activityCode', title: 'Код мероприятия'},
+            {field: 'activityName', title: 'Наименование мероприятия'},
+            {field: 'year', title: 'Отчетный год'},
+            {field: 'beginYear', title: 'Начало выполнения мероприятия'},
+            {field: 'endYear', title: 'Окончание выполнения мероприятия'},
+            {field: 'control', title: 'Наличие отчета по мероприятию', type: 'number'},
+        ];
+
+        const filtersList = {
+            'year': 'equals',
+            'beginYear': 'equals',
+            'endYear': 'equals',
+            'control': 'equals'
         };
 
-        const { data, page, count, isLoading } = this.state;
+        const filterMinimalLength = 1;
 
         return (
-            <MDBContainer fluid>
-                <MDBRow center>
-                    <MDBCol md={'12'} className='my-5 mx-auto'>
-                        {isLoading && <MDBSpinner multicolor />}
-                        <MUIDataTable
-                            title={"Контроль поступления и согласования данных по выполнению мероприятий по реализации ТС"}
-                            // data={data}
-                            // columns={columns}
-                            options={options}
-                        />
-                    </MDBCol>
-                </MDBRow>
-            </MDBContainer>
+            <React.Fragment>
+                <TableContainer
+                    columns={columns}
+                    title={'Контроль поступления и согласования данных по выполнению мероприятий по реализации ТС'}
+                    baseUrl={'views/control-activity-reports'}
+                    filtersList={filtersList}
+                    filterMinimalLength={filterMinimalLength}
+                    loadAll={true}
+                />
+            </React.Fragment>
         )
     }
 };
