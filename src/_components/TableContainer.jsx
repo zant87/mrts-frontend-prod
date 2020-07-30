@@ -60,6 +60,7 @@ export default class TableContainer extends React.Component {
                                                     } else {
                                                         url += `&${element.column.field}.contains=${element.value}`;
                                                     }
+
                                                     filtersEnabled = true;
                                                 }
                                         });

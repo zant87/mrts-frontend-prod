@@ -7,15 +7,12 @@ export default class OperatorControlIndicatorsPage extends React.Component {
 
         const columns = [
             {field: 'id', title: '#', filtering: false},
-            {field: 'transportStrategyName', title: 'Редакция ТС'},
-            {field: 'goalName', title: 'Цель'},
-            {field: 'goalDescription', title: 'Описание цели'},
-            {field: 'indicatorCode', title: 'Код индикатора'},
-            {field: 'indicatorDescription', title: 'Описание индикатора'},
+            {field: 'parameterCode', title: 'Код параметра'},
+            {field: 'parameterName', title: 'Наименование параметра'},
             {field: 'year', title: 'Отчетный год', type: 'number'},
             {field: 'quarterName', title: 'Отчетный квартал'},
-            {field: 'missing', title: 'Перечень отсутствующих параметров'},
-            {field: 'control', title: 'Полнота исходных данных', type: 'number', filtering: false},
+            {field: 'dataSource', title: 'Источники данных'},
+            {field: 'control', title: 'Наличие данных', type: 'number'},
         ];
 
         const filtersList = {
@@ -23,16 +20,20 @@ export default class OperatorControlIndicatorsPage extends React.Component {
             'control': 'equals'
         };
 
+        const filterMinimalLength = 1;
+
         return (
             <React.Fragment>
                 <TableContainer
                     columns={columns}
                     title={'Контроль выполнения и согласования расчета индикаторов ТС'}
-                    baseUrl={'views/control-inticator-inputs'}
+                    baseUrl={'views/control-parameter-data'}
                     filtersList={filtersList}
+                    filterMinimalLength={filterMinimalLength}
                     loadAll={true}
                 />
             </React.Fragment>
         )
     }
+
 };
