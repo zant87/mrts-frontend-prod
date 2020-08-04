@@ -68,6 +68,8 @@ import AdminStructureProjectsExtensionPage from "../Admin/Structure/ProjectsExte
 import AdminStructureFormulasPage from "../Admin/Structure/Formulas";
 import AdminStructureFormulasEditPage from "../Admin/Structure/FormulaEdit";
 import OperatorReportProjectsMasterEditPage from "../Operator/Report/ProjectsMaster/ProjectsMasterEdit";
+import {MDBSideNavItem, MDBSideNavLink, MDBSideNavNav} from "mdbreact";
+import OperatorControlIndicatorsAgreementPage from "../Operator/Control/IndicatorsAgreement";
 
 const AsyncAdminStructureGoalsPage = loadable({
     loader: () => import("../Admin/Structure/Goals"),
@@ -302,6 +304,13 @@ export const AppRoutes = () => {
                           component={OperatorControlProjectsPage}/>
             <PrivateRoute exact path="/operator/control/resources" roles={Role.Operator}
                           component={OperatorControlResourcesPage}/>
+            <PrivateRoute exact path="/operator/control/indicatorsAgreement" roles={Role.Operator}
+                          component={OperatorControlIndicatorsAgreementPage}/>
+            {/*<MDBSideNavItem>*/}
+            {/*    <MDBSideNavLink to='/operator/control/indicatorsAgreement'>*/}
+            {/*        Согласование индикаторов*/}
+            {/*    </MDBSideNavLink>*/}
+            {/*</MDBSideNavItem>*/}
 
             {/*Report - Отчетные показатели */}
             {/*<PrivateRoute exact path="/operator/report" roles={Role.Operator} component={OperatorReportNavigation}/>*/}

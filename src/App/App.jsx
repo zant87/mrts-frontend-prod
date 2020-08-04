@@ -388,6 +388,11 @@ class App extends React.Component {
                           Ресурсного обеспечения
                         </MDBSideNavLink>
                       </MDBSideNavItem>
+                      <MDBSideNavItem>
+                        <MDBSideNavLink to='/operator/control/indicatorsAgreement'>
+                          Согласование индикаторов
+                        </MDBSideNavLink>
+                      </MDBSideNavItem>
                     </MDBSideNavNav>
                 )}
                 {layout === Layouts.operatorReport && (

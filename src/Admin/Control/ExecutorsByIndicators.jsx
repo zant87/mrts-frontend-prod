@@ -1,21 +1,31 @@
 import React from 'react';
-import {MDBBreadcrumb, MDBBreadcrumbItem, MDBContainer, MDBRow} from "mdbreact";
+import TableContainer from "../../_components/TableContainer";
 
-const AdminExecutorsByIndicatorPage = () => {
-    return (
-        <MDBContainer>
-            <MDBRow className='mt-5'>
-                <MDBBreadcrumb>
-                    <MDBBreadcrumbItem>Главная</MDBBreadcrumbItem>
-                    <MDBBreadcrumbItem>Контроль</MDBBreadcrumbItem>
-                    <MDBBreadcrumbItem active>Исполнители по индикаторам</MDBBreadcrumbItem>
-                </MDBBreadcrumb>
-            </MDBRow>
-            <MDBRow>
-                <h1>Исполнители по индикаторам</h1>
-            </MDBRow>
-        </MDBContainer>
-    );
+export default class AdminExecutorsByIndicatorPage extends React.Component {
+
+    render() {
+
+        const columns = [
+            {field: 'id', title: '#', filtering: false},
+            {field: 'indicatorName', title: 'Индикатор'},
+            {field: 'role', title: 'Роль'},
+            {field: 'fullname', title: 'Пользователь'},
+            {field: 'beginDate', title: 'Начало действия', type: 'date', filtering: false},
+            {field: 'endDate', title: 'Конец действия', type: 'date', filtering: false},
+        ];
+
+        return (
+            <React.Fragment>
+                <TableContainer
+                    columns={columns}
+                    title={'Исполнители по индикаторам'}
+                    baseUrl={'views/indicator-agree-settings'}
+                    loadAll={true}
+                />
+            </React.Fragment>
+        )
+    }
 };
 
-export default AdminExecutorsByIndicatorPage;
+
+// export default AdminExecutorsByIndicatorPage;
