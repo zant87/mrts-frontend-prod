@@ -1,9 +1,8 @@
-//OperatorCalculationValuesPage
 import React from "react";
 import {MDBBtn, MDBCol, MDBDatePicker, MDBInput, MDBRow, MDBSelect, toast} from "mdbreact";
 import moment from "moment";
 import appAxios from "../../_services/appAxios";
-import {authenticationService} from "../../_services/authentication.service";
+import {authenticationService} from "../../_services";
 
 export default class OperatorCalculationValuesPage extends React.Component {
 
