@@ -13,13 +13,7 @@ export const IndsAPI = {
     });
   },
 
-  getIndData(
-    indId,
-    frequencyId = 1,
-    yearStart = "",
-    yearEnd = "",
-    quarterId = null
-  ) {
+  getIndData(indId, frequencyId = 1, yearStart = "", yearEnd = "", quarterId = null) {
     let url;
     if (quarterId == null) {
       url =
@@ -54,18 +48,14 @@ export const IndsAPI = {
     });
   },
   getGoals() {
-    return instance
-      .get("goals?transportStrategyVersionId.equals=3")
-      .then((response) => {
-        return response.data;
-      });
+    return instance.get("goals?transportStrategyVersionId.equals=3").then((response) => {
+      return response.data;
+    });
   },
   getGoal() {
-    return instance
-      .get("goals?transportStrategyVersionId.equals=3")
-      .then((response) => {
-        return response.data;
-      });
+    return instance.get("goals?transportStrategyVersionId.equals=3").then((response) => {
+      return response.data;
+    });
   },
   getTransportTypes() {
     return instance.get("nsi-transport-types").then((response) => {

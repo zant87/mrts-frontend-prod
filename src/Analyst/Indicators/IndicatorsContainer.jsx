@@ -20,6 +20,7 @@ import {
 import { withRouter } from "react-router-dom";
 import { compose } from "redux";
 
+
 class IndicatorsContainer extends React.Component {
   componentDidMount() {
     this.props.getGoals();

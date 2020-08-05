@@ -183,6 +183,7 @@ export const setQuarters = (quarters) => ({
   quarters,
 });
 
+
 export const setIndsQuarterId = (indsQuarterId) => ({
   type: SET_INDS_QUARTER_ID,
   indsQuarterId,

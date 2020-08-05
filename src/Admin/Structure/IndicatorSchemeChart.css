@@ -1,0 +1,50 @@
+[node-id] rect {
+  /* fill: #1da5e8; */
+}
+
+[node-id="0"] rect {
+  /* fill: #750000; */
+  color: #ffffff;
+}
+
+.field_0 {
+  font-family: Impact;
+  text-transform: uppercase;
+  fill: #a3a3a3;
+}
+
+.field_1 {
+  fill: #a3a3a3;
+}
+
+[link-id] path {
+  /* stroke: #750000; */
+}
+
+[link-id="[3][4]"] path {
+  stroke: #016e25;
+}
+
+[control-expcoll-id] circle {
+  /* fill: #750000; */
+}
+
+[control-expcoll-id="3"] circle {
+  fill: #016e25;
+}
+
+[control-node-menu-id] circle {
+  fill: #bfbfbf;
+}
+
+#tree > svg {
+  /* background-color: #2e2e2e; */
+}
+
+.bg-search-table {
+  background-color: #2e2e2e !important;
+}
+
+.bg-search-table input {
+  background-color: #2e2e2e !important;
+}
