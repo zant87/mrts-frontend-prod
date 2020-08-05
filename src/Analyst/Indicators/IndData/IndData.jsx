@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  MDBCol,
-  MDBNav,
-  MDBNavItem,
-  MDBNavLink,
-  MDBIcon,
-  MDBTabContent,
-  MDBTabPane,
-} from "mdbreact";
+import { MDBCol, MDBNav, MDBNavItem, MDBNavLink, MDBIcon, MDBTabContent, MDBTabPane } from "mdbreact";
 import IndsTable from "./IndsTable/IndsTable";
 import IndsChart from "./IndsChart/IndsChart";
 
@@ -28,39 +20,20 @@ class IndData extends React.Component {
     return (
       <MDBCol lg="6" className="chart mt-10" style={{ marginBottom: "10px" }}>
         {/* <MDBCardHeader color="special-color p-1"> */}
-        <MDBNav
-          tabs
-          className="nav-justified  mt-0  special-color  "
-          color="blue-grey lighten-5"
-        >
+        <MDBNav tabs className="nav-justified  mt-0  special-color  " color="blue-grey lighten-5">
           <MDBNavItem>
-            <MDBNavLink
-              to="#"
-              link
-              active={this.state.activeItemJustified === "1"}
-              onClick={this.toggleJustified("1")}
-              role="tab"
-            >
+            <MDBNavLink to="#" link active={this.state.activeItemJustified === "1"} onClick={this.toggleJustified("1")} role="tab">
               <MDBIcon far icon="chart-bar" size="1x" /> График
             </MDBNavLink>
           </MDBNavItem>
           <MDBNavItem>
-            <MDBNavLink
-              to="#"
-              link
-              active={this.state.activeItemJustified === "2"}
-              onClick={this.toggleJustified("2")}
-              role="tab"
-            >
+            <MDBNavLink to="#" link active={this.state.activeItemJustified === "2"} onClick={this.toggleJustified("2")} role="tab">
               <MDBIcon icon="table" size="1x" /> Таблица
             </MDBNavLink>
           </MDBNavItem>
         </MDBNav>
 
-        <MDBTabContent
-          className="card"
-          activeItem={this.state.activeItemJustified}
-        >
+        <MDBTabContent className="card" activeItem={this.state.activeItemJustified}>
           <MDBTabPane tabId="1" role="tabpanel">
             <IndsChart
               indVals={this.props.indVals}

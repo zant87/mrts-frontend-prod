@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  MDBRow,
-  MDBCol,
-  MDBCard,
-  MDBCardBody,
-  MDBCardTitle,
-  MDBCardText,
-} from "mdbreact";
+import { MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText } from "mdbreact";
 import ReactEcharts from "echarts-for-react";
 import s from "./indsChart.module.css";
 import Preloader from "@/Common/Preloader/Preloader";
@@ -22,9 +15,7 @@ let IndsChart = (props) => {
     let okeiName = "";
 
     if (props.indVals) {
-      indsval = props.indVals.sort((a, b) =>
-        a.indicatorDate > b.indicatorDate ? 1 : -1
-      );
+      indsval = props.indVals.sort((a, b) => (a.indicatorDate > b.indicatorDate ? 1 : -1));
 
       indsval.forEach((item) => {
         years.push(item.indicatorDate);
@@ -32,13 +23,9 @@ let IndsChart = (props) => {
         okeiName = item.okeiName;
       });
 
-      years = indsval
-        .map((item) => item.indicatorDate)
-        .filter((item, i, arr) => arr.indexOf(item) === i);
+      years = indsval.map((item) => item.indicatorDate).filter((item, i, arr) => arr.indexOf(item) === i);
 
-      scenarioNames = indsval
-        .map((item) => item.scenarioName)
-        .filter((item, i, arr) => arr.indexOf(item) === i);
+      scenarioNames = indsval.map((item) => item.scenarioName).filter((item, i, arr) => arr.indexOf(item) === i);
 
       // --------------------------Объект series для графика------------------
       chartindsvals = scenarioNames.map((scen) => ({
@@ -79,13 +66,9 @@ let IndsChart = (props) => {
       //console.log(chartindsvals);
       //years = indsval.map(item => item.indicatorDate.split("-")[0]).filter((item, i, arr) => arr.indexOf(item) === i);
       if (props.indFrequencyId == 1) {
-        years = years
-          .filter((item, i, arr) => arr.indexOf(item) === i)
-          .map((i) => i.split("-")[0]);
+        years = years.filter((item, i, arr) => arr.indexOf(item) === i).map((i) => i.split("-")[0]);
       } else {
-        years = years
-          .filter((item, i, arr) => arr.indexOf(item) === i)
-          .map((i) => i);
+        years = years.filter((item, i, arr) => arr.indexOf(item) === i).map((i) => i);
       }
 
       // years = years.filter((item, i, arr) => arr.indexOf(item) === i).map(i => i.split("-")[0]);
@@ -194,6 +177,7 @@ let IndsChart = (props) => {
           },
         },
       ],
+
       yAxis: {
         axisLabel: {
           show: true,
@@ -264,13 +248,7 @@ let IndsChart = (props) => {
                 textTransform: "uppercase",
               }}
             >
-              {props.indVals ? (
-                props.indVals[0].indicatorCode.replace("IND_", "") +
-                " " +
-                props.indVals[0].indicatorName
-              ) : (
-                <div>Нет данных</div>
-              )}
+              {props.indVals ? props.indVals[0].indicatorCode.replace("IND_", "") + " " + props.indVals[0].indicatorName : <div>Нет данных</div>}
             </MDBCardTitle>
             {props.isFetchingIndData ? (
               <Preloader />
@@ -279,18 +257,11 @@ let IndsChart = (props) => {
                 {props.indVals ? (
                   <div>
                     <div style={{ fontSize: "12px" }}>
-                      Заданный период:{" "}
-                      {props.indsYearStart + "-" + props.indsYearEnd}
-                      {props.indFrequencyId == 2
-                        ? " ( " + props.indVals[0].quarterName + " )"
-                        : ""}
+                      Заданный период: {props.indsYearStart + "-" + props.indsYearEnd}
+                      {props.indFrequencyId == 2 ? " ( " + props.indVals[0].quarterName + " )" : ""}
                     </div>
 
-                    <ReactEcharts
-                      ref={echarts_react}
-                      option={getOption()}
-                      className={s.chart}
-                    />
+                    <ReactEcharts ref={echarts_react} option={getOption()} className={s.chart} />
                   </div>
                 ) : (
                   <div>Нет данных</div>
