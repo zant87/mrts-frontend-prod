@@ -3,6 +3,7 @@ import React from "react";
 import {MDBBtn, MDBCol, MDBDatePicker, MDBInput, MDBRow, MDBSelect, toast} from "mdbreact";
 import moment from "moment";
 import appAxios from "../../_services/appAxios";
+import {authenticationService} from "../../_services/authentication.service";
 
 export default class OperatorCalculationValuesPage extends React.Component {
 
@@ -13,12 +14,18 @@ export default class OperatorCalculationValuesPage extends React.Component {
         providerList: [],
         providerCode: "",
         isLoading: false,
-        result: ""
+        result: "",
+        username: ""
     };
 
     componentDidMount() {
         this.getAlgorithmList();
         this.getProviderList();
+        authenticationService.currentUser.subscribe((x) =>
+            this.setState({
+                username: x.id,
+            })
+        );
     };
 
     getAlgorithmList = () => {
@@ -43,7 +50,7 @@ export default class OperatorCalculationValuesPage extends React.Component {
             .then(res => {
                 let selected;
                 const data = res.data.map(item => {
-                        return {value: item.code, text: item.year, checked: false};
+                    return {value: item.code, text: item.year, checked: false};
                 })
                 this.setState({providerList: data, isLoading: false});
             })
@@ -54,18 +61,60 @@ export default class OperatorCalculationValuesPage extends React.Component {
         this.setState({providerCode: event.toString()});
     }
 
+    doCalcAndSave = () => {
+        console.log(this.state);
+
+        this.setState({isLoading: true});
+        const url = `calculation/calc-and-save-indicator?algorithm=${this.state.algorithmCode}&date=${this.state.date}&provider=${this.state.providerCode}&username=${this.state.username}`;
+
+        console.log(url);
+
+        appAxios.get(url)
+            .then(res => {
+                console.log(res.data);
+                const data = res.data;
+                this.setState({result: data, isLoading: false});
+                toast.success(`Успешно выполнен расчет индикатора`, {
+                    closeButton: false
+                });
+            }).catch(function (error) {
+            console.log(error);
+            toast.error(`Ошибка при выполнении расчета индикатора`, {
+                closeButton: false
+            });
+        });
+    }
+
+    doCalcAll = () => {
+        console.log(this.state);
+
+        this.setState({isLoading: true});
+        const url = `calculation/calc-and-save-all?date=${this.state.date}&provider=${this.state.providerCode}&username=${this.state.username}`;
+
+        console.log(url);
+
+        appAxios.get(url)
+            .then(res => {
+                console.log(res.data);
+                const data = res.data;
+                this.setState({result: data, isLoading: false});
+                toast.success(`Успешно выполнен расчет индикатора`, {
+                    closeButton: false
+                });
+            }).catch(function (error) {
+            console.log(error);
+            toast.error(`Ошибка при выполнении расчета индикатора`, {
+                closeButton: false
+            });
+        });
+    }
+
     doCalculate = () => {
 
         console.log(this.state);
 
-        /*
-            @RequestParam("code") String code,
-            @RequestParam("date") LocalDate date,
-            @RequestParam(name = "provider", required = false, defaultValue = "") String provider)
-        * */
-
-        this.setState({ isLoading: true });
-        const url =  this.state.providerCode ? `calculation/indicator-by-algorithm?code=${this.state.algorithmCode}&date=${this.state.date}&provider=${this.state.providerCode}`
+        this.setState({isLoading: true});
+        const url = this.state.providerCode ? `calculation/indicator-by-algorithm?code=${this.state.algorithmCode}&date=${this.state.date}&provider=${this.state.providerCode}`
             : `calculation/indicator-by-algorithm?code=${this.state.algorithmCode}&date=${this.state.date}`;
 
         console.log(url);
@@ -84,6 +133,7 @@ export default class OperatorCalculationValuesPage extends React.Component {
                 closeButton: false
             });
         });
+
     };
 
     getDate = (value) => {
@@ -157,8 +207,11 @@ export default class OperatorCalculationValuesPage extends React.Component {
                 </MDBRow>
 
                 <MDBRow around={true}>
-                    <MDBBtn color="primary" type="none" onClick={this.doCalculate}>
-                        Раcсчитать
+                    <MDBBtn color="primary" type="none" onClick={this.doCalcAndSave}>
+                        Сохранить
+                    </MDBBtn>
+                    <MDBBtn color="primary" type="none" onClick={this.doCalcAll}>
+                        Рассчитать все
                     </MDBBtn>
                 </MDBRow>
 
