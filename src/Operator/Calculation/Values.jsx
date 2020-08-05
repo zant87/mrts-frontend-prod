@@ -202,7 +202,6 @@ export default class OperatorCalculationValuesPage extends React.Component {
                                 value={this.state.result}
                             />
                         </div>
-                        {/*<MDBInput type="textarea" label="Результат" value={this.state.result} rows="5" disabled={true}/>*/}
                     </MDBCol>
                 </MDBRow>
 
