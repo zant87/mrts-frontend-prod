@@ -70,6 +70,7 @@ import AdminStructureFormulasEditPage from "../Admin/Structure/FormulaEdit";
 import OperatorReportProjectsMasterEditPage from "../Operator/Report/ProjectsMaster/ProjectsMasterEdit";
 import OperatorControlIndicatorsAgreementPage from "../Operator/Control/IndicatorsAgreement";
 import AdminStructureIndicatorsScheme from "@/Admin/Structure/IndicatorScheme";
+import OperatorControlDeviationsPage from "../Operator/Control/Deviations";
 
 const AsyncAdminStructureGoalsPage = loadable({
   loader: () => import("../Admin/Structure/Goals"),
@@ -283,7 +284,10 @@ export const AppRoutes = () => {
       <PrivateRoute exact path="/operator/control/activities" roles={Role.Operator} component={OperatorControlActivitiesPage} />
       <PrivateRoute exact path="/operator/control/projects" roles={Role.Operator} component={OperatorControlProjectsPage} />
       <PrivateRoute exact path="/operator/control/resources" roles={Role.Operator} component={OperatorControlResourcesPage} />
-      <PrivateRoute exact path="/operator/control/indicatorsAgreement" roles={Role.Operator} component={OperatorControlIndicatorsAgreementPage} />
+        <PrivateRoute exact path="/operator/control/indicatorsAgreement" roles={Role.Operator}
+                      component={OperatorControlIndicatorsAgreementPage}/>
+        <PrivateRoute exact path="/operator/control/deviations" roles={Role.Operator}
+                      component={OperatorControlDeviationsPage}/>
 
       {/*Report - Отчетные показатели */}
       {/*<PrivateRoute exact path="/operator/report" roles={Role.Operator} component={OperatorReportNavigation}/>*/}
