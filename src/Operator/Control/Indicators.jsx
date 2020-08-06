@@ -7,12 +7,13 @@ export default class OperatorControlIndicatorsPage extends React.Component {
 
         const columns = [
             {field: 'id', title: '#', filtering: false},
-            {field: 'parameterCode', title: 'Код параметра'},
-            {field: 'parameterName', title: 'Наименование параметра'},
+            {field: 'parameterCode', title: 'Код показателя'},
+            {field: 'parameterName', title: 'Наименование показателя'},
             {field: 'year', title: 'Отчетный год', type: 'number'},
             {field: 'quarterName', title: 'Отчетный квартал'},
             {field: 'dataSource', title: 'Источники данных'},
             {field: 'control', title: 'Наличие данных', type: 'number'},
+            {field: 'responsible', title: 'Ответственное лицо'}
         ];
 
         const filtersList = {

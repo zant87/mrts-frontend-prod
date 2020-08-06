@@ -1,7 +1,4 @@
 import React from 'react';
-import MUIDataTable from "mui-datatables";
-import { MDBCol, MDBContainer, MDBRow, MDBSpinner } from "mdbreact";
-import {labels} from "../../_components/TableTextLabels";
 import TableContainer from "../../_components/TableContainer";
 
 export default class OperatorControlCompletionPage extends React.Component {
@@ -17,7 +14,7 @@ export default class OperatorControlCompletionPage extends React.Component {
             {field: 'indicatorDescription', title: 'Описание индикатора'},
             {field: 'year', title: 'Отчетный год', type: 'number'},
             {field: 'quarterName', title: 'Отчетный квартал'},
-            {field: 'missing', title: 'Перечень отсутствующих параметров'},
+            {field: 'missing', title: 'Перечень отсутствующих показателей'},
             {field: 'control', title: 'Полнота исходных данных', type: 'number'},
         ];
 
@@ -33,7 +30,7 @@ export default class OperatorControlCompletionPage extends React.Component {
                 <TableContainer
                     columns={columns}
                     title={'Контроль поступления и согласования данных по показателям для расчета индикаторов ТС'}
-                    baseUrl={'views/control-inticator-inputs'}
+                    baseUrl={'views/control-indicator-inputs'}
                     filtersList={filtersList}
                     filterMinimalLength={filterMinimalLength}
                     loadAll={true}
