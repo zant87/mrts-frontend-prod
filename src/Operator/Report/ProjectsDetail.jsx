@@ -38,59 +38,6 @@ export default class OperatorReportProjectsDetailPage extends React.Component {
                     loadAll={true}
                 />
             </React.Fragment>
-            // <MDBContainer fluid>
-            //     <MDBRow center>
-            //         <MDBCol md={'12'} className='my-3 mx-auto'>
-            //             <MaterialTable
-            //                 title="Финансирование проектов ТС (detail)"
-            //                 columns={columns}
-            //                 tableRef={tableRef}
-            //                 data={data}
-            //                 isLoading={isLoading}
-            //                 localization={ruLocalization}
-            //                 editable={{
-            //                     onRowUpdate: (newData, oldData) =>
-            //                         new Promise((resolve, reject) => {
-            //                             setTimeout(() => {
-            //                                 const dataUpdate = [...data];
-            //                                 const index = dataUpdate.findIndex(item => item.id === oldData.id);
-            //
-            //                                 newData.value = (newData.value !== null) ? newData.value : 0;
-            //                                 dataUpdate[index] = newData;
-            //
-            //                                 console.log(newData);
-            //
-            //                                 appAxios.get(`/views/k-7-details/update?pID=${newData.id}&pDoc=${newData.documentId}&pPlan=${newData.plan}&pSpent=${newData.spent}&pFact=${newData.fact}`)
-            //                                     .then(res => {
-            //                                         const data = res.data;
-            //                                         this.setState({result: data, isLoading: false});
-            //                                         toast.success(`Обновили данные документа №${data}`, {
-            //                                             closeButton: false
-            //                                         });
-            //                                     }).catch(function (error) {
-            //                                     console.log(error);
-            //                                     toast.error(`Ошибка при обновлении документа`, {
-            //                                         closeButton: false
-            //                                     });
-            //                                 });
-            //
-            //                                 this.setState({data: dataUpdate});
-            //
-            //                                 resolve();
-            //                             }, 6000)
-            //                         }),
-            //                 }}
-            //                 options={{
-            //                     actionsColumnIndex: 999,
-            //                     search: true,
-            //                     pageSize: 20,
-            //                     pageSizeOptions: [20, 50, 100],
-            //                     filtering: true
-            //                 }}
-            //             />
-            //         </MDBCol>
-            //     </MDBRow>
-            // </MDBContainer>
         );
     }
 }

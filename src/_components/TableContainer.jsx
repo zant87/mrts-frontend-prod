@@ -55,7 +55,7 @@ export default class TableContainer extends React.Component {
                                         query.filters.forEach(element => {
                                                 if (element.value.length >= filterMinimalLength) {
 
-                                                    if (filtersList[element.column.field]) {
+                                                    if (filtersList && filtersList[element.column.field]) {
                                                         console.log(element.column.field, 'filter is', filtersList[element.column.field]);
                                                         url += `&${element.column.field}.${filtersList[element.column.field]}=${element.value}`;
                                                     } else {

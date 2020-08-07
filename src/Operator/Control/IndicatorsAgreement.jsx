@@ -20,12 +20,15 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
             'year': 'equals',
         };
 
+        const filterMinimalLength = 1;
+
         return (
             <React.Fragment>
                 <TableContainer
                     columns={columns}
                     title={'Согласование индикаторов ТС'}
                     filtersList={filtersList}
+                    filterMinimalLength={filterMinimalLength}
                     baseUrl={'views/indicator-agrees'}
                     loadAll={true}
                 />
