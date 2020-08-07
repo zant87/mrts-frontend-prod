@@ -51,7 +51,7 @@ export default class OperatorPlanIndicatorsPage extends React.Component {
             {field: 'goalName', title: 'Цель'},
             {field: 'indicatorName', title: 'Индикатор'},
             {field: 'transportTypeName', title: 'Вид транспорта'},
-            {field: 'indicatorDate', title: 'Этап реализации стратегии', type: 'date', filtering: false},
+            {field: 'stageName', title: 'Этап реализации стратегии'},
             {field: 'okeiName', title: 'Единица измерения'},
             {field: 'value', title: 'Значение индикатора', filtering: false},
         ];
