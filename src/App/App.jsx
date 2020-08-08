@@ -429,7 +429,7 @@ class App extends React.Component {
                       {/*</MDBSideNavItem>*/}
                       <MDBSideNavItem>
                         <MDBSideNavLink to='/operator/report/appropriations'>
-                          Бюджетные ассигнования
+                          Ресурсное обеспечение
                         </MDBSideNavLink>
                       </MDBSideNavItem>
                       {/*<MDBSideNavItem>*/}

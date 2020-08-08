@@ -52,7 +52,7 @@ export default class OperatorReportAppropriationsPage extends React.Component {
             <React.Fragment>
                 <TableContainer
                     columns={columns}
-                    title={'Бюджетные ассигнования в рамках программ развития транспорта'}
+                    title={'Ресурсное обеспечение'}
                     baseUrl={'views/k-9-s'}
                     actions={actions}
                     filtersList={filtersList}
