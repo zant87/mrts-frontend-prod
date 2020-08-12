@@ -7,7 +7,7 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
 
         const columns = [
             {field: 'id', title: '#', filtering: false},
-            {field: 'indicatorYear', title: 'Год', type: 'number'},
+            {field: 'indicatorYear', title: 'Год', type: 'numeric'},
             {field: 'indicatorQuarter', title: 'Квартал'},
             {field: 'indicatorName', title: 'Индикатор'},
             {field: 'nationalSymbolicName', title: 'Единица измерения'},
