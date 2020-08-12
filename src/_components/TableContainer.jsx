@@ -25,6 +25,7 @@ export default class TableContainer extends React.Component {
         const filterMinimalLength = this.props.filterMinimalLength ? this.props.filterMinimalLength : 3;
         const tableRef = this.props.tableRef ? this.props.tableRef : React.createRef();
         const filtersList = this.props.filtersList ? this.props.filtersList : null;
+        const modifiedBaseUrl = this.props.modifiedBaseUrl ? this.props.modifiedBaseUrl : false;
 
         return (
             <MDBContainer fluid>
@@ -44,6 +45,7 @@ export default class TableContainer extends React.Component {
                                     console.log('Фильтры', filtersList);
 
                                     let url = `/${this.props.baseUrl}?page=${query.page}&size=${query.pageSize}`;
+                                    if (modifiedBaseUrl) url = `/${this.props.baseUrl}&page=${query.page}&size=${query.pageSize}`;
                                     let filtersEnabled = false;
 
                                     if (query.orderBy) {

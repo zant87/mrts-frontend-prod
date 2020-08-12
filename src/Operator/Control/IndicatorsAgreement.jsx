@@ -1,7 +1,22 @@
 import React from 'react';
 import TableContainer from "../../_components/TableContainer";
+import {authenticationService} from "../../_services";
 
 export default class OperatorControlIndicatorsAgreementPage extends React.Component {
+
+    state = {
+        currentUser: null,
+        initialized: false
+    };
+
+    componentDidMount() {
+        authenticationService.currentUser.subscribe((x) =>
+            this.setState({
+                currentUser: x,
+                initialized: true
+            })
+        );
+    }
 
     render() {
 
@@ -24,14 +39,17 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
 
         return (
             <React.Fragment>
-                <TableContainer
-                    columns={columns}
-                    title={'Согласование индикаторов ТС'}
-                    filtersList={filtersList}
-                    filterMinimalLength={filterMinimalLength}
-                    baseUrl={'views/indicator-agrees'}
-                    loadAll={true}
-                />
+                {this.state.initialized && (
+                    <TableContainer
+                        columns={columns}
+                        title={'Согласование индикаторов ТС'}
+                        filtersList={filtersList}
+                        filterMinimalLength={filterMinimalLength}
+                        baseUrl={`views/indicator-agrees?agreeIdList.contains=userid_operator`}
+                        modifiedBaseUrl={true}
+                        loadAll={true}
+                    />
+                )}
             </React.Fragment>
         )
     }
