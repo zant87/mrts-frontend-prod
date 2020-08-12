@@ -18,6 +18,14 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
         );
     }
 
+    cancelAgreement = (rowData) => {
+        console.log(rowData)
+    };
+    approveAgreement = (rowData) => {
+        console.log(rowData)
+    };
+    tableRef = React.createRef();
+
     render() {
 
         const columns = [
@@ -37,6 +45,23 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
 
         const filterMinimalLength = 1;
 
+        const actions = [
+            {
+                icon: 'check',
+                tooltip: 'Согласовать',
+                onClick: (event, rowData) => {
+                    this.approveAgreement(rowData);
+                }
+            },
+            {
+                icon: 'cancel',
+                tooltip: 'Отозвать согласование',
+                onClick: (event, rowData) => {
+                    this.cancelAgreement(rowData);
+                }
+            },
+        ];
+
         return (
             <React.Fragment>
                 {this.state.initialized && (
@@ -44,6 +69,8 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
                         columns={columns}
                         title={'Согласование индикаторов ТС'}
                         filtersList={filtersList}
+                        actions={actions}
+                        tableRef={this.tableRef}
                         filterMinimalLength={filterMinimalLength}
                         baseUrl={`views/indicator-agrees?agreeIdList.contains=userid_operator`}
                         modifiedBaseUrl={true}
