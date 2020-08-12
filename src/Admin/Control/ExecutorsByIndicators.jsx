@@ -1,15 +1,43 @@
 import React from 'react';
 import TableContainer from "../../_components/TableContainer";
 import appAxios from "../../_services/appAxios";
-import {toast} from "mdbreact";
+import {MDBContainer, MDBModal, MDBModalBody, MDBModalHeader, toast} from "mdbreact";
 import moment from "moment";
+import TemplateItemEdit from "../Structure/TemplateItemEdit";
+import Axios from "axios";
+import ExecutorsByIndicatorEdit from "./ExecutorsByIndicatorEdit";
 
 export default class AdminExecutorsByIndicatorPage extends React.Component {
 
     state = {
         modal: false,
-        row: {}
+        row: {},
+        initialized: false
     }
+
+    getUsers = () => appAxios.get(`users`).catch(err => null);
+    getIndicators = () => appAxios.get(`indicators`).catch(err => null);
+
+    async componentDidMount() {
+        try {
+            console.log('Props =', this.props);
+
+            const [rUsers, rIndicators] = await Axios.all([
+                this.getUsers(),
+                this.getIndicators(),
+            ]);
+
+            this.setState(
+                {
+                    users: rUsers.data,
+                    indicators: rIndicators.data,
+                    initialized: true
+                }
+            );
+        } catch (err) {
+            console.log(err.message);
+        }
+    };
 
     tableRef = React.createRef();
 
@@ -23,6 +51,7 @@ export default class AdminExecutorsByIndicatorPage extends React.Component {
     }
 
     cancelAgreement = (rowData) => {
+
         appAxios({
             url: `document-agreement-settings/${rowData.id}`,
             method: 'GET',
@@ -44,6 +73,7 @@ export default class AdminExecutorsByIndicatorPage extends React.Component {
                 this.tableRef.current.onQueryChange();
             });
         });
+
     }
 
     render() {
@@ -60,7 +90,7 @@ export default class AdminExecutorsByIndicatorPage extends React.Component {
                 icon: 'add',
                 tooltip: 'Добавить согласование',
                 onClick: (event, rowData) => {
-                    this.toggleModal(rowData);
+                    if (this.state.initialized) this.toggleModal(rowData, 'add');
                 },
                 isFreeAction: true
             }
@@ -85,6 +115,17 @@ export default class AdminExecutorsByIndicatorPage extends React.Component {
                     baseUrl={'views/indicator-agree-settings'}
                     loadAll={true}
                 />
+                <MDBContainer>
+                    <MDBModal isOpen={this.state.modal} toggle={this.toggleModal} backdrop={false} size="lg">
+                        <MDBModalHeader toggle={this.toggleModal}>Форма создания согласования</MDBModalHeader>
+                        <MDBModalBody>
+                            <ExecutorsByIndicatorEdit
+                                indicators={this.state.indicators}
+                                users={this.state.users}
+                                tableRef={this.tableRef}/>
+                        </MDBModalBody>
+                    </MDBModal>
+                </MDBContainer>
             </React.Fragment>
         )
     }
