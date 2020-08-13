@@ -138,9 +138,9 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
             {field: 'indicatorQuarter', title: 'Квартал'},
             {field: 'indicatorName', title: 'Индикатор'},
             {field: 'nationalSymbolicName', title: 'Единица измерения'},
-            {field: 'agreeList', title: 'Требуется согласование (agreeList)'},
-            {field: 'agreeUndone', title: 'Не согласован (agreeUndone)'},
-            {field: 'approveList', title: 'Утвержден (approveList)'},
+            {field: 'agreeList', title: 'Требуется согласование'},
+            {field: 'agreeUndone', title: 'Не согласован'},
+            {field: 'approveList', title: 'Утвержден'},
         ];
 
         const filtersList = {
