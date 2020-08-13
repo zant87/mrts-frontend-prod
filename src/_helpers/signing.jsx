@@ -1,11 +1,11 @@
 export const signingData = [
     {
         value: 'AGREE',
-        text: 'AGREE',
+        text: 'Согласование',
         checked: true
     },
     {
         value: 'APPROVE',
-        text: 'APPROVE',
+        text: 'Утверждение',
     }
 ];
