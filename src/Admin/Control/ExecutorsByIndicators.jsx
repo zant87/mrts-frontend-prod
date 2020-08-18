@@ -3,7 +3,6 @@ import TableContainer from "../../_components/TableContainer";
 import appAxios from "../../_services/appAxios";
 import {MDBContainer, MDBModal, MDBModalBody, MDBModalHeader, toast} from "mdbreact";
 import moment from "moment";
-import TemplateItemEdit from "../Structure/TemplateItemEdit";
 import Axios from "axios";
 import ExecutorsByIndicatorEdit from "./ExecutorsByIndicatorEdit";
 
