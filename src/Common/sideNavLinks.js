@@ -7,7 +7,7 @@ export const sideNavLinks = [
         layout: Layouts.analyst
     },
     {
-        link: '/analyst/indicator',
+        link: '/analyst/indicators',
         text: 'Индикаторы',
         layout: Layouts.analyst
     },

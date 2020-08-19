@@ -205,7 +205,7 @@ export default class OperatorCalculationValuesPage extends React.Component {
                 </MDBRow>
 
                 <MDBRow around={true}>
-                    <MDBBtn color="primary" type="none">
+                    <MDBBtn color="primary" type="none" onClick={this.doCalculate}>
                         Рассчитать
                     </MDBBtn>
                     <MDBBtn color="primary" type="none" onClick={this.doCalcAndSave}>
