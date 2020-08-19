@@ -71,11 +71,19 @@ export default class OperatorCalculationValuesPage extends React.Component {
         appAxios.get(url)
             .then(res => {
                 console.log(res.data);
-                const data = res.data;
+                const data = res.data ? res.data : 'Успех';
                 this.setState({result: data, isLoading: false});
-                toast.success(`Успешно выполнен расчет индикатора`, {
-                    closeButton: false
-                });
+
+                if (res.data) {
+                    toast.error(`Ошибка при выполнении расчета индикатора`, {
+                        closeButton: false
+                    });
+                } else {
+                    toast.success(`Успешно выполнен расчет индикатора`, {
+                        closeButton: false
+                    });
+                }
+
             }).catch(function (error) {
             console.log(error);
             toast.error(`Ошибка при выполнении расчета индикатора`, {
@@ -95,11 +103,21 @@ export default class OperatorCalculationValuesPage extends React.Component {
         appAxios.get(url)
             .then(res => {
                 console.log(res.data);
-                const data = res.data;
+
+                const data = res.data ? res.data : 'Успех';
+
                 this.setState({result: data, isLoading: false});
-                toast.success(`Успешно выполнен расчет индикатора`, {
-                    closeButton: false
-                });
+
+                if (res.data) {
+                    toast.error(`Ошибка при выполнении расчета индикатора`, {
+                        closeButton: false
+                    });
+                } else {
+                    toast.success(`Успешно выполнен расчет индикатора`, {
+                        closeButton: false
+                    });
+                }
+
             }).catch(function (error) {
             console.log(error);
             toast.error(`Ошибка при выполнении расчета индикатора`, {
