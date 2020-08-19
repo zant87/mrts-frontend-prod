@@ -7,7 +7,7 @@ import {authenticationService} from "../../_services";
 export default class OperatorCalculationValuesPage extends React.Component {
 
     state = {
-        date: "2019-12-31",
+        date: "2018-12-31",
         algorithmList: [],
         algorithmCode: "",
         providerList: [],
@@ -205,8 +205,11 @@ export default class OperatorCalculationValuesPage extends React.Component {
                 </MDBRow>
 
                 <MDBRow around={true}>
+                    <MDBBtn color="primary" type="none">
+                        Рассчитать
+                    </MDBBtn>
                     <MDBBtn color="primary" type="none" onClick={this.doCalcAndSave}>
-                        Сохранить
+                        Рассчитать и сохранить
                     </MDBBtn>
                     <MDBBtn color="primary" type="none" onClick={this.doCalcAll}>
                         Рассчитать все
