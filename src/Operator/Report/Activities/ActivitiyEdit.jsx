@@ -63,7 +63,8 @@ export default class OperatorReportActivityEditPage extends React.Component {
             <MDBContainer>
                 <div className="scrollbar my-1 mx-auto" style={{minHeight: '600px', maxHeight: '600px'}}>
                     <MDBInput label="#" value={this.state.id} type="number" name="id" outline/>
-                    <MDBInput label="Наименование мероприятия" value={this.state.activityName} type="textarea" rows="2"
+                    <MDBInput label="Наименование мероприятия" value={this.props.data.activityName} type="textarea"
+                              rows="2"
                               name="activityName" outline/>
                     <MDBInput type="textarea" value={this.state.description} label="Описание" rows="5"
                               onChange={e => this.onChangeHandler(e)} name='description' outline/>
@@ -76,5 +77,4 @@ export default class OperatorReportActivityEditPage extends React.Component {
             </MDBContainer>
         )
     }
-
 }
