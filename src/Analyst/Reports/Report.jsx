@@ -79,7 +79,7 @@ class AnalystReportPage extends React.Component {
             strategies: StrategiesData.data,
 
             strategiesSelectList: StrategiesData.data.map(item => {
-              return {value: item.code, text: item.name, checked: false}
+              return {value: item.code, text: item.code, checked: false}
             }),
 
             quarters: quartersData.data,
