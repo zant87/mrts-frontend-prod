@@ -118,12 +118,12 @@ export const sideNavLinks = [
     },
     {
         link: '/admin/archive/activities',
-        text: 'Архив выполнений мероприятий',
+        text: 'Архив мероприятий по реализации ТС',
         layout: Layouts.adminArchive
     },
     {
         link: '/admin/archive/projects',
-        text: 'Архив выполнения крупных проектов',
+        text: 'Архив крупных инвестпроектов',
         layout: Layouts.adminArchive
     },
     {
@@ -188,12 +188,12 @@ export const sideNavLinks = [
     },
     {
         link: '/operator/report/activities',
-        text: 'Выполнение мероприятий',
+        text: 'Мероприятия по реализации ТС',
         layout: Layouts.operatorReport
     },
     {
         link: '/operator/report/projects_master',
-        text: 'Выполнение крупных проектов',
+        text: 'Крупные инвестпроекты',
         layout: Layouts.operatorReport
     },
     {

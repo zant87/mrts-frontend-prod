@@ -61,7 +61,7 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
             <React.Fragment>
                 <TableContainer
                     columns={columns}
-                    title={'Выполнение крупных инвестиционных проектов (master)'}
+                    title={'Отчет о выполнении крупных инвестиционных проектов'}
                     filtersList={filtersList}
                     baseUrl={'views/k-7-masters'}
                     actions={actions}

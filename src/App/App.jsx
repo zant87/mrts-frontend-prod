@@ -148,6 +148,7 @@ class App extends React.Component {
                   color="special-color"
                   mask='light'
                   className='special-color'
+                  href='#!'
                   hidden>
                 <li>
                   <ul className="social">

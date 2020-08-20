@@ -2,9 +2,9 @@ body {
     /* background-color: #edeef0; */
 }
 
-/*.side-nav.wide {*/
-/*    width: 18rem;*/
-/*}*/
+.side-nav.wide {
+    width: 260px
+}
 
 .side-nav.wide .collapsible a {
     padding-left: 0.2rem;
@@ -18,7 +18,7 @@ body {
 .side-nav .logo-wrapper {
     height: 180px;
     margin-top: -10px;
-
+    margin-left: 10px;
 }
 
 .logo-wrapper {

@@ -15,8 +15,8 @@ export default class AdminArchiveProjectsPage extends React.Component {
             {field: 'planCost', title: 'План', filtering: false, editable: 'never'},
             {field: 'reportFactCost', title: 'Отчетный факт', filtering: false, editable: 'never'},
             {field: 'factCost', title: 'Факт', filtering: false, editable: 'never'},
-            {field: 'beginDate', title: 'Начало периода', filtering: false, type: 'date'},
-            {field: 'endDate', title: 'Конец периода', filtering: false, type: 'date'},
+            {field: 'beginDate', title: 'Дата изменения записи', filtering: false, type: 'date'},
+            {field: 'endDate', title: 'Дата окончания действия записи', filtering: false, type: 'date'},
         ];
 
         const filtersList = {
@@ -29,7 +29,7 @@ export default class AdminArchiveProjectsPage extends React.Component {
             <React.Fragment>
                 <TableContainer
                     columns={columns}
-                    title={'Архив выполнения крупных инвестиционных проектов'}
+                    title={'Архив отчетов исполнителей по выполнению крупных инвестпроектов'}
                     baseUrl={'views/i-4-s'}
                     filtersList={filtersList}
                     loadAll={true}

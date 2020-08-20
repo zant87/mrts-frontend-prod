@@ -13,8 +13,8 @@ export default class AdminArchiveActivitiesPage extends React.Component {
             {field: 'activityName', title: 'Мероприятие', filtering: true, editable: 'never'},
             {field: 'activityDocumentType', title: 'Тип документа', filtering: true, editable: 'never'},
             {field: 'activityExecutors', title: 'Исполнитель', filtering: true, editable: 'never'},
-            {field: 'beginDate', title: 'Начало периода', filtering: false, type: 'date'},
-            {field: 'endDate', title: 'Конец периода', filtering: false, type: 'date'},
+            {field: 'beginDate', title: 'Дата изменения записи', filtering: false, type: 'date'},
+            {field: 'endDate', title: 'Дата окончания действия записи', filtering: false, type: 'date'},
         ];
 
         const filtersList = {
@@ -25,7 +25,7 @@ export default class AdminArchiveActivitiesPage extends React.Component {
             <React.Fragment>
                 <TableContainer
                     columns={columns}
-                    title={'Архив выполнения мероприятий по реализации ТС'}
+                    title={'Архив отчетов исполнителей по выполнению мероприятий по реализации транспортной стратегии'}
                     baseUrl={'views/i-3-s'}
                     filtersList={filtersList}
                     loadAll={true}
