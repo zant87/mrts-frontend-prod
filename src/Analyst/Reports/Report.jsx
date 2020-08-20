@@ -26,6 +26,8 @@ class AnalystReportPage extends React.Component {
       quartersSelectList: {},
       report: {},
       reports: reportsData,
+      strategy: {},
+      strategies: {},
       reportFormat: 'PDF',
       formats: [
         {
@@ -48,11 +50,12 @@ class AnalystReportPage extends React.Component {
   getGoals = () => appAxios.get(`/goals?transportStrategyVersionActual.equals=true`).catch(err => console.log(err));
   getScenarios = () => appAxios.get(`/scenarios`).catch(err => console.log(err));
   getQuarters = () => appAxios.get(`/nsi-quarters`).catch(err => console.log(err));
+  getStrategies = () => appAxios.get(`/transport-strategy-versions`).catch(err => console.log(err));
 
   async componentDidMount() {
     try {
 
-      const [goalsData, scenariosData, quartersData] = await axios.all([this.getGoals(), this.getScenarios(), this.getQuarters()]);
+      const [goalsData, scenariosData, quartersData, StrategiesData] = await axios.all([this.getGoals(), this.getScenarios(), this.getQuarters(), this.getStrategies()]);
 
       this.setState(
           {
@@ -60,14 +63,22 @@ class AnalystReportPage extends React.Component {
             goalsSelectList: goalsData.data.map(item => {
               return {value: item.name, text: item.description, checked: false}
             }),
+
             goals: goalsData.data,
 
             scenariosSelectList: scenariosData.data.map(item => {
               return {value: item.code, text: item.name, checked: false}
             }),
+
             scenarios: scenariosData.data,
 
             quartersSelectList: quartersData.data.map(item => {
+              return {value: item.code, text: item.name, checked: false}
+            }),
+
+            strategies: StrategiesData.data,
+
+            strategiesSelectList: StrategiesData.data.map(item => {
               return {value: item.code, text: item.name, checked: false}
             }),
 
@@ -87,6 +98,17 @@ class AnalystReportPage extends React.Component {
 
   componentWillUnmount() {
     console.log(this.state);
+  }
+
+  setStrategy = (event) => {
+    console.log(event, this.state.strategies);
+    const filter = this.state.strategies.filter((strategy) => strategy.code === event.toString())[0];
+    if (filter) {
+      console.log('Strategy = ', filter);
+      this.setState({strategy: filter});
+    } else {
+      this.setState({strategy: null});
+    }
   }
 
   setQuarter = (event) => {
@@ -167,10 +189,17 @@ class AnalystReportPage extends React.Component {
       reportUrl = `reports/${this.state.report.value}/download?format=${this.state.reportFormat}&start=${this.state.start}&end=${this.state.end}&label=${this.state.labeling}`;
       reportName = `report_${this.state.report.value}_${this.state.start}_${this.state.end}.${this.state.reportFormat}`;
     }
+
     if (this.state.report.type === 5) {
       //http://localhost:8080/api/reports/m24/download?format=DOCX&start=2020&label=true
       reportUrl = `reports/${this.state.report.value}/download?format=${this.state.reportFormat}&year=${this.state.start}&label=${this.state.labeling}`;
       reportName = `report_${this.state.report.value}_${this.state.start}.${this.state.reportFormat}`;
+    }
+
+    if (this.state.report.type === 6) {
+      //http://localhost:8080/api/reports/m37/download?format=PDF&year=2018&scenario=5&ts=3
+      reportUrl = `reports/${this.state.report.value}/download?format=${this.state.reportFormat}&year=${this.state.start}&scenario=${this.state.scenario.id}&ts=${this.state.strategy.id}`;
+      reportName = `report_${this.state.report.value}_${this.state.start}_${this.state.scenario.code}_${this.state.strategy.code}.${this.state.reportFormat}`;
     }
 
     console.log('Retrieving URL = ', reportUrl);
@@ -281,7 +310,7 @@ class AnalystReportPage extends React.Component {
                             </MDBCol>
                           </MDBRow>
                       )}
-                      {this.state.report.type === 1 && (
+                      {this.state.report.type === 1 || this.state.report.type === 6 && (
                           <MDBRow>
                             <MDBCol md="12" className="mb-3">
                               <MDBSelect
@@ -340,6 +369,23 @@ class AnalystReportPage extends React.Component {
                                   Введите корректный конечный год
                                 </div>
                               </MDBInput>
+                            </MDBCol>
+                          </MDBRow>
+                      )}
+                      {this.state.report.type === 6 && (
+                          <MDBRow>
+                            <MDBCol md="12" className="mb-3">
+                              <MDBSelect
+                                  className="my-2"
+                                  options={this.state.strategiesSelectList}
+                                  search={true}
+                                  searchLabel="Поиск по стратегиям"
+                                  getValue={this.setStrategy}
+                                  selected="Выберите стратегию"
+                                  outline
+                                  required
+                                  label="Наименование стратегии"
+                              />
                             </MDBCol>
                           </MDBRow>
                       )}
