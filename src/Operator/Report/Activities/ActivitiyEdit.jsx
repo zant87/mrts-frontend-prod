@@ -49,7 +49,6 @@ export default class OperatorReportActivityEditPage extends React.Component {
                 this.props.tableRef.current.onQueryChange();
             });
         }
-
     }
 
     onChangeHandler = event => {

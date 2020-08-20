@@ -40,9 +40,9 @@ export default class OperatorReportProjectsResTable extends React.Component {
 
         const columnsProjectsRes = [
             {field: 'fundingName', title: 'Направление бюджета'},
-            {field: 'plan', title: 'План', type: 'number'},
-            {field: 'spent', title: 'Потрачено', type: 'number'},
-            {field: 'fact', title: 'Факт', type: 'number'},
+            {field: 'plan', title: 'Предусмотрено, млн. руб.', type: 'number'},
+            {field: 'spent', title: 'Освоено, млн. руб', type: 'number'},
+            {field: 'fact', title: 'Кассовые расходы, млн. руб.', type: 'number'},
         ];
 
         const tableProjectsRes = React.createRef();
