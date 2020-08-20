@@ -39,7 +39,8 @@ export default class OperatorReportProjectsResTable extends React.Component {
     render() {
 
         const columnsProjectsRes = [
-            {field: 'fundingName', title: 'Направление бюджета'},
+            {field: 'fundingName', title: 'Источник финансирования'},
+            {field: 'costTypeName', title: 'Направление бюджета'},
             {field: 'plan', title: 'Предусмотрено, млн. руб.', type: 'number'},
             {field: 'spent', title: 'Освоено, млн. руб', type: 'number'},
             {field: 'fact', title: 'Кассовые расходы, млн. руб.', type: 'number'},
