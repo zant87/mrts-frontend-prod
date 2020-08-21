@@ -54,17 +54,48 @@ export default class TableContainer extends React.Component {
 
                                     if (query.filters.length > 0) {
                                         query.filters.forEach(element => {
-                                                if (element.value.length >= filterMinimalLength) {
+                                            if (element.value.length >= filterMinimalLength) {
+                                                if (filtersList && filtersList[element.column.field]) {
+                                                    console.log(element.column.field, 'filter is', filtersList[element.column.field]);
+                                                    if (filtersList[element.column.field] === 'numeric') {
 
-                                                    if (filtersList && filtersList[element.column.field]) {
-                                                        console.log(element.column.field, 'filter is', filtersList[element.column.field]);
-                                                        url += `&${element.column.field}.${filtersList[element.column.field]}=${element.value}`;
+                                                        if (element.value.includes('>=')) {
+                                                            url += `&${element.column.field}.greaterThanOrEqual=${element.value.slice(2, element.value.length)}`;
+                                                        }
+                                                        if (element.value.includes('=>')) {
+                                                            url += `&${element.column.field}.greaterThanOrEqual=${element.value.slice(2, element.value.length)}`;
+                                                        }
+                                                        if (element.value.includes('<=')) {
+                                                            url += `&${element.column.field}.lessThanOrEqual=${element.value.slice(2, element.value.length)}`;
+                                                        }
+                                                        if (element.value.includes('=<')) {
+                                                            url += `&${element.column.field}.lessThanOrEqual=${element.value.slice(2, element.value.length)}`;
+                                                        }
+                                                        if (element.value.includes('<') && !element.value.includes('=')) {
+                                                            url += `&${element.column.field}.lessThan=${element.value.slice(1, element.value.length)}`;
+                                                        }
+                                                        if (element.value.includes('>') && !element.value.includes('=')) {
+                                                            url += `&${element.column.field}.greaterThan=${element.value.slice(1, element.value.length)}`;
+                                                        }
+                                                        if (element.value.includes('=') && !element.value.includes('>') && !element.value.includes('<')) {
+                                                            url += `&${element.column.field}.equals=${element.value.slice(1, element.value.length)}`;
+                                                        }
+                                                        // switch (element.value) {
+                                                        //     case element.value.includes('='):
+                                                        //         console.log('Value includes = ');
+                                                        //         url += `&${element.column.field}.equals=${element.value.slice(0, -1)}`;
+                                                        //         break;
+                                                        //     default:
+                                                        //         url += `&${element.column.field}.equals=${element.value}`;
+                                                        // }
                                                     } else {
-                                                        url += `&${element.column.field}.contains=${element.value}`;
+                                                        url += `&${element.column.field}.${filtersList[element.column.field]}=${element.value}`;
                                                     }
-
-                                                    filtersEnabled = true;
+                                                } else {
+                                                    url += `&${element.column.field}.contains=${element.value}`;
                                                 }
+                                                filtersEnabled = true;
+                                            }
                                         });
                                     }
 
@@ -79,22 +110,22 @@ export default class TableContainer extends React.Component {
                                                 resolve({
                                                     data: data,
                                                     page: query.page,
-                                                        totalCount: count
-                                                    });
+                                                    totalCount: count
                                                 });
-                                        } else if (filtersEnabled) {
-                                            appAxios.get(url)
-                                                .then(res => {
-                                                    const count = Number(res.headers['x-total-count']);
-                                                    const data = res.data;
-                                                    resolve({
-                                                        data: data,
-                                                        page: query.page,
-                                                        totalCount: count
-                                                    });
+                                            });
+                                    } else if (filtersEnabled) {
+                                        appAxios.get(url)
+                                            .then(res => {
+                                                const count = Number(res.headers['x-total-count']);
+                                                const data = res.data;
+                                                resolve({
+                                                    data: data,
+                                                    page: query.page,
+                                                    totalCount: count
                                                 });
-                                        } else {
-                                            resolve(
+                                            });
+                                    } else {
+                                        resolve(
                                                 {
                                                     data: [],
                                                     page: 0,

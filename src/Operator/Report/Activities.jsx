@@ -32,7 +32,7 @@ export default class OperatorReportActivitiesPage extends React.Component {
             {field: 'documentType', title: 'Вид документа'},
             {field: 'activityDescription', title: 'Содержание мероприятия'},
             {field: 'yearNumber', title: 'Отчетный год'},
-            {field: 'quarterName', title: 'Отчетный квартал', filtering: false},
+            {field: 'quarterName', title: 'Отчетный квартал'},
             {field: 'beginYear', title: 'Плановое начало'},
             {field: 'endYear', title: 'Плановое окончание'},
             {field: 'reportDescription', title: 'Описание'},
@@ -49,7 +49,9 @@ export default class OperatorReportActivitiesPage extends React.Component {
         ];
 
         const filtersList = {
-            'yearNumber': 'equals'
+            'yearNumber': 'numeric',
+            'beginYear': 'numeric',
+            'endYear': 'numeric',
         };
 
         return (

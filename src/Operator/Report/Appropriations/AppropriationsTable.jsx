@@ -30,8 +30,8 @@ export default class OperatorReportAppropriationsPage extends React.Component {
             {field: 'directionName', title: 'Направление расходов'},
             {field: 'fundingName', title: 'Источник финансирования'},
             {field: 'costTypeName', title: 'Вид расходов'},
-            {field: 'plan', title: 'Запланировано, млн. руб.', filtering: false},
-            {field: 'fact', title: 'Кассовое исполнение, млн. руб.', filtering: false},
+            {field: 'plan', title: 'Запланировано, млн. руб.'},
+            {field: 'fact', title: 'Кассовое исполнение, млн. руб.'},
         ];
 
         const actions = [
@@ -45,7 +45,9 @@ export default class OperatorReportAppropriationsPage extends React.Component {
         ];
 
         const filtersList = {
-            'year': 'equals'
+            'year': 'numeric',
+            'plan': 'numeric',
+            'fact': 'numeric',
         };
 
         return (

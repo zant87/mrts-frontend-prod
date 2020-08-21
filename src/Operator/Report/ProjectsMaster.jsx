@@ -1,12 +1,14 @@
 import React from 'react';
-import {MDBCol, MDBContainer, MDBModal, MDBModalBody, MDBModalHeader, MDBRow, toast} from "mdbreact";
-import appAxios from "../../_services/appAxios";
-import MaterialTable from "material-table";
-import {ruLocalization} from "../../_components/MaterialTableLocalization";
-import {history} from "@/_helpers";
+import {
+    MDBContainer,
+    MDBModal,
+    MDBModalBody,
+    MDBModalHeader,
+    toast
+} from "mdbreact";
 import TableContainer from "../../_components/TableContainer";
-import FinancingEdit from "./Financing/FinancingEdit";
 import ProjectsMasterEdit from "./ProjectsMaster/ProjectsMasterEdit";
+
 
 export default class OperatorReportProjectsMasterPage extends React.Component {
 
@@ -45,17 +47,23 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
             {field: 'projectCode', title: 'Обозначение проекта'},
             {field: 'projectName', title: 'Содержание проекта'},
             {field: 'directionName', title: 'Вид транспорта'},
-            {field: 'done', title: 'Уровень технической готовности', filtering: false},
-            {field: 'planBeginYear', title: 'Сроки реализации плановые', filtering: false},
-            {field: 'factStarted', title: 'Начало фактической реализации', filtering: false},
-            {field: 'factFinished', title: 'Конец фактической реализации', filtering: false},
-            {field: 'realPlanCost', title: 'Общие затраты (плановые)', filtering: false},
-            {field: 'fact', title: 'Общие затраты (факт)', filtering: false},
+            {field: 'done', title: 'Уровень технической готовности'},
+            {field: 'planBeginYear', title: 'Сроки реализации плановые'},
+            {field: 'factStarted', title: 'Начало фактической реализации'},
+            {field: 'factFinished', title: 'Конец фактической реализации'},
+            {field: 'realPlanCost', title: 'Общие затраты (плановые)'},
+            {field: 'fact', title: 'Общие затраты (факт)'},
             {field: 'description', title: 'Фактические результаты'},
         ];
 
         const filtersList = {
-            'yearNumber': 'equals'
+            'yearNumber': 'equals',
+            'done': 'numeric',
+            'planBeginYear': 'numeric',
+            'factStarted': 'numeric',
+            'factFinished': 'numeric',
+            'realPlanCost': 'numeric',
+            'fact': 'numeric',
         };
 
         return (
@@ -66,6 +74,7 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
                     filtersList={filtersList}
                     baseUrl={'views/k-7-masters'}
                     actions={actions}
+                    filterMinimalLength={2}
                     tableRef={this.tableRef}
                     loadAll={true}
                 />
