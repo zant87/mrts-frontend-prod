@@ -44,6 +44,7 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
             {field: 'yearNumber', title: 'Отчетный год'},
             {field: 'projectCode', title: 'Обозначение проекта'},
             {field: 'projectName', title: 'Содержание проекта'},
+            {field: 'directionName', title: 'Вид транспорта'},
             {field: 'done', title: 'Уровень технической готовности', filtering: false},
             {field: 'planBeginYear', title: 'Сроки реализации плановые', filtering: false},
             {field: 'factStarted', title: 'Начало фактической реализации', filtering: false},
