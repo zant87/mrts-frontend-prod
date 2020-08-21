@@ -176,7 +176,8 @@ export default class OperatorReportProjectsMasterEditPage extends React.Componen
                 )}
 
                 <ProjectExtTable projectId={this.state.projectId} documentId={this.state.documentId}/>
-                <ProjectResTable projectId={this.state.projectId} documentId={this.state.documentId}/>
+                <ProjectResTable projectId={this.state.projectId} documentId={this.state.documentId}
+                                 projectReportId={this.state.id}/>
 
                 <MDBRow around className='mt-2'>
                     <MDBBtn color="primary" type="none" onClick={this.doSave}>

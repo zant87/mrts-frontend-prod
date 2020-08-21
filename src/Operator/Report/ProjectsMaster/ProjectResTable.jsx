@@ -4,6 +4,7 @@ import Axios from "axios";
 import {ruLocalization} from "../../../_components";
 import {toast} from "mdbreact";
 import MaterialTable from "material-table";
+import PropTypes from 'prop-types';
 
 export default class OperatorReportProjectsResTable extends React.Component {
 
@@ -11,7 +12,7 @@ export default class OperatorReportProjectsResTable extends React.Component {
         isLoading: true
     };
 
-    getProjectsRes = () => appAxios.get(`project-resources?projectId.equals=${this.props.projectId}&documentId.equals=${this.props.documentId}`).catch(err => null);
+    getProjectsRes = () => appAxios.get(`project-resources?projectId.equals=${this.props.projectId}&documentId.equals=${this.props.documentId}&projectReportId.equals=${this.props.projectReportId}`).catch(err => null);
 
     constructor(props) {
         super(props);
@@ -41,9 +42,9 @@ export default class OperatorReportProjectsResTable extends React.Component {
         const columnsProjectsRes = [
             {field: 'fundingName', title: 'Источник финансирования'},
             {field: 'costTypeName', title: 'Направление бюджета'},
-            {field: 'plan', title: 'Предусмотрено, млн. руб.', type: 'number'},
-            {field: 'spent', title: 'Освоено, млн. руб', type: 'number'},
-            {field: 'fact', title: 'Кассовые расходы, млн. руб.', type: 'number'},
+            {field: 'plan', title: 'Предусмотрено, млн. руб.', type: 'numeric'},
+            {field: 'spent', title: 'Освоено, млн. руб', type: 'numeric'},
+            {field: 'fact', title: 'Кассовые расходы, млн. руб.', type: 'numeric'},
         ];
 
         const tableProjectsRes = React.createRef();
@@ -95,3 +96,9 @@ export default class OperatorReportProjectsResTable extends React.Component {
         );
     }
 }
+
+OperatorReportProjectsResTable.propTypes = {
+    projectId: PropTypes.number.isRequired,
+    documentId: PropTypes.number.isRequired,
+    projectReportId: PropTypes.number.isRequired
+};
