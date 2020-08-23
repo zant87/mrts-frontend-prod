@@ -83,7 +83,7 @@ export const sideNavLinks = [
     },
     {
         link: '/admin/control/emiss',
-        text: 'Ответственные за подготовку данных Росстата',
+        text: 'Контактные данные ЕМИСС',
         layout: Layouts.adminControl
     },
     {
