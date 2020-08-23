@@ -3,7 +3,6 @@ import {MDBBtn, MDBCol, MDBInput, MDBRow, MDBSelect, MDBSpinner, toast} from "md
 import appAxios from "../../_services/appAxios";
 import axios from 'axios';
 import {reportsData} from "./ReportsData";
-import {element} from "prop-types";
 
 class AnalystReportPage extends React.Component {
 
@@ -165,41 +164,36 @@ class AnalystReportPage extends React.Component {
 
     let reportUrl;
     let reportName;
+    const reportType = Number(this.state.report.type);
 
-    if (this.state.report.type === 1) {
-      //http://localhost:8080/api/reports/m1/download?format=DOCX&year=2015&goal_code=GOAL_06&quarter_code=1&scenario_code=BASE
-      reportUrl = `reports/${this.state.report.value}/download?format=${this.state.reportFormat}&year=${this.state.start}&goal_code=${this.state.goal.name}&quarter_code=${this.state.quarter.code}&scenario_code=${this.state.scenario.name}`;
-      reportName = `report_${this.state.report.value}_${this.state.start}_${this.state.goal.name}_${this.state.quarter.code}_${this.state.scenario.name}.${this.state.reportFormat}`;
-    }
-
-    if (this.state.report.type === 2) {
-      //http://localhost:8080/api/reports/m5/download?format=DOCX&year=2015&quarter_code=1
-      reportUrl = `reports/${this.state.report.value}/download?format=${this.state.reportFormat}&year=${this.state.start}&quarter_code=${this.state.quarter.code}`;
-      reportName = `report_${this.state.report.value}_${this.state.start}_${this.state.quarter.code}.${this.state.reportFormat}`;
-    }
-
-    if (this.state.report.type === 3) {
-      //http://localhost:8080/api/reports/m13/download?format=DOCX&start=2012
-      reportUrl = `reports/${this.state.report.value}/download?format=${this.state.reportFormat}&year=${this.state.start}`;
-      reportName = `report_${this.state.report.value}_${this.state.start}.${this.state.reportFormat}`;
-    }
-
-    if (this.state.report.type === 4) {
-      //http://localhost:8080/api/reports/m14/download?format=PDF&start=2012&end=2020&label=true
-      reportUrl = `reports/${this.state.report.value}/download?format=${this.state.reportFormat}&start=${this.state.start}&end=${this.state.end}&label=${this.state.labeling}`;
-      reportName = `report_${this.state.report.value}_${this.state.start}_${this.state.end}.${this.state.reportFormat}`;
-    }
-
-    if (this.state.report.type === 5) {
-      //http://localhost:8080/api/reports/m24/download?format=DOCX&start=2020&label=true
-      reportUrl = `reports/${this.state.report.value}/download?format=${this.state.reportFormat}&year=${this.state.start}&label=${this.state.labeling}`;
-      reportName = `report_${this.state.report.value}_${this.state.start}.${this.state.reportFormat}`;
-    }
-
-    if (this.state.report.type === 6) {
-      //http://localhost:8080/api/reports/m37/download?format=PDF&year=2018&scenario=5&ts=3
-      reportUrl = `reports/${this.state.report.value}/download?format=${this.state.reportFormat}&year=${this.state.start}&scenario=${this.state.scenario.id}&ts=${this.state.strategy.id}`;
-      reportName = `report_${this.state.report.value}_${this.state.start}_${this.state.scenario.code}_${this.state.strategy.code}.${this.state.reportFormat}`;
+    switch (reportType) {
+      case 1:
+        reportUrl = `reports/${this.state.report.value}/download?format=${this.state.reportFormat}&year=${this.state.start}&goal_code=${this.state.goal.name}&quarter_code=${this.state.quarter.code}&scenario_code=${this.state.scenario.name}`;
+        reportName = `report_${this.state.report.value}_${this.state.start}_${this.state.goal.name}_${this.state.quarter.code}_${this.state.scenario.name}.${this.state.reportFormat}`;
+        break;
+      case 2:
+        reportUrl = `reports/${this.state.report.value}/download?format=${this.state.reportFormat}&year=${this.state.start}&quarter_code=${this.state.quarter.code}`;
+        reportName = `report_${this.state.report.value}_${this.state.start}_${this.state.quarter.code}.${this.state.reportFormat}`;
+        break;
+      case 3:
+        reportUrl = `reports/${this.state.report.value}/download?format=${this.state.reportFormat}&year=${this.state.start}`;
+        reportName = `report_${this.state.report.value}_${this.state.start}.${this.state.reportFormat}`;
+        break;
+      case 4:
+        reportUrl = `reports/${this.state.report.value}/download?format=${this.state.reportFormat}&start=${this.state.start}&end=${this.state.end}&label=${this.state.labeling}`;
+        reportName = `report_${this.state.report.value}_${this.state.start}_${this.state.end}.${this.state.reportFormat}`;
+        break;
+      case 5:
+        reportUrl = `reports/${this.state.report.value}/download?format=${this.state.reportFormat}&year=${this.state.start}&label=${this.state.labeling}`;
+        reportName = `report_${this.state.report.value}_${this.state.start}.${this.state.reportFormat}`;
+        break;
+      case 6:
+        reportUrl = `reports/${this.state.report.value}/download?format=${this.state.reportFormat}&year=${this.state.start}&scenario=${this.state.scenario.id}&ts=${this.state.strategy.id}`;
+        reportName = `report_${this.state.report.value}_${this.state.start}_${this.state.scenario.code}_${this.state.strategy.code}.${this.state.reportFormat}`;
+        break;
+      default:
+        reportUrl = `reports/${this.state.report.value}/download?format=${this.state.reportFormat}`;
+        reportName = `report_${this.state.report.value}.${this.state.reportFormat}`;
     }
 
     console.log('Retrieving URL = ', reportUrl);
@@ -252,7 +246,6 @@ class AnalystReportPage extends React.Component {
 
     return (
         <MDBCol md="8" className="mx-auto my-5">
-
           <h1 className="text-center my-3">Материалы доклада о реализации транспортной стратегии Российской
             Федерации</h1>
 
@@ -310,7 +303,7 @@ class AnalystReportPage extends React.Component {
                             </MDBCol>
                           </MDBRow>
                       )}
-                      {this.state.report.type === 1 || this.state.report.type === 6 && (
+                      {(this.state.report.type === 1 || this.state.report.type === 6) && (
                           <MDBRow>
                             <MDBCol md="12" className="mb-3">
                               <MDBSelect
@@ -390,7 +383,7 @@ class AnalystReportPage extends React.Component {
                           </MDBRow>
                       )}
                       <MDBRow center middle between className="text-center">
-                        {this.state.report.type === 4 || this.state.report.type === 5 && (
+                        {(this.state.report.type === 4 || this.state.report.type === 5) && (
                             <MDBCol middle>
                               <MDBInput
                                   type="checkbox"
