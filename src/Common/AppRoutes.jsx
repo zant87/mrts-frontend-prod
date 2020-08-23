@@ -73,6 +73,7 @@ import AdminStructureIndicatorsScheme from "@/Admin/Structure/IndicatorScheme";
 import OperatorControlDeviationsPage from "../Operator/Control/Deviations";
 import AdminStructureIndicatorsWeightPage from "../Admin/Structure/IndicatorsWeight";
 import AdminControlEmissPage from "../Admin/Control/Emiss";
+import AdminStructureTransportStrategiesPage from "../Admin/Structure/TransportStrategies";
 
 const AsyncAdminStructureGoalsPage = loadable({
     loader: () => import("../Admin/Structure/Goals"),
@@ -244,6 +245,8 @@ export const AppRoutes = () => {
                           component={AdminStructureFormulasEditPage}/>
             <PrivateRoute exact path="/admin/structure/weights" roles={Role.Admin}
                           component={AdminStructureIndicatorsWeightPage}/>
+            <PrivateRoute exact path="/admin/structure/ts" roles={Role.Admin}
+                          component={AdminStructureTransportStrategiesPage}/>
 
             {/*Control - Настройка контроля*/}
             {/*<PrivateRoute exact path="/admin/control" roles={Role.Admin} component={AsyncAdminControlNavigation}/>*/}
