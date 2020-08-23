@@ -82,6 +82,11 @@ export const sideNavLinks = [
         layout: Layouts.adminControl
     },
     {
+        link: '/admin/control/emiss',
+        text: 'Ответственные за подготовку данных Росстата',
+        layout: Layouts.adminControl
+    },
+    {
         link: '/admin/loading/reports',
         text: 'Бланки отчетов исполнителей',
         layout: Layouts.adminLoading

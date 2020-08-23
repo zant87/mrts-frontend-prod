@@ -72,6 +72,7 @@ import OperatorControlIndicatorsAgreementPage from "../Operator/Control/Indicato
 import AdminStructureIndicatorsScheme from "@/Admin/Structure/IndicatorScheme";
 import OperatorControlDeviationsPage from "../Operator/Control/Deviations";
 import AdminStructureIndicatorsWeightPage from "../Admin/Structure/IndicatorsWeight";
+import AdminControlEmissPage from "../Admin/Control/Emiss";
 
 const AsyncAdminStructureGoalsPage = loadable({
     loader: () => import("../Admin/Structure/Goals"),
@@ -258,6 +259,8 @@ export const AppRoutes = () => {
                           component={AsyncAdminControlExecutorsByProjectsPage}/>
             <PrivateRoute exact path="/admin/control/executorsByResource" roles={Role.Admin}
                           component={AsyncAdminControlExecutorsByResourcesPage}/>
+            <PrivateRoute exact path="/admin/control/emiss" roles={Role.Admin}
+                          component={AdminControlEmissPage}/>
 
             {/*Loading - Загрузка из АС и файлов*/}
             <PrivateRoute exact path="/admin/loading" roles={Role.Admin} component={AsyncAdminLoadingNavigation}/>

@@ -27,6 +27,7 @@ export const ruLocalization = {
         cancelTooltip: 'Отмена',
         saveTooltip: 'Сохранить',
         editTooltip: 'Редактировать',
+        deleteTooltip: 'Удалить',
         filterRow: {
             filterTooltip: 'Фильтр'
         },
