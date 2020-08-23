@@ -80,14 +80,6 @@ export default class TableContainer extends React.Component {
                                                         if (element.value.includes('=') && !element.value.includes('>') && !element.value.includes('<')) {
                                                             url += `&${element.column.field}.equals=${element.value.slice(1, element.value.length)}`;
                                                         }
-                                                        // switch (element.value) {
-                                                        //     case element.value.includes('='):
-                                                        //         console.log('Value includes = ');
-                                                        //         url += `&${element.column.field}.equals=${element.value.slice(0, -1)}`;
-                                                        //         break;
-                                                        //     default:
-                                                        //         url += `&${element.column.field}.equals=${element.value}`;
-                                                        // }
                                                     } else {
                                                         url += `&${element.column.field}.${filtersList[element.column.field]}=${element.value}`;
                                                     }

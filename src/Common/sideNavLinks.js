@@ -67,6 +67,11 @@ export const sideNavLinks = [
         layout: Layouts.adminStructure
     },
     {
+        link: '/admin/structure/weights',
+        text: 'Веса индикаторов',
+        layout: Layouts.adminStructure
+    },
+    {
         link: '/admin/control/executors',
         text: 'Реестр исполнителей',
         layout: Layouts.adminControl
