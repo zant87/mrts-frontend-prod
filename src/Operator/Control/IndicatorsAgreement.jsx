@@ -134,7 +134,7 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
 
         const columns = [
             {field: 'id', title: '#', filtering: false},
-            {field: 'indicatorYear', title: 'Год', type: 'numeric'},
+            {field: 'indicatorYear', title: 'Год'},
             {field: 'indicatorQuarter', title: 'Квартал'},
             {field: 'indicatorName', title: 'Индикатор'},
             {field: 'nationalSymbolicName', title: 'Единица измерения'},
@@ -144,7 +144,7 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
         ];
 
         const filtersList = {
-            'year': 'equals',
+            'indicatorYear': 'numeric',
         };
 
         const filterMinimalLength = 1;
