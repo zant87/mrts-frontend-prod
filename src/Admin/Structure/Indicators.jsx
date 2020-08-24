@@ -44,7 +44,7 @@ export default class AdminStructureIndicatorsPage extends React.Component {
     return (
       <React.Fragment>
         <MDBCol className="mr-5">
-          <MDBBtn color="primary" size="sm" href="/admin/structure/indicatorscheme">
+          <MDBBtn color="primary" size="sm" href="admin/structure/indicatorscheme">
             Схема
           </MDBBtn>
         </MDBCol>

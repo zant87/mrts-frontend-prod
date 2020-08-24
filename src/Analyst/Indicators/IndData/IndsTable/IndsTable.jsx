@@ -1,15 +1,5 @@
 import React from "react";
-import {
-  MDBRow,
-  MDBCol,
-  MDBCard,
-  MDBCardBody,
-  MDBCardTitle,
-  MDBCardText,
-  MDBDataTable,
-  ExportToCSV,
-  MDBIcon,
-} from "mdbreact";
+import { MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBDataTable, ExportToCSV, MDBIcon } from "mdbreact";
 import Preloader from "@/Common/Preloader/Preloader";
 import { ExportXLSX } from "../../../../Common/ExportXLSX/ExportXLSX";
 
@@ -27,9 +17,7 @@ const IndsTable = (props) => {
   let rowsarr = [];
 
   if (props.indVals) {
-    indsval = props.indVals.sort((a, b) =>
-      a.indicatorDate > b.indicatorDate ? 1 : -1
-    );
+    indsval = props.indVals.sort((a, b) => (a.indicatorDate > b.indicatorDate ? 1 : -1));
 
     indsval.forEach((item) => {
       years.push(item.indicatorDate);
@@ -38,24 +26,18 @@ const IndsTable = (props) => {
       valuetypeNames.push(item.valueTypeName);
     });
 
-    years = indsval
-      .map((item) => item.indicatorDate)
-      .filter((item, i, arr) => arr.indexOf(item) === i);
+    years = indsval.map((item) => item.indicatorDate).filter((item, i, arr) => arr.indexOf(item) === i);
 
-    valuetypeNames = indsval
-      .map((item) => item.valueTypeName)
-      .filter((item, i, arr) => arr.indexOf(item) === i);
+    valuetypeNames = indsval.map((item) => item.valueTypeName).filter((item, i, arr) => arr.indexOf(item) === i);
 
-    scenarioNames = indsval
-      .map((item) => item.scenarioName)
-      .filter((item, i, arr) => arr.indexOf(item) === i);
+    scenarioNames = indsval.map((item) => item.scenarioName).filter((item, i, arr) => arr.indexOf(item) === i);
 
     //---------------Объект data для MDBDataTable
     data = {
       columns: [
         {
           label: "Тип значения / Год, " + indsval[0].okeiName,
-          field: "valueTypeName",
+          field: "Сценарий",
           sort: "asc",
           width: 250,
         },
@@ -68,14 +50,14 @@ const IndsTable = (props) => {
       //--------Если годовые значения
       props.indFrequencyId == 1
         ? data.columns.push({
-            label: year.split("-")[0],
-            field: year.split("-")[0],
+            label: " " + year.split("-")[0],
+            field: " " + year.split("-")[0],
             sort: "asc",
             width: 120,
           })
         : data.columns.push({
-            label: year,
-            field: year,
+            label: " " + year,
+            field: " " + year,
             sort: "asc",
             width: 120,
           })
@@ -83,12 +65,15 @@ const IndsTable = (props) => {
 
     //-----------Заполнение data.rows для MDBDataTable
     scenarioNames.forEach((scen) => {
-      rows = {};
-      rows.valueTypeName = scen;
+      rows = {
+        Сценарий: null,
+      };
+      rows.Сценарий = scen;
+
       //------------Если годовые значения
       if (props.indFrequencyId == 1) {
         years.forEach((year) => {
-          rows[year.split("-")[0]] = indsval
+          rows[" " + year.split("-")[0]] = indsval
             .filter((val, i, arr) => {
               if (val.scenarioName == scen && val.indicatorDate == year) {
                 return val.value;
@@ -101,7 +86,7 @@ const IndsTable = (props) => {
         });
       } else {
         years.forEach((year) => {
-          rows[year] = indsval
+          rows[" " + year] = indsval
             .filter((val, i, arr) => {
               if (val.scenarioName == scen && val.indicatorDate == year) {
                 return val.value;
@@ -120,7 +105,7 @@ const IndsTable = (props) => {
     });
 
     data.rows = rowsarr;
-    //console.log(data.rows);
+    console.log(data.rows);
   }
 
   return (
@@ -137,13 +122,7 @@ const IndsTable = (props) => {
                   textTransform: "uppercase",
                 }}
               >
-                {props.indVals ? (
-                  props.indVals[0].indicatorCode.replace("IND_", "") +
-                  " " +
-                  props.indVals[0].indicatorName
-                ) : (
-                  <div>Нет данных</div>
-                )}
+                {props.indVals ? props.indVals[0].indicatorCode.replace("IND_", "") + " " + props.indVals[0].indicatorName : <div>Нет данных</div>}
               </MDBCardTitle>
               {props.isFetchingIndData ? (
                 <Preloader />
@@ -152,11 +131,8 @@ const IndsTable = (props) => {
                   {props.indVals ? (
                     <div>
                       <div style={{ fontSize: "12px", marginBottom: "10px" }}>
-                        Заданный период:{" "}
-                        {props.indsYearStart + "-" + props.indsYearEnd}
-                        {props.indFrequencyId == 2
-                          ? " ( " + props.indVals[0].quarterName + " )"
-                          : ""}
+                        Заданный период: {props.indsYearStart + "-" + props.indsYearEnd}
+                        {props.indFrequencyId == 2 ? " ( " + props.indVals[0].quarterName + " )" : ""}
                       </div>
                       <ExportXLSX csvData={data.rows} fileName={"exportInds"} />
                       {/* <ExportToCSV columns={data.columns} data={data.rows} color="deep-orange" size="sm">

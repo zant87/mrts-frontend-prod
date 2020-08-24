@@ -5,7 +5,8 @@ import paramsReducer from "./params-reducer";
 import archiveReducer from "./archive-reducer";
 import dynamicsReducer from "./dynamics-reducer";
 import levelsReducer from "./levels-reducer";
-import reportsReducer from '../Analyst/Reports/ReportsReducers';
+import budgetLevelsReducer from "./budget-levels-reducer";
+import reportsReducer from "../Analyst/Reports/ReportsReducers";
 
 export default combineReducers({
   errors: errorReducer,
@@ -14,5 +15,6 @@ export default combineReducers({
   archivePage: archiveReducer,
   dynamicsPage: dynamicsReducer,
   levelsPage: levelsReducer,
-  reports: reportsReducer
+  budgetLevelsPage: budgetLevelsReducer,
+  reports: reportsReducer,
 });

@@ -40,14 +40,14 @@ export default class extends Component {
       scaleInitial: 1,
       //scaleMin: 0.2,
       collapse: {
-        level: 2,
+        level: 3,
         allChildren: true,
       },
       //layout: OrgChart.mixed,
       layout: OrgChart.treeRightOffset,
-      nodeMenu: {
-        details: { text: "Инфо" },
-      },
+      // nodeMenu: {
+      //   details: { text: "Инфо" },
+      // },
       showYScroll: OrgChart.scroll.visible,
       mouseScrool: OrgChart.action.zoom,
       //mouseScrool: OrgChart.action.scroll,

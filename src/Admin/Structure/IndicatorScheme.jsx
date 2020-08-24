@@ -1,9 +1,15 @@
 import React from "react";
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardHeader, MDBCardBody, MDBCardText } from "mdbreact";
 import { IndsAPI } from "@/_services/api-inds.service";
+import { OrgDiagram } from "basicprimitivesreact";
+import primitives from "basicprimitives";
 import OrgChart from "./IndicatorSchemeChart";
+import OrgTree from "react-org-tree";
+
+//import OrgChart from "awesome-react-org-chart";
+
 // import Chart from "react-google-charts";
-// import OrganizationChart from "@dabeng/react-orgchart";
+//import OrganizationChart from "@dabeng/react-orgchart";
 // import Highcharts from "highcharts";
 // import HighchartsReact from "highcharts-react-official";
 // import HighchartsSankey from "highcharts/modules/sankey";
@@ -20,28 +26,36 @@ class IndicatorScheme extends React.Component {
     this.state = {
       inds: null,
       goals: null,
+      goals_: null,
+      inds_: null,
     };
   }
 
   getIndicators = (data) => {
     let inds = [];
+    let inds_ = [];
     data.forEach((ind) => {
       inds.push({ id: ind.id, pid: ind.goalId, Наименование: ind.code.replace("IND_", ""), Описание: ind.name });
+      inds_.push({ id: ind.id, code: ind.code.replace("IND_", ""), name: ind.name, goalId: ind.goalId });
     });
     this.setState({
       inds: inds,
+      inds_: inds_,
     });
   };
 
   getGoals = (data) => {
     let goals = [];
+    let goals_ = [];
     data.forEach((goal) => {
       if (goal.name != "Цель 7") {
         goals.push({ id: goal.id, pid: 0, Наименование: goal.name, Описание: goal.description });
+        goals_.push({ id: goal.id, name: goal.name, descriptions: goal.description });
       }
     });
     this.setState({
       goals: goals,
+      goals_: goals_,
     });
   };
 
@@ -56,6 +70,104 @@ class IndicatorScheme extends React.Component {
 
   render() {
     let nodes = [];
+
+    let orgdata = [];
+    if (this.state.inds_ && this.state.goals_) {
+      orgdata = {
+        id: 0,
+        label: "Транспортная стратегия Российской Федерации на период до 2030 года",
+        expand: true,
+        children: this.state.goals_.map((goal) => ({
+          id: goal.id,
+          label: goal.name,
+          children: this.state.inds_
+            .filter((item) => item.goalId == goal.id)
+            .sort((a, b) => (a.code > b.code ? 1 : -1))
+            .map((item) => ({ id: item.id, label: item.code.replace("IND_", "") + " " + item.name })),
+        })),
+      };
+      // this.state.goals_.forEach((goal) => {
+      //   orgdata.push({
+      //     id: goal.id,
+      //     label: goal.name,
+      //     children: null,
+      //     // this.state.inds_.map((item) => ({ id: item.id, label: item.code.replace("IND_", "") + item.name })),
+      //   });
+      // });
+      console.log(orgdata);
+    } else orgdata = null;
+
+    const horizontal = true;
+    const collapsable = true;
+    const expandAll = true;
+    // const data = {
+    //   id: 0,
+    //   label: "Транспортная стратегия",
+    //   children: [
+    //     {
+    //       id: 1,
+    //       label: "Цель 1",
+    //       children: [
+    //         {
+    //           id: 4,
+    //           label: "1.1 Ввоывэпоыждпждывьопждывоп",
+    //         },
+    //         {
+    //           id: 5,
+    //           label: "1.2 вылдптолдывполдвоыпждлвып",
+    //         },
+    //         {
+    //           id: 6,
+    //           label: "1.3 выпопщждывопждоывпждоыпж",
+    //         },
+    //       ],
+    //     },
+    //     {
+    //       id: 2,
+    //       label: "Цель 2",
+    //     },
+    //     {
+    //       id: 3,
+    //       label: "Цель 3",
+    //     },
+    //   ],
+    // };
+    let config = {
+      pageFitMode: primitives.common.PageFitMode.None,
+      maximumColumnsInMatrix: 2,
+      cursorItem: 1,
+      highlightItem: 0,
+      normalItemsInterval: 20,
+      cousinsIntervalMultiplier: 1,
+      defaultTemplateName: "info",
+      templates: [
+        {
+          name: "info",
+          itemSize: { width: 80, height: 36 },
+          minimizedItemSize: { width: 3, height: 3 },
+          highlightPadding: { left: 4, top: 4, right: 4, bottom: 4 },
+          onItemRender: ({ context: itemConfig }) => {
+            return <div className="InfoTemplate">{itemConfig.title}</div>;
+          },
+        },
+      ],
+      hasSelectorCheckbox: primitives.common.Enabled.False,
+      items: [
+        /* vertical layout example */
+        {
+          id: 101,
+          parent: null,
+          title: "Vertical Layout",
+          childrenPlacementType: primitives.common.ChildrenPlacementType.Vertical,
+        },
+        { id: 102, parent: 101, title: "Child 1" },
+        { id: 103, parent: 101, title: "Child 2", childrenPlacementType: primitives.common.ChildrenPlacementType.Vertical },
+        { id: 104, parent: 103, title: "Sub Child 3" },
+        { id: 105, parent: 103, title: "Sub Child 4" },
+        { id: 106, parent: 101, title: "Child 5" },
+        { id: 107, parent: 101, title: "Child 6" },
+      ],
+    };
     return (
       <div>
         <MDBContainer fluid>
@@ -65,6 +177,23 @@ class IndicatorScheme extends React.Component {
                 <MDBCardHeader color=" special-color">Индикаторы по целям ТС (схема)</MDBCardHeader>
                 <MDBCardBody>
                   <MDBCardText>
+                    {/* <OrgDiagram centerOnCursor={true} config={config} /> */}
+                    {/* <OrganizationChart datasource={ds} collapsible={false} verticalDepth={"2"} depth={2} chartClass="myChart" /> */}
+                    {/* {orgdata ? (
+                      <div>
+                        <OrgTree
+                          data={orgdata}
+                          horizontal={horizontal}
+                          collapsable={collapsable}
+                          expandAll={expandAll}
+                          labelWidth={"200px"}
+                          style={{ fontSize: "8px" }}
+                        ></OrgTree>
+                      </div>
+                    ) : (
+                      false
+                    )} */}
+                    {/* <HighchartsReact highcharts={Highcharts} options={options} /> */}
                     {this.state.inds && this.state.goals ? (
                       <OrgChart
                         nodes={nodes.concat(
@@ -91,6 +220,40 @@ class IndicatorScheme extends React.Component {
 }
 
 export default IndicatorScheme;
+
+// const ds = {
+//   id: "n1",
+//   name: "Lao Lao",
+//   title: "general manager",
+//   children: [
+//     { id: "n2", name: "Bo Miao", title: "department manager" },
+//     {
+//       id: "n3",
+//       name: "Su Miao",
+//       title: "department manager",
+//       children: [
+//         { id: "n4", name: "Tie Hua", title: "senior engineer" },
+//         {
+//           id: "n5",
+//           name: "Hei Hei",
+//           title: "senior engineer",
+//           children: [
+//             { id: "n6", name: "Dan Dan", title: "engineer" },
+//             { id: "n7", name: "Xiang Xiang", title: "engineer" },
+//           ],
+//         },
+//         { id: "n8", name: "Pang Pang", title: "senior engineer" },
+//       ],
+//     },
+//     { id: "n9", name: "Hong Miao", title: "department manager" },
+//     {
+//       id: "n10",
+//       name: "Chun Miao",
+//       title: "department manager",
+//       children: [{ id: "n11", name: "Yue Yue", title: "senior engineer" }],
+//     },
+//   ],
+// };
 
 {
   /* <OrganizationChart datasource={ds} chartClass="myChart" /> */
