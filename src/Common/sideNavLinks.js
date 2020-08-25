@@ -222,6 +222,11 @@ export const sideNavLinks = [
     layout: Layouts.operatorReport,
   },
   {
+    link: "/operator/report/actualIndicators",
+    text: "Индикаторы за отчетный период",
+    layout: Layouts.operatorReport,
+  },
+  {
     link: "/operator/calculation/intermediate",
     text: "Промежуточных значений индикаторов",
     layout: Layouts.operatorCalculation,

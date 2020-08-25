@@ -34,7 +34,7 @@ export default class AdminLoadingFromXLSXPage extends React.Component {
             method: 'POST',
             data: formData
         }).then((response) => {
-            toast.success(`${response.data}`, {closeButton: false});
+            toast.success(`Синхронизация с ID ${response.data} запущена`, {closeButton: false});
         }).catch(function (error) {
             console.log(error);
             toast.error(`Ошибка загрузки XLSX файла`, {closeButton: false});

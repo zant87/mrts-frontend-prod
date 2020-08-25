@@ -26,6 +26,7 @@ export default class TableContainer extends React.Component {
         const tableRef = this.props.tableRef ? this.props.tableRef : React.createRef();
         const filtersList = this.props.filtersList ? this.props.filtersList : null;
         const modifiedBaseUrl = this.props.modifiedBaseUrl ? this.props.modifiedBaseUrl : false;
+        const editable = this.props.editable ? this.props.editable : null;
 
         return (
             <MDBContainer fluid>
@@ -38,6 +39,7 @@ export default class TableContainer extends React.Component {
                             localization={ruLocalization}
                             options={options}
                             actions={this.props.actions}
+                            editable={this.props.editable}
                             data={query =>
                                 new Promise((resolve, reject) => {
 
