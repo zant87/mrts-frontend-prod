@@ -2,7 +2,7 @@ import React from 'react';
 import {MDBCol, MDBContainer, MDBModal, MDBModalBody, MDBModalHeader, MDBRow, toast} from "mdbreact";
 import appAxios from "../../_services/appAxios";
 import Axios from "axios";
-import TableContainer from "../../_components/TableContainer";
+import TableContainer from "../../Containers/TableContainer";
 import TemplateEdit from "./TemplateEdit";
 
 export default class AdminStructureTemplatesPage extends React.Component {

@@ -7,7 +7,7 @@ import appAxios from "../../_services/appAxios";
 import ButtonUpdateColumn from "../../_components/ButtonUpdateColumn";
 import MaterialTable from "material-table";
 import {ruLocalization} from "../../_components/MaterialTableLocalization";
-import TableContainer from "../../_components/TableContainer";
+import TableContainer from "../../Containers/TableContainer";
 
 export default class OperatorReportProjectsDetailPage extends React.Component {
 

@@ -1,9 +1,9 @@
-import {reportsData} from "./ReportsData";
+import {reportsList} from "./ReportsList";
 
 export default class ReportsService {
 
     static list() {
-        return reportsData;
+        return reportsList;
     }
 
 }

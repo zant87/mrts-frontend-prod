@@ -1,5 +1,5 @@
 import React from 'react';
-import TableContainer from "../../_components/TableContainer";
+import TableContainer from "../../Containers/TableContainer";
 import appAxios from "../../_services/appAxios";
 import {MDBContainer, MDBModal, MDBModalBody, MDBModalHeader, toast} from "mdbreact";
 import moment from "moment";

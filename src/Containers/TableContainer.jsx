@@ -2,13 +2,9 @@ import React from 'react';
 import {MDBContainer, MDBRow, MDBCol, toast} from "mdbreact";
 import appAxios from "../_services/appAxios";
 import MaterialTable from "material-table";
-import {ruLocalization} from "./MaterialTableLocalization";
+import {ruLocalization} from "../_components";
 
 export default class TableContainer extends React.Component {
-
-    constructor(props) {
-        super(props);
-    }
 
     render() {
 

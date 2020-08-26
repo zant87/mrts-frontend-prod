@@ -1,89 +1,68 @@
-import React from "react";
-import {MDBBtn, MDBCol, MDBInput, MDBRow, MDBSelect, MDBSpinner, toast} from "mdbreact";
+import React, {Fragment} from "react";
+import {MDBBtn, MDBCol, MDBRow, MDBSpinner, toast} from "mdbreact";
 import appAxios from "../../_services/appAxios";
 import axios from 'axios';
-import {reportsData} from "./ReportsData";
+import {reportsList} from "./ReportsList";
+import SelectInput from "../../_components/Inputs/SelectInput";
+import {formatsList} from "./FormatsList";
+import Preloader from "../../Common/Preloader/Preloader";
+import Report1 from "./ReportTypes/Report1";
 
 class AnalystReportPage extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      isDownloading: false,
-      labeling: false,
-      start: 2015,
-      end: 2020,
-      isLoading: true,
-      goal: {},
-      goals: {},
-      goalsSelectList: {},
-      scenario: {},
-      scenarios: {},
-      scenariosSelectList: {},
-      quarter: {},
-      quarters: {},
-      quartersSelectList: {},
-      report: {},
-      reports: reportsData,
-      strategy: {},
-      strategies: {},
-      reportFormat: 'PDF',
-      formats: [
-        {
-          text: "PDF",
-          value: "PDF",
-          checked: true,
-        },
-        {
-          text: "XLSX",
-          value: "XLSX",
-        },
-        {
-          text: "DOCX",
-          value: "DOCX",
-        },
-      ],
-    };
+  state = {
+    isDownloading: false,
+    labeling: false,
+    start: 2018,
+    end: 2020,
+    initialized: false,
+    goal: null,
+    goals: {},
+    scenario: null,
+    scenarios: {},
+    quarter: null,
+    quarters: {},
+    report: null,
+    reports: reportsList,
+    strategy: null,
+    strategies: {},
+    stage: null,
+    stages: {},
+    reportFormat: 'PDF'
+  };
+
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    console.log('Reports.jsx getSnapshotBeforeUpdate', prevProps, prevState);
+  }
+
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    console.log('Reports.jsx shouldComponentUpdate', nextProps, nextState);
+    return this.state !== nextState;
   }
 
   getGoals = () => appAxios.get(`/goals?transportStrategyVersionActual.equals=true`).catch(err => console.log(err));
   getScenarios = () => appAxios.get(`/scenarios`).catch(err => console.log(err));
   getQuarters = () => appAxios.get(`/nsi-quarters`).catch(err => console.log(err));
   getStrategies = () => appAxios.get(`/transport-strategy-versions`).catch(err => console.log(err));
+  getStages = () => appAxios.get('/nsi-stages').catch(err => console.log(err));
 
   async componentDidMount() {
     try {
 
-      const [goalsData, scenariosData, quartersData, StrategiesData] = await axios.all([this.getGoals(), this.getScenarios(), this.getQuarters(), this.getStrategies()]);
+      const [goalsData, scenariosData, quartersData, strategiesData, stageData] = await axios.all(
+          [this.getGoals(), this.getScenarios(),
+            this.getQuarters(), this.getStrategies(),
+            this.getStages()]);
 
       this.setState(
           {
-
-            goalsSelectList: goalsData.data.map(item => {
-              return {value: item.name, text: item.description, checked: false}
-            }),
-
             goals: goalsData.data,
-
-            scenariosSelectList: scenariosData.data.map(item => {
-              return {value: item.code, text: item.name, checked: false}
-            }),
-
             scenarios: scenariosData.data,
-
-            quartersSelectList: quartersData.data.map(item => {
-              return {value: item.code, text: item.name, checked: false}
-            }),
-
-            strategies: StrategiesData.data,
-
-            strategiesSelectList: StrategiesData.data.map(item => {
-              return {value: item.code, text: item.code, checked: false}
-            }),
-
+            strategies: strategiesData.data,
             quarters: quartersData.data,
-            reports: reportsData,
-            isLoading: false,
+            stages: stageData.data,
+            reports: reportsList,
+            initialized: true,
           }
       );
 
@@ -95,52 +74,53 @@ class AnalystReportPage extends React.Component {
     }
   }
 
-  componentWillUnmount() {
-    console.log(this.state);
+  setStage = (event) => {
+    console.log('[Report.jsx] calling setStage...');
+    if (event) {
+      const filter = this.state.stages.filter((item) => item.code === event.toString())[0];
+      console.log('[Report.jsx] setting Stage =', filter);
+      this.setState({stage: filter});
+    }
   }
 
   setStrategy = (event) => {
-    console.log(event, this.state.strategies);
-    const filter = this.state.strategies.filter((strategy) => strategy.code === event.toString())[0];
-    if (filter) {
-      console.log('Strategy = ', filter);
+    console.log('[Report.jsx] calling setQuarter...');
+    if (event) {
+      const filter = this.state.strategies.filter((item) => item.code === event.toString())[0];
+      console.log('[Report.jsx] setting Strategy =', filter);
       this.setState({strategy: filter});
-    } else {
-      this.setState({strategy: null});
     }
   }
 
   setQuarter = (event) => {
-    const filter = this.state.quarters.filter((quarter) => quarter.code === event.toString())[0];
-    if (filter) {
-      console.log('Quarter = ', filter);
+    console.log('[Report.jsx] calling setQuarter...');
+    if (event) {
+      const filter = this.state.quarters.filter((item) => item.code === event.toString())[0];
+      console.log('[Report.jsx] setting Quarter =', filter);
       this.setState({quarter: filter});
-    } else {
-      this.setState({quarter: null});
     }
   }
 
   setScenario = (event) => {
-    const filter = this.state.scenarios.filter((scenario) => scenario.code === event.toString())[0];
-    if (filter) {
-      console.log('Scenario = ', filter);
+    console.log('[Report.jsx] calling setScenario...');
+    if (event) {
+      const filter = this.state.scenarios.filter((item) => item.code === event.toString())[0];
+      console.log('[Report.jsx] setting Scenario =', filter);
       this.setState({scenario: filter});
-    } else {
-      this.setState({scenario: null});
     }
   }
 
   setGoal = (event) => {
-    const filter = this.state.goals.filter((goal) => goal.name === event.toString())[0];
-    if (filter) {
-      console.log('Goal = ', filter);
+    console.log('[Report.jsx] calling setGoal...');
+    if (event) {
+      const filter = this.state.goals.filter((item) => item.name === event.toString())[0];
+      console.log('[Report.jsx] setting Goal =', filter);
       this.setState({goal: filter});
-    } else {
-      this.setState({goal: null});
     }
   }
 
   setReportFormat = (event) => {
+    console.log(event);
     const filter = event.toString();
     if (filter) {
       console.log('Report Format = ', filter);
@@ -151,6 +131,7 @@ class AnalystReportPage extends React.Component {
   };
 
   setReport = (event) => {
+    console.log(event);
     const filter = this.state.reports.filter((report) => report.value === event.toString())[0];
     if (filter) {
       console.log('Report = ', filter);
@@ -225,13 +206,13 @@ class AnalystReportPage extends React.Component {
   };
 
   onChangeHandler = (event) => {
+    console.log(event);
     this.setState({[event.target.name]: event.target.value});
-    console.log(this.state);
   };
 
-  onChangeLabelHandler = (event) => {
-    const inverseLabeling = !this.state.labeling;
-    this.setState({labeling: inverseLabeling});
+  onChangeLabelingHandler = (event) => {
+    console.log(event);
+    this.setState({labeling: !this.state.labeling});
   }
 
   onSubmitHandler = async event => {
@@ -244,176 +225,61 @@ class AnalystReportPage extends React.Component {
 
   render() {
 
+    let reportPicker = <MDBRow between><MDBSpinner multicolor small={true}/></MDBRow>;
+    let report = null;
+
+    if (this.state.initialized) {
+      reportPicker =
+          <Fragment>
+            <MDBRow>
+              <MDBCol md="12" className="mb-5">
+                <SelectInput getValue={this.setReport}
+                             options={this.state.reports}
+                             selected="Выберите отчет"
+                             label="Наименование отчета"
+                             searchLabel="Поиск по отчетам"/>
+              </MDBCol>
+            </MDBRow>
+            <MDBRow>
+              <MDBCol md="12" className="mb-3">
+                <SelectInput options={formatsList}
+                             getValue={this.setReportFormat}
+                             searchLabel="Поиск по форматам"
+                             selected="Выберите формат"
+                             label="Формат отчета"/>
+              </MDBCol>
+            </MDBRow>
+          </Fragment>
+    }
+
+    if (this.state.initialized && this.state.report) {
+      switch (this.state.report.type) {
+        case 1:
+          report =
+              <form className="needs-validation" onSubmit={this.onSubmitHandler}>
+                <Report1 goals={this.state.goals}
+                         start={this.state.start}
+                         scenarios={this.state.scenarios}
+                         quarters={this.state.quarters}
+                         onChange={(event) => this.onChangeHandler(event)}
+                         setQuarter={(event) => this.setQuarter(event)}
+                         setScenario={(event) => this.setScenario(event)}
+                         setGoal={(event) => this.setGoal(event)}/>
+              </form>
+          break;
+        default:
+          report = <Preloader/>
+      }
+    }
+
     return (
         <MDBCol md="8" className="mx-auto my-5">
           <h1 className="text-center my-3">Материалы доклада о реализации транспортной стратегии Российской
             Федерации</h1>
-
-          {!this.state.isLoading && (
-              <form className="needs-validation"
-                    onSubmit={this.onSubmitHandler}>
-                <MDBRow>
-                  <MDBCol md="12" className="mb-5">
-                    <MDBSelect
-                        searchId={'Reports'}
-                        className="my-2"
-                        options={this.state.reports}
-                        search={true}
-                        searchLabel="Поиск по отчетам"
-                        getValue={this.setReport}
-                        selected="Выберите отчет"
-                        outline
-                        id="reportsSelect"
-                        name='reports'
-                        required
-                        label="Наименование отчета"/>
-                  </MDBCol>
-                </MDBRow>
-                <MDBRow>
-                  <MDBCol md="12" className="mb-3">
-                    <MDBSelect
-                        className="my-2"
-                        options={this.state.formats}
-                        getValue={this.setReportFormat}
-                        search={true}
-                        searchLabel="Поиск по форматам"
-                        selected="Выберите формат"
-                        outline
-                        required
-                        label="Формат отчета"
-                    />
-                  </MDBCol>
-                </MDBRow>
-                {this.state.report && (
-                    <React.Fragment>
-                      {this.state.report.type === 1 && (
-                          <MDBRow>
-                            <MDBCol md="12" className="mb-3">
-                              <MDBSelect
-                                  className="my-2"
-                                  options={this.state.goalsSelectList}
-                                  search={true}
-                                  searchLabel="Поиск по целям"
-                                  getValue={this.setGoal}
-                                  selected="Выберите цель"
-                                  outline
-                                  required
-                                  label="Наименование цели"
-                              />
-                            </MDBCol>
-                          </MDBRow>
-                      )}
-                      {(this.state.report.type === 1 || this.state.report.type === 6) && (
-                          <MDBRow>
-                            <MDBCol md="12" className="mb-3">
-                              <MDBSelect
-                                  className="my-2"
-                                  options={this.state.scenariosSelectList}
-                                  search={true}
-                                  searchLabel="Поиск по сценариям"
-                                  getValue={this.setScenario}
-                                  selected="Выберите сценарий"
-                                  outline
-                                  required
-                                  label="Наименование сценария"
-                              />
-                            </MDBCol>
-                          </MDBRow>
-                      )}
-                      {this.state.report.type <= 2 && (
-                          <MDBRow>
-                            <MDBCol md="12" className="mb-3">
-                              <MDBSelect
-                                  className="my-2"
-                                  options={this.state.quartersSelectList}
-                                  search={true}
-                                  searchLabel="Поиск по кварталам"
-                                  getValue={this.setQuarter}
-                                  selected="Выберите квартал"
-                                  outline
-                                  required
-                                  label="Наименование квартала"
-                              />
-                            </MDBCol>
-                          </MDBRow>
-                      )}
-                      {this.state.report.type >= 0 && (
-                          <MDBRow>
-                            <MDBCol>
-                              <MDBInput label="Начальный год" value={this.state.start} type="number" name="start"
-                                        outline
-                                        id='startInput'
-                                        onChange={this.onChangeHandler} required>
-                                <div className='invalid-feedback'>
-                                  Введите корректный начальный год
-                                </div>
-                              </MDBInput>
-                            </MDBCol>
-                          </MDBRow>
-                      )}
-                      {this.state.report.type === 4 && (
-                          <MDBRow>
-                            <MDBCol>
-                              <MDBInput label="Конечный год" value={this.state.end} type="number" name="end"
-                                        id='endInput'
-                                        outline
-                                        onChange={this.onChangeHandler} required>
-                                <div className='invalid-feedback'>
-                                  Введите корректный конечный год
-                                </div>
-                              </MDBInput>
-                            </MDBCol>
-                          </MDBRow>
-                      )}
-                      {this.state.report.type === 6 && (
-                          <MDBRow>
-                            <MDBCol md="12" className="mb-3">
-                              <MDBSelect
-                                  className="my-2"
-                                  options={this.state.strategiesSelectList}
-                                  search={true}
-                                  searchLabel="Поиск по стратегиям"
-                                  getValue={this.setStrategy}
-                                  selected="Выберите стратегию"
-                                  outline
-                                  required
-                                  label="Наименование стратегии"
-                              />
-                            </MDBCol>
-                          </MDBRow>
-                      )}
-                      <MDBRow center middle between className="text-center">
-                        {(this.state.report.type === 4 || this.state.report.type === 5) && (
-                            <MDBCol middle>
-                              <MDBInput
-                                  type="checkbox"
-                                  value="conditions"
-                                  id="checkInput"
-                                  name='labeling'
-                                  label="Подписи значений рядов данных"
-                                  onClick={this.onChangeLabelHandler}>
-                              </MDBInput>
-                            </MDBCol>
-                        )}
-                        {this.state.report.type >= 0 && (
-                            <MDBCol middle>
-                              <MDBBtn color="primary" type="submit">
-                                Скачать
-                              </MDBBtn>
-                            </MDBCol>
-                        )}
-                        {this.state.report.type >= 0 && (
-                            <MDBCol middle>
-                              {this.state.isDownloading && <MDBSpinner multicolor small={true}/>}
-                            </MDBCol>
-                        )}
-                      </MDBRow>
-                    </React.Fragment>
-                )}
-              </form>
-          )}
+          {reportPicker}
+          {report}
         </MDBCol>
-    );
+    )
   }
 }
 

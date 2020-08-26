@@ -1,5 +1,5 @@
 import React from 'react';
-import TableContainer from "../../_components/TableContainer";
+import TableContainer from "../../Containers/TableContainer";
 
 export default class AdminStructureGoalsPage extends React.Component {
 

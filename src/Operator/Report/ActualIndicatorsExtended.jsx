@@ -3,7 +3,7 @@ import {toast} from "mdbreact";
 import appAxios from "../../_services/appAxios";
 import {ruLocalization} from "../../_components";
 import MaterialTable from "material-table";
-import TableContainer from "../../_components/TableContainer";
+import TableContainer from "../../Containers/TableContainer";
 
 export default class OperatorActualIndicatorsExtendedPage extends React.Component {
 

@@ -97,9 +97,9 @@ export const sideNavLinks = [
     layout: Layouts.adminControl,
   },
   {
-    link: "/admin/loading/reports",
-    text: "Бланки отчетов исполнителей",
-    layout: Layouts.adminLoading,
+      link: "/admin/loading/reportsList",
+      text: "Бланки отчетов исполнителей",
+      layout: Layouts.adminLoading,
   },
   {
     link: "/admin/loading/fromEMISS",

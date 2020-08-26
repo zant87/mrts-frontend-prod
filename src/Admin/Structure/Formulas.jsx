@@ -13,7 +13,7 @@ import {
 } from "mdbreact";
 import appAxios from "../../_services/appAxios";
 import "../../scrollbar.css";
-import TableContainer from "../../_components/TableContainer";
+import TableContainer from "../../Containers/TableContainer";
 import FormulaEdit from "./FormulaEdit";
 
 export default class AdminStructureFormulasPage extends React.Component {

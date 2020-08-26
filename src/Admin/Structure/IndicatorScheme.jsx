@@ -312,7 +312,7 @@ export default IndicatorScheme;
 //           nodeId = point.toNode.id,
 //           nodeDesc = nodeName === nodeId ? nodeName : nodeName + ", " + nodeId,
 //           parentDesc = point.fromNode.id;
-//         return point.index + ". " + nodeDesc + ", reports to " + parentDesc + ".";
+//         return point.index + ". " + nodeDesc + ", reportsList to " + parentDesc + ".";
 //       },
 //     },
 //   },
