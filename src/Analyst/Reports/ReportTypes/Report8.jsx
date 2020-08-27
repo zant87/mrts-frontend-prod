@@ -2,7 +2,6 @@ import React, {Fragment} from "react";
 import PropTypes from "prop-types";
 import {MDBCol, MDBRow} from "mdbreact";
 import SelectInput from "../../../_components/Inputs/SelectInput";
-import Report7 from "./Report7";
 
 const Report8 = (props) => {
 
@@ -22,7 +21,7 @@ const Report8 = (props) => {
     return (
         <Fragment>
             <MDBRow>
-                <MDBCol md="12" className="mb-3">
+                <MDBCol>
                     <SelectInput options={strategiesList}
                                  getValue={props.setStrategy}
                                  searchLabel="Поиск по стратегиям"
@@ -32,7 +31,7 @@ const Report8 = (props) => {
                 </MDBCol>
             </MDBRow>
             <MDBRow>
-                <MDBCol md="12" className="mb-3">
+                <MDBCol>
                     <SelectInput options={stagesList}
                                  getValue={props.setStage}
                                  searchLabel="Поиск по этапам ТС"
@@ -42,7 +41,7 @@ const Report8 = (props) => {
                 </MDBCol>
             </MDBRow>
             <MDBRow>
-                <MDBCol md="12" className="mb-3">
+                <MDBCol>
                     <SelectInput options={scenariosList}
                                  getValue={props.setScenario}
                                  searchLabel="Поиск по сценариям"

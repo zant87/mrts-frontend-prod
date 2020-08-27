@@ -17,7 +17,7 @@ const Report6 = (props) => {
     return (
         <Fragment>
             <MDBRow>
-                <MDBCol md="12" className="mb-3">
+                <MDBCol>
                     <SelectInput options={scenarioList}
                                  getValue={props.setScenario}
                                  searchLabel="Поиск по сценариям"
@@ -27,7 +27,7 @@ const Report6 = (props) => {
                 </MDBCol>
             </MDBRow>
             <MDBRow>
-                <MDBCol md="12" className="mb-3">
+                <MDBCol>
                     <SelectInput options={strategiesList}
                                  getValue={props.setStrategy}
                                  searchLabel="Поиск по стратегиям"

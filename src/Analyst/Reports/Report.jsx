@@ -217,7 +217,7 @@ class AnalystReportPage extends React.Component {
 
   onChangeHandler = (event) => {
     console.log(event);
-    this.setState({[event.target.name]: event.target.value});
+    this.setState({[event.target.name]: Number(event.target.value)});
   };
 
   onChangeLabelingHandler = (event) => {

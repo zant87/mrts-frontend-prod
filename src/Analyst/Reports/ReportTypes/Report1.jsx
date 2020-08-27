@@ -6,7 +6,9 @@ import NumberInput from "../../../_components/Inputs/NumberInput";
 
 const Report1 = (props) => {
 
-    console.log('Report1 props =', props);
+    const quartersList = props.quarters.map(item => {
+        return {value: item.code, text: item.name, checked: false}
+    });
 
     const goalsList = props.goals.map(item => {
         return {value: item.name, text: item.description, checked: false}
@@ -16,14 +18,10 @@ const Report1 = (props) => {
         return {value: item.code, text: item.name, checked: false}
     });
 
-    const quartersList = props.quarters.map(item => {
-        return {value: item.code, text: item.name, checked: false}
-    });
-
     return (
         <Fragment>
             <MDBRow>
-                <MDBCol md="12" className="mb-3">
+                <MDBCol>
                     <SelectInput options={goalsList}
                                  getValue={props.setGoal}
                                  searchLabel="Поиск по целям"
@@ -33,7 +31,7 @@ const Report1 = (props) => {
                 </MDBCol>
             </MDBRow>
             <MDBRow>
-                <MDBCol md="12" className="mb-3">
+                <MDBCol>
                     <SelectInput options={scenariosList}
                                  getValue={props.setScenario}
                                  searchLabel="Поиск по сценариям"
@@ -43,7 +41,7 @@ const Report1 = (props) => {
                 </MDBCol>
             </MDBRow>
             <MDBRow>
-                <MDBCol md="12" className="mb-3">
+                <MDBCol>
                     <SelectInput options={quartersList}
                                  getValue={props.setQuarter}
                                  searchLabel="Поиск по кварталам"

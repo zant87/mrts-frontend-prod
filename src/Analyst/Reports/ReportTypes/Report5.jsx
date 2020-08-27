@@ -3,7 +3,6 @@ import {MDBCol, MDBRow} from "mdbreact";
 import NumberInput from "../../../_components/Inputs/NumberInput";
 import BooleanInput from "../../../_components/Inputs/BooleanInput";
 import PropTypes from "prop-types";
-import Report4 from "./Report4";
 
 const Report5 = (props) => {
     return (
@@ -16,6 +15,7 @@ const Report5 = (props) => {
                                  label="Начальный год"
                                  value={props.start}/>
                 </MDBCol>
+
             </MDBRow>
             <MDBRow middle between>
                 <MDBCol>

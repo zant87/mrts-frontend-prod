@@ -1,4 +1,4 @@
-import React, {Fragment} from "react";
+import React from "react";
 import {MDBCol, MDBRow} from "mdbreact";
 import NumberInput from "../../../_components/Inputs/NumberInput";
 import PropTypes from "prop-types";

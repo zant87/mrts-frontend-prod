@@ -30,8 +30,7 @@ const Report4 = (props) => {
                     <BooleanInput onChange={props.onCheckboxChange}
                                   label='Подписи значений рядов данных'
                                   id='checkboxInput'
-                                  name='labeling'
-                    />
+                                  name='labeling'/>
                 </MDBCol>
             </MDBRow>
         </Fragment>

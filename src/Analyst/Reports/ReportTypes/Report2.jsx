@@ -3,7 +3,6 @@ import {MDBCol, MDBRow} from "mdbreact";
 import SelectInput from "../../../_components/Inputs/SelectInput";
 import NumberInput from "../../../_components/Inputs/NumberInput";
 import PropTypes from "prop-types";
-import BooleanInput from "../../../_components/Inputs/BooleanInput";
 
 const Report2 = (props) => {
 
@@ -15,7 +14,7 @@ const Report2 = (props) => {
         <Fragment>
             <Fragment>
                 <MDBRow>
-                    <MDBCol md="12" className="mb-3">
+                    <MDBCol>
                         <SelectInput options={quartersList}
                                      getValue={props.setQuarter}
                                      searchLabel="Поиск по кварталам"
