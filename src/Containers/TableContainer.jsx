@@ -2,13 +2,9 @@ import React from 'react';
 import {MDBContainer, MDBRow, MDBCol, toast} from "mdbreact";
 import appAxios from "../_services/appAxios";
 import MaterialTable from "material-table";
-import {ruLocalization} from "./MaterialTableLocalization";
+import {ruLocalization} from "../_components";
 
 export default class TableContainer extends React.Component {
-
-    constructor(props) {
-        super(props);
-    }
 
     render() {
 
@@ -26,6 +22,7 @@ export default class TableContainer extends React.Component {
         const tableRef = this.props.tableRef ? this.props.tableRef : React.createRef();
         const filtersList = this.props.filtersList ? this.props.filtersList : null;
         const modifiedBaseUrl = this.props.modifiedBaseUrl ? this.props.modifiedBaseUrl : false;
+        const editable = this.props.editable ? this.props.editable : null;
 
         return (
             <MDBContainer fluid>
@@ -38,6 +35,7 @@ export default class TableContainer extends React.Component {
                             localization={ruLocalization}
                             options={options}
                             actions={this.props.actions}
+                            editable={this.props.editable}
                             data={query =>
                                 new Promise((resolve, reject) => {
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import {MDBCol, MDBContainer, MDBModal, MDBModalBody, MDBModalHeader, MDBRow, toast} from "mdbreact";
-import TableContainer from "../../../_components/TableContainer";
+import TableContainer from "../../../Containers/TableContainer";
 import AppropriationsEdit from "./AppropriationsEdit";
 
 export default class OperatorReportAppropriationsPage extends React.Component {

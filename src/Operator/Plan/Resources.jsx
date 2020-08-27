@@ -1,6 +1,6 @@
 import React from 'react';
 import {MDBContainer, MDBModal, MDBModalBody, MDBModalHeader, toast} from "mdbreact";
-import TableContainer from "../../_components/TableContainer";
+import TableContainer from "../../Containers/TableContainer";
 import ResourcesEdit from "./ResourcesEdit";
 
 export default class OperatorPlanResourcesPage extends React.Component {

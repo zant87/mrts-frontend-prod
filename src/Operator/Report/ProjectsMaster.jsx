@@ -6,7 +6,7 @@ import {
     MDBModalHeader,
     toast
 } from "mdbreact";
-import TableContainer from "../../_components/TableContainer";
+import TableContainer from "../../Containers/TableContainer";
 import ProjectsMasterEdit from "./ProjectsMaster/ProjectsMasterEdit";
 
 

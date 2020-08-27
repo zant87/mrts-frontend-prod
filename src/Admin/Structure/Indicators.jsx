@@ -2,7 +2,7 @@ import React from "react";
 import { MDBCol, MDBContainer, MDBRow, MDBBtn } from "mdbreact";
 import appAxios from "../../_services/appAxios";
 import MaterialTable from "material-table";
-import TableContainer from "../../_components/TableContainer";
+import TableContainer from "../../Containers/TableContainer";
 
 export default class AdminStructureIndicatorsPage extends React.Component {
   state = {

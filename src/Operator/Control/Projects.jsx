@@ -1,5 +1,5 @@
 import React from 'react';
-import TableContainer from "../../_components/TableContainer";
+import TableContainer from "../../Containers/TableContainer";
 
 export default class OperatorControlProjectsPage extends React.Component {
 
@@ -32,7 +32,7 @@ export default class OperatorControlProjectsPage extends React.Component {
                 <TableContainer
                     columns={columns}
                     title={'Контроль поступления и согласования данных по выполнению крупных инвестиционных проектов'}
-                    baseUrl={'views/control-project-reports'}
+                    baseUrl={'views/control-project-reportsList'}
                     filtersList={filtersList}
                     filterMinimalLength={filterMinimalLength}
                     loadAll={true}

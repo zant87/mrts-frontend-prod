@@ -1,6 +1,6 @@
 import React from 'react';
 import appAxios from "../../_services/appAxios";
-import TableContainer from "../../_components/TableContainer";
+import TableContainer from "../../Containers/TableContainer";
 import {MDBContainer, MDBModal, MDBModalBody, MDBModalHeader} from "mdbreact";
 import Axios from "axios";
 import IndicatorsEdit from "./IndicatorsEdit";

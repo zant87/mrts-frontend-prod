@@ -97,9 +97,9 @@ export const sideNavLinks = [
     layout: Layouts.adminControl,
   },
   {
-    link: "/admin/loading/reports",
-    text: "Бланки отчетов исполнителей",
-    layout: Layouts.adminLoading,
+      link: "/admin/loading/reportsList",
+      text: "Бланки отчетов исполнителей",
+      layout: Layouts.adminLoading,
   },
   {
     link: "/admin/loading/fromEMISS",
@@ -219,6 +219,11 @@ export const sideNavLinks = [
   {
     link: "/operator/report/appropriations",
     text: "Ресурсное обеспечение",
+    layout: Layouts.operatorReport,
+  },
+  {
+    link: "/operator/report/actualIndicators",
+    text: "Индикаторы за отчетный период",
     layout: Layouts.operatorReport,
   },
   {

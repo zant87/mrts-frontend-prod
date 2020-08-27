@@ -25,7 +25,7 @@ const actions = {
             });
 
         } catch (error) {
-            console.log("Error while fetching reports list: " + error);
+            console.log("Error while fetching reportsList list: " + error);
             dispatch({
                 type: actions.FETCH_ERROR,
             });

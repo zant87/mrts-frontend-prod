@@ -1,6 +1,6 @@
 import React from 'react';
 import {MDBCol, MDBContainer, MDBModal, MDBModalBody, MDBModalHeader, MDBRow, MDBSpinner, toast} from "mdbreact";
-import TableContainer from "../../../_components/TableContainer";
+import TableContainer from "../../../Containers/TableContainer";
 import FinancingEdit from "./FinancingEdit";
 
 export default class OperatorReportFinancingPage extends React.Component {

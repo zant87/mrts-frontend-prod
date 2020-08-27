@@ -1,5 +1,5 @@
 import React from 'react';
-import TableContainer from "../../_components/TableContainer";
+import TableContainer from "../../Containers/TableContainer";
 
 export default class OperatorControlActivitiesPage extends React.Component {
 
@@ -29,7 +29,7 @@ export default class OperatorControlActivitiesPage extends React.Component {
                 <TableContainer
                     columns={columns}
                     title={'Контроль поступления и согласования данных по выполнению мероприятий по реализации ТС'}
-                    baseUrl={'views/control-activity-reports'}
+                    baseUrl={'views/control-activity-reportsList'}
                     filtersList={filtersList}
                     filterMinimalLength={filterMinimalLength}
                     loadAll={true}

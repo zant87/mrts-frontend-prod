@@ -1,5 +1,5 @@
 import React from 'react';
-import TableContainer from "../../_components/TableContainer";
+import TableContainer from "../../Containers/TableContainer";
 import {authenticationService} from "../../_services";
 import appAxios from "../../_services/appAxios";
 import Axios from "axios";

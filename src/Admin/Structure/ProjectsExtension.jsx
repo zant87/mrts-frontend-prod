@@ -3,7 +3,7 @@ import {MDBCol, MDBContainer, MDBModal, MDBModalBody, MDBModalHeader, MDBRow, to
 import appAxios from "../../_services/appAxios";
 import MaterialTable from "material-table";
 import {ruLocalization} from "../../_components/MaterialTableLocalization";
-import TableContainer from "../../_components/TableContainer";
+import TableContainer from "../../Containers/TableContainer";
 import ProjectExtensionEdit from "./ProjectExtensionEdit";
 import Axios from "axios";
 
