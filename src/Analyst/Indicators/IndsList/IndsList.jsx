@@ -70,7 +70,7 @@ class IndsList extends React.Component {
   };
 
   render() {
-    //console.log(indsstyle);
+    //console.log(indsstyle);s
     let inds = null;
 
     inds = this.props.inds.sort((a, b) => (a.code > b.code ? 1 : -1));
@@ -87,10 +87,13 @@ class IndsList extends React.Component {
 
     if (this.props.searchQuery != null) {
       inds = inds.filter((x) =>
-        x.name
+        (x.name
           .trim()
           .toLowerCase()
-          .includes(this.props.searchQuery.trim().toLowerCase())
+          .includes(this.props.searchQuery.trim().toLowerCase()) || (x.code
+            .trim()
+            .toLowerCase()
+            .includes(this.props.searchQuery.trim().toLowerCase())))
       );
     }
 
