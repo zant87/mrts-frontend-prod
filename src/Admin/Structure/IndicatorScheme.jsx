@@ -179,7 +179,7 @@ class IndicatorScheme extends React.Component {
                   <MDBCardText>
                     {/* <OrgDiagram centerOnCursor={true} config={config} /> */}
                     {/* <OrganizationChart datasource={ds} collapsible={false} verticalDepth={"2"} depth={2} chartClass="myChart" /> */}
-                    {/* {orgdata ? (
+                    {orgdata ? (
                       <div>
                         <OrgTree
                           data={orgdata}
@@ -192,7 +192,7 @@ class IndicatorScheme extends React.Component {
                       </div>
                     ) : (
                       false
-                    )} */}
+                    )}
                     {/* <HighchartsReact highcharts={Highcharts} options={options} /> */}
                     {this.state.inds && this.state.goals ? (
                       <OrgChart
