@@ -38,6 +38,7 @@ const Report1 = (props) => {
                                  getValue={props.setScenario}
                                  searchLabel="Поиск по сценариям"
                                  selected="Выберите сценарий"
+                                 id="scenariosSelect"
                                  label="Наименование сценария"/>
                 </MDBCol>
             </MDBRow>
@@ -71,7 +72,8 @@ Report1.propTypes = {
     onChange: PropTypes.func.isRequired,
     setQuarter: PropTypes.func.isRequired,
     setScenario: PropTypes.func.isRequired,
-    setGoal: PropTypes.func.isRequired
+    setGoal: PropTypes.func.isRequired,
+    start: PropTypes.number.isRequired
 };
 
 export default Report1;

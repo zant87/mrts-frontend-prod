@@ -5,8 +5,14 @@ import axios from 'axios';
 import {reportsList} from "./ReportsList";
 import SelectInput from "../../_components/Inputs/SelectInput";
 import {formatsList} from "./FormatsList";
-import Preloader from "../../Common/Preloader/Preloader";
 import Report1 from "./ReportTypes/Report1";
+import Report2 from "./ReportTypes/Report2";
+import Report3 from "./ReportTypes/Report3";
+import Report4 from "./ReportTypes/Report4";
+import Report5 from "./ReportTypes/Report5";
+import Report6 from "./ReportTypes/Report6";
+import Report7 from "./ReportTypes/Report7";
+import Report8 from "./ReportTypes/Report8";
 
 class AnalystReportPage extends React.Component {
 
@@ -30,10 +36,6 @@ class AnalystReportPage extends React.Component {
     stages: {},
     reportFormat: 'PDF'
   };
-
-  getSnapshotBeforeUpdate(prevProps, prevState) {
-    console.log('Reports.jsx getSnapshotBeforeUpdate', prevProps, prevState);
-  }
 
   shouldComponentUpdate(nextProps, nextState, nextContext) {
     console.log('Reports.jsx shouldComponentUpdate', nextProps, nextState);
@@ -75,7 +77,7 @@ class AnalystReportPage extends React.Component {
   }
 
   setStage = (event) => {
-    console.log('[Report.jsx] calling setStage...');
+    console.log('[Report.jsx] calling setStage...', event);
     if (event) {
       const filter = this.state.stages.filter((item) => item.code === event.toString())[0];
       console.log('[Report.jsx] setting Stage =', filter);
@@ -172,6 +174,14 @@ class AnalystReportPage extends React.Component {
         reportUrl = `reports/${this.state.report.value}/download?format=${this.state.reportFormat}&year=${this.state.start}&scenario=${this.state.scenario.id}&ts=${this.state.strategy.id}`;
         reportName = `report_${this.state.report.value}_${this.state.start}_${this.state.scenario.code}_${this.state.strategy.code}.${this.state.reportFormat}`;
         break;
+      case 7:
+        reportUrl = `reports/${this.state.report.value}/download?format=${this.state.reportFormat}&stage=${this.state.stage.id}&scenario=${this.state.scenario.id}&label=${this.state.labeling}`;
+        reportName = `report_${this.state.report.value}_${this.state.stage.id}_${this.state.scenario.id}.${this.state.reportFormat}`;
+        break;
+      case 8:
+        reportUrl = `reports/${this.state.report.value}/download?format=${this.state.reportFormat}&stage=${this.state.stage.id}&scenario=${this.state.scenario.id}&ts=${this.state.strategy.id}`;
+        reportName = `report_${this.state.report.value}_${this.state.stage.id}_${this.state.scenario.id}_${this.state.strategy.id}.${this.state.reportFormat}`;
+        break;
       default:
         reportUrl = `reports/${this.state.report.value}/download?format=${this.state.reportFormat}`;
         reportName = `report_${this.state.report.value}.${this.state.reportFormat}`;
@@ -225,7 +235,7 @@ class AnalystReportPage extends React.Component {
 
   render() {
 
-    let reportPicker = <MDBRow between><MDBSpinner multicolor small={true}/></MDBRow>;
+    let reportPicker = <MDBRow center><MDBSpinner multicolor small={true}/></MDBRow>;
     let report = null;
 
     if (this.state.initialized) {
@@ -265,10 +275,104 @@ class AnalystReportPage extends React.Component {
                          setQuarter={(event) => this.setQuarter(event)}
                          setScenario={(event) => this.setScenario(event)}
                          setGoal={(event) => this.setGoal(event)}/>
+                <MDBBtn color="primary" type="submit">
+                  Скачать
+                </MDBBtn>
+              </form>
+          break;
+        case 2:
+          report =
+              <form className="needs-validation" onSubmit={this.onSubmitHandler}>
+                <Report2 quarters={this.state.quarters}
+                         start={this.state.start}
+                         onChange={(event) => this.onChangeHandler(event)}
+                         setQuarter={(event) => this.setQuarter(event)}/>
+                <MDBBtn color="primary" type="submit">
+                  Скачать
+                </MDBBtn>
+              </form>
+          break;
+        case 3:
+          report =
+              <form className="needs-validation" onSubmit={this.onSubmitHandler}>
+                <Report3 start={this.state.start}
+                         onChange={(event) => this.onChangeHandler(event)}
+                         setQuarter={(event) => this.setQuarter(event)}/>
+                <MDBBtn color="primary" type="submit">
+                  Скачать
+                </MDBBtn>
+              </form>
+          break;
+        case 4:
+          report =
+              <form className="needs-validation" onSubmit={this.onSubmitHandler}>
+                <Report4 onChange={(event) => this.onChangeHandler(event)}
+                         onCheckboxChange={this.onChangeLabelingHandler}
+                         start={this.state.start}
+                         end={this.state.end}
+                         name='labeling'
+                         label='Подписи значений рядов данных'/>
+                <MDBBtn color="primary" type="submit">
+                  Скачать
+                </MDBBtn>
+              </form>
+          break;
+        case 5:
+          report =
+              <form className="needs-validation" onSubmit={this.onSubmitHandler}>
+                <Report5 onChange={(event) => this.onChangeHandler(event)}
+                         onCheckboxChange={this.onChangeLabelingHandler}
+                         start={this.state.start}
+                         name='labeling'
+                         label='Подписи значений рядов данных'/>
+                <MDBBtn color="primary" type="submit">
+                  Скачать
+                </MDBBtn>
+              </form>
+          break;
+        case 6:
+          report =
+              <form className="needs-validation" onSubmit={this.onSubmitHandler}>
+                <Report6 onChange={(event) => this.onChangeHandler(event)}
+                         scenarios={this.state.scenarios}
+                         setScenario={(event) => this.setScenario(event)}
+                         strategies={this.state.strategies}
+                         setStrategy={(event) => this.setStrategy(event)}
+                         start={this.state.start}/>
+                <MDBBtn color="primary" type="submit">
+                  Скачать
+                </MDBBtn>
+              </form>
+          break;
+        case 7:
+          report =
+              <form className="needs-validation" onSubmit={this.onSubmitHandler}>
+                <Report7 stages={this.state.stages}
+                         setStage={(event) => this.setStage(event)}
+                         scenarios={this.state.scenarios}
+                         setScenario={(event) => this.setScenario(event)}
+                         onCheckboxChange={this.onChangeLabelingHandler}/>
+                <MDBBtn color="primary" type="submit">
+                  Скачать
+                </MDBBtn>
+              </form>
+          break;
+        case 8:
+          report =
+              <form className="needs-validation" onSubmit={this.onSubmitHandler}>
+                <Report8 stages={this.state.stages}
+                         setStage={(event) => this.setStage(event)}
+                         scenarios={this.state.scenarios}
+                         setScenario={(event) => this.setScenario(event)}
+                         strategies={this.state.strategies}
+                         setStrategy={(event) => this.setStrategy(event)}/>
+                <MDBBtn color="primary" type="submit">
+                  Скачать
+                </MDBBtn>
               </form>
           break;
         default:
-          report = <Preloader/>
+          report = <MDBRow center><MDBSpinner multicolor small={true}/></MDBRow>
       }
     }
 

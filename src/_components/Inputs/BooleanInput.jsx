@@ -6,7 +6,6 @@ const BooleanInput = (props) => {
     return (
         <MDBInput
             type="checkbox"
-            // id={props.value}
             id='labelingInput'
             name={props.name}
             label={props.label}
@@ -18,6 +17,7 @@ const BooleanInput = (props) => {
 BooleanInput.propsTypes = {
     onChange: PropTypes.func.isRequired,
     label: PropTypes.string,
+    name: PropTypes.string
 };
 
 export default BooleanInput;
