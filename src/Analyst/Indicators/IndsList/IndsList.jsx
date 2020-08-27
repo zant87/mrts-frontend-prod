@@ -55,6 +55,7 @@ class IndsList extends React.Component {
     });
   };
 
+  
   onSaveFilters = () => {
     let quarterId = null;
     let freq = this.setFrequency.current.value;
