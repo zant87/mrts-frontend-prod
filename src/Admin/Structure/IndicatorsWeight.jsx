@@ -27,7 +27,6 @@ export default class AdminStructureIndicatorsWeightPage extends React.Component 
             });
     };
 
-
     render() {
 
         const tableRef = React.createRef();
