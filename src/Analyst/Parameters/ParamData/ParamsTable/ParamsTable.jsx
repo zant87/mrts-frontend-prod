@@ -51,7 +51,7 @@ const ParamsTable = (props) => {
       columns: [
         {
           label: "Тип значения / Год, " + okeiName,
-          field: "valueTypeName",
+          field: "Значение",
           sort: "asc",
           width: 250,
         },
@@ -64,14 +64,14 @@ const ParamsTable = (props) => {
       //--------Если годовые значения
       props.paramFrequencyId == 1
         ? data.columns.push({
-            label: year.split("-")[0],
-            field: year.split("-")[0],
+            label: " " + year.split("-")[0],
+            field: " " + year.split("-")[0],
             sort: "asc",
             width: 120,
           })
         : data.columns.push({
-            label: year,
-            field: year,
+            label: " " + year,
+            field: " " + year,
             sort: "asc",
             width: 120,
           })
@@ -80,10 +80,11 @@ const ParamsTable = (props) => {
     //-----------Заполнение data.rows для MDBDataTable
 
     rows = {};
+    rows.Значение = "Факт";
     //------------Если годовые значения
     if (props.paramFrequencyId == 1) {
       years.forEach((year) => {
-        rows[year.split("-")[0]] = paramsval
+        rows[" " + year.split("-")[0]] = paramsval
           .filter((val, i, arr) => {
             if (val.parameterDate == year) {
               return val.value;
@@ -96,7 +97,7 @@ const ParamsTable = (props) => {
       });
     } else {
       years.forEach((year) => {
-        rows[year] = paramsval
+        rows[" " + year] = paramsval
           .filter((val, i, arr) => {
             if (val.parameterDate == year) {
               return val.value;
@@ -110,7 +111,7 @@ const ParamsTable = (props) => {
     }
 
     rowsarr.push(rows);
-    rows.valueTypeName = "Факт";
+  
     rows = null;
 
     data.rows = rowsarr;

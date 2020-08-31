@@ -41,7 +41,7 @@ export default class AdminStructureIndicatorsWeightPage extends React.Component 
             {field: 'actual', title: 'Актульность', type: 'boolean', filtering: true, editable: 'never'},
             {field: 'goalName', title: 'Цель', filtering: true, editable: 'never'},
             {field: 'transportTypeName', title: 'Тип транспорта', filtering: true, editable: 'never'},
-            {field: 'indicatorWeight', title: 'Вес', filtering: true, type: 'numeric'},
+            {field: 'indicatorWeight', title: 'Вес индикатора', filtering: true, type: 'numeric'},
         ];
 
         return (

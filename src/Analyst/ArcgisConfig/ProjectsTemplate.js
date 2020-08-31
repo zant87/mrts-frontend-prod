@@ -39,6 +39,10 @@ export const ProjectsTemplate = {
                 {
                     fieldName: 'WORK_STAGE',
                     label: 'Этапы'
+                },
+                {
+                    fieldName: 'CODE',
+                    label: 'Код проекта'
                 }
             ]
         }

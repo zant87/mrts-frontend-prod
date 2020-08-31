@@ -170,7 +170,8 @@ class App extends React.Component {
                           mask="light"
                           className="special-color"
                           href="#!"
-                          hidden>
+                          hidden
+                          >
                           <li>
                               <ul className="social">
                                   <li>

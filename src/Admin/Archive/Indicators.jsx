@@ -9,13 +9,13 @@ export default class AdminArchiveIndicatorsPage extends React.Component {
             {field: 'id', title: '#', filtering: false},
             {field: 'year', title: 'Отчетный год'},
             {field: 'quarterName', title: 'Отчетный квартал', filtering: false},
-            {field: 'indicatorName', title: 'Показатель', filtering: true},
+            {field: 'indicatorName', title: 'Индикатор', filtering: true},
             {field: 'scenarioName', title: 'Сценарий', filtering: true},
             {field: 'okeiCode', title: 'ОКЕИ', filtering: true, editable: 'never'},
             {field: 'transportTypeName', title: 'Вид транспорта', filtering: true},
             {field: 'beginDate', title: 'Дата расчета (изменения) значения', filtering: false, type: 'date'},
             {field: 'endDate', title: 'Дата окончания действия значения', filtering: false, type: 'date'},
-            {field: 'value', title: 'Значение показателя', filtering: false},
+            {field: 'value', title: 'Значение индикатора', filtering: false},
         ];
 
         const filtersList = {
@@ -26,7 +26,7 @@ export default class AdminArchiveIndicatorsPage extends React.Component {
             <React.Fragment>
                 <TableContainer
                     columns={columns}
-                    title={'Архив расчета индикаторов ТС'}
+                    title={'Архив результатов расчета индикаторов ТС'}
                     baseUrl={'views/i-2-s'}
                     filtersList={filtersList}
                     loadAll={true}

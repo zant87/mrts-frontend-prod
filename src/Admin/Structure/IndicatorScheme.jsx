@@ -170,8 +170,8 @@ class IndicatorScheme extends React.Component {
     };
     return (
       <div>
-        <MDBContainer fluid>
-          <MDBRow center>
+        <MDBContainer fluid style={{height: "100%"}}> 
+          <MDBRow center style={{height: "100%"}}>
             <MDBCol md={"12"} className="my-2 mx-auto" style={{ height: "100%" }}>
               <MDBCard style={{ width: "100%" }}>
                 <MDBCardHeader color=" special-color">Индикаторы по целям ТС (схема)</MDBCardHeader>

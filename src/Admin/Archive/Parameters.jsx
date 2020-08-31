@@ -14,7 +14,7 @@ export default class AdminArchiveParametersPage extends React.Component {
             {field: 'transportTypeName', title: 'Вид транспорта', filtering: true},
             {field: 'dataProviderCode', title: 'Источник', filtering: true},
             {field: 'value', title: 'Значение показателя', filtering: false},
-            {field: 'beginDate', title: 'Дата изменения записи', filtering: false, type: 'date'},
+            {field: 'beginDate', title: 'Дата изменения записи', filtering: true, type: 'date'},
             {field: 'endDate', title: 'Дата окончания действия записи', filtering: false, type: 'date'},
             {field: 'okeiName', title: 'Единица измерений'},
         ];
@@ -27,7 +27,7 @@ export default class AdminArchiveParametersPage extends React.Component {
             <React.Fragment>
                 <TableContainer
                     columns={columns}
-                    title={'Архив исходных данных (показателей)для расчета индикаторов ТС'}
+                    title={'Архив показателей для расчета индикаторов ТС'}
                     baseUrl={'views/i-1-s'}
                     loadAll={true}
                 />

@@ -46,7 +46,7 @@ export default class OperatorActualIndicatorsExtendedPage extends React.Componen
             {field: 'year', title: 'Год', filtering: true, editable: 'never'},
             {field: 'quarterName', title: 'Квартал', filtering: true, editable: 'never'},
             {field: 'transportTypeName', title: 'Вид транспорта', filtering: true, editable: 'never'},
-            {field: 'username', title: 'Пользователь', filtering: true, editable: 'never'},
+            {field: 'username', title: 'Ответственный', filtering: true, editable: 'never'},
             {field: 'calcScript', title: 'Результаты расчета', filtering: true, editable: 'never'},
             {field: 'indicatorValue', title: 'Значение', type: 'numeric', editable: 'always'},
         ];

@@ -178,27 +178,27 @@ export const sideNavLinks = [
   },
   {
     link: "/operator/control/indicators",
-    text: "Показателей",
+    text: "Контроль показателей",
     layout: Layouts.operatorControl,
   },
   {
     link: "/operator/control/completion",
-    text: "Расчета индикаторов",
+    text: "Конроль расчета индикаторов",
     layout: Layouts.operatorControl,
   },
   {
     link: "/operator/control/activities",
-    text: "Мероприятий по реализации",
+    text: "Контроль мероприятий по реализации",
     layout: Layouts.operatorControl,
   },
   {
     link: "/operator/control/projects",
-    text: "Крупных инвестиционных проектов",
+    text: "Контроль крупных инвестиционных проектов",
     layout: Layouts.operatorControl,
   },
   {
     link: "/operator/control/resources",
-    text: "Ресурсного обеспечения",
+    text: "Контроль ресурсного обеспечения",
     layout: Layouts.operatorControl,
   },
   {
@@ -213,7 +213,7 @@ export const sideNavLinks = [
   },
   {
     link: "/operator/report/fact",
-    text: "Фактические значения показателей",
+    text: "Фактические значения показателей за отчетный период",
     layout: Layouts.operatorReport,
   },
   {
@@ -238,17 +238,17 @@ export const sideNavLinks = [
   },
   {
     link: "/operator/calculation/intermediate",
-    text: "Промежуточных значений индикаторов",
+    text: "Расчет промежуточных значений индикаторов",
     layout: Layouts.operatorCalculation,
   },
   {
     link: "/operator/calculation/values",
-    text: "Индикаторов за отчетный период",
+    text: "Расчет индикаторов за отчетный период",
     layout: Layouts.operatorCalculation,
   },
   {
     link: "/operator/calculation/levels",
-    text: "Уровней и динамики достижения индикаторов",
+    text: "Расчет уровней и динамики достижения индикаторов",
     layout: Layouts.operatorCalculation,
   },
 ];

@@ -14,7 +14,7 @@ export default class SideNav extends Component {
         if (this.props.layout) {
 
             links = (
-                <MDBSideNavNav>
+                <MDBSideNavNav >
                     {
                         sideNavLinks.filter(link => link.layout === this.props.layout)
                             .map(filtered => {
