@@ -41,7 +41,7 @@ const Report6 = (props) => {
                     <NumberInput onChange={props.onChange}
                                  required
                                  name="start"
-                                 label="Начальный год"
+                                 label="Отчетный год"
                                  value={props.start}/>
                 </MDBCol>
             </MDBRow>

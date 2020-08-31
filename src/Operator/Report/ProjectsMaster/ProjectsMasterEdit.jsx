@@ -167,7 +167,7 @@ export default class OperatorReportProjectsMasterEditPage extends React.Componen
                 )}
                 {this.state.project && (
 
-                    <MDBInput label="Описание проекта"
+                    <MDBInput label="Комментарий о выполнении мероприятия"
                               onChange={this.onChangeHandler}
                               name='description'
                               value={this.state.description}

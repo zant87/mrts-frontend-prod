@@ -20,7 +20,7 @@ const Report2 = (props) => {
                                      searchLabel="Поиск по кварталам"
                                      selected="Выберите квартал"
                                      id="quartersSelect"
-                                     label="Наименование квартала"/>
+                                     label="Отчетный квартал"/>
                     </MDBCol>
                 </MDBRow>
                 <MDBRow>
@@ -28,7 +28,7 @@ const Report2 = (props) => {
                         <NumberInput onChange={props.onChange}
                                      required
                                      name="start"
-                                     label="Начальный год"
+                                     label="Отчетный год"
                                      value={props.start}/>
                     </MDBCol>
                 </MDBRow>

@@ -3,7 +3,7 @@ body {
 }
 
 .side-nav.wide {
-    width: 260px
+    width: 350px;
 }
 
 .side-nav.wide .collapsible a {
@@ -18,10 +18,11 @@ body {
 .side-nav .logo-wrapper {
     height: 180px;
     margin-top: -5px;
-    margin-left: 10px;
+    /* margin-left: 10px; */
 }
 
 .logo-wrapper {
+    padding-left: 50px;
     margin-bottom: 10px;
 }
 
