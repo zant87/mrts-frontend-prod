@@ -30,11 +30,11 @@ export const ProjectsTemplate = {
                 },
                 {
                     fieldName: 'TYPE_BUDGET',
-                    label: 'Тип бюджета'
+                    label: 'Источник финансирования'
                 },
                 {
                     fieldName: 'PROJECT_TYPE',
-                    label: 'Тип проекта'
+                    label: 'Вид транспорта'
                 },
                 {
                     fieldName: 'WORK_STAGE',
