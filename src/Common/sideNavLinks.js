@@ -127,6 +127,16 @@ export const sideNavLinks = [
     layout: Layouts.adminLoading,
   },
   {
+    link: "/admin/loading/resourcesFromXLSX",
+    text: "Загрузка ресурсного обеспечения",
+    layout: Layouts.adminLoading,
+  },
+  {
+    link: "/admin/loading/activitiesFromXLSX",
+    text: "Загрузка мероприятий",
+    layout: Layouts.adminLoading,
+  },
+  {
     link: "/admin/archive/parameters",
     text: "Архив показателей",
     layout: Layouts.adminArchive,
