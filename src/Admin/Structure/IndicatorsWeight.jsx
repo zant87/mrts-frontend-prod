@@ -27,7 +27,6 @@ export default class AdminStructureIndicatorsWeightPage extends React.Component 
             });
     };
 
-
     render() {
 
         const tableRef = React.createRef();
@@ -39,7 +38,13 @@ export default class AdminStructureIndicatorsWeightPage extends React.Component 
             {field: 'shortName', title: 'Короткое наименование', filtering: true, editable: 'never'},
             {field: 'code', title: 'Код', filtering: true, editable: 'never'},
             {field: 'description', title: 'Описание', filtering: true, editable: 'never'},
-            {field: 'actual', title: 'Актульность', type: 'boolean', filtering: true, editable: 'never'},
+            {
+                field: 'actual',
+                title: 'Актульность',
+                lookup: {true: 'Да', false: 'Нет'},
+                filtering: true,
+                editable: 'never'
+            },
             {field: 'goalName', title: 'Цель', filtering: true, editable: 'never'},
             {field: 'transportTypeName', title: 'Тип транспорта', filtering: true, editable: 'never'},
             {field: 'indicatorWeight', title: 'Вес индикатора', filtering: true, type: 'numeric'},

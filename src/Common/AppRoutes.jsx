@@ -5,7 +5,6 @@ import { Role } from "@/_helpers";
 import AdminGoalsPage from "@/Admin/Structure/Goals";
 import AdminIndicatorsPage from "@/Admin/Structure/Indicators";
 import AdminParametersPage from "@/Admin/Structure/Parameters";
-import AdminControlNavigation from "@/Admin/Control/Navigation";
 import AdminExecutorsPage from "@/Admin/Control/Executors";
 import AdminExecutorsByIndicatorPage from "@/Admin/Control/ExecutorsByIndicators";
 import AdminExecutorsByParametersPage from "@/Admin/Control/ExecutorsByParameters";
@@ -78,6 +77,7 @@ import AnalystBudgetLevelsPage from "../Analyst/BudgetLevels/BudgetLevelsContain
 import OperatorActualIndicatorsExtendedPage from "../Operator/Report/ActualIndicatorsExtended";
 import AdminLoadingResourcesFromXLSXPage from "../Admin/Loading/ResourcesFromXLSX";
 import AdminLoadingActivitiesFromXLSXPage from "../Admin/Loading/ActivitiesFromXLSX";
+import AdminControlExecutorsPage from "../Admin/Control/Executors";
 
 const AsyncAdminStructureGoalsPage = loadable({
     loader: () => import("../Admin/Structure/Goals"),
@@ -255,7 +255,7 @@ export const AppRoutes = () => {
             {/*Control - Настройка контроля*/}
             {/*<PrivateRoute exact path="/admin/control" roles={Role.Admin} component={AsyncAdminControlNavigation}/>*/}
             <PrivateRoute exact path="/admin/control/executors" roles={Role.Admin}
-                          component={AsyncAdminControlExecutorsPage}/>
+                          component={AdminControlExecutorsPage}/>
             <PrivateRoute exact path="/admin/control/executorsByIndicator" roles={Role.Admin}
                           component={AsyncAdminControlExecutorsByIndicatorPage}/>
             <PrivateRoute exact path="/admin/control/executorsByParameters" roles={Role.Admin}
