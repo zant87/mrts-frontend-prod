@@ -1,5 +1,11 @@
 export const ProjectsTemplate = {
     title: '{NAME}',
+    actions: [
+        {
+            id: "show-form",
+            title: "Детализация"
+        }
+    ],
     content: [
         {
             type: 'fields',
@@ -7,6 +13,10 @@ export const ProjectsTemplate = {
                 {
                     fieldName: 'NAME',
                     label: 'Название проекта'
+                },
+                {
+                    fieldName: 'CODE',
+                    label: 'Код проекта'
                 },
                 {
                     fieldName: 'PERCENT_READY',

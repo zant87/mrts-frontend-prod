@@ -86,6 +86,7 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
                                 data={this.state.row}
                                 action={this.state.action}
                                 tableRef={this.tableRef}
+                                editable={true}
                             />
                         </MDBModalBody>
                     </MDBModal>
