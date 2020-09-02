@@ -11,26 +11,41 @@ import {
     SeaPortsTemplate
 } from "./ArcgisConfig";
 import {MDBContainer, MDBModal, MDBModalBody, MDBModalHeader} from "mdbreact";
-import MapModal from "./MapModal";
+import MapFilterModal from "./Map/MapFilterModal";
+import appAxios from "../_services/appAxios";
+import ProjectsMasterEdit from "../Operator/Report/ProjectsMaster/ProjectsMasterEdit";
 
 class AnalystMapPage extends React.Component {
 
     state = {
         mapRef: React.createRef(),
         modal: false,
+        form: false,
         base: null,
         action: '',
         start: 2018,
-        end: 2018
+        end: 2018,
+        project: null
     }
+
+    getProject = (code, year) => appAxios.get(`views/k-7-masters?page=0&size=20?projectCode=${code}&yearNumber.equals=${year}`).catch(err => null);
 
     componentDidMount() {
         loadModules([
-            'esri/Map', 'esri/views/MapView',
-            'esri/layers/MapImageLayer', 'esri/widgets/LayerList',
+            'esri/Map',
+            'esri/views/MapView',
+            'esri/layers/MapImageLayer',
+            'esri/widgets/LayerList',
             'esri/widgets/Legend',
         ], {css: true})
             .then(([ArcGISMap, MapView, MapImageLayer, LayerList, Legend]) => {
+
+                // const customContent = new CustomContent({
+                //     outFields: ["*"],
+                //     creator:  () => {
+                //         return 'hello';
+                //     }
+                // });
 
                 const base = new MapImageLayer({
                     url: "https://agoracle.asutk.ru/arcgis/rest/services/TS_projects/MapServer",
@@ -156,6 +171,7 @@ class AnalystMapPage extends React.Component {
                                             id: 6,
                                             title: 'Воздушный транспорт: на 2018 год, %',
                                             visible: true,
+
                                             popupTemplate: ProjectsTemplate
                                         },
                                         {
@@ -227,12 +243,31 @@ class AnalystMapPage extends React.Component {
 
                     view.ui.add(layerList, "bottom-left");
                 });
+
+                view.popup.on("trigger-action", (event) => this.triggerPopupActions(event));
             });
+    }
+
+    triggerPopupActions = (event) => {
+        if (event.action.id === "show-form") {
+            const projectCode = event.target.selectedFeature.attributes.CODE;
+            if (projectCode) {
+
+                this.getProject(projectCode, 2018).then((response) => {
+                    const projectData = response.data ? response.data[0] : null;
+                    if (projectData) {
+                        this.setState({project: projectData, form: true})
+                    }
+                });
+
+            }
+        }
     }
 
     triggerActions = (event, base) => {
 
         const id = event.action.id;
+        console.log('[triggerActions] base =', base);
 
         if (id === "enter-date") {
             this.setState({modal: true, base: base, action: id});
@@ -274,6 +309,9 @@ class AnalystMapPage extends React.Component {
         this.setState({modal: false});
     }
 
+    toggleForm = () => {
+        this.setState({form: false});
+    }
 
     onChangeHandler = (event) => {
         this.setState({[event.target.name]: Number(event.target.value)});
@@ -325,6 +363,9 @@ class AnalystMapPage extends React.Component {
     }
 
     render() {
+
+        console.log(this.state);
+
         return (
             <React.Fragment>
                 <div className="webmap mb-1" ref={this.state.mapRef}/>
@@ -332,12 +373,20 @@ class AnalystMapPage extends React.Component {
                     <MDBModal isOpen={this.state.modal} toggle={this.toggleModal} backdrop={true}>
                         <MDBModalHeader toggle={this.toggleModal}>Настройка фильтров</MDBModalHeader>
                         <MDBModalBody>
-                            <MapModal
+                            <MapFilterModal
                                 start={this.state.start}
                                 end={this.state.end}
                                 action={this.state.action}
                                 onChange={(event) => this.onChangeHandler(event)}
                                 doFilterLayers={this.doFilterLayers}/>
+                        </MDBModalBody>
+                    </MDBModal>
+                </MDBContainer>
+                <MDBContainer>
+                    <MDBModal isOpen={this.state.form} toggle={this.toggleForm} backdrop={false} size="fluid">
+                        <MDBModalHeader toggle={this.toggleForm}>Детализация проекта</MDBModalHeader>
+                        <MDBModalBody>
+                            <ProjectsMasterEdit data={this.state.project} editable={false}/>
                         </MDBModalBody>
                     </MDBModal>
                 </MDBContainer>

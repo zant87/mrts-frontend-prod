@@ -1,8 +1,8 @@
 import React from "react";
 import {MDBBtn, MDBInput, toast, MDBScrollbar, MDBContainer} from "mdbreact";
-import '../scrollbar.css';
+import '../../scrollbar.css';
 
-const MapModal = (props) => {
+const MapFilterModal = (props) => {
 
     let inputs = <MDBInput label="Конкретный год" name='start' value={props.start} onChange={props.onChange}
                            outline={true} type="number"/>;
@@ -27,4 +27,4 @@ const MapModal = (props) => {
 
 }
 
-export default MapModal;
+export default MapFilterModal;
