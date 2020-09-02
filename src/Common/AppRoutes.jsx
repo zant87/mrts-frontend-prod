@@ -78,7 +78,6 @@ import OperatorActualIndicatorsExtendedPage from "../Operator/Report/ActualIndic
 import AdminLoadingResourcesFromXLSXPage from "../Admin/Loading/ResourcesFromXLSX";
 import AdminLoadingActivitiesFromXLSXPage from "../Admin/Loading/ActivitiesFromXLSX";
 import AdminControlExecutorsPage from "../Admin/Control/Executors";
-import AnalystStructureIndicatorsSchemeValues from "../Analyst/IndicatorSchemeValues";
 
 const AsyncAdminStructureGoalsPage = loadable({
   loader: () => import("../Admin/Structure/Goals"),
@@ -282,7 +281,6 @@ export const AppRoutes = () => {
       <PrivateRoute exact path="/analyst/budgetlevels" roles={Role.Analyst} component={AnalystBudgetLevelsPage} />
       <PrivateRoute exact path="/analyst/report" roles={Role.Analyst} component={AsyncAnalystReportPage} />
       <PrivateRoute exact path="/analyst/map" roles={Role.Analyst} component={AnalystMapPage} />
-      <PrivateRoute exact path="/analyst/indschemevalues" roles={Role.Analyst} component={AnalystStructureIndicatorsSchemeValues} />
 
       {/* Оператор */}
       {/*Plan - Плановые показатели */}
