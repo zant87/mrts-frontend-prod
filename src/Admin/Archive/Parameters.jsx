@@ -1,6 +1,5 @@
 import React from 'react';
 import TableContainer from "../../Containers/TableContainer";
-import Highlighter from "react-highlight-words";
 
 export default class AdminArchiveParametersPage extends React.Component {
 
@@ -12,17 +11,7 @@ export default class AdminArchiveParametersPage extends React.Component {
             {field: 'quarterName', title: 'Отчетный квартал', filtering: true},
             {field: 'okudName', title: 'ОКУД', filtering: true},
             {field: 'parameterName', title: 'Показатель', filtering: true},
-            {
-                field: 'transportTypeName', title: 'Вид транспорта', filtering: true, render: rowData => {
-                    console.log(rowData);
-                    return <Highlighter
-                        highlightClassName="YourHighlightClass"
-                        searchWords={["транспорте"]}
-                        autoEscape={false}
-                        textToHighlight={rowData.parameterName}
-                    />
-                }
-            },
+            {field: 'transportTypeName', title: 'Вид транспорта', filtering: true},
             {field: 'dataProviderCode', title: 'Источник', filtering: true},
             {field: 'value', title: 'Значение показателя', filtering: false},
             {field: 'beginDate', title: 'Дата изменения записи', filtering: true, type: 'date'},
@@ -34,16 +23,14 @@ export default class AdminArchiveParametersPage extends React.Component {
             'year': 'equals'
         };
 
-        const actions = [
-            {
-                icon: 'highlight',
-                tooltip: 'Подсветка',
-                onClick: (rowData) => {
-                    console.log('You clicked Highlight button =', rowData);
-                },
-                isFreeAction: true
-            }
-        ];
+        const options = this.props.options ? this.props.options : {
+            pageSize: 20,
+            pageSizeOptions: [20, 50, 100],
+            actionsColumnIndex: 999,
+            filtering: true,
+            search: false,
+            columnsButton: true
+        };
 
         return (
             <React.Fragment>
@@ -51,7 +38,8 @@ export default class AdminArchiveParametersPage extends React.Component {
                     columns={columns}
                     title={'Архив показателей для расчета индикаторов ТС'}
                     baseUrl={'views/i-1-s'}
-                    actions={actions}
+                    options={options}
+                    filtersList={filtersList}
                     loadAll={true}
                 />
             </React.Fragment>
