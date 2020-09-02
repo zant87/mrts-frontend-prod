@@ -27,7 +27,6 @@ export default class AdminStructureTransportStrategiesPage extends React.Compone
             });
     };
 
-
     render() {
 
         const tableRef = React.createRef();

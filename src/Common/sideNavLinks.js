@@ -129,7 +129,7 @@ export const sideNavLinks = [
   },
   {
     link: "/admin/loading/fromXLSX",
-    text: "Загрузка из XLSX",
+    text: "Загрузка показателей",
     layout: Layouts.adminLoading,
   },
   {
@@ -140,6 +140,11 @@ export const sideNavLinks = [
   {
     link: "/admin/loading/activitiesFromXLSX",
     text: "Загрузка мероприятий",
+    layout: Layouts.adminLoading,
+  },
+  {
+    link: "/admin/loading/formulas",
+    text: "Загрузка формул",
     layout: Layouts.adminLoading,
   },
   {
