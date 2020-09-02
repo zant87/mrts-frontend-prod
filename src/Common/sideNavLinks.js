@@ -38,7 +38,7 @@ export const sideNavLinks = [
   },
 
   {
-    link: "/analyst/indSchemeValues",
+    link: "/analyst/indschemevalues",
     text: "Схема индикаторов по целям",
     layout: Layouts.analyst,
   },

@@ -6,13 +6,19 @@ import OrgTree from "react-org-tree";
 class IndicatorSchemeValues extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      inds: null,
-      goals: null,
-      goals_: null,
-      inds_: null,
-    };
   }
+
+  state = {
+    inds: null,
+    goals: null,
+    goals_: null,
+    inds_: null,
+    years: null,
+    year: 2018,
+    indvals: null,
+  };
+
+  selectedYearRef = React.createRef();
   zoomRef = React.createRef();
 
   getIndicators = (data) => {
@@ -43,6 +49,30 @@ class IndicatorSchemeValues extends React.Component {
     });
   };
 
+  getYears = (data) => {
+    let years = data;
+    // data.forEach((year) => {
+    //   this.setState({ years: years });
+    // });
+    this.setState({ years: years });
+    //console.log(this.state.years);
+  };
+
+  setYear = () => {
+    let year = this.selectedYearRef.current.value;
+    this.setState({ year: year });
+    console.log(this.state.year);
+    IndsAPI.getIndDataScheme(year).then((res) => {
+      this.getIndValues(res);
+    });
+  };
+
+  getIndValues = (data) => {
+    let indvals = data;
+    this.setState({ indvals: indvals });
+    console.log(this.state.indvals);
+  };
+
   zoomIn = () => {
     let zoomIn = this.zoomRef.current.style.zoom;
     this.zoomRef.current.style.zoom = Number(zoomIn) + 0.2;
@@ -56,20 +86,54 @@ class IndicatorSchemeValues extends React.Component {
     }
   };
 
-  async componentDidMount() {
+  componentDidMount() {
     IndsAPI.getInds().then((res) => {
       this.getIndicators(res);
     });
     IndsAPI.getGoals().then((res) => {
       this.getGoals(res);
     });
+    IndsAPI.getYears().then((res) => {
+      this.getYears(res);
+    });
+    IndsAPI.getIndDataScheme(this.state.year).then((res) => {
+      this.getIndValues(res);
+    });
+    //console.log(this.props);
   }
 
   render() {
-    let nodes = [];
+    //let nodes = [];
 
     let orgdata = [];
-    if (this.state.inds_ && this.state.goals_) {
+    if (this.state.indvals) {
+      let indval = this.state.indvals;
+      let inds = this.state.inds_;
+      let indsval = [];
+      inds.forEach((item) => {
+        let i = indval.find((val) => val.indicatorCode.replace("IND_", "") == item.code);
+        //console.log(i);
+        if (i) {
+          indsval.push({
+            id: item.id,
+            code: item.code.replace("IND_", ""),
+            name: item.name,
+            goalId: item.goalId,
+            value: i.value.toString(),
+            okei: i.okeiName,
+          });
+        } else {
+          indsval.push({ id: item.id, code: item.code.replace("IND_", ""), name: item.name, goalId: item.goalId, value: "", okei: "" });
+        }
+      });
+      //console.log(indsval);
+      //debugger;
+      // let valtest = this.state.indvals.filter((val) => val.indicatorCode == "IND_1.12.1").map((item) => item.value)[0];
+      //let valtest = indval.filter((val) => val.indicatorCode == "IND_1.12.1")[0].value;
+
+      //debugger;
+      //console.log(inds);
+
       orgdata = {
         id: 0,
         label: "Транспортная стратегия Российской Федерации на период до 2030 года",
@@ -78,13 +142,13 @@ class IndicatorSchemeValues extends React.Component {
           id: goal.id,
           label: goal.name,
 
-          children: this.state.inds_
+          children: indsval
             .filter((item) => item.goalId == goal.id)
             .sort((a, b) => (a.code > b.code ? 1 : -1))
             .map((item) => ({
               id: item.id,
 
-              label: item.code.replace("IND_", "") + " " + item.name,
+              label: item.code.replace("IND_", "") + " " + item.name + " \n " + " (Факт: " + item.value + " " + item.okei + " )",
             })),
         })),
       };
@@ -96,7 +160,8 @@ class IndicatorSchemeValues extends React.Component {
       //     // this.state.inds_.map((item) => ({ id: item.id, label: item.code.replace("IND_", "") + item.name })),
       //   });
       // });
-      console.log(orgdata);
+      //console.log(orgdata);
+      //console.log(this.props);
     } else orgdata = null;
 
     const horizontal = false;
@@ -109,18 +174,45 @@ class IndicatorSchemeValues extends React.Component {
           <MDBRow center style={{ height: "700px" }}>
             <MDBCol md={"12"} className="my-2 mx-auto" style={{ height: "700px" }}>
               <MDBCard style={{ width: "100%", height: "800px" }}>
-                <MDBCardHeader color=" special-color">Схема индикаторов по целям</MDBCardHeader>
+                <MDBCardHeader color="special-color">Схема индикаторов по целям</MDBCardHeader>
                 <MDBCardBody>
-                  <div>
-                    <MDBBtn onClick={this.zoomIn} color="primary" outline size="sm" style={{ width: "60px" }}>
-                      +
-                    </MDBBtn>
-                    <br />
-                    <MDBBtn onClick={this.zoomOut} color="primary" outline size="sm" style={{ width: "60px" }}>
-                      -
-                    </MDBBtn>
-                  </div>
-                  {orgdata ? (
+                  <MDBContainer fluid style={{ borderBottom: "1px solid #f1f1f1" }}>
+                    <MDBRow>
+                      <MDBCol md={"4"} size="6" style={{ padding: "7px", textAlign: "left" }}>
+                        <MDBBtn onClick={this.zoomIn} color="special-color" size="sm" style={{ width: "60px", fontSize: "14px" }}>
+                          +
+                        </MDBBtn>
+                        <br />
+                        <MDBBtn onClick={this.zoomOut} color="special-color" size="sm" style={{ width: "60px", fontSize: "14px" }}>
+                          -
+                        </MDBBtn>
+                      </MDBCol>
+                      <MDBCol md={"4"} size="6" style={{ padding: "7px" }}>
+                        <span>
+                          <select ref={this.selectedYearRef} id="yearForm" className=" custom-select custom-select-md">
+                            {this.state.years
+                              ? this.state.years.map((item) =>
+                                  this.state.year == item.year ? (
+                                    <option value={item.year} selected>
+                                      {item.year}
+                                    </option>
+                                  ) : (
+                                    <option value={item.year}>{item.year}</option>
+                                  )
+                                )
+                              : null}
+                          </select>
+                        </span>
+                      </MDBCol>
+                      <MDBCol md={"4"} size="6" style={{}}>
+                        <MDBBtn color="primary" size="md" onClick={this.setYear}>
+                          Показать схему
+                        </MDBBtn>
+                      </MDBCol>
+                    </MDBRow>
+                  </MDBContainer>
+
+                  {this.state.indvals ? (
                     <div
                       style={{
                         display: "block",

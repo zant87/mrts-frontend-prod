@@ -282,7 +282,7 @@ export const AppRoutes = () => {
       <PrivateRoute exact path="/analyst/budgetlevels" roles={Role.Analyst} component={AnalystBudgetLevelsPage} />
       <PrivateRoute exact path="/analyst/report" roles={Role.Analyst} component={AsyncAnalystReportPage} />
       <PrivateRoute exact path="/analyst/map" roles={Role.Analyst} component={AnalystMapPage} />
-      <PrivateRoute exact path="/analyst/indSchemeValues" roles={Role.Analyst} component={AnalystStructureIndicatorsSchemeValues} />
+      <PrivateRoute exact path="/analyst/indschemevalues" roles={Role.Analyst} component={AnalystStructureIndicatorsSchemeValues} />
 
       {/* Оператор */}
       {/*Plan - Плановые показатели */}
