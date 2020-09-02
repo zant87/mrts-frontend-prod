@@ -36,6 +36,12 @@ export const sideNavLinks = [
     text: "Карта мероприятий",
     layout: Layouts.analyst,
   },
+
+  {
+    link: "/analyst/indschemevalues",
+    text: "Схема индикаторов по целям",
+    layout: Layouts.analyst,
+  },
   {
     link: "/admin/structure/indicators",
     text: "Индикаторы по целям",
@@ -97,9 +103,9 @@ export const sideNavLinks = [
     layout: Layouts.adminControl,
   },
   {
-      link: "/admin/loading/reportsList",
-      text: "Бланки отчетов исполнителей",
-      layout: Layouts.adminLoading,
+    link: "/admin/loading/reportsList",
+    text: "Бланки отчетов исполнителей",
+    layout: Layouts.adminLoading,
   },
   {
     link: "/admin/loading/fromEMISS",
