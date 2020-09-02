@@ -217,7 +217,7 @@ class IndicatorSchemeValues extends React.Component {
                       style={{
                         display: "block",
                         overflow: "auto",
-                        height: "620px",
+                        height: "600px",
                         width: "100%",
                         fontSize: "12px",
                         position: "realtive",
