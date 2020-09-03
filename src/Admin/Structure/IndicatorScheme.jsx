@@ -224,11 +224,11 @@ class IndicatorScheme extends React.Component {
                     <OrgDiagram centerOnCursor={true} config={config} />
                   </div> */}
                   <div>
-                    <MDBBtn onClick={this.zoomIn} color="primary" outline size="sm" style={{ width: "60px" }}>
+                    <MDBBtn onClick={this.zoomIn} color="special-color" outline size="sm" style={{ width: "60px", fontSize: "14px" }}>
                       +
                     </MDBBtn>
                     <br />
-                    <MDBBtn onClick={this.zoomOut} color="primary" outline size="sm" style={{ width: "60px" }}>
+                    <MDBBtn onClick={this.zoomOut} color="special-color" outline size="sm" style={{ width: "60px", fontSize: "14px" }}>
                       -
                     </MDBBtn>
                   </div>

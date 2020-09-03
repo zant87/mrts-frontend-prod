@@ -2,6 +2,7 @@ import React from "react";
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardHeader, MDBCardBody, MDBCardText, MDBBtn } from "mdbreact";
 import { IndsAPI } from "@/_services/api-inds.service";
 import OrgTree from "react-org-tree";
+import Preloader from "@/Common/Preloader/Preloader";
 
 class IndicatorSchemeValues extends React.Component {
   constructor(props) {
@@ -16,6 +17,7 @@ class IndicatorSchemeValues extends React.Component {
     years: null,
     year: 2018,
     indvals: null,
+    isFetchingvals: true
   };
 
   selectedYearRef = React.createRef();
@@ -59,9 +61,10 @@ class IndicatorSchemeValues extends React.Component {
   };
 
   setYear = () => {
+    
     let year = this.selectedYearRef.current.value;
-    this.setState({ year: year });
-    console.log(this.state.year);
+    this.setState({ year: year, isFetchingvals: true });
+    //console.log(this.state.year);
     IndsAPI.getIndDataScheme(year).then((res) => {
       this.getIndValues(res);
     });
@@ -69,8 +72,12 @@ class IndicatorSchemeValues extends React.Component {
 
   getIndValues = (data) => {
     let indvals = data;
-    this.setState({ indvals: indvals });
-    console.log(this.state.indvals);
+    this.setState({ 
+      indvals: indvals, 
+      isFetchingvals: false
+    });
+    
+    //console.log(this.state.indvals);
   };
 
   zoomIn = () => {
@@ -133,7 +140,7 @@ class IndicatorSchemeValues extends React.Component {
 
       //debugger;
       //console.log(inds);
-
+      //let br = parseInt('\000D', 8);
       orgdata = {
         id: 0,
         label: "Транспортная стратегия Российской Федерации на период до 2030 года",
@@ -148,7 +155,7 @@ class IndicatorSchemeValues extends React.Component {
             .map((item) => ({
               id: item.id,
 
-              label: item.code.replace("IND_", "") + " " + item.name + " \n " + " (Факт: " + item.value + " " + item.okei + " )",
+              label: item.code.replace("IND_", "") + " " + item.name + " " + " (Факт: " + item.value + " " + item.okei + " )",
             })),
         })),
       };
@@ -187,9 +194,9 @@ class IndicatorSchemeValues extends React.Component {
                           -
                         </MDBBtn>
                       </MDBCol>
-                      <MDBCol md={"4"} size="6" style={{ padding: "7px" }}>
+                      <MDBCol md={"3"} size="6" style={{ padding: "7px" }}>
                         <span>
-                          <select ref={this.selectedYearRef} id="yearForm" className=" custom-select custom-select-md">
+                          <select  ref={this.selectedYearRef} id="yearForm" className=" custom-select custom-select-md">
                             {this.state.years
                               ? this.state.years.map((item) =>
                                   this.state.year == item.year ? (
@@ -204,16 +211,14 @@ class IndicatorSchemeValues extends React.Component {
                           </select>
                         </span>
                       </MDBCol>
-                      <MDBCol md={"4"} size="6" style={{}}>
+                      <MDBCol md={"5"} size="6" style={{}}>
                         <MDBBtn color="primary" size="md" onClick={this.setYear}>
                           Показать схему
                         </MDBBtn>
                       </MDBCol>
                     </MDBRow>
                   </MDBContainer>
-
-                  {this.state.indvals ? (
-                    <div
+                  <div
                       style={{
                         display: "block",
                         overflow: "auto",
@@ -223,7 +228,10 @@ class IndicatorSchemeValues extends React.Component {
                         position: "realtive",
                         textAlign: "center",
                       }}
-                    >
+                    >          
+                     
+                  {this.state.isFetchingvals ? (<Preloader />) : this.state.indvals ? (
+                     
                       <div ref={this.zoomRef} style={{ zoom: "1.0" }}>
                         <OrgTree
                           //dangerouslySetInnerHTML={{ __html: orgdata }}
@@ -234,10 +242,12 @@ class IndicatorSchemeValues extends React.Component {
                           labelWidth={"150px"}
                         ></OrgTree>
                       </div>
-                    </div>
+                     
+                    
                   ) : (
-                    false
+                   "Нет данных"
                   )}
+                  </div> 
                   <MDBCardText></MDBCardText>
                 </MDBCardBody>
               </MDBCard>
