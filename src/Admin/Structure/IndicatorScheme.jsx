@@ -91,7 +91,7 @@ class IndicatorScheme extends React.Component {
         id: 0,
         label: "Транспортная стратегия Российской Федерации на период до 2030 года",
         expand: true,
-        children: this.state.goals_.map((goal) => ({
+        children: this.state.goals_.sort((a, b) => (a.name > b.name ? 1 : -1)).map((goal) => ({
           id: goal.id,
           label: goal.name,
 
