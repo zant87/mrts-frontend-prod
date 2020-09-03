@@ -145,6 +145,17 @@ class LevSettings extends React.Component {
     if (this.props.goalId !== null) {
       inds = inds.filter((x) => x.goalId == this.props.goalId);
     }
+    else {
+      inds = null;
+      if (this.props.goals) {
+        //debugger;
+        if (this.props.goals.length > 0) {
+      let goalId = this.props.goals.sort((a, b) => (a.code > b.code ? 1 : -1))[0].id;
+      //debugger;
+      this.props.setGoalId(goalId);
+        }
+      }
+    }
 
     if (this.props.transportTypeId != "0") {
       inds = inds.filter((x) => x.transportTypeId == this.props.transportTypeId);
@@ -315,14 +326,16 @@ class LevSettings extends React.Component {
             </MDBContainer>
             <hr />
 
+
             <form className="needs-validation" onSubmit={this.submitHandler}>
               {this.props.isFetchingInds ? (
                 <Preloader />
-              ) : (
+              ) :  (
                 <div style={{ marginBottom: "20px", clear: "left" }}>
                   <label htmlFor="scenarioform">
                     <strong>Выберите индикаторы</strong>
                   </label>
+                  {inds!= null && inds.length>0 ? (
                   <MDBSelect
                     required
                     ref={this.selectedIndsRef}
@@ -347,9 +360,9 @@ class LevSettings extends React.Component {
                     selectAllValue=""
                     //focusShadow="inset 0px 10px 0px 0px"
                     //getValue={this.onSelectedInds}
-                  />
+                  /> ) : ( <div> Нет данных </div>) }
                 </div>
-              )}
+               ) }
 
               <div className="form-group">
                 <label htmlFor="scenarioform">

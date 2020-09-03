@@ -24,6 +24,12 @@ import { compose } from "redux";
 class IndicatorsContainer extends React.Component {
   componentDidMount() {
     this.props.getGoals();
+
+    // let goals = this.props.goals;
+    // if (goals) {
+    //   let goalId = goals.sort((a, b) => (a.code > b.code ? 1 : -1))[0].id;
+    // }
+    
     this.props.getTransportTypes();
     this.props.getInds();
     this.props.getFrequencies();
@@ -113,6 +119,7 @@ let mapStateToProps = (state) => {
     indsYearEnd: state.indsPage.indsYearEnd,
   };
 };
+
 
 export default compose(
   connect(mapStateToProps, {

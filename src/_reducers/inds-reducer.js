@@ -28,7 +28,7 @@ let initialState = {
   isFetchingIndData: false,
   isFetchingInfo: false,
   indId: null,
-  goalId: 34,
+  goalId: null,
   searchQuery: null,
   transportTypeId: "0",
   frequencies: null,
@@ -137,6 +137,7 @@ const indsReducer = (state = initialState, action) => {
       return state;
   }
 };
+
 
 //ActionCreators
 export const setInds = (inds) => ({ type: SET_INDS, inds });

@@ -21,6 +21,7 @@ import {
 import { withRouter } from "react-router-dom";
 import { compose } from "redux";
 
+
 class DynamicsContainer extends React.Component {
   componentDidMount() {
     this.props.getGoals();

@@ -7,6 +7,7 @@ import IndsList from "./IndsList/IndsList";
 import IndsInfo from "./IndsInfo/IndsInfo";
 import IndData from "./IndData/IndData";
 
+
 let Indicators = (props) => {
   //debugger;
   return (

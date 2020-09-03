@@ -62,14 +62,14 @@ export const LevelsAPI = {
   },
   getGoals() {
     return instance
-      .get("goals?transportStrategyVersionId.equals=3")
+      .get("goals?transportStrategyVersionActual.equals=true")
       .then((response) => {
         return response.data;
       });
   },
   getGoal() {
     return instance
-      .get("goals?transportStrategyVersionId.equals=3")
+      .get("goals?transportStrategyVersionActual.equals=true")
       .then((response) => {
         return response.data;
       });

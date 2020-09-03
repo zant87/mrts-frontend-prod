@@ -144,6 +144,17 @@ class DynSettings extends React.Component {
     if (this.props.goalId !== null) {
       inds = inds.filter((x) => x.goalId == this.props.goalId);
     }
+    else {
+      inds = null;
+      if (this.props.goals) {
+        //debugger;
+        if (this.props.goals.length > 0) {
+      let goalId = this.props.goals.sort((a, b) => (a.code > b.code ? 1 : -1))[0].id;
+      //debugger;
+      this.props.setGoalId(goalId);
+        }
+      }
+    }
 
     if (this.props.transportTypeId != "0") {
       inds = inds.filter((x) => x.transportTypeId == this.props.transportTypeId);
@@ -316,6 +327,7 @@ class DynSettings extends React.Component {
                   <label htmlFor="scenarioform">
                     <strong>Выберите индикаторы</strong>
                   </label>
+                  {inds!= null && inds.length>0 ? (
                   <MDBSelect
                     ref={this.selectedIndsRef}
                     //className="sel"
@@ -340,8 +352,8 @@ class DynSettings extends React.Component {
                     //focusShadow="inset 0px 10px 0px 0px"
                     //getValue={this.onSelectedInds}
                     required
-                  />
-                </div>
+                  /> ) : ( <div> Нет данных </div>) }
+                </div> 
               )}
 
               <div className="form-group">

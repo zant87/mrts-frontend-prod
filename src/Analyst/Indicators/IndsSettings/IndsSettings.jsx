@@ -3,6 +3,7 @@ import { MDBCol, MDBIcon } from "mdbreact";
 import Preloader from "@/Common/Preloader/Preloader";
 import { Fragment } from "react";
 
+
 const IndsSettings = (props) => {
   if (!props.goals || !props.transportTypes) {
     return <Preloader />;

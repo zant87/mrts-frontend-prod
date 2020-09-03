@@ -19,6 +19,7 @@ const SET_FUNDING_ID = "SET_FUNDING_ID";
 const SET_BUDLEV_YEAR_START = "SET_BUDLEV_YEAR_START";
 const SET_BUDLEV_YEAR_END = "SET_BUDLEV_YEAR_END";
 
+
 let initialState = {
   inds: [],
   budLevVals: null,
@@ -27,7 +28,7 @@ let initialState = {
   isFetchingInds: false,
   isFetchingBudLevData: false,
   checkedIndId: "1039",
-  goalId: 34,
+  goalId: null,
   transportTypeId: "0",
   years: null,
   yearStart: 2016,
