@@ -1,5 +1,5 @@
 import React from "react";
-import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardHeader, MDBCardBody, MDBCardText } from "mdbreact";
+import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardHeader, MDBCardBody, MDBCardText, MDBBtn } from "mdbreact";
 import { IndsAPI } from "@/_services/api-inds.service";
 import { OrgDiagram } from "basicprimitivesreact";
 import primitives from "basicprimitives";
@@ -30,6 +30,7 @@ class IndicatorScheme extends React.Component {
       inds_: null,
     };
   }
+  zoomRef = React.createRef();
 
   getIndicators = (data) => {
     let inds = [];
@@ -59,6 +60,19 @@ class IndicatorScheme extends React.Component {
     });
   };
 
+  zoomIn = () => {
+    let zoomIn = this.zoomRef.current.style.zoom;
+    this.zoomRef.current.style.zoom = Number(zoomIn) + 0.2;
+    //debugger;
+  };
+
+  zoomOut = () => {
+    let zoomOut = this.zoomRef.current.style.zoom;
+    if (zoomOut > 0.2) {
+      this.zoomRef.current.style.zoom = Number(zoomOut) - 0.2;
+    }
+  };
+
   async componentDidMount() {
     IndsAPI.getInds().then((res) => {
       this.getIndicators(res);
@@ -80,10 +94,15 @@ class IndicatorScheme extends React.Component {
         children: this.state.goals_.map((goal) => ({
           id: goal.id,
           label: goal.name,
+
           children: this.state.inds_
             .filter((item) => item.goalId == goal.id)
             .sort((a, b) => (a.code > b.code ? 1 : -1))
-            .map((item) => ({ id: item.id, label: item.code.replace("IND_", "") + " " + item.name })),
+            .map((item) => ({
+              id: item.id,
+
+              label: item.code.replace("IND_", "") + " " + item.name,
+            })),
         })),
       };
       // this.state.goals_.forEach((goal) => {
@@ -97,9 +116,9 @@ class IndicatorScheme extends React.Component {
       console.log(orgdata);
     } else orgdata = null;
 
-    const horizontal = true;
+    const horizontal = false;
     const collapsable = true;
-    const expandAll = true;
+    const expandAll = false;
     // const data = {
     //   id: 0,
     //   label: "Транспортная стратегия",
@@ -132,22 +151,42 @@ class IndicatorScheme extends React.Component {
     //     },
     //   ],
     // };
-    let config = {
+    const config = {
       pageFitMode: primitives.common.PageFitMode.None,
       maximumColumnsInMatrix: 2,
-      cursorItem: 1,
-      highlightItem: 0,
+      //cursorItem: 1,
+      //highlightItem: 0,
       normalItemsInterval: 20,
       cousinsIntervalMultiplier: 1,
+      itemTitleSecondFontColor: primitives.common.Colors.White,
+      leavesPlacementType: primitives.common.ChildrenPlacementType.Matrix,
+      arrowsDirection: primitives.common.GroupByType.Children,
+      //scale: 1,
+      labelFontSize: "24px",
       defaultTemplateName: "info",
       templates: [
         {
           name: "info",
-          itemSize: { width: 80, height: 36 },
-          minimizedItemSize: { width: 3, height: 3 },
-          highlightPadding: { left: 4, top: 4, right: 4, bottom: 4 },
+          itemSize: { width: 80 },
+          //itemBorderWidth: 1,
+          //minimizedItemLineWidth: 1,
+          //minimizedItemSize: { width: 3, height: 3 },
+          //highlightPadding: { left: 4, top: 4, right: 4, bottom: 0 },
           onItemRender: ({ context: itemConfig }) => {
-            return <div className="InfoTemplate">{itemConfig.title}</div>;
+            return (
+              <div
+                //className="InfoTemplate"
+                dangerouslySetInnerHTML={{ __html: itemConfig.title }}
+                style={{
+                  backgroundColor: "#fff",
+                  //minWidth: "200px",
+                  //height: "100%",
+                  fontSize: "14px",
+                }}
+              >
+                {/* {itemConfig.title} */}
+              </div>
+            );
           },
         },
       ],
@@ -157,44 +196,73 @@ class IndicatorScheme extends React.Component {
         {
           id: 101,
           parent: null,
-          title: "Vertical Layout",
-          childrenPlacementType: primitives.common.ChildrenPlacementType.Vertical,
+          title: "Транспортная стратегия Российской Федерации на период до 2030 года",
+          childrenPlacementType: primitives.common.ChildrenPlacementType.Horizontal,
         },
-        { id: 102, parent: 101, title: "Child 1" },
-        { id: 103, parent: 101, title: "Child 2", childrenPlacementType: primitives.common.ChildrenPlacementType.Vertical },
-        { id: 104, parent: 103, title: "Sub Child 3" },
-        { id: 105, parent: 103, title: "Sub Child 4" },
-        { id: 106, parent: 101, title: "Child 5" },
-        { id: 107, parent: 101, title: "Child 6" },
+        { id: 102, parent: 101, title: "<b>Цель 1</b>" },
+        { id: 106, parent: 101, title: "Цель 2" },
+        { id: 107, parent: 101, title: "Цель 3" },
+        { id: 108, parent: 101, title: "Цель 4" },
+        { id: 109, parent: 101, title: "Цель 5" },
+        { id: 103, parent: 101, title: "Цель 6", childrenPlacementType: primitives.common.ChildrenPlacementType.Matrix },
+        { id: 104, parent: 103, title: "6.1" },
+        { id: 105, parent: 103, title: "6.2" },
+        { id: 1014, parent: 103, title: "6.3" },
+        { id: 1015, parent: 103, title: "6.4" },
       ],
     };
+
     return (
       <div>
-        <MDBContainer fluid style={{height: "100%"}}> 
-          <MDBRow center style={{height: "100%"}}>
-            <MDBCol md={"12"} className="my-2 mx-auto" style={{ height: "100%" }}>
-              <MDBCard style={{ width: "100%" }}>
+        <MDBContainer fluid>
+          <MDBRow center style={{ height: "700px" }}>
+            <MDBCol md={"12"} className="my-2 mx-auto" style={{ height: "700px" }}>
+              <MDBCard style={{ width: "100%", height: "800px" }}>
                 <MDBCardHeader color=" special-color">Индикаторы по целям ТС (схема)</MDBCardHeader>
                 <MDBCardBody>
-                  <MDBCardText>
-                    {/* <OrgDiagram centerOnCursor={true} config={config} /> */}
-                    {/* <OrganizationChart datasource={ds} collapsible={false} verticalDepth={"2"} depth={2} chartClass="myChart" /> */}
-                    {/* {orgdata ? (
-                      <div>
+                  {/* <div style={{ display: "block", overflow: "scroll", height: "700px" }}>
+                    <OrgDiagram centerOnCursor={true} config={config} />
+                  </div> */}
+                  <div>
+                    <MDBBtn onClick={this.zoomIn} color="primary" outline size="sm" style={{ width: "60px" }}>
+                      +
+                    </MDBBtn>
+                    <br />
+                    <MDBBtn onClick={this.zoomOut} color="primary" outline size="sm" style={{ width: "60px" }}>
+                      -
+                    </MDBBtn>
+                  </div>
+                  {orgdata ? (
+                    <div
+                      style={{
+                        display: "block",
+                        overflow: "auto",
+                        height: "620px",
+                        width: "100%",
+                        fontSize: "12px",
+                        position: "realtive",
+                        textAlign: "center",
+                      }}
+                    >
+                      <div ref={this.zoomRef} style={{ zoom: "1.0" }}>
                         <OrgTree
+                          //dangerouslySetInnerHTML={{ __html: orgdata }}
                           data={orgdata}
                           horizontal={horizontal}
                           collapsable={collapsable}
                           expandAll={expandAll}
-                          labelWidth={"200px"}
-                          style={{ fontSize: "8px" }}
+                          labelWidth={"150px"}
                         ></OrgTree>
                       </div>
-                    ) : (
-                      false
-                    )} */}
+                    </div>
+                  ) : (
+                    false
+                  )}
+                  <MDBCardText>
+                    {/* <OrganizationChart datasource={ds} collapsible={false} verticalDepth={"2"} depth={2} chartClass="myChart" /> */}
+
                     {/* <HighchartsReact highcharts={Highcharts} options={options} /> */}
-                    {this.state.inds && this.state.goals ? (
+                    {/* {this.state.inds && this.state.goals ? (
                       <OrgChart
                         nodes={nodes.concat(
                           {
@@ -207,7 +275,7 @@ class IndicatorScheme extends React.Component {
                       />
                     ) : (
                       false
-                    )}
+                    )} */}
                   </MDBCardText>
                 </MDBCardBody>
               </MDBCard>

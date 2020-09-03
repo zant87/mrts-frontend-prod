@@ -47,6 +47,18 @@ export const IndsAPI = {
       return response.data;
     });
   },
+
+  getIndDataScheme(year) {
+    let url = "views/actual-indicators?valueTypeCode.equals=FACT&frequencyId.equals=1&year.equals=" + year;
+    console.log(url);
+    return instance.get(url).then((response) => {
+      if (response.data.length == 0) {
+        return null;
+      }
+      return response.data;
+    });
+  },
+
   getGoals() {
     return instance.get("goals?transportStrategyVersionId.equals=3").then((response) => {
       return response.data;

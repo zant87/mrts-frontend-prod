@@ -179,11 +179,15 @@ export default class OperatorReportProjectsMasterEditPage extends React.Componen
                 <ProjectResTable projectId={this.state.projectId} documentId={this.state.documentId}
                                  projectReportId={this.state.id}/>
 
-                <MDBRow around className='mt-2'>
-                    <MDBBtn color="primary" type="none" onClick={this.doSave}>
-                        Сохранить
-                    </MDBBtn>
-                </MDBRow>
+                {this.props.editable && (
+                    <MDBRow around className='mt-2'>
+                        <MDBBtn color="primary" type="none" onClick={this.doSave}>
+                            Сохранить
+                        </MDBBtn>
+                    </MDBRow>
+                )
+                }
+
 
             </div>
         );

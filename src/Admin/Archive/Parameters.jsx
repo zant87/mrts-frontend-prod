@@ -23,15 +23,26 @@ export default class AdminArchiveParametersPage extends React.Component {
             'year': 'equals'
         };
 
+        const options = this.props.options ? this.props.options : {
+            pageSize: 20,
+            pageSizeOptions: [20, 50, 100],
+            actionsColumnIndex: 999,
+            filtering: true,
+            search: false,
+            columnsButton: true
+        };
+
         return (
             <React.Fragment>
                 <TableContainer
                     columns={columns}
                     title={'Архив показателей для расчета индикаторов ТС'}
                     baseUrl={'views/i-1-s'}
+                    options={options}
+                    filtersList={filtersList}
                     loadAll={true}
                 />
             </React.Fragment>
-    );
-  }
+        );
+    }
 }
