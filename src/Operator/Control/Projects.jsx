@@ -32,7 +32,7 @@ export default class OperatorControlProjectsPage extends React.Component {
                 <TableContainer
                     columns={columns}
                     title={'Контроль поступления и согласования данных по выполнению крупных инвестиционных проектов'}
-                    baseUrl={'views/control-project-reportsList'}
+                    baseUrl={'views/control-project-reports'}
                     filtersList={filtersList}
                     filterMinimalLength={filterMinimalLength}
                     loadAll={true}
