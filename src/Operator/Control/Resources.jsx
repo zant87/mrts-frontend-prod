@@ -40,7 +40,7 @@ export default class OperatorControlResourcesPage extends React.Component {
                 <TableContainer
                     columns={columns}
                     title={'Контроль поступления и согласования данных по выполнению ресурсного обеспечения'}
-                    baseUrl={'views/control-budget-reportsList'}
+                    baseUrl={'views/control-budget-reports'}
                     filtersList={filtersList}
                     filterMinimalLength={filterMinimalLength}
                     loadAll={true}
