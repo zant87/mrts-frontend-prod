@@ -36,6 +36,12 @@ export const sideNavLinks = [
     text: "Карта мероприятий",
     layout: Layouts.analyst,
   },
+
+  {
+    link: "/analyst/indschemevalues",
+    text: "Схема индикаторов по целям",
+    layout: Layouts.analyst,
+  },
   {
     link: "/admin/structure/indicators",
     text: "Индикаторы по целям",
@@ -97,9 +103,9 @@ export const sideNavLinks = [
     layout: Layouts.adminControl,
   },
   {
-      link: "/admin/loading/reportsList",
-      text: "Бланки отчетов исполнителей",
-      layout: Layouts.adminLoading,
+    link: "/admin/loading/reportsList",
+    text: "Бланки отчетов исполнителей",
+    layout: Layouts.adminLoading,
   },
   {
     link: "/admin/loading/fromEMISS",
@@ -123,7 +129,7 @@ export const sideNavLinks = [
   },
   {
     link: "/admin/loading/fromXLSX",
-    text: "Загрузка из XLSX",
+    text: "Загрузка показателей",
     layout: Layouts.adminLoading,
   },
   {
@@ -134,6 +140,11 @@ export const sideNavLinks = [
   {
     link: "/admin/loading/activitiesFromXLSX",
     text: "Загрузка мероприятий",
+    layout: Layouts.adminLoading,
+  },
+  {
+    link: "/admin/loading/formulas",
+    text: "Загрузка формул",
     layout: Layouts.adminLoading,
   },
   {

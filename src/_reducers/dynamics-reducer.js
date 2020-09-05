@@ -19,6 +19,7 @@ const SET_QUARTERS = "SET_QUARTERS";
 const SET_SCENARIOS = "SET_SCENARIOS";
 const SET_SCENARIO_ID = "SET_SCENARIO_ID";
 
+
 let initialState = {
   inds: [],
   dynVals: null,
@@ -27,7 +28,7 @@ let initialState = {
   isFetchingInds: false,
   isFetchingDynData: false,
   checkedindsId: [],
-  goalId: 34,
+  goalId: null,
   //searchQuery: null,
   transportTypeId: "0",
   frequencies: null,

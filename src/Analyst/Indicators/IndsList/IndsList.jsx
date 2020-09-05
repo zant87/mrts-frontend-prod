@@ -78,6 +78,18 @@ class IndsList extends React.Component {
 
     if (this.props.goalId !== null) {
       inds = inds.filter((x) => x.goalId == this.props.goalId);
+     // debugger;
+    }
+    else {
+      inds = null;
+      if (this.props.goals) {
+        //debugger;
+        if (this.props.goals.length > 0) {
+      let goalId = this.props.goals.sort((a, b) => (a.code > b.code ? 1 : -1))[0].id;
+      //debugger;
+      this.props.setGoalId(goalId);
+        }
+      }
     }
 
     if (this.props.transportTypeId != "0") {
@@ -157,6 +169,7 @@ class IndsList extends React.Component {
                 </div>
               ) : null}
               <hr />
+
 
               <div className="form-group">
                 <label htmlFor="freqform">
@@ -242,7 +255,9 @@ class IndsList extends React.Component {
             <MDBCardText>
               {this.props.isFetchingInds ? (
                 <Preloader />
-              ) : (
+              ) : 
+
+                inds!= null && inds.length>0 ? (
                 <div className={indsstyle.indsliste}>
                   <div className="list-group">
                     {inds.map((ind) => (
@@ -258,7 +273,8 @@ class IndsList extends React.Component {
                     ))}
                   </div>
                 </div>
-              )}
+                ) : "Нет данных"
+              }
             </MDBCardText>
           </MDBCardBody>
         </MDBCard>

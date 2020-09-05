@@ -6,6 +6,7 @@ const instance = axios.create({
   baseURL: "/api/",
 });
 
+
 export const DynamicsAPI = {
   getInds() {
     return instance.get(`indicators`).then((response) => {
@@ -55,12 +56,12 @@ export const DynamicsAPI = {
     });
   },
   getGoals() {
-    return instance.get("goals?transportStrategyVersionId.equals=3").then((response) => {
+    return instance.get("goals?transportStrategyVersionActual.equals=true").then((response) => {
       return response.data;
     });
   },
   getGoal() {
-    return instance.get("goals?transportStrategyVersionId.equals=3").then((response) => {
+    return instance.get("goals?transportStrategyVersionActual.equals=true").then((response) => {
       return response.data;
     });
   },

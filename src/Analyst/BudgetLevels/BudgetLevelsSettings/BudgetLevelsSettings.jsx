@@ -130,6 +130,17 @@ class BudgetLevelsSettings extends React.Component {
     if (this.props.goalId !== null) {
       inds = inds.filter((x) => x.goalId == this.props.goalId);
     }
+    else {
+      inds = null;
+      if (this.props.goals) {
+        //debugger;
+        if (this.props.goals.length > 0) {
+      let goalId = this.props.goals.sort((a, b) => (a.code > b.code ? 1 : -1))[0].id;
+      //debugger;
+      this.props.setGoalId(goalId);
+        }
+      }
+    }
 
     if (this.props.transportTypeId != "0") {
       inds = inds.filter((x) => x.transportTypeId == this.props.transportTypeId);
@@ -246,6 +257,7 @@ class BudgetLevelsSettings extends React.Component {
                   <label htmlFor="scenarioform">
                     <strong>Выберите индикатор</strong>
                   </label>
+                  {inds!= null && inds.length>0 ? (
                   <MDBSelect
                     required
                     ref={this.selectedIndIdRef}
@@ -265,7 +277,7 @@ class BudgetLevelsSettings extends React.Component {
                       value: ind.id,
                       checked: this.props.checkedIndId == ind.id ? 2 : 0,
                     }))}
-                  />
+                  /> ) : ( <div> Нет данных </div>) }
                 </div>
               ) : (
                 false

@@ -7,6 +7,7 @@ import DynamicsData from "./DynamicsData/DynamicsData";
 
 //import DynamicsData from "./DynamicsData/DynamicsData";
 
+
 let Dynamics = (props) => {
   //debugger;
   return (

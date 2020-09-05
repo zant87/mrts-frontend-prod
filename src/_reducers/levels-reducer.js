@@ -27,7 +27,7 @@ let initialState = {
   isFetchingInds: false,
   isFetchingLevData: false,
   checkedindsId: [],
-  goalId: 34,
+  goalId: null,
   //searchQuery: null,
   transportTypeId: "0",
   frequencies: null,
@@ -39,6 +39,7 @@ let initialState = {
   scenarios: null,
   scenarioId: null,
 };
+
 
 const levelsReducer = (state = initialState, action) => {
   //debugger;

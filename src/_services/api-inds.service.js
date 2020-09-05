@@ -6,6 +6,7 @@ const instance = axios.create({
   baseURL: "/api/",
 });
 
+
 export const IndsAPI = {
   getInds() {
     return instance.get(`indicators`).then((response) => {
@@ -47,13 +48,30 @@ export const IndsAPI = {
       return response.data;
     });
   },
-  getGoals() {
-    return instance.get("goals?transportStrategyVersionId.equals=3").then((response) => {
+
+  getIndDataScheme(year) {
+    let url = "views/actual-indicators?valueTypeCode.equals=FACT&frequencyId.equals=1&year.equals=" + year;
+    console.log(url);
+    return instance.get(url).then((response) => {
+      if (response.data.length == 0) {
+        return null;
+      }
       return response.data;
     });
   },
+  // goals?transportStrategyVersionId.equals=3
+  getGoals() {
+    return instance.get("goals?transportStrategyVersionActual.equals=true").then((response) => {
+      return response.data;
+    });
+  },
+  // getGoal() {
+  //   return instance.get("goals?transportStrategyVersionActual.equals=true").then((response) => {
+  //     return response.data;
+  //   });
+  // },
   getGoal() {
-    return instance.get("goals?transportStrategyVersionId.equals=3").then((response) => {
+    return instance.get("goals?transportStrategyVersionActual.equals=true").then((response) => {
       return response.data;
     });
   },

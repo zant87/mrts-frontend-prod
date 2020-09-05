@@ -27,7 +27,6 @@ export default class AdminStructureTransportStrategiesPage extends React.Compone
             });
     };
 
-
     render() {
 
         const tableRef = React.createRef();
@@ -39,7 +38,13 @@ export default class AdminStructureTransportStrategiesPage extends React.Compone
             {field: 'name', title: 'Наименование', filtering: true, editable: 'never'},
             {field: 'description', title: 'Описание', filtering: true, editable: 'never'},
             {field: 'documentBase', title: 'Основание', filtering: true, editable: 'never'},
-            {field: 'actual', title: 'Актуальность', type: 'boolean', editable: 'always'},
+            {
+                field: 'actual',
+                title: 'Актуальность',
+                filtering: true,
+                editable: 'onUpdate',
+                lookup: {true: 'Да', false: 'Нет'}
+            },
         ];
 
         return (

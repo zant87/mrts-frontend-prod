@@ -10,21 +10,42 @@ import {
     RoadsTemplate,
     SeaPortsTemplate
 } from "./ArcgisConfig";
+import {MDBContainer, MDBModal, MDBModalBody, MDBModalHeader} from "mdbreact";
+import MapFilterModal from "./Map/MapFilterModal";
+import appAxios from "../_services/appAxios";
+import ProjectsMasterEdit from "../Operator/Report/ProjectsMaster/ProjectsMasterEdit";
 
 class AnalystMapPage extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.mapRef = React.createRef();
+    state = {
+        mapRef: React.createRef(),
+        modal: false,
+        form: false,
+        base: null,
+        action: '',
+        start: 2018,
+        end: 2018,
+        project: null
     }
+
+    getProject = (code, year) => appAxios.get(`views/k-7-masters?page=0&size=20?projectCode=${code}&yearNumber.equals=${year}`).catch(err => null);
 
     componentDidMount() {
         loadModules([
-            'esri/Map', 'esri/views/MapView',
-            'esri/layers/MapImageLayer', 'esri/widgets/LayerList',
+            'esri/Map',
+            'esri/views/MapView',
+            'esri/layers/MapImageLayer',
+            'esri/widgets/LayerList',
             'esri/widgets/Legend',
         ], {css: true})
             .then(([ArcGISMap, MapView, MapImageLayer, LayerList, Legend]) => {
+
+                // const customContent = new CustomContent({
+                //     outFields: ["*"],
+                //     creator:  () => {
+                //         return 'hello';
+                //     }
+                // });
 
                 const base = new MapImageLayer({
                     url: "https://agoracle.asutk.ru/arcgis/rest/services/TS_projects/MapServer",
@@ -150,6 +171,7 @@ class AnalystMapPage extends React.Component {
                                             id: 6,
                                             title: 'Воздушный транспорт: на 2018 год, %',
                                             visible: true,
+
                                             popupTemplate: ProjectsTemplate
                                         },
                                         {
@@ -194,11 +216,10 @@ class AnalystMapPage extends React.Component {
                 });
 
                 const view = new MapView({
-                    // container: "webmap",
-                    container: this.mapRef.current,
+                    container: this.state.mapRef.current,
                     map: map,
                     center: [37, 55],
-                    zoom: 12,
+                    zoom: '12',
                     navigation: {
                         mouseWheelZoomEnabled: false
                     }
@@ -212,12 +233,70 @@ class AnalystMapPage extends React.Component {
                 });
 
                 view.when(() => {
+
                     const layerList = new LayerList({
                         view: view,
+                        listItemCreatedFunction: this.defineActions
                     });
+
+                    layerList.on("trigger-action", (event) => this.triggerActions(event, base));
+
                     view.ui.add(layerList, "bottom-left");
                 });
+
+                view.popup.on("trigger-action", (event) => this.triggerPopupActions(event));
             });
+    }
+
+    triggerPopupActions = (event) => {
+        if (event.action.id === "show-form") {
+            const projectCode = event.target.selectedFeature.attributes.CODE;
+            if (projectCode) {
+
+                this.getProject(projectCode, 2018).then((response) => {
+                    const projectData = response.data ? response.data[0] : null;
+                    if (projectData) {
+                        this.setState({project: projectData, form: true})
+                    }
+                });
+
+            }
+        }
+    }
+
+    triggerActions = (event, base) => {
+
+        const id = event.action.id;
+        console.log('[triggerActions] base =', base);
+
+        if (id === "enter-date") {
+            this.setState({modal: true, base: base, action: id});
+        }
+        if (id === "enter-period") {
+            this.setState({modal: true, base: base, action: id});
+        }
+    }
+
+    defineActions = (event) => {
+
+        const item = event.item;
+
+        if (item.title === "Мониторинг Реализации Транспортной Стратегии") {
+
+            item.actionsSections = [
+                [
+                    {
+                        title: "Выбор конкретной даты",
+                        id: "enter-date"
+                    },
+                    {
+                        title: "Выбор интервала дат",
+                        id: "enter-period"
+                    }
+                ],
+            ];
+        }
+
     }
 
     componentWillUnmount() {
@@ -226,10 +305,91 @@ class AnalystMapPage extends React.Component {
         }
     }
 
+    toggleModal = () => {
+        this.setState({modal: false});
+    }
+
+    toggleForm = () => {
+        this.setState({form: false});
+    }
+
+    onChangeHandler = (event) => {
+        this.setState({[event.target.name]: Number(event.target.value)});
+    };
+
+    doFilterLayers = (event) => {
+        console.log('Фильтруем слои');
+        console.log('State =', this.state);
+
+        this.state.base.allSublayers.items.map((layer) => {
+
+            switch (layer.title) {
+                case 'Картографическая основа':
+                    layer.visible = true;
+                    break;
+                case 'Страны':
+                    layer.visible = true;
+                    break;
+                case 'Регионы':
+                    layer.visible = true;
+                    break;
+                case 'Федеральные округа':
+                    layer.visible = true;
+                    break;
+                case 'Границы':
+                    layer.visible = true;
+                    break;
+                case 'Центры регионов':
+                    layer.visible = true;
+                    break;
+                case 'Столица':
+                    layer.visible = true;
+                    break;
+                default:
+                    const title = layer.title;
+                    const regex = /\d+/;
+                    const match = regex.exec(title);
+                    if (match) {
+                        console.log(match);
+                        const year = Number(match[0]);
+                        if (this.state.action === 'enter-date') {
+                            layer.visible = year === this.state.start;
+                        } else {
+                            layer.visible = year >= this.state.start && year <= this.state.end;
+                        }
+                    }
+            }
+        });
+    }
+
     render() {
+
+        console.log(this.state);
+
         return (
             <React.Fragment>
-                <div className="webmap mb-1" ref={this.mapRef}/>
+                <div className="webmap mb-1" ref={this.state.mapRef}/>
+                <MDBContainer>
+                    <MDBModal isOpen={this.state.modal} toggle={this.toggleModal} backdrop={true}>
+                        <MDBModalHeader toggle={this.toggleModal}>Настройка фильтров</MDBModalHeader>
+                        <MDBModalBody>
+                            <MapFilterModal
+                                start={this.state.start}
+                                end={this.state.end}
+                                action={this.state.action}
+                                onChange={(event) => this.onChangeHandler(event)}
+                                doFilterLayers={this.doFilterLayers}/>
+                        </MDBModalBody>
+                    </MDBModal>
+                </MDBContainer>
+                <MDBContainer>
+                    <MDBModal isOpen={this.state.form} toggle={this.toggleForm} backdrop={false} size="fluid">
+                        <MDBModalHeader toggle={this.toggleForm}>Детализация проекта</MDBModalHeader>
+                        <MDBModalBody>
+                            <ProjectsMasterEdit data={this.state.project} editable={false}/>
+                        </MDBModalBody>
+                    </MDBModal>
+                </MDBContainer>
             </React.Fragment>
         );
     }
