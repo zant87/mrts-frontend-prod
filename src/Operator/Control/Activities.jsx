@@ -29,7 +29,7 @@ export default class OperatorControlActivitiesPage extends React.Component {
                 <TableContainer
                     columns={columns}
                     title={'Контроль поступления и согласования данных по выполнению мероприятий по реализации ТС'}
-                    baseUrl={'views/control-activity-reportsList'}
+                    baseUrl={'views/control-activity-reports'}
                     filtersList={filtersList}
                     filterMinimalLength={filterMinimalLength}
                     loadAll={true}

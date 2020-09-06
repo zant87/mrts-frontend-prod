@@ -194,7 +194,7 @@ export const sideNavLinks = [
   },
   {
     link: "/operator/control/completion",
-    text: "Конроль расчета индикаторов",
+    text: "Контроль расчета индикаторов",
     layout: Layouts.operatorControl,
   },
   {
