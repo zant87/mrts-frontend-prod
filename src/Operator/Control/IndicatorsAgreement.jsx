@@ -142,7 +142,7 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
             {field: 'nationalSymbolicName', title: 'Единица измерения'},
             {field: 'agreeList', title: 'Требуется согласование'},
             {field: 'agreeUndone', title: 'Не согласован'},
-            {field: 'approveList', title: 'Утвержден'},
+            {field: 'approveList', title: 'Требует утверждения'},
         ];
 
         const filtersList = {
@@ -178,8 +178,9 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
                         actions={actions}
                         tableRef={this.tableRef}
                         filterMinimalLength={filterMinimalLength}
-                        baseUrl={`views/indicator-agrees?agreeIdList.contains=${this.state.user.username}`}
-                        modifiedBaseUrl={true}
+                        baseUrl={`views/indicator-agrees`}
+                        // baseUrl={`views/indicator-agrees?agreeIdList.contains=${this.state.user.username}`}
+                        // modifiedBaseUrl={false}
                         loadAll={true}
                     />
                 )}
