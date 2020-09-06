@@ -36,6 +36,7 @@
     "mdb-react-fileupload": "./mdb-react-fileupload-4.26.1.tgz",
     "mdb-react-wysiwyg": "./mdb-react-wysiwyg-4.26.1.tgz",
     "mdbreact": "./mdbreact-4.27.0.tgz",
+    "moment": "^2.27.0",
     "mui-datatables": "^2.14.0",
     "mui-rte": "^1.23.1",
     "react": "^16.13.0",

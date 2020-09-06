@@ -24,6 +24,8 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
                 this.getIndicators(),
             ]);
 
+            console.log('%cUser =', 'color: green', rUser.data[0]);
+
             this.setState(
                 {
                     user: rUser.data[0],
@@ -176,7 +178,7 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
                         actions={actions}
                         tableRef={this.tableRef}
                         filterMinimalLength={filterMinimalLength}
-                        baseUrl={`views/indicator-agrees?agreeIdList.contains=userid_operator`}
+                        baseUrl={`views/indicator-agrees?agreeIdList.contains=${this.state.user.username}`}
                         modifiedBaseUrl={true}
                         loadAll={true}
                     />
