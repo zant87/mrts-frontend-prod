@@ -46,7 +46,7 @@ export default class OperatorPlanActivitiesPage extends React.Component {
     render() {
 
         const columns = [
-            {field: 'id', title: '#', filtering: false},
+            {field: 'activityId', title: '#', filtering: false},
             {field: 'transportStrategyVersionId', title: 'Редакция ТС', lookup: this.state.transportStrategiesList},
             // {field: 'transportStrategyName', title: 'Редакция ТС'},
             {field: 'activityCode', title: 'Обозначение мероприятия'},
@@ -69,7 +69,7 @@ export default class OperatorPlanActivitiesPage extends React.Component {
                             endYear: newData.yearEnd,
                             description: newData.activityDescription,
                             transportStrategyVersionId: newData.transportStrategyVersionId,
-                        }
+                        };
 
                         console.log(data);
 
@@ -94,7 +94,7 @@ export default class OperatorPlanActivitiesPage extends React.Component {
                     setTimeout(() => {
 
                         const data = {
-                            id: newData.id,
+                            id: newData.activityId,
                             code: newData.activityCode,
                             name: newData.activityCode,
                             documentType: newData.documentType,
