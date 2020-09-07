@@ -17,11 +17,14 @@ export default class AdminLoadingFromEMISSPage extends React.Component {
             endYear: this.state.end,
         };
 
+        console.log('Посылаем на сервер =', responseData);
+
         appAxios({
             url: `/import/emiss`,
             method: 'POST',
             data: responseData,
         }).then((response) => {
+            console.log('%cУспешно', 'color: green');
             if (response.data >= 0)
                 toast.success(`Выполнена синхронизация с ЕМИСС с кодом ${response.data}`, {
                     closeButton: false

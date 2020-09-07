@@ -22,21 +22,20 @@ export default class AdminLoadingFromXLSXPage extends React.Component {
 
     fileUpload = async () => {
 
-        console.log(this.state.file);
-        console.log('Грузим файл!');
-
         const formData = new FormData();
         formData.append('file', this.state.file);
-        formData.append('frequency', this.state.frequency)
+        formData.append('frequency', this.state.frequency);
+        console.log('Посылаем на сервер =', formData);
 
         appAxios({
             url: `/batch-data-upload`,
             method: 'POST',
             data: formData
         }).then((response) => {
+            console.log('%cУспешно', 'color: green');
             toast.success(`Синхронизация с ID ${response.data} запущена`, {closeButton: false});
         }).catch(function (error) {
-            console.log(error);
+            console.error(error);
             toast.error(`Ошибка загрузки XLSX файла`, {closeButton: false});
         });
 

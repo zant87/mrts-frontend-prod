@@ -11,16 +11,20 @@ export default class AdminLoadingFromMSTKPage extends React.Component {
     };
 
     doImport = async () => {
+
         const responseData = {
-            startYear: this.state.startYear,
-            endYear: this.state.endYear,
+            startYear: this.state.start,
+            endYear: this.state.end,
         };
+
+        console.log('Посылаем на сервер =', responseData);
 
         appAxios({
             url: `/import/mstk`,
             method: 'POST',
             data: responseData
         }).then((response) => {
+            console.log('%cУспешно', 'color: green');
             if (response.data > 0)
                 toast.success(`Выполнена синхронизация с ФЗ МТСК с кодом ${response.data}`, {
                     closeButton: false

@@ -17,11 +17,14 @@ export default class AdminLoadingFromGIBDDPage extends React.Component {
             endYear: this.state.end,
         };
 
+        console.log('Посылаем на сервер =', responseData);
+
         appAxios({
             url: `/import/gibdd`,
             method: 'POST',
             data: responseData
         }).then((response) => {
+            console.log('%cУспешно', 'color: green');
             if (response.data >= 0)
                 toast.success(`Выполнена синхронизация с ГИБДД с кодом ${response.data}`, {
                     closeButton: false

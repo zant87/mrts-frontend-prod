@@ -29,18 +29,18 @@ export default class AdminLoadingResourcesFromXLSXPage extends React.Component {
 
     fileUpload = async () => {
 
-        console.log(this.state.file);
-        console.log('Грузим файл!');
-
         const formData = new FormData();
         formData.append('file', this.state.file);
         formData.append('username', this.state.user.username);
+
+        console.log('Посылаем на сервер =', formData);
 
         appAxios({
             url: `/budget-batches-upload`,
             method: 'POST',
             data: formData
         }).then((response) => {
+            console.log('%cУспешно', 'color: green');
             toast.success(`Синхронизация с ID ${response.data} запущена`, {closeButton: false});
         }).catch(function (error) {
             console.log(error);
