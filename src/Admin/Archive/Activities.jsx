@@ -13,8 +13,8 @@ export default class AdminArchiveActivitiesPage extends React.Component {
             {field: 'activityName', title: 'Содержание мероприятия', filtering: true, editable: 'never'},
             {field: 'activityDocumentType', title: 'Тип документа', filtering: true, editable: 'never'},
             {field: 'activityExecutors', title: 'Исполнитель', filtering: true, editable: 'never'},
-            {field: 'beginDate', title: 'Дата изменения записи', type: 'date'},
-            {field: 'endDate', title: 'Дата окончания действия записи', type: 'date'},
+            {field: 'beginDate', title: 'Дата изменения записи', filtering: true, type: 'date'},
+            {field: 'endDate', title: 'Дата окончания действия записи', filtering: true, type: 'date'},
         ];
 
         const filtersList = {

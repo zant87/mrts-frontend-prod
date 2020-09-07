@@ -30,10 +30,9 @@ export default class OperatorActualIndicatorsExtendedPage extends React.Componen
             onRowUpdate: (newData, oldData) =>
                 new Promise((resolve, reject) => {
 
-                    console.log('Data to insert =', newData);
                     console.log('User to insert =', this.state.username);
-
                     const data = {...newData, username: this.state.username};
+                    console.log('Data to insert =', data);
 
                     setTimeout(() => {
                         appAxios({

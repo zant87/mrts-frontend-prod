@@ -15,8 +15,8 @@ export default class AdminArchiveProjectsPage extends React.Component {
             {field: 'planCost', title: 'План', filtering: false, editable: 'never'},
             {field: 'reportFactCost', title: 'Отчетный факт', filtering: false, editable: 'never'},
             {field: 'factCost', title: 'Факт', filtering: false, editable: 'never'},
-            {field: 'beginDate', title: 'Дата изменения записи', type: 'date'},
-            {field: 'endDate', title: 'Дата окончания действия записи', type: 'date'},
+            {field: 'beginDate', title: 'Дата изменения записи', filtering: true, type: 'date'},
+            {field: 'endDate', title: 'Дата окончания действия записи', filtering: true, type: 'date'},
         ];
 
         const filtersList = {

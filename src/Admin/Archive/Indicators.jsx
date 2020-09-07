@@ -13,8 +13,8 @@ export default class AdminArchiveIndicatorsPage extends React.Component {
             {field: 'scenarioName', title: 'Сценарий', filtering: true},
             {field: 'okeiCode', title: 'ОКЕИ', filtering: true, editable: 'never'},
             {field: 'transportTypeName', title: 'Вид транспорта', filtering: true},
-            {field: 'beginDate', title: 'Дата расчета (изменения) значения', type: 'date'},
-            {field: 'endDate', title: 'Дата окончания действия значения', type: 'date'},
+            {field: 'beginDate', title: 'Дата расчета (изменения) значения', filtering: true, type: 'date'},
+            {field: 'endDate', title: 'Дата окончания действия значения', filtering: true, type: 'date'},
             {field: 'value', title: 'Значение индикатора', filtering: false},
         ];
 
