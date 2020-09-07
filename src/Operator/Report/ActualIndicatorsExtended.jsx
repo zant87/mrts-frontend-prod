@@ -66,14 +66,19 @@ export default class OperatorActualIndicatorsExtendedPage extends React.Componen
             {field: 'indicatorValue', title: 'Значение', type: 'numeric', editable: 'always'},
         ];
 
+        const filtersList = {
+            'year': 'numeric'
+        };
+
         return (
             <React.Fragment>
                 <TableContainer
                     columns={columns}
                     title={'Индикаторы за отчетный период'}
                     baseUrl={'views/actual-indicator-ext'}
-                    filterMinimalLength={2}
+                    filterMinimalLength={1}
                     editable={editable}
+                    filtersList={filtersList}
                     loadAll={true}
                 />
             </React.Fragment>

@@ -86,8 +86,7 @@ export default class TableContainer extends React.Component {
                                                         if (element.value.includes('=') && !element.value.includes('>') && !element.value.includes('<')) {
                                                             url += `&${element.column.field}.equals=${element.value.slice(1, element.value.length)}`;
                                                         }
-                                                    }
-                                                    if (filtersList[element.column.field] === 'date') {
+                                                    } else if (filtersList[element.column.field] === 'date') {
                                                         const date = moment(element.value).format('YYYY-MM-DD');
                                                         console.log('Date =', date);
                                                         url += `&${element.column.field}.equals=${date}`;
@@ -129,13 +128,13 @@ export default class TableContainer extends React.Component {
                                             });
                                     } else {
                                         resolve(
-                                                {
-                                                    data: [],
-                                                    page: 0,
-                                                    totalCount: 0
-                                                }
-                                            );
-                                        }
+                                            {
+                                                data: [],
+                                                page: 0,
+                                                totalCount: 0
+                                            }
+                                        );
+                                    }
                                     }
                                 )
                             }
