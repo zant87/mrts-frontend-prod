@@ -41,6 +41,7 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
 
     cancelAgreement = (rowData) => {
 
+        const date = moment().format('YYYY-MM-DD');
         console.log(rowData);
 
         if (rowData.agreeIdList && rowData.agreeIdList.includes(this.state.user.username)) {
@@ -48,10 +49,10 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
                 url: `document-agreements?documentId.equals=${rowData.documentId}&executorId.equals=${this.state.user.id}&endDate.equals=2099-12-31`,
                 method: 'GET',
             }).then((response) => {
-                console.log('document-agreements response =', response.data[0]);
-                const data = response.data[0];
-                const date = moment();
-                data.endDate = date.format('YYYY-MM-DD');
+
+                const data = {...response.data[0], endDate: date};
+                console.log('Data to PUT into document-agreements =', data);
+
                 appAxios({
                     url: `document-agreements`,
                     method: 'PUT',
@@ -69,10 +70,12 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
                 url: `document-agreements?documentId.equals=${rowData.documentId}&executorId.equals=${this.state.user.id}&endDate.equals=2099-12-31`,
                 method: 'GET',
             }).then((response) => {
-                console.log('document-agreements response =', response.data[0]);
-                const data = response.data[0];
-                const date = moment();
-                data.endDate = date.format('YYYY-MM-DD');
+
+                console.log('document-agreements GET response =', response.data);
+
+                const data = {...response.data[0], endDate: date};
+                console.log('Data to PUT into document-agreements =', data);
+
                 appAxios({
                     url: `document-agreements`,
                     method: 'PUT',
@@ -87,19 +90,22 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
 
     approveAgreement = (rowData) => {
 
+        const date = moment().format('YYYY-MM-DD');
         let role = null;
 
         if (rowData.agreeIdList && rowData.agreeIdList.includes(this.state.user.username)) {
             role = 'AGREE';
-            const date = moment();
+
             const data = {
                 "agreementRole": role,
-                "beginDate": date.format('YYYY-MM-DD'),
+                "beginDate": date,
                 "endDate": "2099-12-31",
                 "executorId": this.state.user.id,
                 "documentId": rowData.documentId,
             };
-            console.log('Data =', data);
+
+            console.log('Data to POST into document-agreements =', data);
+
             appAxios({
                 url: `document-agreements`,
                 method: 'POST',
@@ -113,15 +119,17 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
 
         if (rowData.approveIdList && rowData.approveIdList.includes(this.state.user.username)) {
             role = 'APPROVE';
-            const date = moment();
+
             const data = {
                 "agreementRole": role,
-                "beginDate": date.format('YYYY-MM-DD'),
+                "beginDate": date,
                 "endDate": "2099-12-31",
                 "executorId": this.state.user.id,
                 "documentId": rowData.documentId,
             };
-            console.log('Data =', data);
+
+            console.log('Data to POST into document-agreements =', data);
+
             appAxios({
                 url: `document-agreements`,
                 method: 'POST',

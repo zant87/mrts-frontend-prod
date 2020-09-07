@@ -88,7 +88,7 @@ export default class TableContainer extends React.Component {
                                                         }
                                                     } else if (filtersList[element.column.field] === 'date') {
                                                         const date = moment(element.value).format('YYYY-MM-DD');
-                                                        console.log('Date =', date);
+                                                        console.log(`${filtersList[element.column.field]} = ${date}`);
                                                         url += `&${element.column.field}.equals=${date}`;
                                                     } else {
                                                         url += `&${element.column.field}.${filtersList[element.column.field]}=${element.value}`;
