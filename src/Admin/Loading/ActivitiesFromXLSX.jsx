@@ -29,12 +29,11 @@ export default class AdminLoadingActivitiesFromXLSXPage extends React.Component 
 
     fileUpload = async () => {
 
-        console.log(this.state.file);
-        console.log('Грузим файл!');
-
         const formData = new FormData();
         formData.append('file', this.state.file);
-        formData.append('username', this.state.frequency)
+        formData.append('username', this.state.frequency);
+
+        console.log('Посылаем на сервер =', formData);
 
         appAxios({
             url: `/activity-batches-upload`,

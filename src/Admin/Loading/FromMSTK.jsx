@@ -11,10 +11,13 @@ export default class AdminLoadingFromMSTKPage extends React.Component {
     };
 
     doImport = async () => {
+
         const responseData = {
             startYear: this.state.startYear,
             endYear: this.state.endYear,
         };
+
+        console.log('Посылаем на сервер =', responseData);
 
         appAxios({
             url: `/import/mstk`,

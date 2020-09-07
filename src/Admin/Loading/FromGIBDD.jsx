@@ -17,6 +17,8 @@ export default class AdminLoadingFromGIBDDPage extends React.Component {
             endYear: this.state.end,
         };
 
+        console.log('Посылаем на сервер =', responseData);
+
         appAxios({
             url: `/import/gibdd`,
             method: 'POST',

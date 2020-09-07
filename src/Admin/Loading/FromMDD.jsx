@@ -18,6 +18,8 @@ export default class AdminLoadingFromMDDPage extends React.Component {
             endYear: this.state.end,
         };
 
+        console.log('Посылаем на сервер =', responseData);
+
         appAxios({
             url: `/import/monitoring`,
             method: 'POST',

@@ -17,6 +17,8 @@ export default class AdminLoadingFromEMISSPage extends React.Component {
             endYear: this.state.end,
         };
 
+        console.log('Посылаем на сервер =', responseData);
+
         appAxios({
             url: `/import/emiss`,
             method: 'POST',
