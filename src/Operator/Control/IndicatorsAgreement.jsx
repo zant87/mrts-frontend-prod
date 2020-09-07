@@ -41,93 +41,103 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
 
     cancelAgreement = (rowData) => {
 
-        const indicator = this.state.indicators.filter(x => x.id === rowData.indicatorId)[0];
+        console.log(rowData);
 
-        appAxios({
-            url: `document-agreement-settings?documentTypeId.equals=${indicator.documentTypeId}&executorId.equals=${this.state.user.id}&endDate.equals=2099-12-31`,
-            method: 'GET',
-        }).then((response) => {
-            const agreement = response.data[0];
-            console.log(agreement);
-            let check = false;
-            let role = null;
-
-            if (agreement.role === 'AGREE') {
-                check = rowData.agreeIdDone && rowData.agreeIdDone.includes(this.state.user.username);
-                role = 'AGREE';
-            } else {
-                check = rowData.approveIdList && rowData.approveIdList.includes(this.state.user.username);
-                role = 'APPROVE';
-            }
-
-            if (!check) {
-                toast.warning(`Согласование или утверждение уже отозвано или не существует`, {closeButton: false});
-            } else {
+        if (rowData.agreeIdList && rowData.agreeIdList.includes(this.state.user.username)) {
+            appAxios({
+                url: `document-agreements?documentId.equals=${rowData.documentId}&executorId.equals=${this.state.user.id}&endDate.equals=2099-12-31`,
+                method: 'GET',
+            }).then((response) => {
+                console.log('document-agreements response =', response.data[0]);
+                const data = response.data[0];
+                const date = moment();
+                data.endDate = date.format('YYYY-MM-DD');
                 appAxios({
-                    url: `document-agreements?documentId.equals=${rowData.documentId}&executorId.equals=${this.state.user.id}&endDate.equals=2099-12-31`,
-                    method: 'GET',
+                    url: `document-agreements`,
+                    method: 'PUT',
+                    data: data
                 }).then((response) => {
-                    // console.log(response.data[0]);
-                    const data = response.data[0];
-                    const date = moment();
-                    data.endDate = date.format('YYYY-MM-DD');
-                    appAxios({
-                        url: `document-agreements`,
-                        method: 'PUT',
-                        data: data
-                    }).then((response) => {
-                        toast.success(`Согласование успешно отозвано`, {closeButton: false});
-                        this.tableRef.current.onQueryChange();
-                    })
+                    toast.success(`Согласование успешно отозвано`, {closeButton: false});
+                    this.tableRef.current.onQueryChange();
                 })
-            }
-        })
+            })
+        }
+
+        if (rowData.approveIdList && rowData.approveIdList.includes(this.state.user.username)) {
+
+            appAxios({
+                url: `document-agreements?documentId.equals=${rowData.documentId}&executorId.equals=${this.state.user.id}&endDate.equals=2099-12-31`,
+                method: 'GET',
+            }).then((response) => {
+                console.log('document-agreements response =', response.data[0]);
+                const data = response.data[0];
+                const date = moment();
+                data.endDate = date.format('YYYY-MM-DD');
+                appAxios({
+                    url: `document-agreements`,
+                    method: 'PUT',
+                    data: data
+                }).then((response) => {
+                    toast.success(`Утверждение успешно отозвано`, {closeButton: false});
+                    this.tableRef.current.onQueryChange();
+                })
+            })
+        }
+
+        toast.warning(`Согласование или утверждение уже отозвано или не существует`, {closeButton: false});
+
     };
 
     approveAgreement = (rowData) => {
 
-        const indicator = this.state.indicators.filter(x => x.id === rowData.indicatorId)[0];
+        let role = null;
 
-        appAxios({
-            url: `document-agreement-settings?documentTypeId.equals=${indicator.documentTypeId}&executorId.equals=${this.state.user.id}&endDate.equals=2099-12-31`,
-            method: 'GET',
-        }).then((response) => {
-            const agreement = response.data[0];
-            console.log(agreement);
-            let check = false;
-            let role = null;
+        if (rowData.agreeIdList && rowData.agreeIdList.includes(this.state.user.username)) {
+            role = 'AGREE';
+            const date = moment();
+            const data = {
+                "agreementRole": role,
+                "beginDate": date.format('YYYY-MM-DD'),
+                "endDate": "2099-12-31",
+                "executorId": this.state.user.id,
+                "documentId": rowData.documentId,
+            };
+            console.log('Data =', data);
+            appAxios({
+                url: `document-agreements`,
+                method: 'POST',
+                data: data
+            }).then((response) => {
+                const message = response.headers["x-mrts-backend-params"];
+                toast.success(`Согласование успешно создано для ID ${message}`, {closeButton: false});
+                this.tableRef.current.onQueryChange();
+            });
+        }
 
-            if (agreement.role === 'AGREE') {
-                check = rowData.agreeIdDone && rowData.agreeIdDone.includes(this.state.user.username);
-                role = 'AGREE';
-            } else {
-                check = rowData.approveIdList && rowData.approveIdList.includes(this.state.user.username);
-                role = 'APPROVE';
-            }
+        if (rowData.approveIdList && rowData.approveIdList.includes(this.state.user.username)) {
+            role = 'APPROVE';
+            const date = moment();
+            const data = {
+                "agreementRole": role,
+                "beginDate": date.format('YYYY-MM-DD'),
+                "endDate": "2099-12-31",
+                "executorId": this.state.user.id,
+                "documentId": rowData.documentId,
+            };
+            console.log('Data =', data);
+            appAxios({
+                url: `document-agreements`,
+                method: 'POST',
+                data: data
+            }).then((response) => {
+                const message = response.headers["x-mrts-backend-params"];
+                toast.success(`Утверждение успешно создано для ID ${message}`, {closeButton: false});
+                this.tableRef.current.onQueryChange();
+            });
+        }
 
-            if (check) {
-                toast.warning(`Согласование или утверждение уже выполнено`, {closeButton: false});
-            } else {
-                const date = moment();
-                const data = {
-                    "agreementRole": role,
-                    "beginDate": date.format('YYYY-MM-DD'),
-                    "endDate": "2099-12-31",
-                    "executorId": this.state.user.id,
-                    "documentId": rowData.documentId,
-                };
-                console.log('Data =', data);
-                appAxios({
-                    url: `document-agreements`,
-                    method: 'POST',
-                    data: data
-                }).then((response) => {
-                    const message = response.headers["x-mrts-backend-params"];
-                    toast.success(`Согласование успешно создано для ID ${message}`, {closeButton: false});
-                    this.tableRef.current.onQueryChange();
-                });
-            }
-        });
+        toast.warning(`Согласование или утверждение уже выполнено`, {closeButton: false});
+
     };
 
     tableRef = React.createRef();

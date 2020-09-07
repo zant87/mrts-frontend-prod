@@ -148,6 +148,11 @@ export const sideNavLinks = [
     layout: Layouts.adminLoading,
   },
   {
+    link: "/admin/loading/copyProjects",
+    text: "Обновить данные карточек инвестпроектов",
+    layout: Layouts.adminLoading,
+  },
+  {
     link: "/admin/archive/parameters",
     text: "Архив показателей",
     layout: Layouts.adminArchive,
