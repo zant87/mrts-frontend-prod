@@ -15,12 +15,14 @@ export default class AdminArchiveParametersPage extends React.Component {
             {field: 'dataProviderCode', title: 'Источник', filtering: true},
             {field: 'value', title: 'Значение показателя', filtering: false},
             {field: 'beginDate', title: 'Дата изменения записи', filtering: true, type: 'date'},
-            {field: 'endDate', title: 'Дата окончания действия записи', filtering: false, type: 'date'},
+            {field: 'endDate', title: 'Дата окончания действия записи', filtering: true, type: 'date'},
             {field: 'okeiName', title: 'Единица измерений'},
         ];
 
         const filtersList = {
-            'year': 'equals'
+            'year': 'equals',
+            'beginDate': 'date',
+            'endDate': 'date'
         };
 
         const options = this.props.options ? this.props.options : {
@@ -40,6 +42,7 @@ export default class AdminArchiveParametersPage extends React.Component {
                     baseUrl={'views/i-1-s'}
                     options={options}
                     filtersList={filtersList}
+                    filterMinimalLength={0}
                     loadAll={true}
                 />
             </React.Fragment>

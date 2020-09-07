@@ -83,9 +83,6 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
                 })
             })
         }
-
-        toast.warning(`Согласование или утверждение уже отозвано или не существует`, {closeButton: false});
-
     };
 
     approveAgreement = (rowData) => {
@@ -135,9 +132,6 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
                 this.tableRef.current.onQueryChange();
             });
         }
-
-        toast.warning(`Согласование или утверждение уже выполнено`, {closeButton: false});
-
     };
 
     tableRef = React.createRef();

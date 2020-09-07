@@ -4,6 +4,7 @@ import appAxios from "../../_services/appAxios";
 import {ruLocalization} from "../../_components";
 import MaterialTable from "material-table";
 import TableContainer from "../../Containers/TableContainer";
+import {authenticationService} from "../../_services";
 
 export default class OperatorActualIndicatorsExtendedPage extends React.Component {
 
@@ -11,19 +12,34 @@ export default class OperatorActualIndicatorsExtendedPage extends React.Componen
         page: 0,
         count: 0,
         data: [],
-        isLoading: false
+        isLoading: false,
+        username: ''
     };
+
+    componentDidMount() {
+        authenticationService.currentUser.subscribe((x) =>
+            this.setState({
+                username: x.id,
+            })
+        );
+    }
 
     render() {
 
         const editable = {
             onRowUpdate: (newData, oldData) =>
                 new Promise((resolve, reject) => {
+
+                    console.log('Data to insert =', newData);
+                    console.log('User to insert =', this.state.username);
+
+                    const data = {...newData, username: this.state.username};
+
                     setTimeout(() => {
                         appAxios({
                             url: `/views/actual-indicator-ext`,
                             method: 'PUT',
-                            data: newData
+                            data: data
                         }).then((response) => {
                             const message = response.headers["x-mrts-backend-params"];
                             toast.success(`Успешно обновлена запись с ID ${newData.id}`, {

@@ -1,3 +1,5 @@
+import ruLocale from 'date-fns/locale/ru';
+
 export const ruLocalization = {
     pagination: {
         labelDisplayedRows: '{from}-{to} из {count}',
@@ -36,10 +38,11 @@ export const ruLocalization = {
             deleteText: 'Вы уверены что хотите удалить запись?',
             cancelTooltip: 'Отмена',
             saveTooltip: 'Сохранить'
-        }
+        },
+        dateTimePickerLocalization: ruLocale
     },
     grouping: {
         placeholder: 'Перетащите колонки...',
         groupedBy: 'Группировка по: '
-    },
+    }
 };
