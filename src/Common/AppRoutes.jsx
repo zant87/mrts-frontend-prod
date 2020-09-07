@@ -80,6 +80,7 @@ import AdminLoadingActivitiesFromXLSXPage from "../Admin/Loading/ActivitiesFromX
 import AdminControlExecutorsPage from "../Admin/Control/Executors";
 import AdminLoadingFormulasPage from "../Admin/Loading/Formulas";
 import AnalystStructureIndicatorsSchemeValues from "../Analyst/IndicatorSchemeValues";
+import AdminLoadingCopyProjectsPage from "../Admin/Loading/CopyProjects";
 
 const AsyncAdminStructureGoalsPage = loadable({
   loader: () => import("../Admin/Structure/Goals"),
@@ -266,7 +267,9 @@ export const AppRoutes = () => {
       <PrivateRoute exact path="/admin/loading/document" roles={Role.Admin} component={AdminLoadingDocumentPage} />
       <PrivateRoute exact path="/admin/loading/resourcesFromXLSX" roles={Role.Admin} component={AdminLoadingResourcesFromXLSXPage} />
       <PrivateRoute exact path="/admin/loading/activitiesFromXLSX" roles={Role.Admin} component={AdminLoadingActivitiesFromXLSXPage} />
-      <PrivateRoute exact path="/admin/loading/formulas" roles={Role.Admin} component={AdminLoadingFormulasPage} />
+        <PrivateRoute exact path="/admin/loading/formulas" roles={Role.Admin} component={AdminLoadingFormulasPage}/>
+        <PrivateRoute exact path="/admin/loading/copyProjects" roles={Role.Admin}
+                      component={AdminLoadingCopyProjectsPage}/>
       {/*AdminLoadingDocumentPage*/}
 
       {/*Archive - Архив */}

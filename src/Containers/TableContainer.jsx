@@ -3,6 +3,7 @@ import {MDBContainer, MDBRow, MDBCol, toast} from "mdbreact";
 import appAxios from "../_services/appAxios";
 import MaterialTable from "material-table";
 import {ruLocalization} from "../_components";
+import moment from "moment";
 
 export default class TableContainer extends React.Component {
 
@@ -52,9 +53,16 @@ export default class TableContainer extends React.Component {
 
                                     if (query.filters.length > 0) {
                                         query.filters.forEach(element => {
-                                            if (element.value.length >= filterMinimalLength) {
+
+                                            console.log('element.value =', element.value);
+                                            console.log('element.value.length =', String(element.value).length);
+
+                                            if (String(element.value).length >= filterMinimalLength) {
+
                                                 if (filtersList && filtersList[element.column.field]) {
+
                                                     console.log(element.column.field, 'filter is', filtersList[element.column.field]);
+
                                                     if (filtersList[element.column.field] === 'numeric') {
 
                                                         if (element.value.includes('>=')) {
@@ -78,6 +86,11 @@ export default class TableContainer extends React.Component {
                                                         if (element.value.includes('=') && !element.value.includes('>') && !element.value.includes('<')) {
                                                             url += `&${element.column.field}.equals=${element.value.slice(1, element.value.length)}`;
                                                         }
+                                                    }
+                                                    if (filtersList[element.column.field] === 'date') {
+                                                        const date = moment(element.value).format('YYYY-MM-DD');
+                                                        console.log('Date =', date);
+                                                        url += `&${element.column.field}.equals=${date}`;
                                                     } else {
                                                         url += `&${element.column.field}.${filtersList[element.column.field]}=${element.value}`;
                                                     }
