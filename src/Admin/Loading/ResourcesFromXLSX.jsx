@@ -40,6 +40,7 @@ export default class AdminLoadingResourcesFromXLSXPage extends React.Component {
             method: 'POST',
             data: formData
         }).then((response) => {
+            console.log('%cУспешно', 'color: green');
             toast.success(`Синхронизация с ID ${response.data} запущена`, {closeButton: false});
         }).catch(function (error) {
             console.log(error);

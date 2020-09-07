@@ -25,6 +25,7 @@ export default class AdminLoadingFromMDDPage extends React.Component {
             method: 'POST',
             data: responseData
         }).then((response) => {
+            console.log('%cУспешно', 'color: green');
             if (response.data > 0)
                 toast.success(`Выполнена синхронизация с ФЗ МДД с кодом ${response.data}`, {
                     closeButton: false
