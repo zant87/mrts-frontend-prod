@@ -155,20 +155,13 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
             {field: 'agreeList', title: 'Требуется согласование'},
             {field: 'agreeUndone', title: 'Не согласован'},
             {field: 'approveList', title: 'Требует утверждения'},
-            {
-                field: 'agree', title: 'Утвержден', filtering: false, render: rowData => {
-                    if (rowData.agreeIdDone) {
-                        console.log('Column [AGREE] содержит =', rowData.agreeIdDone.includes(this.state.user.username));
-                        rowData.agreeIdDone && rowData.agreeIdDone.includes(this.state.user.username)
-                        return 'Да';
-                    }
-                    return 'Нет';
-                }
-            },
+            {field: 'indicatorValue', title: 'Значение индикатора'},
+            {field: 'approved', title: 'Утвержден', lookup: {0: 'Нет', 1: 'Да'}}
         ];
 
         const filtersList = {
             'indicatorYear': 'numeric',
+            'approved': 'equals'
         };
 
         const filterMinimalLength = 1;
