@@ -11,7 +11,11 @@ const Report6 = (props) => {
     });
 
     const strategiesList = props.strategies.map(item => {
-        return {value: item.code, text: item.code, checked: false}
+        if (item.actual) {
+            return {value: item.code, text: item.name, checked: true}
+        } else {
+            return {value: item.code, text: item.name, checked: false}
+        }
     });
 
     return (
