@@ -16,6 +16,7 @@ const BudgetLevelsTable = (props) => {
     rows: null,
   };
 
+  
   if (props.budLevVals) {
     budLevVals = props.budLevVals.sort((a, b) => (a.year > b.year ? 1 : -1));
 
@@ -33,7 +34,7 @@ const BudgetLevelsTable = (props) => {
     data = {
       columns: [
         {
-          label: "Тип значения / Год, ",
+          label: "Тип значения / Год ",
           field: "Сценарий",
           sort: "asc",
           width: 250,
@@ -117,6 +118,7 @@ const BudgetLevelsTable = (props) => {
                     <div style={{ fontSize: "11px" }}> Сценарий: {props.budLevVals[0].scenarioName}</div>
                     <div style={{ fontSize: "11px" }}> Источник финансирования: {props.budLevVals[0].fundingSourceName}</div>
                     <div style={{ fontSize: "11px" }}> Вид транспорта: {props.budLevVals[0].transportName}</div>
+                    <div style={{ fontSize: "11px" }}>Единица измерения: {"процент (%)"}</div>
                   </div>
                 ) : (
                   <div>Нет данных</div>

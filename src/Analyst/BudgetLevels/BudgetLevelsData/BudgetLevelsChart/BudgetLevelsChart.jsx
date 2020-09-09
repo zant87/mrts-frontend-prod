@@ -281,6 +281,7 @@ let BudgetLevelsChart = (props) => {
                     <div style={{ fontSize: "11px" }}> Сценарий: {props.budLevVals[0].scenarioName}</div>
                     <div style={{ fontSize: "11px" }}> Источник финансирования: {props.budLevVals[0].fundingSourceName}</div>
                     <div style={{ fontSize: "11px" }}> Вид транспорта: {props.budLevVals[0].transportName}</div>
+                    <div style={{ fontSize: "11px" }}> Единица измерения: Процент (%)</div>
                     {/* {props.indFrequencyId == 2 ? " ( " + props.budLevVals[0].quarterName + " )" : ""} */}
                     <ReactEcharts ref={echarts_react} option={getOption()} className={s.chart} />
                   </div>

@@ -33,7 +33,7 @@ export default class AdminLoadingFromXLSXPage extends React.Component {
       .then((response) => {
         console.log("%cУспешно", "color: green");
         //toast.success(`Синхронизация с ID ${response.data} запущена`, {closeButton: false});
-        toast.success(`Показатели загружены. Код выполнения %d`, { closeButton: false });
+        toast.success(`Показатели загружены. Код выполнения ${response.data}`, { closeButton: false });
       })
       .catch(function (error) {
         console.error(error);

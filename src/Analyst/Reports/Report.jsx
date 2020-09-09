@@ -378,7 +378,7 @@ class AnalystReportPage extends React.Component {
 
     return (
         <MDBCol md="8" className="mx-auto my-5">
-          <h1 className="text-center my-3">Материалы доклада о реализации транспортной стратегии Российской
+          <h1 className="text-center my-3">Материалы доклада о реализации Транспортной стратегии Российской
             Федерации</h1>
           {reportPicker}
           {report}

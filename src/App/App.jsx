@@ -175,8 +175,8 @@ class App extends React.Component {
                           <li>
                               <ul className="social">
                                   <li>
-                                      <p className="custom-font">Информационно-Аналитическая Система Регулирования На
-                                          Транспорте</p>
+                                      <p className="custom-font">Информационно-аналитическая система регулирования на
+                                          транспорте</p>
                                   </li>
                               </ul>
                           </li>

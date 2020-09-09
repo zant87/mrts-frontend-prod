@@ -23,12 +23,12 @@ export const sideNavLinks = [
   },
   {
     link: "/analyst/budgetlevels",
-    text: "Ресурс. обеспечение и уровни дост.",
+    text: "Ресурсное обеспечение и уровни достижения",
     layout: Layouts.analyst,
   },
   {
     link: "/analyst/report",
-    text: "Отчет перед Правительством",
+    text: "Отчет перед Правительством РФ",
     layout: Layouts.analyst,
   },
   {

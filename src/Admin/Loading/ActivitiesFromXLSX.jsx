@@ -41,7 +41,7 @@ export default class AdminLoadingActivitiesFromXLSXPage extends React.Component 
       data: formData,
     })
       .then((response) => {
-        toast.success(`Данные по ходу выполнения мероприятий загружены. Код выполнения %d`, { closeButton: false });
+        toast.success(`Данные по ходу выполнения мероприятий загружены. Код выполнения ${response.data}`, { closeButton: false });
         // toast.success(`Синхронизация с ID ${response.data} запущена`, {closeButton: false});
       })
       .catch(function (error) {
