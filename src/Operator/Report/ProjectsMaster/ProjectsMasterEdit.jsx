@@ -121,13 +121,15 @@ export default class OperatorReportProjectsMasterEditPage extends React.Componen
                                 </MDBRow>
                                 <MDBRow>
                                     <MDBCol>
-                                        <MDBInput outline label="Начало фактическое" onChange={this.onChangeHandler}
+                                        <MDBInput outline label="Начало фактическое, год"
+                                                  onChange={this.onChangeHandler}
                                                   name='factStarted' value={this.state.factStarted} type="number"/>
                                     </MDBCol>
                                 </MDBRow>
                                 <MDBRow>
                                     <MDBCol>
-                                        <MDBInput outline label="Конец фактический" onChange={this.onChangeHandler}
+                                        <MDBInput outline label="Окончание фактическое, год"
+                                                  onChange={this.onChangeHandler}
                                                   name='factFinished' value={this.state.factFinished}
                                                   type="number"/>
                                     </MDBCol>
@@ -137,7 +139,7 @@ export default class OperatorReportProjectsMasterEditPage extends React.Componen
                     )}
                 </React.Fragment>
                 {this.state.project && (
-                    <MDBInput outline label="Выполнение проекта"
+                    <MDBInput outline label="Выполнение проекта, %"
                               onChange={this.onChangeHandler}
                               name='done'
                               value={this.state.done} type="number"/>
