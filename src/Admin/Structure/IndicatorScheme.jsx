@@ -36,15 +36,23 @@ class IndicatorScheme extends React.Component {
     let inds = [];
     let inds_ = [];
     data.forEach((ind) => {
-      inds.push({ id: ind.id, pid: ind.goalId, Наименование: ind.code.replace("IND_", ""), Описание: ind.name });
-      inds_.push({ id: ind.id, code: ind.code.replace("IND_", ""), name: ind.name, goalId: ind.goalId, transport: ind.transportTypeName, transportid: ind.transportTypeId });
+      if (ind.isCalc == 1) {
+        inds.push({ id: ind.id, pid: ind.goalId, Наименование: ind.code.replace("IND_", ""), Описание: ind.name });
+        inds_.push({
+          id: ind.id,
+          code: ind.code.replace("IND_", ""),
+          name: ind.name,
+          goalId: ind.goalId,
+          transport: ind.transportTypeName,
+          transportid: ind.transportTypeId,
+        });
+      }
     });
     this.setState({
       inds: inds,
       inds_: inds_,
     });
   };
-
 
   getGoals = (data) => {
     let goals = [];
@@ -88,45 +96,43 @@ class IndicatorScheme extends React.Component {
 
     let orgdata = [];
     if (this.state.inds_ && this.state.goals_) {
-
       //let uniqueTransport = [...new Set(this.state.inds_.map(tran => tran.transportid))];
-
 
       orgdata = {
         id: 0,
         label: "Транспортная стратегия Российской Федерации на период до 2030 года",
         expand: true,
-        children: this.state.goals_.sort((a, b) => (a.name > b.name ? 1 : -1)).map((goal) => ({
-          id: goal.id,
-          label: goal.name,
-          children: [...new Set(this.state.inds_.filter(item => goal.id == item.goalId).map(tran => tran.transport))].sort(
-            function (a, b) {
-              if (a > b) {
-                return 1;
-              }
-              if (a < b) {
-                return -1;
-              }
-              if (a == "" ) {
-              return -1;
-              }
-            }
-            )
-            .map(tran => ({
-            id: tran,
-            label: tran == null ? "Прочие" : tran ,
-            children: this.state.inds_
-            .filter((item) => item.goalId == goal.id && item.transport == tran)
-            .sort((a, b) => (a.code > b.code ? 1 : -1))
-            .map((item) => ({
-              id: item.id,
+        children: this.state.goals_
+          .sort((a, b) => (a.name > b.name ? 1 : -1))
+          .map((goal) => ({
+            id: goal.id,
+            label: goal.name,
+            children: [...new Set(this.state.inds_.filter((item) => goal.id == item.goalId).map((tran) => tran.transport))]
+              .sort(function (a, b) {
+                if (a > b) {
+                  return 1;
+                }
+                if (a < b) {
+                  return -1;
+                }
+                if (a == "") {
+                  return -1;
+                }
+              })
+              .map((tran) => ({
+                id: tran,
+                label: tran == null ? "Остальное" : tran,
+                children: this.state.inds_
+                  .filter((item) => item.goalId == goal.id && item.transport == tran)
+                  .sort((a, b) => (a.code > b.code ? 1 : -1))
+                  .map((item) => ({
+                    id: item.id,
 
-              label: item.code.replace("IND_", "") + " " + item.name,
-            })),
+                    label: item.code.replace("IND_", "") + " " + item.name,
+                  })),
+              })),
           })),
-        })),
       };
-
 
       // orgdata = {
       //   id: 0,
@@ -146,12 +152,8 @@ class IndicatorScheme extends React.Component {
       //   })),
       // };
 
-
-
       //let transport = [...new Set(this.state.inds_.map(data => data.transport))];
       //console.log(this.state.inds_);
-     
-
 
       //console.log(orgdata);
     } else orgdata = null;

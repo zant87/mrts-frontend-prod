@@ -17,7 +17,7 @@ class IndicatorSchemeValues extends React.Component {
     years: null,
     year: 2018,
     indvals: null,
-    isFetchingvals: true
+    isFetchingvals: true,
   };
 
   selectedYearRef = React.createRef();
@@ -27,8 +27,17 @@ class IndicatorSchemeValues extends React.Component {
     let inds = [];
     let inds_ = [];
     data.forEach((ind) => {
-      inds.push({ id: ind.id, pid: ind.goalId, Наименование: ind.code.replace("IND_", ""), Описание: ind.name });
-      inds_.push({ id: ind.id, code: ind.code.replace("IND_", ""), name: ind.name, goalId: ind.goalId, transport: ind.transportTypeName, transportid: ind.transportTypeId });
+      if (ind.isCalc == 1) {
+        inds.push({ id: ind.id, pid: ind.goalId, Наименование: ind.code.replace("IND_", ""), Описание: ind.name });
+        inds_.push({
+          id: ind.id,
+          code: ind.code.replace("IND_", ""),
+          name: ind.name,
+          goalId: ind.goalId,
+          transport: ind.transportTypeName,
+          transportid: ind.transportTypeId,
+        });
+      }
     });
     this.setState({
       inds: inds,
@@ -54,13 +63,12 @@ class IndicatorSchemeValues extends React.Component {
   getYears = (data) => {
     let years = data;
     this.setState({ years: years });
-    };
+  };
 
   setYear = () => {
-    
     let year = this.selectedYearRef.current.value;
     this.setState({ year: year, isFetchingvals: true });
-  
+
     IndsAPI.getIndDataScheme(year).then((res) => {
       this.getIndValues(res);
     });
@@ -68,16 +76,16 @@ class IndicatorSchemeValues extends React.Component {
 
   getIndValues = (data) => {
     let indvals = data;
-    this.setState({ 
-      indvals: indvals, 
-      isFetchingvals: false
+    this.setState({
+      indvals: indvals,
+      isFetchingvals: false,
     });
-   };
+  };
 
   zoomIn = () => {
     let zoomIn = this.zoomRef.current.style.zoom;
     this.zoomRef.current.style.zoom = Number(zoomIn) + 0.2;
-    };
+  };
 
   zoomOut = () => {
     let zoomOut = this.zoomRef.current.style.zoom;
@@ -102,7 +110,6 @@ class IndicatorSchemeValues extends React.Component {
   }
 
   render() {
- 
     let orgdata = [];
 
     if (this.state.indvals) {
@@ -111,7 +118,7 @@ class IndicatorSchemeValues extends React.Component {
       let indsval = [];
       inds.forEach((item) => {
         let i = indval.find((val) => val.indicatorCode.replace("IND_", "") == item.code);
-      
+
         if (i) {
           indsval.push({
             id: item.id,
@@ -120,10 +127,18 @@ class IndicatorSchemeValues extends React.Component {
             goalId: item.goalId,
             value: i.value.toString(),
             okei: i.okeiName,
-            transport: item.transport
+            transport: item.transport,
           });
         } else {
-          indsval.push({ id: item.id, code: item.code.replace("IND_", ""), name: item.name, goalId: item.goalId, value: "", okei: "", transport: item.transport });
+          indsval.push({
+            id: item.id,
+            code: item.code.replace("IND_", ""),
+            name: item.name,
+            goalId: item.goalId,
+            value: "",
+            okei: "",
+            transport: item.transport,
+          });
         }
       });
       //console.log(inds);
@@ -133,35 +148,36 @@ class IndicatorSchemeValues extends React.Component {
         id: 0,
         label: "Транспортная стратегия Российской Федерации на период до 2030 года",
         expand: true,
-        children: this.state.goals_.sort((a, b) => (a.name > b.name ? 1 : -1)).map((goal) => ({
-          id: goal.id,
-          label: goal.name,
-          children: [...new Set(this.state.inds_.filter(item => goal.id == item.goalId).map(tran => tran.transport))].sort(
-            function (a, b) {
-              if (a > b) {
-                return 1;
-              }
-              if (a < b) {
-                return -1;
-              }
-              if (a == "" ) {
-              return -1;
-              }
-            }
-            ).map(tran => ({
-            id: tran,
-            label: tran == null ? "Прочие" : tran ,
-            children: indsval
-            .filter((item) => item.goalId == goal.id && item.transport == tran)
-            .sort((a, b) => (a.code > b.code ? 1 : -1))
-            .map((item) => ({
-            id: item.id,
-            label: item.code.replace("IND_", "") + " " + item.name + " " + " (Факт: " + item.value + " " + item.okei + " )",
-            })),
-          }))
-        })),
+        children: this.state.goals_
+          .sort((a, b) => (a.name > b.name ? 1 : -1))
+          .map((goal) => ({
+            id: goal.id,
+            label: goal.name,
+            children: [...new Set(this.state.inds_.filter((item) => goal.id == item.goalId).map((tran) => tran.transport))]
+              .sort(function (a, b) {
+                if (a > b) {
+                  return 1;
+                }
+                if (a < b) {
+                  return -1;
+                }
+                if (a == "") {
+                  return -1;
+                }
+              })
+              .map((tran) => ({
+                id: tran,
+                label: tran == null ? "Остальное" : tran,
+                children: indsval
+                  .filter((item) => item.goalId == goal.id && item.transport == tran)
+                  .sort((a, b) => (a.code > b.code ? 1 : -1))
+                  .map((item) => ({
+                    id: item.id,
+                    label: item.code.replace("IND_", "") + " " + item.name + " " + " (Факт: " + item.value + " " + item.okei + " )",
+                  })),
+              })),
+          })),
       };
-
 
       // orgdata = {
       //   id: 0,
@@ -180,7 +196,6 @@ class IndicatorSchemeValues extends React.Component {
       //       })),
       //   })),
       // };
-
     } else orgdata = null;
 
     const horizontal = false;
@@ -208,7 +223,7 @@ class IndicatorSchemeValues extends React.Component {
                       </MDBCol>
                       <MDBCol md={"3"} size="6" style={{ padding: "7px" }}>
                         <span>
-                          <select  ref={this.selectedYearRef} id="yearForm" className=" custom-select custom-select-md">
+                          <select ref={this.selectedYearRef} id="yearForm" className=" custom-select custom-select-md">
                             {this.state.years
                               ? this.state.years.map((item) =>
                                   this.state.year == item.year ? (
@@ -231,22 +246,21 @@ class IndicatorSchemeValues extends React.Component {
                     </MDBRow>
                   </MDBContainer>
                   <div
-                      style={{
-                        display: "block",
-                        overflow: "auto",
-                        height: "600px",
-                        width: "100%",
-                        fontSize: "12px",
-                        position: "realtive",
-                        textAlign: "center",
-                      }}
-                    >          
-                     
-                  {this.state.isFetchingvals ? (<Preloader />) : this.state.indvals ? (
-                     
+                    style={{
+                      display: "block",
+                      overflow: "auto",
+                      height: "600px",
+                      width: "100%",
+                      fontSize: "12px",
+                      position: "realtive",
+                      textAlign: "center",
+                    }}
+                  >
+                    {this.state.isFetchingvals ? (
+                      <Preloader />
+                    ) : this.state.indvals ? (
                       <div ref={this.zoomRef} style={{ zoom: "1.0" }}>
                         <OrgTree
-                        
                           data={orgdata}
                           horizontal={horizontal}
                           collapsable={collapsable}
@@ -254,12 +268,10 @@ class IndicatorSchemeValues extends React.Component {
                           labelWidth={"150px"}
                         ></OrgTree>
                       </div>
-                     
-                    
-                  ) : (
-                   "Нет данных"
-                  )}
-                  </div> 
+                    ) : (
+                      "Нет данных"
+                    )}
+                  </div>
                   <MDBCardText></MDBCardText>
                 </MDBCardBody>
               </MDBCard>
