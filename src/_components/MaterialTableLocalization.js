@@ -1,4 +1,5 @@
-import ruLocale from 'date-fns/locale/ru';
+import DateFnsUtils from "@date-io/date-fns";
+import {ru} from "date-fns/locale";
 
 export const ruLocalization = {
     pagination: {
@@ -39,7 +40,8 @@ export const ruLocalization = {
             cancelTooltip: 'Отмена',
             saveTooltip: 'Сохранить'
         },
-        dateTimePickerLocalization: ruLocale
+        dateTimePickerLocalization: ru
+
     },
     grouping: {
         placeholder: 'Перетащите колонки...',

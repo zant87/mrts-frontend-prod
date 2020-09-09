@@ -25,6 +25,8 @@ export default class TableContainer extends React.Component {
         const modifiedBaseUrl = this.props.modifiedBaseUrl ? this.props.modifiedBaseUrl : false;
         const editable = this.props.editable ? this.props.editable : null;
 
+        console.log(tableRef);
+
         return (
             <MDBContainer fluid>
                 <MDBRow center>
