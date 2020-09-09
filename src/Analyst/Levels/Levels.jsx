@@ -9,6 +9,7 @@ let Levels = (props) => {
   //debugger;
   return (
     
+
     <div>
       <MDBRow style={{ marginTop: "0px" }}>
         <LevSettings
@@ -42,6 +43,8 @@ let Levels = (props) => {
           isFetchingLevData={props.levelsPage.isFetchingLevData}
           frequencyLevId={props.levelsPage.frequencyLevId}
           year={props.levelsPage.year}
+          goalId={props.levelsPage.goalId}
+          goals={props.levelsPage.goals}
         />
       </MDBRow>
     </div>

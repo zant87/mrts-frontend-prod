@@ -13,12 +13,19 @@ import {
 import Preloader from "@/Common/Preloader/Preloader";
 import { ExportXLSX } from "../../../../Common/ExportXLSX/ExportXLSX";
 
+
 const DynamicsTable = (props) => {
   let dynVals = null;
   let data = {
     column: null,
     rows: null,
   };
+  let checkedGoal = null;
+
+  if (props.checkedGoal) {
+    checkedGoal = props.checkedGoal;
+  }
+
 
   if (props.dynVals) {
     dynVals = props.dynVals.sort((a, b) =>
@@ -99,8 +106,7 @@ const DynamicsTable = (props) => {
                         ? "( " + props.dynVals[0].quarterLabel + " )"
                         : "")}
                     <br />
-                    <br />
-                    Цель: {props.dynVals[0].goalName} <br />
+                    {checkedGoal ? checkedGoal.name + ". " + checkedGoal.description  : ""} <br />
                     Сценарий: {props.dynVals[0].scenarioName} <br />
                     Год: {props.dynVals[0].year}
                   </div>

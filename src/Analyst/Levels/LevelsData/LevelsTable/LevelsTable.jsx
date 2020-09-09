@@ -19,6 +19,11 @@ const LevelsTable = (props) => {
     column: null,
     rows: null,
   };
+  let checkedGoal = null;
+
+  if (props.checkedGoal) {
+    checkedGoal = props.checkedGoal;
+  }
 
   if (props.levVals) {
     levVals = props.levVals.sort((a, b) =>
@@ -76,17 +81,18 @@ const LevelsTable = (props) => {
                   textTransform: "uppercase",
                 }}
               >
+
                 {props.levVals ? (
                   <div>
-                    Уровни достижения за{" "}
+                    Уровни достижения индикаторов за{" "}
                     {props.levVals[0].year +
                       " г. " +
                       (props.frequencyLevId == 2
                         ? "( " + props.levVals[0].quarterLabel + " )"
                         : "")}{" "}
+                   
                     <br />
-                    <br />
-                    Цель: {props.levVals[0].goalName} <br />
+                    {checkedGoal ? checkedGoal.name + ". " + checkedGoal.description  : ""} <br />
                     Сценарий: {props.levVals[0].scenarioName} <br />
                     Год: {props.levVals[0].year}
                   </div>

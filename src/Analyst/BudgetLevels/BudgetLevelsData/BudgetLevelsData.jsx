@@ -17,6 +17,7 @@ class BudgetLevelsData extends React.Component {
   };
 
   
+
   render() {
     return (
       <MDBCol lg="9" className="chart mt-10" style={{ marginBottom: "10px" }}>

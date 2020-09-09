@@ -25,6 +25,18 @@ class LevelsData extends React.Component {
   };
 
   render() {
+    let checkedGoal;
+    let goalId;
+    let goals;
+    if (this.props.levVals && this.props.goals) {
+      goalId = this.props.levVals[0].goalId;
+      goals = this.props.goals;
+      checkedGoal = goals.find(goal => goal.id == goalId);
+    }
+    else {
+      checkedGoal = null;
+    }
+
     return (
       <MDBCol lg="9" className="chart mt-10" style={{ marginBottom: "10px" }}>
         {/* <MDBCardHeader color="special-color p-1"> */}
@@ -61,12 +73,14 @@ class LevelsData extends React.Component {
           className="card"
           activeItem={this.state.activeItemJustified}
         >
+
           <MDBTabPane tabId="1" role="tabpanel">
             <LevelsChart
               levVals={this.props.levVals}
               isFetchingLevData={this.props.isFetchingLevData}
               frequencyLevId={this.props.frequencyLevId}
               year={this.props.year}
+              checkedGoal={checkedGoal}
             />
           </MDBTabPane>
           <MDBTabPane tabId="2" role="tabpanel">
@@ -75,6 +89,7 @@ class LevelsData extends React.Component {
               isFetchingLevData={this.props.isFetchingLevData}
               frequencyLevId={this.props.frequencyLevId}
               year={this.props.year}
+              checkedGoal={checkedGoal}
             />
           </MDBTabPane>
         </MDBTabContent>

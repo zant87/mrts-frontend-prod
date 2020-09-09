@@ -24,7 +24,19 @@ class DynamicsData extends React.Component {
     }
   };
 
+
   render() {
+    let checkedGoal;
+    let goalId;
+    let goals;
+    if (this.props.dynVals && this.props.goals) {
+      goalId = this.props.dynVals[0].goalId;
+      goals = this.props.goals;
+      checkedGoal = goals.find(goal => goal.id == goalId);
+    }
+    else {
+      checkedGoal = null;
+    }
     return (
       <MDBCol lg="9" className="chart mt-10" style={{ marginBottom: "10px" }}>
         {/* <MDBCardHeader color="special-color p-1"> */}
@@ -67,6 +79,7 @@ class DynamicsData extends React.Component {
               isFetchingDynData={this.props.isFetchingDynData}
               frequencyDynId={this.props.frequencyDynId}
               year={this.props.year}
+              checkedGoal={checkedGoal}
             />
           </MDBTabPane>
           <MDBTabPane tabId="2" role="tabpanel">
@@ -75,6 +88,7 @@ class DynamicsData extends React.Component {
               isFetchingDynData={this.props.isFetchingDynData}
               frequencyDynId={this.props.frequencyDynId}
               year={this.props.year}
+              checkedGoal={checkedGoal}
             />
           </MDBTabPane>
         </MDBTabContent>

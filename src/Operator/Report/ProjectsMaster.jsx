@@ -155,6 +155,7 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
                     </MDBModal>
                     <MDBModal isOpen={this.state.highlightModal} toggle={this.toggleHighlight} backdrop={true}>
                         <MDBModalHeader toggle={this.toggleHighlight}>Подсветка</MDBModalHeader>
+                        
                         <MDBModalBody>
                             <HighlighModal
                                 highlight={this.state.highlight}

@@ -39,11 +39,14 @@ let Dynamics = (props) => {
           setScenarioId={props.dynamicsPage.setScenarioId}
           getDynValues={props.dynamicsPage.getDynValues}
         />
+
         <DynamicsData
           dynVals={props.dynamicsPage.dynVals}
           isFetchingDynData={props.dynamicsPage.isFetchingDynData}
           frequencyDynId={props.dynamicsPage.frequencyDynId}
           year={props.dynamicsPage.year}
+          goalId={props.dynamicsPage.goalId}
+          goals={props.dynamicsPage.goals}
         />
       </MDBRow>
     </div>

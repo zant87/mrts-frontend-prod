@@ -11,11 +11,17 @@ import ReactEcharts from "echarts-for-react";
 import s from "./DynamicsChart.module.css";
 import Preloader from "@/Common/Preloader/Preloader";
 
+
 let DynamicsChart = (props) => {
   let dynVals = null;
   let echarts_react = React.createRef();
   let chartDynvals = [];
   let checkedInds = [];
+  let checkedGoal = null;
+
+  if (props.checkedGoal) {
+    checkedGoal = props.checkedGoal;
+  }
 
   let getOption = () => {
     let years = [];
@@ -211,12 +217,22 @@ let DynamicsChart = (props) => {
               }}
             >
               {props.dynVals ? (
-                "Динамика уровней достижения за " +
-                props.dynVals[0].year +
-                " г. " +
-                (props.frequencyDynId == 2
-                  ? "( " + props.dynVals[0].quarterLabel + " )"
-                  : "")
+                // "Динамика уровней достижения за " +
+                // props.dynVals[0].year +
+                // " г. " +
+                // (props.frequencyDynId == 2
+                //   ? "( " + props.dynVals[0].quarterLabel + " )"
+                //   : "")
+                <div>
+               Динамика уровней достижения за {" "}
+                 {props.dynVals[0].year +
+                   " г. " +
+                   (props.frequencyDynId == 2
+                     ? "( " + props.dynVals[0].quarterLabel + " )"
+                     : "")}{" "}
+                 <br />
+                {checkedGoal ? checkedGoal.name + ". " + checkedGoal.description  : ""}
+               </div>
               ) : (
                 <div>Нет данных</div>
               )}

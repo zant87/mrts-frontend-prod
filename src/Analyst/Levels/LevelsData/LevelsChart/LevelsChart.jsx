@@ -11,11 +11,18 @@ import ReactEcharts from "echarts-for-react";
 import s from "./LevelsChart.module.css";
 import Preloader from "@/Common/Preloader/Preloader";
 
+
 let LevelsChart = (props) => {
   let levVals = null;
   let echarts_react = React.createRef();
   let chartLevvals = [];
   let checkedInds = [];
+  let checkedGoal = null;
+
+  if (props.checkedGoal) {
+    checkedGoal = props.checkedGoal;
+  }
+  
 
   let getOption = () => {
     if (props.levVals) {
@@ -178,16 +185,28 @@ let LevelsChart = (props) => {
               }}
             >
               {props.levVals ? (
-                "Уровни достижения индикаторов за " +
-                props.levVals[0].year +
-                " г. " +
-                (props.frequencyLevId == 2
-                  ? "( " + props.levVals[0].quarterLabel + " )"
-                  : "")
+                // "Уровни достижения индикаторов за " +
+                // props.levVals[0].year +
+                // " г. " + 
+                // (props.frequencyLevId == 2
+                //   ? "( " + props.levVals[0].quarterLabel + " )"
+                //   : "") 
+                //     +  (checkedGoal ? <div >{checkedGoal.name + ". " + checkedGoal.description }</div> : "" )
+                <div>
+               Уровни достижения индикаторов за {" "}
+                {props.levVals[0].year +
+                  " г. " +
+                  (props.frequencyLevId == 2
+                    ? "( " + props.levVals[0].quarterLabel + " )"
+                    : "")}{" "}
+                <br />
+               {checkedGoal ? checkedGoal.name + ". " + checkedGoal.description  : ""}
+              </div>
               ) : (
                 <div>Нет данных</div>
               )}
             </MDBCardTitle>
+            
             {props.isFetchingLevData ? (
               <Preloader />
             ) : (
@@ -212,49 +231,3 @@ let LevelsChart = (props) => {
 
 export default LevelsChart;
 
-// option = {
-
-//   legend: {
-//       data: ['Уровень достижения']
-//   },
-//   radar: {
-//       // shape: 'circle',
-//       name: {
-//           textStyle: {
-//               color: '#fff',
-//               backgroundColor: '#999',
-//               borderRadius: 3,
-//               padding: [3, 5]
-//           }
-//       },
-//        tooltip: {
-//            show: true,
-//       trigger: 'item',
-//        axisPointer: {
-//            //type:'cross',
-//            //axis:'auto'
-//        }
-//   },
-//       indicator: [
-//           { name: '销售（sales）'},
-//           { name: '管理（Administration）' },
-//           { name: '信息技术（Information Techology）',},
-//           { name: '客服（Customer Support）',},
-//           { name: '研发（Development）'},
-//           { name: '市场（Marketing）'}
-//       ]
-//   },
-//   series: [{
-//       name: '预算 vs 开销（Budget vs spending）',
-//       type: 'radar',
-//       // areaStyle: {normal: {}},
-
-//       data: [
-//           {
-//               value: [4300, 10000, 28000, 35000, 50000, 19000],
-//               name: 'Уровень достижения',
-
-//           }
-//       ]
-//   }]
-// };
