@@ -37,13 +37,14 @@ class IndicatorScheme extends React.Component {
     let inds_ = [];
     data.forEach((ind) => {
       inds.push({ id: ind.id, pid: ind.goalId, Наименование: ind.code.replace("IND_", ""), Описание: ind.name });
-      inds_.push({ id: ind.id, code: ind.code.replace("IND_", ""), name: ind.name, goalId: ind.goalId });
+      inds_.push({ id: ind.id, code: ind.code.replace("IND_", ""), name: ind.name, goalId: ind.goalId, transport: ind.transportTypeName, transportid: ind.transportTypeId });
     });
     this.setState({
       inds: inds,
       inds_: inds_,
     });
   };
+
 
   getGoals = (data) => {
     let goals = [];
@@ -87,6 +88,10 @@ class IndicatorScheme extends React.Component {
 
     let orgdata = [];
     if (this.state.inds_ && this.state.goals_) {
+
+      //let uniqueTransport = [...new Set(this.state.inds_.map(tran => tran.transportid))];
+
+
       orgdata = {
         id: 0,
         label: "Транспортная стратегия Российской Федерации на период до 2030 года",
@@ -94,26 +99,61 @@ class IndicatorScheme extends React.Component {
         children: this.state.goals_.sort((a, b) => (a.name > b.name ? 1 : -1)).map((goal) => ({
           id: goal.id,
           label: goal.name,
-
-          children: this.state.inds_
-            .filter((item) => item.goalId == goal.id)
+          children: [...new Set(this.state.inds_.filter(item => goal.id == item.goalId).map(tran => tran.transport))].sort(
+            function (a, b) {
+              if (a > b) {
+                return 1;
+              }
+              if (a < b) {
+                return -1;
+              }
+              if (a == "" ) {
+              return -1;
+              }
+            }
+            )
+            .map(tran => ({
+            id: tran,
+            label: tran == null ? "Прочие" : tran ,
+            children: this.state.inds_
+            .filter((item) => item.goalId == goal.id && item.transport == tran)
             .sort((a, b) => (a.code > b.code ? 1 : -1))
             .map((item) => ({
               id: item.id,
 
               label: item.code.replace("IND_", "") + " " + item.name,
             })),
+          })),
         })),
       };
-      // this.state.goals_.forEach((goal) => {
-      //   orgdata.push({
+
+
+      // orgdata = {
+      //   id: 0,
+      //   label: "Транспортная стратегия Российской Федерации на период до 2030 года",
+      //   expand: true,
+      //   children: this.state.goals_.sort((a, b) => (a.name > b.name ? 1 : -1)).map((goal) => ({
       //     id: goal.id,
       //     label: goal.name,
-      //     children: null,
-      //     // this.state.inds_.map((item) => ({ id: item.id, label: item.code.replace("IND_", "") + item.name })),
-      //   });
-      // });
-      console.log(orgdata);
+      //     children: this.state.inds_
+      //       .filter((item) => item.goalId == goal.id)
+      //       .sort((a, b) => (a.code > b.code ? 1 : -1))
+      //       .map((item) => ({
+      //         id: item.id,
+
+      //         label: item.code.replace("IND_", "") + " " + item.name,
+      //       })),
+      //   })),
+      // };
+
+
+
+      //let transport = [...new Set(this.state.inds_.map(data => data.transport))];
+      //console.log(this.state.inds_);
+     
+
+
+      //console.log(orgdata);
     } else orgdata = null;
 
     const horizontal = false;
