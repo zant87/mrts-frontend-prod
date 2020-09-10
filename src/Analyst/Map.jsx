@@ -48,7 +48,7 @@ class AnalystMapPage extends React.Component {
                 // });
 
                 const base = new MapImageLayer({
-                    url: "https://agoracle.asutk.ru/arcgis/rest/services/TS_projects/MapServer",
+                    url: "http://10.10.10.99:6080/arcgis/rest/services/TS_projects/MapServer",
                     title: 'Мониторинг Реализации Транспортной Стратегии',
                     sublayers:
                         [
