@@ -53,22 +53,22 @@ class AnalystMapPage extends React.Component {
                     sublayers:
                         [
                             {
-                                id: 26, title: 'Картографическая основа', sublayers:
+                                id: 40, title: 'Картографическая основа', sublayers:
                                     [
-                                        {id: 32, title: 'Страны', outFields: ["*"],},
-                                        {id: 31, title: 'Регионы', outFields: ["*"],},
-                                        {id: 30, title: 'Федеральные округа', outFields: ["*"],},
-                                        {id: 29, title: 'Границы'},
-                                        {id: 28, title: 'Центры регионов'},
-                                        {id: 27, title: 'Столица'},
+                                        {id: 46, title: 'Страны', outFields: ["*"],},
+                                        {id: 45, title: 'Регионы', outFields: ["*"],},
+                                        {id: 44, title: 'Федеральные округа', outFields: ["*"],},
+                                        {id: 43, title: 'Границы'},
+                                        {id: 42, title: 'Центры регионов'},
+                                        {id: 41, title: 'Столица'},
                                     ]
                             },
                             {
-                                id: 23, title: 'Внутренний водный транспорт', visible: false, sublayers:
+                                id: 37, title: 'Внутренний водный транспорт', visible: false, sublayers:
                                     [
-                                        {id: 25, title: 'Водные пути', visible: true, popupTemplate: RiversTemplate},
+                                        {id: 39, title: 'Водные пути', visible: true, popupTemplate: RiversTemplate},
                                         {
-                                            id: 24,
+                                            id: 38,
                                             title: 'Речные порты',
                                             visible: true,
                                             popupTemplate: RiverPortsTemplate
@@ -76,61 +76,61 @@ class AnalystMapPage extends React.Component {
                                     ]
                             },
                             {
-                                id: 18, title: 'Транспортная инфраструктура', visible: false, sublayers:
+                                id: 32, title: 'Транспортная инфраструктура', visible: false, sublayers:
                                     [
                                         {
-                                            id: 22,
+                                            id: 36,
                                             title: 'Железные дороги',
                                             visible: false,
                                             popupTemplate: RailRoadsTemplate
                                         },
                                         {
-                                            id: 21,
+                                            id: 35,
                                             title: 'Автомобильные дороги',
                                             visible: false,
                                             popupTemplate: RoadsTemplate
                                         },
                                         {
-                                            id: 20,
+                                            id: 34,
                                             title: 'Морские порты',
                                             visible: false,
                                             popupTemplate: SeaPortsTemplate
                                         },
-                                        {id: 19, title: 'Аэропорты', visible: false, popupTemplate: AirportTemplate},
+                                        {id: 33, title: 'Аэропорты', visible: false, popupTemplate: AirportTemplate},
                                     ]
                             },
                             {
-                                id: 7, title: 'Плановое состояние транспортного комплекса', sublayers:
+                                id: 21, title: 'Плановое состояние транспортного комплекса', sublayers:
                                     [
                                         {
-                                            id: 17,
+                                            id: 31,
                                             title: 'Воздушный транспорт',
                                             visible: false,
                                             popupTemplate: ProjectsTemplate
                                         },
                                         {
-                                            id: 16,
+                                            id: 30,
                                             title: 'Морской транспорт',
                                             visible: false,
                                             popupTemplate: ProjectsTemplate
                                         },
                                         {
-                                            id: 15,
+                                            id: 29,
                                             title: 'Внутренний водный транспорт',
                                             visible: false,
                                             popupTemplate: ProjectsTemplate
                                         },
                                         {
-                                            id: 12, title: 'Дорожное хозяйство', visible: false, sublayers:
+                                            id: 26, title: 'Дорожное хозяйство', visible: false, sublayers:
                                                 [
                                                     {
-                                                        id: 14,
+                                                        id: 28,
                                                         title: 'Линейные объекты (Дорожное хозяйство)',
                                                         visible: true,
                                                         popupTemplate: ProjectsTemplate
                                                     },
                                                     {
-                                                        id: 13,
+                                                        id: 27,
                                                         title: 'Точечные объекты (Дорожное хозяйство)',
                                                         visible: true,
                                                         popupTemplate: ProjectsTemplate
@@ -138,16 +138,16 @@ class AnalystMapPage extends React.Component {
                                                 ]
                                         },
                                         {
-                                            id: 9, title: 'Железнодорожный транспорт', visible: false, sublayers:
+                                            id: 23, title: 'Железнодорожный транспорт', visible: false, sublayers:
                                                 [
                                                     {
-                                                        id: 11,
+                                                        id: 25,
                                                         title: 'Линейные объекты',
                                                         visible: true,
                                                         popupTemplate: ProjectsTemplate
                                                     },
                                                     {
-                                                        id: 10,
+                                                        id: 24,
                                                         title: 'Точечные объекты',
                                                         visible: true,
                                                         popupTemplate: ProjectsTemplate
@@ -155,8 +155,96 @@ class AnalystMapPage extends React.Component {
                                                 ]
                                         },
                                         {
-                                            id: 8,
+                                            id: 22,
                                             title: 'Крупные комплексные проекты',
+                                            visible: false,
+                                            popupTemplate: ProjectsTemplate
+                                        },
+                                    ]
+                            },
+                            {
+                                id: 14,
+                                title: 'Выполнение мероприятий по транспортному комплексу на 2016 год',
+                                sublayers:
+                                    [
+                                        {
+                                            id: 20,
+                                            title: 'Морской транспорт: на 2016 год, %',
+                                            visible: false,
+                                            popupTemplate: ProjectsTemplate
+                                        },
+                                        {
+                                            id: 19,
+                                            title: 'Воздушный транспорт: на 2016 год, %',
+                                            visible: false,
+
+                                            popupTemplate: ProjectsTemplate
+                                        },
+                                        {
+                                            id: 18,
+                                            title: 'Внутренний водный транспорт: на 2016 год, %',
+                                            visible: false,
+                                            popupTemplate: ProjectsTemplate
+                                        },
+                                        {
+                                            id: 17,
+                                            title: 'Дорожное хозяйство: на 2016 год, %',
+                                            visible: false,
+                                            popupTemplate: ProjectsTemplate
+                                        },
+                                        {
+                                            id: 16,
+                                            title: 'Железнодорожный транспорт: на 2016 год, %',
+                                            visible: false,
+                                            popupTemplate: ProjectsTemplate
+                                        },
+                                        {
+                                            id: 15,
+                                            title: 'Крупные комплексные проекты: на 2016 год, %',
+                                            visible: false,
+                                            popupTemplate: ProjectsTemplate
+                                        },
+                                    ]
+                            },
+                            {
+                                id: 7,
+                                title: 'Выполнение мероприятий по транспортному комплексу на 2017 год',
+                                sublayers:
+                                    [
+                                        {
+                                            id: 13,
+                                            title: 'Морской транспорт: на 2017 год, %',
+                                            visible: false,
+                                            popupTemplate: ProjectsTemplate
+                                        },
+                                        {
+                                            id: 12,
+                                            title: 'Воздушный транспорт: на 2017 год, %',
+                                            visible: false,
+
+                                            popupTemplate: ProjectsTemplate
+                                        },
+                                        {
+                                            id: 11,
+                                            title: 'Внутренний водный транспорт: на 2017 год, %',
+                                            visible: false,
+                                            popupTemplate: ProjectsTemplate
+                                        },
+                                        {
+                                            id: 10,
+                                            title: 'Дорожное хозяйство: на 2017 год, %',
+                                            visible: false,
+                                            popupTemplate: ProjectsTemplate
+                                        },
+                                        {
+                                            id: 9,
+                                            title: 'Железнодорожный транспорт: на 2017 год, %',
+                                            visible: false,
+                                            popupTemplate: ProjectsTemplate
+                                        },
+                                        {
+                                            id: 8,
+                                            title: 'Крупные комплексные проекты: на 2017 год, %',
                                             visible: false,
                                             popupTemplate: ProjectsTemplate
                                         },
@@ -169,15 +257,15 @@ class AnalystMapPage extends React.Component {
                                     [
                                         {
                                             id: 6,
-                                            title: 'Воздушный транспорт: на 2018 год, %',
+                                            title: 'Морской транспорт: на 2018 год, %',
                                             visible: true,
-
                                             popupTemplate: ProjectsTemplate
                                         },
                                         {
                                             id: 5,
-                                            title: 'Морской транспорт: на 2018 год, %',
+                                            title: 'Воздушный транспорт: на 2018 год, %',
                                             visible: true,
+
                                             popupTemplate: ProjectsTemplate
                                         },
                                         {
