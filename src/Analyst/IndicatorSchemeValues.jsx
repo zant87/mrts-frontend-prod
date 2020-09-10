@@ -161,9 +161,9 @@ class IndicatorSchemeValues extends React.Component {
                 if (a < b) {
                   return -1;
                 }
-                if (a == "") {
-                  return -1;
-                }
+                // if (a == "") {
+                //   return -1;
+                // }
               })
               .map((tran) => ({
                 id: tran,

@@ -1,9 +1,9 @@
 import React from "react";
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardHeader, MDBCardBody, MDBCardText, MDBBtn } from "mdbreact";
 import { IndsAPI } from "@/_services/api-inds.service";
-import { OrgDiagram } from "basicprimitivesreact";
-import primitives from "basicprimitives";
-import OrgChart from "./IndicatorSchemeChart";
+//import { OrgDiagram } from "basicprimitivesreact";
+//import primitives from "basicprimitives";
+//import OrgChart from "./IndicatorSchemeChart";
 import OrgTree from "react-org-tree";
 
 //import OrgChart from "awesome-react-org-chart";
@@ -96,8 +96,8 @@ class IndicatorScheme extends React.Component {
 
     let orgdata = [];
     if (this.state.inds_ && this.state.goals_) {
-      //let uniqueTransport = [...new Set(this.state.inds_.map(tran => tran.transportid))];
-
+      // let uniqueTransport = [...new Set(this.state.inds_.map(tran => tran.transport))].sort();
+      // console.log(uniqueTransport);
       orgdata = {
         id: 0,
         label: "Транспортная стратегия Российской Федерации на период до 2030 года",
@@ -115,9 +115,9 @@ class IndicatorScheme extends React.Component {
                 if (a < b) {
                   return -1;
                 }
-                if (a == "") {
-                  return -1;
-                }
+                // if (a == "") {
+                //   return -1;
+                // }
               })
               .map((tran) => ({
                 id: tran,
@@ -193,66 +193,66 @@ class IndicatorScheme extends React.Component {
     //     },
     //   ],
     // };
-    const config = {
-      pageFitMode: primitives.common.PageFitMode.None,
-      maximumColumnsInMatrix: 2,
-      //cursorItem: 1,
-      //highlightItem: 0,
-      normalItemsInterval: 20,
-      cousinsIntervalMultiplier: 1,
-      itemTitleSecondFontColor: primitives.common.Colors.White,
-      leavesPlacementType: primitives.common.ChildrenPlacementType.Matrix,
-      arrowsDirection: primitives.common.GroupByType.Children,
-      //scale: 1,
-      labelFontSize: "24px",
-      defaultTemplateName: "info",
-      templates: [
-        {
-          name: "info",
-          itemSize: { width: 80 },
-          //itemBorderWidth: 1,
-          //minimizedItemLineWidth: 1,
-          //minimizedItemSize: { width: 3, height: 3 },
-          //highlightPadding: { left: 4, top: 4, right: 4, bottom: 0 },
-          onItemRender: ({ context: itemConfig }) => {
-            return (
-              <div
-                //className="InfoTemplate"
-                dangerouslySetInnerHTML={{ __html: itemConfig.title }}
-                style={{
-                  backgroundColor: "#fff",
-                  //minWidth: "200px",
-                  //height: "100%",
-                  fontSize: "14px",
-                }}
-              >
-                {/* {itemConfig.title} */}
-              </div>
-            );
-          },
-        },
-      ],
-      hasSelectorCheckbox: primitives.common.Enabled.False,
-      items: [
-        /* vertical layout example */
-        {
-          id: 101,
-          parent: null,
-          title: "Транспортная стратегия Российской Федерации на период до 2030 года",
-          childrenPlacementType: primitives.common.ChildrenPlacementType.Horizontal,
-        },
-        { id: 102, parent: 101, title: "<b>Цель 1</b>" },
-        { id: 106, parent: 101, title: "Цель 2" },
-        { id: 107, parent: 101, title: "Цель 3" },
-        { id: 108, parent: 101, title: "Цель 4" },
-        { id: 109, parent: 101, title: "Цель 5" },
-        { id: 103, parent: 101, title: "Цель 6", childrenPlacementType: primitives.common.ChildrenPlacementType.Matrix },
-        { id: 104, parent: 103, title: "6.1" },
-        { id: 105, parent: 103, title: "6.2" },
-        { id: 1014, parent: 103, title: "6.3" },
-        { id: 1015, parent: 103, title: "6.4" },
-      ],
-    };
+    // const config = {
+    //   pageFitMode: primitives.common.PageFitMode.None,
+    //   maximumColumnsInMatrix: 2,
+    //   //cursorItem: 1,
+    //   //highlightItem: 0,
+    //   normalItemsInterval: 20,
+    //   cousinsIntervalMultiplier: 1,
+    //   itemTitleSecondFontColor: primitives.common.Colors.White,
+    //   leavesPlacementType: primitives.common.ChildrenPlacementType.Matrix,
+    //   arrowsDirection: primitives.common.GroupByType.Children,
+    //   //scale: 1,
+    //   labelFontSize: "24px",
+    //   defaultTemplateName: "info",
+    //   templates: [
+    //     {
+    //       name: "info",
+    //       itemSize: { width: 80 },
+    //       //itemBorderWidth: 1,
+    //       //minimizedItemLineWidth: 1,
+    //       //minimizedItemSize: { width: 3, height: 3 },
+    //       //highlightPadding: { left: 4, top: 4, right: 4, bottom: 0 },
+    //       onItemRender: ({ context: itemConfig }) => {
+    //         return (
+    //           <div
+    //             //className="InfoTemplate"
+    //             dangerouslySetInnerHTML={{ __html: itemConfig.title }}
+    //             style={{
+    //               backgroundColor: "#fff",
+    //               //minWidth: "200px",
+    //               //height: "100%",
+    //               fontSize: "14px",
+    //             }}
+    //           >
+    //             {/* {itemConfig.title} */}
+    //           </div>
+    //         );
+    //       },
+    //     },
+    //   ],
+    //   hasSelectorCheckbox: primitives.common.Enabled.False,
+    //   items: [
+    //     /* vertical layout example */
+    //     {
+    //       id: 101,
+    //       parent: null,
+    //       title: "Транспортная стратегия Российской Федерации на период до 2030 года",
+    //       childrenPlacementType: primitives.common.ChildrenPlacementType.Horizontal,
+    //     },
+    //     { id: 102, parent: 101, title: "<b>Цель 1</b>" },
+    //     { id: 106, parent: 101, title: "Цель 2" },
+    //     { id: 107, parent: 101, title: "Цель 3" },
+    //     { id: 108, parent: 101, title: "Цель 4" },
+    //     { id: 109, parent: 101, title: "Цель 5" },
+    //     { id: 103, parent: 101, title: "Цель 6", childrenPlacementType: primitives.common.ChildrenPlacementType.Matrix },
+    //     { id: 104, parent: 103, title: "6.1" },
+    //     { id: 105, parent: 103, title: "6.2" },
+    //     { id: 1014, parent: 103, title: "6.3" },
+    //     { id: 1015, parent: 103, title: "6.4" },
+    //   ],
+    // };
 
     return (
       <div>
