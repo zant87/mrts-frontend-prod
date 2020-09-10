@@ -24,6 +24,7 @@ export const ParamsAPI = {
       return response.data;
     });
   },
+  
   getParamData(
     paramId,
     frequencyId = 1,

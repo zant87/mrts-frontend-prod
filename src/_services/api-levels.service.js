@@ -8,7 +8,7 @@ const instance = axios.create({
 
 export const LevelsAPI = {
   getInds() {
-    return instance.get(`indicators`).then((response) => {
+    return instance.get(`indicators?isCalc.equals=1`).then((response) => {
       return response.data;
     });
   },

@@ -4,6 +4,7 @@ import { IndsAPI } from "@/_services/api-inds.service";
 import OrgTree from "react-org-tree";
 import Preloader from "@/Common/Preloader/Preloader";
 
+
 class IndicatorSchemeValues extends React.Component {
   constructor(props) {
     super(props);
