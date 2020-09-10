@@ -164,7 +164,7 @@ export default class OperatorReportFactPivotPage extends React.Component {
                             dataField: 'value',
                             dataType: 'number',
                             format: "#,###,###,##0.##",
-                            summaryType: 'sum',
+                            summaryType: 'max',
                             area: 'data'
                         }],
                     isLoading: true,
