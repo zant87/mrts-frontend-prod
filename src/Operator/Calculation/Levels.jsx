@@ -3,6 +3,7 @@ import React from "react";
 import {MDBBtn, MDBCol, MDBDatePicker, MDBInput, MDBRow, MDBSelect, toast} from "mdbreact";
 import moment from "moment";
 import appAxios from "../../_services/appAxios";
+import Preloader from "@/Common/Preloader/Preloader";
 
 export default class OperatorCalculationLevelsPage extends React.Component {
 
@@ -67,7 +68,9 @@ export default class OperatorCalculationLevelsPage extends React.Component {
 
                     </MDBCol>
                 </MDBRow>
-
+                {this.state.isLoading ? 
+                <Preloader /> : ""
+                }       
                 <MDBRow between={true}>
                         <MDBBtn color="primary" type="none" onClick={this.doCalculate}>
                             Раcсчитать
