@@ -45,6 +45,10 @@ export const authenticationService = {
 function setRole(role) {
     console.log('Switching Role to ', role);
     let data;
+
+    cookie.remove('UserInfo');
+    cookie.remove('UserRole');
+
     switch (role) {
         case Role.Admin:
 
