@@ -232,7 +232,7 @@ export default class OperatorCalculationValuesPage extends React.Component {
             Рассчитать и сохранить
           </MDBBtn>
           <MDBBtn color="primary" type="none" onClick={this.doCalcAll}>
-            Рассчитать все
+            Рассчитать все и сохранить
           </MDBBtn>
         </MDBRow>
       </MDBCol>
