@@ -98,7 +98,7 @@ export default class AdminExecutorsByIndicatorPage extends React.Component {
         const columns = [
             {field: 'id', title: '#', filtering: false},
             {field: 'indicatorName', title: 'Индикатор'},
-            {field: 'role', title: 'Роль'},
+            {field: 'rusRole', title: 'Роль'},
             {field: 'fullname', title: 'Пользователь'},
             {field: 'beginDate', title: 'Начало действия', type: 'date', filtering: false},
             {field: 'endDate', title: 'Конец действия', type: 'date', filtering: false},
