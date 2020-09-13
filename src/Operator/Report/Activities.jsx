@@ -21,11 +21,17 @@ export default class OperatorReportActivitiesPage extends React.Component {
 
     toggleModal = (rowData, action) => {
         console.log(rowData);
+        if (rowData && action) {
         this.setState({
             modal: !this.state.modal,
             row: rowData,
             action: action
         });
+        } else {
+            this.setState({
+                modal: !this.state.modal,
+            });
+        }
     }
 
     toggleHighlight = () => {
@@ -48,6 +54,7 @@ export default class OperatorReportActivitiesPage extends React.Component {
         })
     }
 
+    
     render() {
 
         const columns = [
@@ -142,6 +149,7 @@ export default class OperatorReportActivitiesPage extends React.Component {
                                 data={this.state.row}
                                 action={this.state.action}
                                 tableRef={this.tableRef}
+                                toggleModal={this.toggleModal}
                             />
                         </MDBModalBody>
                     </MDBModal>

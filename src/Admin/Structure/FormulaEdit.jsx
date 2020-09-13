@@ -10,7 +10,7 @@ export default class AdminStructureFormulaEditPage extends React.Component {
         this.state = this.props.data;
     }
 
-    doSave = (e) => {
+    doSave = (e, close) => {
         const responseData = this.state;
 
         appAxios({
@@ -21,6 +21,9 @@ export default class AdminStructureFormulaEditPage extends React.Component {
             const message = response.headers["x-mrts-backend-params"];
             toast.success(`Успешно обновлена запись с ID ${message}`, {closeButton: false});
             this.props.tableRef.current.onQueryChange();
+            if (close) {
+                this.props.toggleModal();
+            }
         });
     }
 
@@ -50,6 +53,9 @@ export default class AdminStructureFormulaEditPage extends React.Component {
 
                     <MDBBtn color="primary" type="none" onClick={e => this.doSave(e)}>
                         Сохранить
+                    </MDBBtn>
+                    <MDBBtn color="primary" type="none" onClick={e => this.doSave(e, true)}>
+                        Сохранить и закрыть
                     </MDBBtn>
                 </div>
             </MDBContainer>

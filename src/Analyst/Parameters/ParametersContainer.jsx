@@ -5,7 +5,7 @@ import {
   getParams,
   getParamValues,
   getTransportTypes,
-  setSearchQuery,
+  setSearchQueryParams,
   setTransportTypeId,
   getFrequencies,
   setParamFrequencyId,
@@ -19,6 +19,7 @@ import {
 } from "@/_reducers/params-reducer";
 import { withRouter } from "react-router-dom";
 import { compose } from "redux";
+
 
 class ParametersContainer extends React.Component {
   componentDidMount() {
@@ -97,6 +98,7 @@ class ParametersContainer extends React.Component {
   }
 }
 
+
 let mapStateToProps = (state) => {
   return {
     params: state.paramsPage.params,
@@ -106,7 +108,7 @@ let mapStateToProps = (state) => {
     isFetchingParams: state.paramsPage.isFetchingParams,
     isFetchingParamData: state.paramsPage.isFetchingParamData,
     isFetchingParamInfo: state.paramsPage.isFetchingParamInfo,
-    searchQuery: state.paramsPage.searchQuery,
+    searchQueryParams: state.paramsPage.searchQueryParams,
     transportTypeId: state.paramsPage.transportTypeId,
     frequencies: state.paramsPage.frequencies,
     paramFrequencyId: state.paramsPage.paramFrequencyId,
@@ -125,7 +127,7 @@ export default compose(
     getParams,
     getParamValues,
     getTransportTypes,
-    setSearchQuery,
+    setSearchQueryParams,
     setTransportTypeId,
     getFrequencies,
     setParamFrequencyId,

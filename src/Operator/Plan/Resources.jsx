@@ -15,12 +15,19 @@ export default class OperatorPlanResourcesPage extends React.Component {
     tableRef = React.createRef();
 
     toggleModal = (rowData, action) => {
-        this.setState({
-            modal: !this.state.modal,
-            row: rowData,
-            action: action
-        });
+        if (rowData && action) {
+            this.setState({
+                modal: !this.state.modal,
+                row: rowData,
+                action: action
+            });
+        } else {
+            this.setState({
+                modal: !this.state.modal,
+            });
+        }
     }
+
 
     render() {
 
@@ -63,6 +70,7 @@ export default class OperatorPlanResourcesPage extends React.Component {
                             <ResourcesEdit
                                 data={this.state.row}
                                 tableRef={this.tableRef}
+                                toggleModal={this.toggleModal}
                             />
                         </MDBModalBody>
                     </MDBModal>

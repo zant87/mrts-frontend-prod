@@ -15,6 +15,7 @@ export default class OperatorPlanIndicatorsPage extends React.Component {
         initialized: false
     }
 
+
     getOkeis = () => appAxios.get(`nsi-okeis`).catch(err => null);
     tableRef = React.createRef();
 
@@ -35,11 +36,17 @@ export default class OperatorPlanIndicatorsPage extends React.Component {
     }
 
     toggleModal = (rowData, action) => {
+        if (rowData && action) {
         this.setState({
             modal: !this.state.modal,
             row: rowData,
             action: action
         });
+        } else {
+            this.setState({
+                modal: !this.state.modal,
+            });
+        }
     }
 
     render() {
@@ -85,6 +92,7 @@ export default class OperatorPlanIndicatorsPage extends React.Component {
                                 okeis={this.state.okeis}
                                 action={this.state.action}
                                 tableRef={this.tableRef}
+                                toggleModal={this.toggleModal}
                             />
                         </MDBModalBody>
                     </MDBModal>

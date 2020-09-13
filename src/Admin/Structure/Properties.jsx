@@ -16,6 +16,7 @@ export default class AdminStructurePropertiesPage extends React.Component {
         initialized: false
     }
 
+
     tableRef = React.createRef();
 
     getDataTypes = () => appAxios.get(`data-types`).catch(err => null);
@@ -40,11 +41,17 @@ export default class AdminStructurePropertiesPage extends React.Component {
 
     toggleModal = (rowData, action) => {
         console.log(rowData);
+        if (rowData && action) {
         this.setState({
             modal: !this.state.modal,
             row: rowData,
             action: action
         });
+        } else {
+            this.setState({
+                modal: !this.state.modal,
+            });
+        }
     }
 
     render() {
@@ -111,6 +118,7 @@ export default class AdminStructurePropertiesPage extends React.Component {
                                 dataTypes={this.state.dataTypes}
                                 okeis={this.state.okeis}
                                 tableRef={this.tableRef}
+                                toggleModal={this.toggleModal}
                             />
                         </MDBModalBody>
                     </MDBModal>

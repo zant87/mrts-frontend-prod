@@ -7,7 +7,7 @@ const TOOGLE_IS_FETCHING_PARAM_INFO = "TOOGLE_IS_FETCHING_PARAM_INFO";
 const SET_PARAM_VALS = "SET_PARAM_VALS";
 const SET_TRANSPORT_TYPES = "SET_TRANSPORT_TYPES";
 const SET_TRANSPORT_TYPE_ID = "SET_TRANSPORT_TYPE_ID";
-const SET_SEARCH_QUERY = "SET_SEARCH_QUERY";
+const SET_SEARCH_QUERY_PARAMS = "SET_SEARCH_QUERY_PARAMS";
 const SET_FREQUENCIES = "SET_FREQUENCIES";
 const SET_PARAM_FREQUENCY_ID = "SET_PARAM_FREQUENCY_ID";
 const SET_PARAM_ID = "SET_PARAM_ID";
@@ -27,7 +27,7 @@ let initialState = {
   isFetchingParamData: false,
   isFetchingParamInfo: false,
   paramId: null,
-  searchQuery: null,
+  searchQueryParams: null,
   transportTypeId: "0",
   frequencies: null,
   paramFrequencyId: 1,
@@ -78,10 +78,11 @@ const paramsReducer = (state = initialState, action) => {
         ...state,
         transportTypes: action.transportTypes,
       };
-    case SET_SEARCH_QUERY:
+
+    case SET_SEARCH_QUERY_PARAMS:
       return {
         ...state,
-        searchQuery: action.searchQuery,
+        searchQueryParams: action.searchQueryParams,
       };
     case SET_TRANSPORT_TYPE_ID:
       return {
@@ -159,9 +160,9 @@ export const setParamValues = (paramVals) => ({
   type: SET_PARAM_VALS,
   paramVals,
 });
-export const setSearchQuery = (searchQuery) => ({
-  type: SET_SEARCH_QUERY,
-  searchQuery,
+export const setSearchQueryParams = (searchQueryParams) => ({
+  type: SET_SEARCH_QUERY_PARAMS,
+  searchQueryParams,
 });
 export const setTransportTypes = (transportTypes) => ({
   type: SET_TRANSPORT_TYPES,

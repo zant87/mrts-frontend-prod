@@ -18,6 +18,7 @@ import FormulaEdit from "./FormulaEdit";
 
 export default class AdminStructureFormulasPage extends React.Component {
 
+
     state = {
         modal: false,
         row: {}
@@ -27,11 +28,18 @@ export default class AdminStructureFormulasPage extends React.Component {
 
     toggleModal = (rowData, action) => {
         console.log(rowData);
+        if (rowData) {
         this.setState({
             modal: !this.state.modal,
             row: rowData,
             action: action
         });
+        }
+        else {
+            this.setState({
+                modal: !this.state.modal,
+            });
+        }
     }
 
     render() {
@@ -66,7 +74,7 @@ export default class AdminStructureFormulasPage extends React.Component {
                     <MDBModal isOpen={this.state.modal} toggle={this.toggleModal} backdrop={false} size="lg">
                         <MDBModalHeader toggle={this.toggleModal}>Форма редактирования</MDBModalHeader>
                         <MDBModalBody>
-                            <FormulaEdit data={this.state.row} tableRef={this.tableRef}/>
+                            <FormulaEdit data={this.state.row} tableRef={this.tableRef} toggleModal={this.toggleModal} />
                         </MDBModalBody>
                     </MDBModal>
                 </MDBContainer>

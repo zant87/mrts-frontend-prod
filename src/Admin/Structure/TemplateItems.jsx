@@ -8,6 +8,7 @@ import TemplateItemEdit from "./TemplateItemEdit";
 
 export default class AdminStructureTemplateItemsPage extends React.Component {
 
+
     state = {
         modal: false,
         row: {},
@@ -40,11 +41,17 @@ export default class AdminStructureTemplateItemsPage extends React.Component {
 
     toggleModal = (rowData, action) => {
         console.log(rowData);
+        if (rowData && action) {
         this.setState({
             modal: !this.state.modal,
             row: rowData,
             action: action
         });
+        } else {
+            this.setState({
+                modal: !this.state.modal,
+            });
+        }
     }
 
     render() {
@@ -109,6 +116,7 @@ export default class AdminStructureTemplateItemsPage extends React.Component {
                                 projectTemplates={this.state.templates}
                                 userProperties={this.state.properties}
                                 tableRef={this.tableRef}
+                                toggleModal={this.toggleModal}
                             />
                         </MDBModalBody>
                     </MDBModal>

@@ -37,8 +37,7 @@ export default class AdminStructureTemplateEditPage extends React.Component {
         this.setState({projectId: event[0]});
     }
 
-    doSave = (e) => {
-
+    doSave = (e, close) => {
         if (this.props.action === 'edit') {
 
             const responseData = {
@@ -63,9 +62,12 @@ export default class AdminStructureTemplateEditPage extends React.Component {
                     closeButton: false
                 });
                 this.props.tableRef.current.onQueryChange();
+                if (close) {
+                    this.props.toggleModal();
+                }
             });
+            
         } else {
-
             const responseData = {
                 code: this.state.code,
                 name: this.state.name,
@@ -87,6 +89,9 @@ export default class AdminStructureTemplateEditPage extends React.Component {
                     closeButton: false
                 });
                 this.props.tableRef.current.onQueryChange();
+                if (close) {
+                    this.props.toggleModal();
+                }
             });
 
         }
@@ -106,6 +111,7 @@ export default class AdminStructureTemplateEditPage extends React.Component {
         const date = moment(value);
         this.setState({endDate: date.format('YYYY-MM-DD')});
     }
+
 
     render() {
 
@@ -172,6 +178,9 @@ export default class AdminStructureTemplateEditPage extends React.Component {
 
                     <MDBBtn color="primary" type="none" onClick={e => this.doSave(e)}>
                         Сохранить
+                    </MDBBtn>
+                    <MDBBtn color="primary" type="none" name="save" onClick={e => this.doSave(e, true) }>
+                        Сохранить и закрыть
                     </MDBBtn>
                 </div>
             </MDBContainer>

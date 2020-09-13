@@ -18,6 +18,7 @@ class OperatorReportAppropriationsTabsPage extends React.Component {
         }
     };
 
+    
     render() {
         return (
             <MDBContainer fluid>

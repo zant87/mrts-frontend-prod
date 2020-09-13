@@ -13,7 +13,8 @@ export default class OperatorReportAppropriationsUpdatePage extends React.Compon
         this.state = props.data;
     }
 
-    doSave = (e) => {
+
+    doSave = (e, close) => {
         this.setState({isLoading: true});
         appAxios.get(`/views/k-9-s/update?pID=${this.state.id}&pDoc=${this.state.documentId}&pPlan=${this.state.plan}&pFact=${this.state.fact}`)
             .then(res => {
@@ -23,6 +24,9 @@ export default class OperatorReportAppropriationsUpdatePage extends React.Compon
                     closeButton: false
                 });
                 this.props.tableRef.current.onQueryChange();
+                if (close) {
+                    this.props.toggleModal();
+                }
             }).catch(function (error) {
             console.log(error);
             toast.error(`Ошибка при обновлении документа`, {
@@ -55,7 +59,10 @@ export default class OperatorReportAppropriationsUpdatePage extends React.Compon
                               onChange={e => this.onChangeHandler(e)} type="number" name="fact"/>
 
                     <MDBBtn color="primary" type="none" onClick={e => this.doSave(e)}>
-                        Обновить
+                        Сохранить
+                    </MDBBtn>
+                    <MDBBtn color="primary" type="none" onClick={e => this.doSave(e, true)}>
+                        Сохранить и закрыть
                     </MDBBtn>
 
                 </div>

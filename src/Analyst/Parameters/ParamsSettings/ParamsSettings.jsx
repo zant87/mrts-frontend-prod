@@ -23,6 +23,7 @@ const ParamsSettings = (props) => {
 
   let onSearchQueryChange = (e) => {
     let searchQuery = e.target.value;
+    debugger;
     props.setSearchQuery(searchQuery);
   };
 
@@ -50,6 +51,7 @@ const ParamsSettings = (props) => {
         </select>
       </div>
       <hr />
+
 
       <div style={{ marginBottom: "20px" }}>
         <MDBCol md="50">

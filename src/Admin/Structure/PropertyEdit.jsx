@@ -49,7 +49,7 @@ export default class AdminStructurePropertyEditPage extends React.Component {
         this.setState({dataTypeId: event[0]});
     }
 
-    doSave = (e) => {
+    doSave = (e, close) => {
 
         if (this.props.action === 'edit') {
 
@@ -73,6 +73,9 @@ export default class AdminStructurePropertyEditPage extends React.Component {
                     closeButton: false
                 });
                 this.props.tableRef.current.onQueryChange();
+                if (close) {
+                    this.props.toggleModal();
+                }
             });
         } else {
 
@@ -95,6 +98,9 @@ export default class AdminStructurePropertyEditPage extends React.Component {
                     closeButton: false
                 });
                 this.props.tableRef.current.onQueryChange();
+                if (close) {
+                    this.props.toggleModal();
+                }
             });
 
         }
@@ -146,6 +152,9 @@ export default class AdminStructurePropertyEditPage extends React.Component {
 
                     <MDBBtn color="primary" type="none" onClick={e => this.doSave(e)}>
                         Сохранить
+                    </MDBBtn>
+                    <MDBBtn color="primary" type="none" onClick={e => this.doSave(e, true)}>
+                        Сохранить и закрыть
                     </MDBBtn>
                 </div>
             </MDBContainer>

@@ -44,7 +44,7 @@ export default class OperatorPlanIndicatorsEditPage extends React.Component {
         this.setState({[event.target.name]: Number(event.target.value)});
     };
 
-    doSave = (e) => {
+    doSave = (e, close) => {
         const responseData = {
             id: this.state.id,
             okeiId: this.state.okeiId,
@@ -62,6 +62,9 @@ export default class OperatorPlanIndicatorsEditPage extends React.Component {
                 closeButton: false
             });
             this.props.tableRef.current.onQueryChange();
+            if (close) {
+                this.props.toggleModal();
+            }
         });
     };
 
@@ -88,6 +91,9 @@ export default class OperatorPlanIndicatorsEditPage extends React.Component {
                     </MDBSelect>
                     <MDBBtn color="primary" type="none" onClick={e => this.doSave(e)}>
                         Сохранить
+                    </MDBBtn>
+                    <MDBBtn color="primary" type="none" onClick={e => this.doSave(e, true)}>
+                        Сохранить и закрыть
                     </MDBBtn>
                 </div>
             </MDBContainer>

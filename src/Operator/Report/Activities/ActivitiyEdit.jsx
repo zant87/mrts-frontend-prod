@@ -30,7 +30,7 @@ export default class OperatorReportActivityEditPage extends React.Component {
         this.getActivityReportAndUser();
     }
 
-    doSave = (e) => {
+    doSave = (e, close) => {
 
         if (this.props.action === 'edit') {
 
@@ -47,6 +47,9 @@ export default class OperatorReportActivityEditPage extends React.Component {
                     closeButton: false
                 });
                 this.props.tableRef.current.onQueryChange();
+                if (close) {
+                    this.props.toggleModal();
+                }
             });
         }
     }
@@ -70,7 +73,10 @@ export default class OperatorReportActivityEditPage extends React.Component {
                     <MDBInput type="textarea" value={this.state.report} label="Отчет" rows="5"
                               onChange={e => this.onChangeHandler(e)} name='report' outline/>
                     <MDBBtn color="primary" type="none" onClick={e => this.doSave(e)}>
-                        Обновить
+                        Сохранить
+                    </MDBBtn>
+                    <MDBBtn color="primary" type="none" onClick={e => this.doSave(e, true)}>
+                        Сохранить и закрыть
                     </MDBBtn>
                 </div>
             </MDBContainer>
