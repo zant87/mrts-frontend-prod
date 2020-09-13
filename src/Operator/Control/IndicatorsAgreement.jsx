@@ -10,7 +10,9 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
 
     state = {
         currentUser: null,
-        initialized: false
+        currentUserOnly: false,
+        initialized: false,
+        icon: 'check_circle_outline'
     };
 
     getUser = (id) => appAxios.get(`users?username.equals=${id}`).catch(err => null);
@@ -24,14 +26,14 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
                 this.getIndicators(),
             ]);
 
-            console.log('%cUser =', 'color: green', rUser.data[0]);
+            console.log('%cUser =', 'color: green', {...rUser.data[0]});
 
             this.setState(
                 {
+                    currentUser: authenticationService.currentUserValue,
                     user: rUser.data[0],
                     indicators: rIndicators.data,
-                    initialized: true,
-                    currentUser: authenticationService.currentUserValue
+                    initialized: true
                 }
             );
         } catch (err) {
@@ -147,16 +149,85 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
     render() {
 
         const columns = [
-            {field: 'id', title: '#', filtering: false},
-            {field: 'indicatorYear', title: 'Год'},
-            {field: 'indicatorQuarter', title: 'Квартал'},
-            {field: 'indicatorName', title: 'Индикатор'},
-            {field: 'nationalSymbolicName', title: 'Единица измерения'},
-            {field: 'agreeList', title: 'Требуется согласование'},
-            {field: 'agreeUndone', title: 'Не согласован'},
-            {field: 'approveList', title: 'Требует утверждения'},
-            {field: 'indicatorValue', title: 'Значение индикатора'},
-            {field: 'approved', title: 'Утвержден', lookup: {0: 'Нет', 1: 'Да'}}
+            {
+                field: 'id', title: '#', filtering: false,
+                cellStyle: (e, rowData) => {
+                    if ((rowData.agreeIdList && rowData.agreeIdList.includes(this.state.user.username)) || rowData.approveIdList && rowData.approveIdList.includes(this.state.user.username)) {
+                        return {background: "#33cc33"};
+                    }
+                },
+            },
+            {
+                field: 'indicatorYear', title: 'Год',
+                cellStyle: (e, rowData) => {
+                    if ((rowData.agreeIdList && rowData.agreeIdList.includes(this.state.user.username)) || rowData.approveIdList && rowData.approveIdList.includes(this.state.user.username)) {
+                        return {background: "#33cc33"};
+                    }
+                },
+            },
+            {
+                field: 'indicatorQuarter', title: 'Квартал', cellStyle: (e, rowData) => {
+                    if ((rowData.agreeIdList && rowData.agreeIdList.includes(this.state.user.username)) || rowData.approveIdList && rowData.approveIdList.includes(this.state.user.username)) {
+                        return {background: "#33cc33"};
+                    }
+                },
+            },
+            {
+                field: 'indicatorName', title: 'Индикатор', cellStyle: (e, rowData) => {
+                    if ((rowData.agreeIdList && rowData.agreeIdList.includes(this.state.user.username)) || rowData.approveIdList && rowData.approveIdList.includes(this.state.user.username)) {
+                        return {background: "#33cc33"};
+                    }
+                },
+            },
+            {
+                field: 'nationalSymbolicName', title: 'Единица измерения',
+                cellStyle: (e, rowData) => {
+                    if ((rowData.agreeIdList && rowData.agreeIdList.includes(this.state.user.username)) || rowData.approveIdList && rowData.approveIdList.includes(this.state.user.username)) {
+                        return {background: "#33cc33"};
+                    }
+                },
+            },
+            {
+                field: 'agreeList', title: 'Требуется согласование',
+                cellStyle: (e, rowData) => {
+                    if ((rowData.agreeIdList && rowData.agreeIdList.includes(this.state.user.username)) || rowData.approveIdList && rowData.approveIdList.includes(this.state.user.username)) {
+                        return {background: "#33cc33"};
+                    }
+                },
+            },
+            {
+                field: 'agreeUndone', title: 'Не согласован',
+                cellStyle: (e, rowData) => {
+                    if ((rowData.agreeIdList && rowData.agreeIdList.includes(this.state.user.username)) || rowData.approveIdList && rowData.approveIdList.includes(this.state.user.username)) {
+                        return {background: "#33cc33"};
+                    }
+                },
+            },
+            {
+                field: 'approveList', title: 'Требует утверждения',
+                cellStyle: (e, rowData) => {
+                    if ((rowData.agreeIdList && rowData.agreeIdList.includes(this.state.user.username)) || rowData.approveIdList && rowData.approveIdList.includes(this.state.user.username)) {
+                        return {background: "#33cc33"};
+                    }
+                },
+            },
+            {
+                field: 'indicatorValue', title: 'Значение индикатора',
+                cellStyle: (e, rowData) => {
+                    if ((rowData.agreeIdList && rowData.agreeIdList.includes(this.state.user.username)) || rowData.approveIdList && rowData.approveIdList.includes(this.state.user.username)) {
+                        return {background: "#33cc33"};
+                    }
+                },
+            },
+            {
+                field: 'approved', title: 'Утвержден', lookup: {0: 'Нет', 1: 'Да'},
+                cellStyle: (e, rowData) => {
+                    if ((rowData.agreeIdList && rowData.agreeIdList.includes(this.state.user.username)) || rowData.approveIdList && rowData.approveIdList.includes(this.state.user.username)) {
+                        return {background: "#33cc33"};
+                    }
+                },
+            },
+            {field: 'userComment', title: 'Комментарий'}
         ];
 
         const filtersList = {
@@ -181,6 +252,18 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
                     this.cancelAgreement(rowData);
                 }
             },
+            {
+                icon: this.state.icon,
+                tooltip: 'Свои согласования',
+                onClick: (event, rowData) => {
+                    let icon = 'check_circle_outline';
+                    if (!this.state.currentUserOnly)
+                        icon = 'check_circle';
+                    this.setState({currentUserOnly: !this.state.currentUserOnly, icon: icon});
+                    this.tableRef.current.onQueryChange();
+                },
+                isFreeAction: true
+            },
         ];
 
         return (
@@ -193,7 +276,8 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
                         actions={actions}
                         tableRef={this.tableRef}
                         filterMinimalLength={filterMinimalLength}
-                        baseUrl={`views/indicator-agrees`}
+                        baseUrl={`views/indicator-agrees?filterByUser=${this.state.currentUserOnly}&username=${this.state.user.username}`}
+                        modifiedBaseUrl={true}
                         loadAll={true}
                     />
                 )}
