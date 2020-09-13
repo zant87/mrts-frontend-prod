@@ -25,11 +25,17 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
     }
 
     toggleModal = (rowData, action) => {
+        if (rowData && action) {
         this.setState({
             modal: !this.state.modal,
             row: rowData,
             action: action
         });
+        } else {
+            this.setState({
+                modal: !this.state.modal,
+            });
+        }
     }
 
     tableRef = React.createRef();
@@ -150,6 +156,7 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
                                 action={this.state.action}
                                 tableRef={this.tableRef}
                                 editable={true}
+                                toggleModal={this.toggleModal}
                             />
                         </MDBModalBody>
                     </MDBModal>

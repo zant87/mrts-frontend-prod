@@ -13,6 +13,7 @@ import Report5 from "./ReportTypes/Report5";
 import Report6 from "./ReportTypes/Report6";
 import Report7 from "./ReportTypes/Report7";
 import Report8 from "./ReportTypes/Report8";
+import Preloader from "@/Common/Preloader/Preloader";
 
 class AnalystReportPage extends React.Component {
 
@@ -55,7 +56,7 @@ class AnalystReportPage extends React.Component {
           [this.getGoals(), this.getScenarios(),
             this.getQuarters(), this.getStrategies(),
             this.getStages()]);
-
+          debugger;
       this.setState(
           {
             goals: goalsData.data,
@@ -171,6 +172,7 @@ class AnalystReportPage extends React.Component {
         reportName = `report_${this.state.report.value}_${this.state.start}.${this.state.reportFormat}`;
         break;
       case 6:
+        debugger;
         reportUrl = `reports/${this.state.report.value}/download?format=${this.state.reportFormat}&year=${this.state.start}&scenario=${this.state.scenario.id}&ts=${this.state.strategy.id}`;
         reportName = `report_${this.state.report.value}_${this.state.start}_${this.state.scenario.code}_${this.state.strategy.code}.${this.state.reportFormat}`;
         break;
@@ -191,7 +193,8 @@ class AnalystReportPage extends React.Component {
     console.log('File Name = ', reportName);
 
     try {
-      this.setState({isDownloading: false});
+      //this.setState({isDownloading: false});
+      //this.setState({isDownloading: true});
 
       let response = await appAxios({
         url: reportUrl,
@@ -275,6 +278,7 @@ class AnalystReportPage extends React.Component {
                          setQuarter={(event) => this.setQuarter(event)}
                          setScenario={(event) => this.setScenario(event)}
                          setGoal={(event) => this.setGoal(event)}/>
+                {this.state.isDownloading ? <Preloader /> : ""}
                 <MDBBtn color="primary" type="submit">
                   Скачать
                 </MDBBtn>
@@ -287,6 +291,7 @@ class AnalystReportPage extends React.Component {
                          start={this.state.start}
                          onChange={(event) => this.onChangeHandler(event)}
                          setQuarter={(event) => this.setQuarter(event)}/>
+                {this.state.isDownloading ? <Preloader /> : ""}
                 <MDBBtn color="primary" type="submit">
                   Скачать
                 </MDBBtn>
@@ -298,6 +303,7 @@ class AnalystReportPage extends React.Component {
                 <Report3 start={this.state.start}
                          onChange={(event) => this.onChangeHandler(event)}
                          setQuarter={(event) => this.setQuarter(event)}/>
+                 {this.state.isDownloading ? <Preloader /> : ""}
                 <MDBBtn color="primary" type="submit">
                   Скачать
                 </MDBBtn>
@@ -312,6 +318,7 @@ class AnalystReportPage extends React.Component {
                          end={this.state.end}
                          name='labeling'
                          label='Подписи значений рядов данных'/>
+                 {this.state.isDownloading ? <Preloader /> : ""}
                 <MDBBtn color="primary" type="submit">
                   Скачать
                 </MDBBtn>
@@ -325,6 +332,7 @@ class AnalystReportPage extends React.Component {
                          start={this.state.start}
                          name='labeling'
                          label='Подписи значений рядов данных'/>
+                 {this.state.isDownloading ? <Preloader /> : ""}
                 <MDBBtn color="primary" type="submit">
                   Скачать
                 </MDBBtn>
@@ -339,6 +347,7 @@ class AnalystReportPage extends React.Component {
                          strategies={this.state.strategies}
                          setStrategy={(event) => this.setStrategy(event)}
                          start={this.state.start}/>
+                 {this.state.isDownloading ? <Preloader /> : ""}
                 <MDBBtn color="primary" type="submit">
                   Скачать
                 </MDBBtn>
@@ -352,6 +361,7 @@ class AnalystReportPage extends React.Component {
                          scenarios={this.state.scenarios}
                          setScenario={(event) => this.setScenario(event)}
                          onCheckboxChange={this.onChangeLabelingHandler}/>
+                 {this.state.isDownloading ? <Preloader /> : ""}
                 <MDBBtn color="primary" type="submit">
                   Скачать
                 </MDBBtn>
@@ -366,6 +376,7 @@ class AnalystReportPage extends React.Component {
                          setScenario={(event) => this.setScenario(event)}
                          strategies={this.state.strategies}
                          setStrategy={(event) => this.setStrategy(event)}/>
+                 {this.state.isDownloading ? <Preloader /> : ""}
                 <MDBBtn color="primary" type="submit">
                   Скачать
                 </MDBBtn>

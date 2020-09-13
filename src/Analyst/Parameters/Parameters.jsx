@@ -16,8 +16,8 @@ let Parameters = (props) => {
           params={props.paramsPage.params}
           isFetchingParams={props.paramsPage.isFetchingParams}
           transportTypes={props.paramsPage.transportTypes}
-          setSearchQuery={props.paramsPage.setSearchQuery}
-          searchQuery={props.paramsPage.searchQuery}
+          setSearchQuery={props.paramsPage.setSearchQueryParams}
+          searchQuery={props.paramsPage.searchQueryParams}
           transportTypeId={props.paramsPage.transportTypeId}
           setTransportTypeId={props.paramsPage.setTransportTypeId}
           frequencies={props.paramsPage.frequencies}

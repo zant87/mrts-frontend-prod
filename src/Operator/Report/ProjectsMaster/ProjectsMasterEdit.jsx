@@ -45,7 +45,7 @@ export default class OperatorReportProjectsMasterEditPage extends React.Componen
         }
     };
 
-    doSave = () => {
+    doSave = (close) => {
 
         const responseData = {
             id: this.state.id,
@@ -67,6 +67,9 @@ export default class OperatorReportProjectsMasterEditPage extends React.Componen
                 closeButton: false
             });
             this.props.tableRef.current.onQueryChange();
+            if (close) {
+                this.props.toggleModal();
+            }
         });
     }
 
@@ -183,8 +186,11 @@ export default class OperatorReportProjectsMasterEditPage extends React.Componen
 
                 {this.props.editable && (
                     <MDBRow around className='mt-2'>
-                        <MDBBtn color="primary" type="none" onClick={this.doSave}>
+                        <MDBBtn color="primary" type="none" onClick={() => this.doSave()}>
                             Сохранить
+                        </MDBBtn>
+                        <MDBBtn color="primary" type="none" onClick={() => this.doSave(true)}>
+                            Сохранить и закрыть
                         </MDBBtn>
                     </MDBRow>
                 )

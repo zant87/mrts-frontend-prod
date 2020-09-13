@@ -29,7 +29,7 @@ export default class OperatorPlanResourcesEditPage extends React.Component {
         this.setState({[event.target.name]: Number(event.target.value)});
     };
 
-    doSave = (e) => {
+    doSave = (e, close) => {
         const responseData = {id: this.state.id, planingMax: this.state.planingMax, planingMin: this.state.planingMin};
         appAxios({
             url: `views/k-4-s`,
@@ -41,6 +41,9 @@ export default class OperatorPlanResourcesEditPage extends React.Component {
                 closeButton: false
             });
             this.props.tableRef.current.onQueryChange();
+            if (close) {
+                this.props.toggleModal();
+            }
         });
     };
 
@@ -61,6 +64,9 @@ export default class OperatorPlanResourcesEditPage extends React.Component {
                               name="planingMax" type="number" onChange={e => this.onChangeHandler(e)}/>
                     <MDBBtn color="primary" type="none" onClick={e => this.doSave(e)}>
                         Сохранить
+                    </MDBBtn>
+                    <MDBBtn color="primary" type="none" onClick={e => this.doSave(e, true)}>
+                        Сохранить и закрыть
                     </MDBBtn>
                 </div>
             </MDBContainer>

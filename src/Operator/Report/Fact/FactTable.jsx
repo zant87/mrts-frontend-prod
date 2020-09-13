@@ -5,6 +5,7 @@ import FactEdit from "./FactEdit";
 
 export default class OperatorReportFactPage extends React.Component {
 
+
     state = {
         modal: false,
         row: {},
@@ -13,11 +14,17 @@ export default class OperatorReportFactPage extends React.Component {
     }
 
     toggleModal = (rowData, action) => {
+        if (rowData && action) {
         this.setState({
             modal: !this.state.modal,
             row: rowData,
             action: action
         });
+        } else {
+        this.setState({
+            modal: !this.state.modal,
+        });
+        }
     }
 
     tableRef = React.createRef();
@@ -69,6 +76,7 @@ export default class OperatorReportFactPage extends React.Component {
                                 data={this.state.row}
                                 action={this.state.action}
                                 tableRef={this.tableRef}
+                                toggleModal={this.toggleModal}
                             />
                         </MDBModalBody>
                     </MDBModal>

@@ -170,7 +170,6 @@ class IndsList extends React.Component {
               ) : null}
               <hr />
 
-
               <div className="form-group">
                 <label htmlFor="freqform">
                   <strong>Начало периода</strong>

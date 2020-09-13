@@ -37,11 +37,18 @@ export default class AdminStructureTemplatesPage extends React.Component {
 
     toggleModal = (rowData, action) => {
         console.log(rowData);
+        if (rowData && action) {
         this.setState({
             modal: !this.state.modal,
             row: rowData,
             action: action
         });
+        }
+        else {
+            this.setState({
+                modal: !this.state.modal,
+            });
+        }
     }
 
     render() {
@@ -64,6 +71,7 @@ export default class AdminStructureTemplatesPage extends React.Component {
                     if (this.state.initialized) this.toggleModal(rowData, 'edit');
                 }
             },
+
             {
                 icon: 'delete',
                 tooltip: 'Удалить',
@@ -109,6 +117,7 @@ export default class AdminStructureTemplatesPage extends React.Component {
                                 action={this.state.action}
                                 projects={this.state.projects}
                                 tableRef={this.tableRef}
+                                toggleModal={this.toggleModal}
                             />
                         </MDBModalBody>
                     </MDBModal>

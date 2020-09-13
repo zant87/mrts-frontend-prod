@@ -97,6 +97,11 @@ class ParamsList extends React.Component {
     let params = null;
     let forms = null;
     let newForms = [];
+    let search = null;
+
+    if (this.props.params) {
+    params = this.props.params.sort((a, b) => (a.id > b.id ? 1 : -1));
+    
 
     if (this.props.forms) {
       forms = this.props.forms.sort().map((item) => {
@@ -129,7 +134,8 @@ class ParamsList extends React.Component {
       }
     }
 
-    params = this.props.params.sort((a, b) => (a.id > b.id ? 1 : -1));
+
+    
 
     if (this.props.transportTypeId != "0") {
       //debugger;
@@ -139,13 +145,14 @@ class ParamsList extends React.Component {
     }
 
     if (this.props.searchQuery != null) {
-      params = params.filter((x) =>
-        x.parameterName
-          .trim()
-          .toLowerCase()
-          .includes(this.props.searchQuery.trim().toLowerCase())
-      );
+      
+      search = this.props.searchQuery;
+      debugger;
+      //params = params.filter((x) => x.parameterName.trim().toLowerCase().includes(this.props.searchQuery.trim().toLowerCase()));
+      params = params.filter((x) => (x.parameterName.includes(search)));
+     
     }
+  }
 
     return (
       <MDBCol lg="3" className="list h-100" style={{ marginBottom: "10px" }}>
@@ -320,6 +327,7 @@ class ParamsList extends React.Component {
               {this.props.isFetchingParams ? (
                 <Preloader />
               ) : (
+                params!= null && params.length>0 ? (
                 <div className={paramsstyle.paramslist}>
                   <div className="list-group">
                     {params.map((param) => (
@@ -334,7 +342,7 @@ class ParamsList extends React.Component {
                       </NavLink>
                     ))}
                   </div>
-                </div>
+                </div> ) : "Нет данных" 
               )}
             </MDBCardText>
           </MDBCardBody>

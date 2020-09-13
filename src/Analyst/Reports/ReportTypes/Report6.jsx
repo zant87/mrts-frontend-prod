@@ -11,12 +11,15 @@ const Report6 = (props) => {
     });
 
     const strategiesList = props.strategies.map(item => {
+        debugger;
         if (item.actual) {
+            props.setStrategy()
             return {value: item.code, text: item.name, checked: true}
         } else {
             return {value: item.code, text: item.name, checked: false}
         }
     });
+
 
     return (
         <Fragment>

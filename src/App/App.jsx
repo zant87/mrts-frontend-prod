@@ -191,7 +191,7 @@ class App extends React.Component {
                                   </div>
                               </MDBNavItem>
                               <MDBNavItem className="white-text" style={{paddingTop: 5}}>
-                                  <div className="d-none d-xl-inline">Мониторинг реализации транспортной стратегии -
+                                  <div className="d-none d-xl-inline">Мониторинг реализации Транспортной стратегии -
                                   </div>
                                   {" "}
                                   {isAnalyst && <div className="d-none d-lg-inline">АРМ Аналитика</div>}

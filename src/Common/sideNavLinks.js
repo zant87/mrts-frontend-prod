@@ -28,7 +28,7 @@ export const sideNavLinks = [
   },
   {
     link: "/analyst/report",
-    text: "Отчет перед Правительством РФ",
+    text: "Отчет перед Правительством Российской Федерации",
     layout: Layouts.analyst,
   },
   {
@@ -67,11 +67,11 @@ export const sideNavLinks = [
     text: "Элементы карточки проектов",
     layout: Layouts.adminStructure,
   },
-  {
-    link: "/admin/structure/projects-ext",
-    text: "Отчеты по проектам",
-    layout: Layouts.adminStructure,
-  },
+  // {
+  //   link: "/admin/structure/projects-ext",
+  //   text: "Отчеты по проектам",
+  //   layout: Layouts.adminStructure,
+  // },
   {
     link: "/admin/structure/formulas",
     text: "Формулы расчета индикаторов",
