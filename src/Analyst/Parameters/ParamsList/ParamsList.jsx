@@ -83,13 +83,7 @@ class ParamsList extends React.Component {
       quarterId = this.setQuarter.current.value;
     }
 
-    this.props.onFilterChanged(
-      freq,
-      yearStart,
-      yearEnd,
-      quarterId,
-      selectedFormsArr
-    );
+    this.props.onFilterChanged(freq, yearStart, yearEnd, quarterId, selectedFormsArr);
     this.toggle();
   };
 
@@ -97,11 +91,9 @@ class ParamsList extends React.Component {
     let params = null;
     let forms = null;
     let newForms = [];
-    let search = null;
+    let search;
 
-    if (this.props.params) {
     params = this.props.params.sort((a, b) => (a.id > b.id ? 1 : -1));
-    
 
     if (this.props.forms) {
       forms = this.props.forms.sort().map((item) => {
@@ -134,32 +126,23 @@ class ParamsList extends React.Component {
       }
     }
 
-
-    
-
     if (this.props.transportTypeId != "0") {
-      //debugger;
-      params = params.filter(
-        (x) => x.transportTypeId == this.props.transportTypeId
-      );
+      params = params.filter((x) => x.transportTypeId == this.props.transportTypeId);
     }
 
     if (this.props.searchQuery != null) {
-      
-      search = this.props.searchQuery;
-      debugger;
-      //params = params.filter((x) => x.parameterName.trim().toLowerCase().includes(this.props.searchQuery.trim().toLowerCase()));
-      params = params.filter((x) => (x.parameterName.includes(search)));
-     
+      params = params.filter((item) => {
+        //debugger;
+        if (item.parameterName != null) {
+          return item.parameterName.trim().toLowerCase().includes(this.props.searchQuery.toString().trim().toLowerCase());
+        }
+      });
     }
-  }
 
     return (
       <MDBCol lg="3" className="list h-100" style={{ marginBottom: "10px" }}>
         <MDBModal isOpen={this.state.modal} toggle={this.toggle} centered>
-          <MDBModalHeader toggle={this.toggle}>
-            Настройка отображения данных
-          </MDBModalHeader>
+          <MDBModalHeader toggle={this.toggle}>Настройка отображения данных</MDBModalHeader>
           <MDBModalBody>
             <MDBContainer className="mt-2">
               <div style={{ marginBottom: "20px", clear: "left" }}>
@@ -326,8 +309,7 @@ class ParamsList extends React.Component {
             <MDBCardText>
               {this.props.isFetchingParams ? (
                 <Preloader />
-              ) : (
-                params!= null && params.length>0 ? (
+              ) : params != null && params.length > 0 ? (
                 <div className={paramsstyle.paramslist}>
                   <div className="list-group">
                     {params.map((param) => (
@@ -342,7 +324,9 @@ class ParamsList extends React.Component {
                       </NavLink>
                     ))}
                   </div>
-                </div> ) : "Нет данных" 
+                </div>
+              ) : (
+                "Нет данных"
               )}
             </MDBCardText>
           </MDBCardBody>
