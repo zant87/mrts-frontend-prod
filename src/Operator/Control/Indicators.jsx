@@ -27,7 +27,7 @@ export default class OperatorControlIndicatorsPage extends React.Component {
             <React.Fragment>
                 <TableContainer
                     columns={columns}
-                    title={'Контроль выполнения и согласования расчета индикаторов ТС'}
+                    title={'Контроль наличия исходных данных для расчета показателей'}
                     baseUrl={'views/control-parameter-data'}
                     filtersList={filtersList}
                     filterMinimalLength={filterMinimalLength}
