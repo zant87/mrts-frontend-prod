@@ -93,37 +93,45 @@ class ParamsList extends React.Component {
     let newForms = [];
     let search;
 
-    params = this.props.params.sort((a, b) => (a.id > b.id ? 1 : -1));
+    params = this.props.params.sort((a, b) => (a.parameterName > b.parameterName ? 1 : -1));
 
     if (this.props.forms) {
-      forms = this.props.forms.sort().map((item) => {
-        if (item.okudName != null)
+      forms = this.props.forms.sort((a, b) => (a.okudName > b.okudName ? 1 : -1)).map((item) => {
+        let emissCode = "";
+        if (item.okudName != null) {
+          if (item.okudName == "ЕМИСС" && item.code != "") {
+            emissCode = "ИД:" + item.code.split('FORM_EMISS_')[1];
+          }
           return {
-            text: item.okudName,
+            text: item.okudName + ` (${item.dataProviderName}) ${emissCode}`,
             value: item.id,
             checked: true,
           };
+        }
       });
-      //console.log(forms);
+
+      console.log(this.props.checkedFormId);
       if (this.props.checkedFormId != null) {
         let checkedFormId = this.props.checkedFormId;
-        //console.log(checkedFormId);
         this.props.forms.forEach((form) => {
-          let checked;
+          let checked=null;
           checkedFormId.forEach((checkedForm) => {
             if (checkedForm == form.id) {
               checked = true;
             }
+            else {
+              checked = false;
+            }
           });
-
           newForms.push({
             text: form.okudName,
             value: form.id,
             checked: checked,
           });
         });
-        //console.log(newForms);
+        console.log(newForms);
       }
+      
     }
 
     if (this.props.transportTypeId != "0") {
@@ -138,6 +146,7 @@ class ParamsList extends React.Component {
         }
       });
     }
+
 
     return (
       <MDBCol lg="3" className="list h-100" style={{ marginBottom: "10px" }}>
@@ -315,12 +324,14 @@ class ParamsList extends React.Component {
                     {params.map((param) => (
                       <NavLink
                         exact
+                        // to={"/analyst/parameters/" + param.id}
                         to={"/analyst/parameters/" + param.id}
                         key={param.id}
                         activeClassName="active"
                         className="list-group-item list-group-item-action text-justify"
                       >
-                        {param.id + ". " + param.parameterName}
+                        {/* {param.id + ". " + param.parameterName} */}
+                        {param.parameterName}
                       </NavLink>
                     ))}
                   </div>

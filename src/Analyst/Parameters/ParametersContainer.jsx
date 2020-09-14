@@ -99,6 +99,7 @@ class ParametersContainer extends React.Component {
 }
 
 
+
 let mapStateToProps = (state) => {
   return {
     params: state.paramsPage.params,

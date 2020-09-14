@@ -7,6 +7,7 @@ import ParamsList from "./ParamsList/ParamsList";
 import ParamsInfo from "./ParamsInfo/ParamsInfo";
 import ParamData from "./ParamData/ParamData";
 
+
 let Parameters = (props) => {
   //debugger;
   return (

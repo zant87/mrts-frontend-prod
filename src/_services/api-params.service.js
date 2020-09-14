@@ -7,6 +7,23 @@ const instance = axios.create({
 });
 
 export const ParamsAPI = {
+  // getParams(checkedFormsId) {
+  //   let formsUrl = "";
+  //   let url = null;
+  //   if (checkedFormsId != null) {
+  //     checkedFormsId.forEach((item, index) => {
+  //       if (item == null) {
+  //         formsUrl = "";
+  //       }
+  //       formsUrl += `&formId.in=${item}`;
+  //     });
+  //   }
+  //   url = "form-params?" + formsUrl;
+  //   console.log(url);
+  //   return instance.get(url).then((response) => {
+  //     return response.data;
+  //   });
+  // },
   getParams(checkedFormsId) {
     let formsUrl = "";
     let url = null;
@@ -18,7 +35,7 @@ export const ParamsAPI = {
         formsUrl += `&formId.in=${item}`;
       });
     }
-    url = "form-params?" + formsUrl;
+    url = "form-params?isDefault.equals=true" + formsUrl;
     console.log(url);
     return instance.get(url).then((response) => {
       return response.data;
@@ -26,6 +43,49 @@ export const ParamsAPI = {
   },
   
   
+  // getParamData(
+  //   paramId,
+  //   frequencyId = 1,
+  //   yearStart = "",
+  //   yearEnd = "",
+  //   quarter = null
+  // ) {
+  //   let url;
+
+  //   if (quarter == null) {
+  //     url =
+  //       "views/actual-params?formParameterId.equals=" +
+  //       paramId +
+  //       "&frequencyId.equals=" +
+  //       frequencyId +
+  //       "&year.greaterThanOrEqual=" +
+  //       yearStart +
+  //       "&year.lessThanOrEqual=" +
+  //       yearEnd;
+  //   } else {
+  //     url =
+  //       "views/actual-params?formParameterId.equals=" +
+  //       paramId +
+  //       "&frequencyId.equals=" +
+  //       frequencyId +
+  //       "&year.greaterThanOrEqual=" +
+  //       yearStart +
+  //       "&year.lessThanOrEqual=" +
+  //       yearEnd +
+  //       "&quarterId.equals=" +
+  //       quarter;
+  //   }
+  //   console.log(url);
+
+  //   return instance.get(url).then((response) => {
+  //     if (response.data.length == 0) {
+  //       return null;
+  //     }
+
+  //     return response.data;
+  //   });
+  // },
+
   getParamData(
     paramId,
     frequencyId = 1,
@@ -68,6 +128,7 @@ export const ParamsAPI = {
       return response.data;
     });
   },
+
   getTransportTypes() {
     return instance.get("nsi-transport-types").then((response) => {
       return response.data;
@@ -88,8 +149,14 @@ export const ParamsAPI = {
       return response.data;
     });
   },
+  // getForms() {
+  //   return instance.get("forms").then((response) => {
+  //     return response.data;
+  //   });
+  // },
   getForms() {
     return instance.get("forms").then((response) => {
+      //debugger;
       return response.data;
     });
   },
