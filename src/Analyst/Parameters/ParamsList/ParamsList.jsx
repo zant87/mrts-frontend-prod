@@ -110,27 +110,27 @@ class ParamsList extends React.Component {
         }
       });
 
-      console.log(this.props.checkedFormId);
-      if (this.props.checkedFormId != null) {
-        let checkedFormId = this.props.checkedFormId;
-        this.props.forms.forEach((form) => {
-          let checked=null;
-          checkedFormId.forEach((checkedForm) => {
-            if (checkedForm == form.id) {
-              checked = true;
-            }
-            else {
-              checked = false;
-            }
-          });
-          newForms.push({
-            text: form.okudName,
-            value: form.id,
-            checked: checked,
-          });
-        });
-        console.log(newForms);
-      }
+      // console.log(this.props.checkedFormId);
+      // if (this.props.checkedFormId != null) {
+      //   let checkedFormId = this.props.checkedFormId;
+      //   this.props.forms.forEach((form) => {
+      //     let checked=null;
+      //     checkedFormId.forEach((checkedForm) => {
+      //       if (checkedForm == form.id) {
+      //         checked = true;
+      //       }
+      //       else {
+      //         checked = false;
+      //       }
+      //     });
+      //     newForms.push({
+      //       text: form.okudName,
+      //       value: form.id,
+      //       checked: checked,
+      //     });
+      //   });
+      //   console.log(newForms);
+      // }
       
     }
 
