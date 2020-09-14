@@ -58,11 +58,11 @@ class AnalystReportPage extends React.Component {
         this.getStages(),
       ]);
 
-      // let actualStrategy = strategiesData.data.map((item) => {
-      //   if (item.actual) {
-      //     return item.id;
-      //   }
-      // })[0];
+      let actualStrategy = strategiesData.data.map((item) => {
+        if (item.actual) {
+          return item.id;
+        }
+      })[0];
 
       this.setState({
         goals: goalsData.data,
@@ -72,7 +72,7 @@ class AnalystReportPage extends React.Component {
         stages: stageData.data,
         reports: reportsList,
         initialized: true,
-        //strategy: actualStrategy,
+        strategy: actualStrategy,
       });
     } catch (err) {
       console.log(err.message);
@@ -177,8 +177,8 @@ class AnalystReportPage extends React.Component {
         reportName = `report_${this.state.report.value}_${this.state.start}.${this.state.reportFormat}`;
         break;
       case 6:
-        reportUrl = `reports/${this.state.report.value}/download?format=${this.state.reportFormat}&year=${this.state.start}&scenario=${this.state.scenario.id}&ts=${this.state.strategy.id}`;
-        //reportUrl = `reports/${this.state.report.value}/download?format=${this.state.reportFormat}&year=${this.state.start}&scenario=${this.state.scenario.id}&ts=${this.state.strategy}`;
+        //reportUrl = `reports/${this.state.report.value}/download?format=${this.state.reportFormat}&year=${this.state.start}&scenario=${this.state.scenario.id}&ts=${this.state.strategy.id}`;
+        reportUrl = `reports/${this.state.report.value}/download?format=${this.state.reportFormat}&year=${this.state.start}&scenario=${this.state.scenario.id}&ts=${this.state.strategy}`;
         reportName = `report_${this.state.report.value}_${this.state.start}_${this.state.scenario.code}_${this.state.strategy.code}.${this.state.reportFormat}`;
         break;
       case 7:

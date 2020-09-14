@@ -17,6 +17,7 @@ const Report6 = (props) => {
     }
   });
 
+  
   return (
     <Fragment>
       <MDBRow>
