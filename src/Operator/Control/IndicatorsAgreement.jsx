@@ -276,7 +276,7 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
                         actions={actions}
                         tableRef={this.tableRef}
                         filterMinimalLength={filterMinimalLength}
-                        baseUrl={`views/indicator-agrees?filterByUser=${this.state.currentUserOnly}&username=${this.state.user.username}`}
+                        baseUrl={`views/indicator-agrees-by-user?filterByUser=${this.state.currentUserOnly}&username=${this.state.user.username}`}
                         modifiedBaseUrl={true}
                         loadAll={true}
                     />
