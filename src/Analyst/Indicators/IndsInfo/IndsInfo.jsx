@@ -18,6 +18,7 @@ let IndsInfo = (props) => {
   let indCode = null;
   let goalName = null;
   let indDesc = null;
+  let okeiName = null;
 
   if (props.indId) {
     props.inds.forEach((item) => {
@@ -46,6 +47,8 @@ let IndsInfo = (props) => {
         strategyversion = item.transportStrategyVersionName;
       }
     });
+    okeiName = props.indVals.find(x => x.okeiName != null).okeiName;
+    debugger;
   }
 
   return (
@@ -71,19 +74,24 @@ let IndsInfo = (props) => {
                       </span>
                     </div>
                     <hr />
+                    {okeiName ? 
                     <div>
                       <span>
                         <strong>Единица измерения: </strong>
-                        {props.indVals[0].okeiName}
+                        {/* {props.indVals[0].okeiName} */}
+                        {okeiName}
                       </span>
                     </div>
+                    : ""}
                     <hr />
+                    {transportName ? 
                     <div>
                       <span>
                         <strong>Вид транспорта: </strong>
                         {transportName}
                       </span>
                     </div>
+                    : ""}
                     <hr />
                     <div>
                       <span>
