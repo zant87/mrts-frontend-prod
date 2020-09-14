@@ -26,16 +26,16 @@ export default class AdminLoadingFromMSTKPage extends React.Component {
         }).then((response) => {
             console.log('%cУспешно', 'color: green');
             if (response.data > 0)
-                toast.success(`Выполнена синхронизация с ФЗ МТСК с кодом ${response.data}`, {
+                toast.success(`Выполнена синхронизация с ФЗ МПИ с кодом ${response.data}`, {
                     closeButton: false
                 })
             else
-                toast.error(`Ошибка синхронизации с ФЗ МТСК с кодом ${response.data}`, {
+                toast.error(`Ошибка синхронизации с ФЗ МПИ с кодом ${response.data}`, {
                     closeButton: false
                 });
         }).catch(function (error) {
             console.log(error);
-            toast.error(`Ошибка синхронизации с ФЗ МТСК без кода`, {
+            toast.error(`Ошибка синхронизации с ФЗ МПИ без кода`, {
                 closeButton: false
             });
         });
@@ -50,7 +50,7 @@ export default class AdminLoadingFromMSTKPage extends React.Component {
         return (
             <MDBCol md='8' className='mx-auto my-5'>
 
-                <h2 className='text-center my-2'>Синхронизация с ФЗ МТСК</h2>
+                <h2 className='text-center my-2'>Синхронизация с ФЗ "Мониторинг показателей и индикаторов"</h2>
 
                 <MDBRow>
                     <MDBCol md="12" className="mb-3">

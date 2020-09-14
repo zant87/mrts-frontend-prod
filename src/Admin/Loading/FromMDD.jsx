@@ -27,16 +27,16 @@ export default class AdminLoadingFromMDDPage extends React.Component {
         }).then((response) => {
             console.log('%cУспешно', 'color: green');
             if (response.data > 0)
-                toast.success(`Выполнена синхронизация с ФЗ МДД с кодом ${response.data}`, {
+                toast.success(`Выполнена синхронизация с ФЗ МДХ с кодом ${response.data}`, {
                     closeButton: false
                 })
             else
-                toast.error(`Ошибка синхронизации с ФЗ МДД с кодом ${response.data}`, {
+                toast.error(`Ошибка синхронизации с ФЗ МДХ с кодом ${response.data}`, {
                     closeButton: false
                 });
         }).catch(function (error) {
             console.log(error);
-            toast.error(`Ошибка синхронизации с ФЗ МДД без кода`, {
+            toast.error(`Ошибка синхронизации с ФЗ МДХ без кода`, {
                 closeButton: false
             });
         });
@@ -52,7 +52,7 @@ export default class AdminLoadingFromMDDPage extends React.Component {
         return(
             <MDBCol md='8' className='mx-auto my-5'>
 
-                <h2 className='text-center my-2'>Синхронизация с ФЗ "Мониторинг Дорожных Фондов" </h2>
+                <h2 className='text-center my-2'>Синхронизация с ФЗ "Мониторинг дорожного хозяйства" </h2>
 
                 <MDBRow>
                     <MDBCol md="12" className="mb-3">

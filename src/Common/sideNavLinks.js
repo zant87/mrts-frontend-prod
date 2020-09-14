@@ -114,12 +114,12 @@ export const sideNavLinks = [
   },
   {
     link: "/admin/loading/fromMDD",
-    text: "Синхронизация с ФЗ МДФ",
+    text: "Синхронизация с ФЗ МДХ",
     layout: Layouts.adminLoading,
   },
   {
     link: "/admin/loading/fromMSTK",
-    text: "Синхронизация с ФЗ МСТК",
+    text: "Синхронизация с ФЗ МПИ",
     layout: Layouts.adminLoading,
   },
   {
