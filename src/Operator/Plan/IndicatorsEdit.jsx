@@ -24,7 +24,7 @@ export default class OperatorPlanIndicatorsEditPage extends React.Component {
         );
 
         this.state.id = props.data.id;
-        this.state.transportStrategyCode = props.data.transportStrategyCode;
+        this.state.transportStrategyName = props.data.transportStrategyName;
         this.state.scenarioName = props.data.scenarioName;
         this.state.goalName = props.data.goalName;
         this.state.indicatorName = props.data.indicatorName;
@@ -70,12 +70,13 @@ export default class OperatorPlanIndicatorsEditPage extends React.Component {
 
     render() {
 
+
         return (
             <MDBContainer>
                 <div className="scrollbar my-1 mx-auto" style={{minHeight: '600px', maxHeight: '600px'}}>
 
                     <MDBInput label="#" value={this.state.id} disabled={true} type="number"/>
-                    <MDBInput label="Редакция ТС" value={this.state.transportStrategyCode} type="textarea"/>
+                    <MDBInput label="Редакция ТС" value={this.state.transportStrategyName} type="textarea"/>
                     <MDBInput label="Вариант реализации стратегии" value={this.state.scenarioName} type="textarea"/>
                     <MDBInput label="Цель" value={this.state.goalName} type="textarea"/>
                     <MDBInput label="Индикатор" value={this.state.indicatorName} type="textarea"/>

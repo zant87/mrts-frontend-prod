@@ -109,7 +109,7 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
                                         textToHighlight={row.directionName}/>
                 }
             },
-            {field: 'done', title: 'Уровень технической готовности'},
+            {field: 'done', title: 'Уровень технической готовности, %'},
             {field: 'planBeginYear', title: 'Сроки реализации плановые'},
             {field: 'factStarted', title: 'Начало фактической реализации'},
             {field: 'factFinished', title: 'Конец фактической реализации'},

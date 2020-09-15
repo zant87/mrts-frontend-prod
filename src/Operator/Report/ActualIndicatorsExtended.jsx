@@ -1,5 +1,5 @@
 import React from 'react';
-import {toast} from "mdbreact";
+import {toast, MDBInput} from "mdbreact";
 import appAxios from "../../_services/appAxios";
 import {ruLocalization} from "../../_components";
 import MaterialTable from "material-table";
@@ -66,9 +66,12 @@ export default class OperatorActualIndicatorsExtendedPage extends React.Componen
             {field: 'indicatorValue', title: 'Значение', type: 'numeric', editable: 'always'},
         ];
 
+        
         const filtersList = {
             'year': 'numeric'
         };
+
+
 
         return (
             <React.Fragment>

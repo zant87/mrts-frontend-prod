@@ -142,7 +142,7 @@ export default class OperatorReportProjectsMasterEditPage extends React.Componen
                     )}
                 </React.Fragment>
                 {this.state.project && (
-                    <MDBInput outline label="Выполнение проекта, %"
+                    <MDBInput outline label="Уровень технической готовности, %"
                               onChange={this.onChangeHandler}
                               name='done'
                               value={this.state.done} type="number"/>

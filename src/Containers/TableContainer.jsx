@@ -15,7 +15,7 @@ export default class TableContainer extends React.Component {
             actionsColumnIndex: 999,
             filtering: true,
             search: false,
-            columnsButton: true
+            columnsButton: true,
         };
 
         const loadAll = this.props.loadAll ? this.props.loadAll : false;
@@ -25,6 +25,7 @@ export default class TableContainer extends React.Component {
         const modifiedBaseUrl = this.props.modifiedBaseUrl ? this.props.modifiedBaseUrl : false;
         const editable = this.props.editable ? this.props.editable : null;
 
+        
         console.log(tableRef);
 
         return (

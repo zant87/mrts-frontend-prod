@@ -53,7 +53,7 @@ export default class OperatorPlanIndicatorsPage extends React.Component {
 
         const columns = [
             {field: 'id', title: '#', filtering: false},
-            {field: 'transportStrategyCode', title: 'Редакция ТС'},
+            {field: 'transportStrategyName', title: 'Редакция ТС'},
             {field: 'scenarioName', title: 'Вариант реализации стратегии'},
             {field: 'goalName', title: 'Цель'},
             {field: 'indicatorName', title: 'Индикатор'},
