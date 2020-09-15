@@ -48,7 +48,7 @@ let ParamsInfo = (props) => {
                     <hr />
                     <div>
                       <span>
-                        <strong>Код показателя: </strong>
+                        <strong>Код показателя:<br /> </strong>
                         {props.paramVals[0].parameterCode}
                       </span>
                     </div>

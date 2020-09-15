@@ -92,46 +92,41 @@ class ParamsList extends React.Component {
     let forms = null;
     let newForms = [];
     let search;
+    let checked = null;
+    let checkedForms = this.props.checkedFormId;
 
     params = this.props.params.sort((a, b) => (a.parameterName > b.parameterName ? 1 : -1));
 
     if (this.props.forms) {
       forms = this.props.forms.sort((a, b) => (a.okudName > b.okudName ? 1 : -1)).map((item) => {
         let emissCode = "";
+        if (checkedForms != null) {
+          checked=false;
+          checkedForms.forEach(cform => {
+            if (cform.toString() == item.id.toString()) {
+              checked = true;
+            }
+          })
+        }
+        else {
+          checked = true;
+        }
         if (item.okudName != null) {
           if (item.okudName == "ЕМИСС" && item.code != "") {
-            emissCode = "ИД:" + item.code.split('FORM_EMISS_')[1];
+            if (item.code.split('FORM_EMISS_')[1]) { 
+            emissCode = "ИД:" + item.code.split('FORM_EMISS_')[1].split('HANDMADE')[0];
+            }
           }
           return {
-            text: item.okudName + ` (${item.dataProviderName}) ${emissCode}`,
+            text: item.okudName + ` (${item.dataProviderName}, ${emissCode})`,
             value: item.id,
-            checked: true,
+            checked: checked,
           };
         }
-      });
 
-      // console.log(this.props.checkedFormId);
-      // if (this.props.checkedFormId != null) {
-      //   let checkedFormId = this.props.checkedFormId;
-      //   this.props.forms.forEach((form) => {
-      //     let checked=null;
-      //     checkedFormId.forEach((checkedForm) => {
-      //       if (checkedForm == form.id) {
-      //         checked = true;
-      //       }
-      //       else {
-      //         checked = false;
-      //       }
-      //     });
-      //     newForms.push({
-      //       text: form.okudName,
-      //       value: form.id,
-      //       checked: checked,
-      //     });
-      //   });
-      //   console.log(newForms);
-      // }
-      
+
+
+      });
     }
 
     if (this.props.transportTypeId != "0") {
