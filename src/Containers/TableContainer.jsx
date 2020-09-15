@@ -1,9 +1,9 @@
 import React from 'react';
 import {MDBContainer, MDBRow, MDBCol, toast} from "mdbreact";
 import appAxios from "../_services/appAxios";
-import MaterialTable from "material-table";
+import MaterialTable, { MTableFilterRow } from "material-table";
 import {ruLocalization} from "../_components";
-import moment from "moment";
+//import ru from "date-fns/locale/ru";
 
 export default class TableContainer extends React.Component {
 
@@ -25,7 +25,7 @@ export default class TableContainer extends React.Component {
         const modifiedBaseUrl = this.props.modifiedBaseUrl ? this.props.modifiedBaseUrl : false;
         const editable = this.props.editable ? this.props.editable : null;
 
-        
+        //console.log(ruLocalization);
         console.log(tableRef);
 
         return (
@@ -40,6 +40,18 @@ export default class TableContainer extends React.Component {
                             options={options}
                             actions={this.props.actions}
                             editable={this.props.editable}
+                            // components={{
+                            //     FilterRow: (props) => {
+                            //       return (
+                            //         <MTableFilterRow
+                            //           {...props}
+                            //           localization={{
+                            //             dateTimePickerLocalization: ru,
+                            //           }}
+                            //         />
+                            //       );
+                            //     },
+                            //   }}
                             data={query =>
                                 new Promise((resolve, reject) => {
 

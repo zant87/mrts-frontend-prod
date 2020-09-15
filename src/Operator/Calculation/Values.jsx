@@ -1,6 +1,10 @@
 import React from "react";
+import * as moment from 'moment';
+import 'moment/locale/ru';
+import ru from "date-fns/locale/ru";
+//import {ru} from "date-fns/locale";
+//import 'moment/locale/fr';
 import { MDBBtn, MDBCol, MDBDatePicker, MDBInput, MDBRow, MDBSelect, toast } from "mdbreact";
-import moment from "moment";
 import appAxios from "../../_services/appAxios";
 import { authenticationService } from "../../_services";
 import Preloader from "@/Common/Preloader/Preloader";
@@ -18,6 +22,8 @@ export default class OperatorCalculationValuesPage extends React.Component {
   };
 
   componentDidMount() {
+  
+    
     this.getAlgorithmList();
     this.getProviderList();
     authenticationService.currentUser.subscribe((x) =>
@@ -160,6 +166,8 @@ export default class OperatorCalculationValuesPage extends React.Component {
   };
 
   render() {
+    moment.locale('ru');
+    
     return (
       <MDBCol md="8" className="mx-auto my-3">
         <h2 className="text-center my-3">Расчет значений индикаторов за отчетный период</h2>
@@ -197,7 +205,8 @@ export default class OperatorCalculationValuesPage extends React.Component {
             <MDBDatePicker
               getValue={this.getDate}
               format="YYYY-MM-DD"
-              locale={moment.locale("ru")}
+               locale={moment.locale('ru')}
+              //locale={ru}
               okLabel="ОК"
               name="documentDate"
               keyboard={true}
@@ -206,6 +215,7 @@ export default class OperatorCalculationValuesPage extends React.Component {
               valueDefault={new Date(this.state.date)}
               cancelLabel="Отмена"
             />
+          
           </MDBCol>
         </MDBRow>
 

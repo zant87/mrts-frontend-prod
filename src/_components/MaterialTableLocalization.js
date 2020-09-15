@@ -1,5 +1,6 @@
 import {ru} from "date-fns/locale";
 
+
 export const ruLocalization = {
     pagination: {
         labelDisplayedRows: '{from}-{to} из {count}',
@@ -21,6 +22,9 @@ export const ruLocalization = {
         addRemoveColumns: 'Выбор столбцов',
         showColumnsTitle: 'Выбор столбцов'
     },
+
+
+    
     header: {
         actions: 'Действия'
     },
@@ -39,7 +43,12 @@ export const ruLocalization = {
             cancelTooltip: 'Отмена',
             saveTooltip: 'Сохранить'
         },
-        dateTimePickerLocalization: ru
+        dateTimePickerLocalization: ru,
+        // dateTimePickerLocalization: {
+        //     modal
+        //     clearLabel: "Очистить",
+            
+        // }
 
     },
     grouping: {
