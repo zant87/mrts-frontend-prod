@@ -24,13 +24,21 @@ if (!config.isLocalDeployment) {
 
     if (Object.entries(cookies).length === 0) {
         console.log('Setting Development Mode Cookies');
-        cookie.save('UserInfo', Base64.encode( JSON.stringify(data)));
-        cookie.save('UserRole', Base64.encode( JSON.stringify({role: 'mrts-admins'})));
+        cookie.save('UserInfo', Base64.encode(JSON.stringify(data)));
+        cookie.save('UserRole', Base64.encode(JSON.stringify({role: 'mrts-admins'})));
     }
 }
 
-const currentUserSubject = new BehaviorSubject(JSON.parse(Base64.decode(cookie.load('UserInfo'))));
-const currentUserRole = new BehaviorSubject(JSON.parse(Base64.decode(cookie.load('UserRole'))));
+let currentUserSubject;
+let currentUserRole;
+
+if (document.cookie.indexOf('UserInfo') !== -1 && document.cookie.indexOf('UserRole') !== -1) {
+    console.log('parsing cookies...');
+    currentUserSubject = new BehaviorSubject(JSON.parse(Base64.decode(cookie.load('UserInfo'))));
+    currentUserRole = new BehaviorSubject(JSON.parse(Base64.decode(cookie.load('UserRole'))));
+} else {
+    window.location.replace('https://int.asutk.ru/');
+}
 
 export const authenticationService = {
     login,
@@ -38,8 +46,12 @@ export const authenticationService = {
     setRole,
     currentUser: currentUserSubject.asObservable(),
     currentUserRole: currentUserRole.asObservable(),
-    get currentUserValue () { return currentUserSubject.value },
-    get currentUserRoleValue () { return currentUserRole.value },
+    get currentUserValue() {
+        return currentUserSubject.value
+    },
+    get currentUserRoleValue() {
+        return currentUserRole.value
+    },
 };
 
 function setRole(role) {
