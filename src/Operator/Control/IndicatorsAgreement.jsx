@@ -158,6 +158,10 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
 
     tableRef = React.createRef();
 
+    checkAgreement = (rowData) => {
+        return rowData.agreeIdList && rowData.agreeIdList.includes(this.state.user.username) || rowData.approveIdList && rowData.approveIdList.includes(this.state.user.username);
+    }
+
     render() {
 
         const columns = [
@@ -172,8 +176,8 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
             {field: 'indicatorValue', title: 'Значение индикатора'},
             {
                 field: 'check', title: 'Согласован',
-                render: rowData => (((rowData.agreeIdList && rowData.agreeIdList.includes(this.state.user.username)) || rowData.approveIdList && rowData.approveIdList.includes(this.state.user.username)) &&
-                    <MDBIcon icon="thumbs-up" size="3x" className="green-text pr-3"/>), filtering: false
+                render: rowData => (this.checkAgreement(rowData) &&
+                    <MDBIcon icon="thumbs-up" size="2x" className="green-text pr-3"/>), filtering: false
             },
             {field: 'approved', title: 'Утвержден', lookup: {0: 'Нет', 1: 'Да'}}
         ];
