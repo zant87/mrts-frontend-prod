@@ -1,9 +1,11 @@
 import {BehaviorSubject} from 'rxjs';
-import { Base64 } from 'js-base64';
+import {Base64} from 'js-base64';
 import cookie from 'react-cookies'
 import {Role} from "../_helpers";
 import {history} from "@/_helpers";
 import config from 'config';
+import appAxios from "./appAxios";
+import moment from "moment";
 
 if (!config.isLocalDeployment) {
     console.log('Production Mode Is Off');
@@ -44,6 +46,7 @@ export const authenticationService = {
     login,
     logout,
     setRole,
+    logUser,
     currentUser: currentUserSubject.asObservable(),
     currentUserRole: currentUserRole.asObservable(),
     get currentUserValue() {
@@ -53,6 +56,48 @@ export const authenticationService = {
         return currentUserRole.value
     },
 };
+
+
+function logUser(user) {
+
+    const newUser = {...user, username: user.id};
+    delete newUser.id;
+    console.log('newUser =', newUser);
+
+    appAxios.get(`users?username.equals=${user.id}`)
+        .then(response => {
+            const res = response.data[0];
+            console.log('Get returned User =', res);
+            console.log('Type of returned User =', typeof res);
+            console.log('Check user === undefined', res === undefined);
+            if (res === undefined) {
+                console.log(`User ${user.fullname} not found`);
+                appAxios({
+                    url: `users`,
+                    method: 'POST',
+                    data: newUser
+                }).then((response) => {
+                    console.log(`User ${user.fullname} created with found id = ${response.data.id}`);
+                });
+            } else {
+                console.log(`User ${res.fullname} found`);
+            }
+
+            newUser.lastLogin = moment().format('YYYY-MM-DDThh:mm:ss');
+
+            console.log('Posting user into Audit Log', newUser);
+
+            appAxios({
+                url: `audit-logs`,
+                method: 'POST',
+                data: newUser
+            }).then((response) => {
+                console.log(`User info posted to Audit Log`);
+            });
+
+            console.log(`Finishing auth`);
+        })
+}
 
 function setRole(role) {
     console.log('Switching Role to ', role);
@@ -80,7 +125,7 @@ function setRole(role) {
             break;
         case Role.Analyst:
 
-             data = {
+            data = {
                 id: 'userid_analyst',
                 name: 'Аналитик',
                 surname: 'МРТС',
