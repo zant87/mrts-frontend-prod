@@ -3,8 +3,9 @@ import TableContainer from "../../Containers/TableContainer";
 import {authenticationService} from "../../_services";
 import appAxios from "../../_services/appAxios";
 import Axios from "axios";
-import {toast} from "mdbreact";
+import {MDBContainer, MDBModal, MDBModalBody, MDBModalHeader, toast} from "mdbreact";
 import moment from "moment";
+import AgreementHistoryPage from "./IndicatorsAgreement/AgreementHistory";
 
 export default class OperatorControlIndicatorsAgreementPage extends React.Component {
 
@@ -12,7 +13,8 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
         currentUser: null,
         currentUserOnly: false,
         initialized: false,
-        icon: 'check_circle_outline'
+        icon: 'check_circle_outline',
+        showHistory: false
     };
 
     getUser = (id) => appAxios.get(`users?username.equals=${id}`).catch(err => null);
@@ -40,6 +42,15 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
             console.log(err.message);
         }
     };
+
+    toggleHistory = (rowData) => {
+        console.log(rowData);
+        console.log(this.state);
+        this.setState({
+            document: rowData.documentId,
+            showHistory: !this.state.showHistory
+        });
+    }
 
     cancelAgreement = (rowData) => {
 
@@ -144,6 +155,7 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
         }
     };
 
+
     tableRef = React.createRef();
 
     render() {
@@ -246,6 +258,13 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
                 }
             },
             {
+                icon: 'history',
+                tooltip: 'История согласований',
+                onClick: (event, rowData) => {
+                    this.toggleHistory(rowData);
+                }
+            },
+            {
                 icon: 'cancel',
                 tooltip: 'Отозвать согласование',
                 onClick: (event, rowData) => {
@@ -269,20 +288,28 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
         return (
             <React.Fragment>
                 {this.state.initialized && (
-                    <TableContainer
-                        columns={columns}
-                        title={'Согласование индикаторов ТС'}
-                        filtersList={filtersList}
-                        actions={actions}
-                        tableRef={this.tableRef}
-                        filterMinimalLength={filterMinimalLength}
-                        baseUrl={`views/indicator-agrees-by-user?filterByUser=${this.state.currentUserOnly}&username=${this.state.user.username}`}
-                        modifiedBaseUrl={true}
-                        loadAll={true}
-                    />
+                    <React.Fragment>
+                        <TableContainer
+                            columns={columns}
+                            title={'Согласование индикаторов ТС'}
+                            filtersList={filtersList}
+                            actions={actions}
+                            tableRef={this.tableRef}
+                            filterMinimalLength={filterMinimalLength}
+                            baseUrl={`views/indicator-agrees-by-user?filterByUser=${this.state.currentUserOnly}&username=${this.state.user.username}`}
+                            modifiedBaseUrl={true}
+                            loadAll={true}
+                        />
+                        <MDBModal isOpen={this.state.showHistory} toggle={this.toggleHistory} backdrop={true} size="lg">
+                            <MDBModalHeader toggle={this.toggleHistory}>История согласований</MDBModalHeader>
+                            <MDBModalBody>
+                                <AgreementHistoryPage document={this.state.document}
+                                                      username={this.state.currentUser.id}/>
+                            </MDBModalBody>
+                        </MDBModal>
+                    </React.Fragment>
                 )}
             </React.Fragment>
         )
     }
-
 };

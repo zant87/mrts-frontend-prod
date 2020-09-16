@@ -2,7 +2,6 @@ const webpack = require("webpack");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const AsyncChunkNames = require('webpack-async-chunk-names-plugin');
-
 const ASSET_PATH = process.env.ASSET_PATH || "/";
 
 const config = {
