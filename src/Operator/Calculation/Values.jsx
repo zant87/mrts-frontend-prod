@@ -1,8 +1,7 @@
 import React from "react";
-import moment from "moment";
+import moment from "mdbreact/node_modules/moment";
 import "moment/locale/ru";
-//import ru from "date-fns/locale/ru";
-import { MDBBtn, MDBCol, MDBDatePicker, MDBInput, MDBRow, MDBSelect, toast } from "mdbreact";
+import { MDBBtn, MDBCol, MDBDatePicker, MDBInput, MDBRow, MDBSelect, toast, MDBDatePickerV5 } from "mdbreact";
 import appAxios from "../../_services/appAxios";
 import { authenticationService } from "../../_services";
 import Preloader from "@/Common/Preloader/Preloader";
@@ -23,7 +22,7 @@ export default class OperatorCalculationValuesPage extends React.Component {
   algorithmList = [];
 
   componentDidMount() {
-    moment.locale("ru");
+    //console.log(moment.locale("ru"));
     this.getIndsList();
     this.getAlgorithmList();
     this.getProviderList();
@@ -188,6 +187,7 @@ export default class OperatorCalculationValuesPage extends React.Component {
       });
       this.algorithmList.sort((a, b) => (a.value > b.value ? 1 : -1));
     }
+
     return (
       <MDBCol md="8" className="mx-auto my-3">
         <h2 className="text-center my-3">Расчет значений индикаторов за отчетный период</h2>
@@ -227,8 +227,7 @@ export default class OperatorCalculationValuesPage extends React.Component {
               getValue={this.getDate}
               format="YYYY-MM-DD"
               locale={moment.locale("ru")}
-              //locale={ru}
-              okLabel="ОК"
+              okLabel="Применить"
               name="documentDate"
               keyboard={true}
               outline
@@ -238,7 +237,6 @@ export default class OperatorCalculationValuesPage extends React.Component {
             />
           </MDBCol>
         </MDBRow>
-
         <MDBRow>
           <MDBCol md="12" className="mb-3">
             <div className="form-group">
