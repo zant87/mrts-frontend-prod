@@ -1,9 +1,7 @@
 import React from "react";
 import moment from "moment";
 import "moment/locale/ru";
-import ru from "date-fns/locale/ru";
-//import {ru} from "date-fns/locale";
-//import 'moment/locale/fr';
+//import ru from "date-fns/locale/ru";
 import { MDBBtn, MDBCol, MDBDatePicker, MDBInput, MDBRow, MDBSelect, toast } from "mdbreact";
 import appAxios from "../../_services/appAxios";
 import { authenticationService } from "../../_services";
