@@ -4,6 +4,7 @@ import TableContainer from "../../Containers/TableContainer";
 import {MDBContainer, MDBModal, MDBModalBody, MDBModalHeader} from "mdbreact";
 import Axios from "axios";
 import IndicatorsEdit from "./IndicatorsEdit";
+import {ruLocalization} from "@/_components";
 
 export default class OperatorPlanIndicatorsPage extends React.Component {
 
@@ -50,7 +51,8 @@ export default class OperatorPlanIndicatorsPage extends React.Component {
     }
 
     render() {
-
+        console.log("Локализация" + ruLocalization);
+        
         const columns = [
             {field: 'id', title: '#', filtering: false},
             {field: 'transportStrategyName', title: 'Редакция ТС'},

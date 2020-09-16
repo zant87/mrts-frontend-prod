@@ -1,6 +1,7 @@
 import React from "react";
-import { MDBBtn, MDBCol, MDBDatePicker, MDBInput, MDBRow, MDBSelect, toast } from "mdbreact";
-import moment from "moment";
+import moment from "mdbreact/node_modules/moment";
+import "moment/locale/ru";
+import { MDBBtn, MDBCol, MDBDatePicker, MDBInput, MDBRow, MDBSelect, toast, MDBDatePickerV5 } from "mdbreact";
 import appAxios from "../../_services/appAxios";
 import { authenticationService } from "../../_services";
 import Preloader from "@/Common/Preloader/Preloader";
@@ -9,6 +10,7 @@ export default class OperatorCalculationValuesPage extends React.Component {
   state = {
     date: "2018-12-31",
     algorithmList: [],
+    indsList: [],
     algorithmCode: "",
     providerList: [],
     providerCode: "",
@@ -17,7 +19,11 @@ export default class OperatorCalculationValuesPage extends React.Component {
     username: "",
   };
 
+  algorithmList = [];
+
   componentDidMount() {
+    //console.log(moment.locale("ru"));
+    this.getIndsList();
     this.getAlgorithmList();
     this.getProviderList();
     authenticationService.currentUser.subscribe((x) =>
@@ -31,9 +37,20 @@ export default class OperatorCalculationValuesPage extends React.Component {
     this.setState({ isLoading: true });
     appAxios.get(`/algorithms`).then((res) => {
       const data = res.data.map((item) => {
-        return { value: item.code, text: item.name, checked: false };
+        //return { value: item.code, text: item.name, checked: false };
+        return { code: item.code, name: item.name, indicatorId: item.indicatorId };
       });
       this.setState({ algorithmList: data, isLoading: false });
+    });
+  };
+
+  getIndsList = () => {
+    this.setState({ isLoading: true });
+    appAxios.get(`/indicators?isCalc.equals=1`).then((res) => {
+      const data = res.data.map((item) => {
+        return { id: item.id, name: item.name, isCalc: item.isCalc };
+      });
+      this.setState({ indsList: data, isLoading: false });
     });
   };
 
@@ -160,6 +177,17 @@ export default class OperatorCalculationValuesPage extends React.Component {
   };
 
   render() {
+    if (this.state.algorithmList && this.state.indsList) {
+      this.state.indsList.forEach((ind) => {
+        this.state.algorithmList.forEach((alg) => {
+          if (ind.id == alg.indicatorId) {
+            this.algorithmList.push({ value: alg.code, text: `${alg.name} (${alg.code.split("ALG_FOR_IND_")[1]})`, checked: false });
+          }
+        });
+      });
+      this.algorithmList.sort((a, b) => (a.value > b.value ? 1 : -1));
+    }
+
     return (
       <MDBCol md="8" className="mx-auto my-3">
         <h2 className="text-center my-3">Расчет значений индикаторов за отчетный период</h2>
@@ -171,7 +199,8 @@ export default class OperatorCalculationValuesPage extends React.Component {
               search={true}
               searchLabel={"Поиск"}
               outline
-              options={this.state.algorithmList}
+              //options={this.state.algorithmList}
+              options={this.algorithmList ? this.algorithmList : ""}
               getValue={this.setAlgorithm}
             ></MDBSelect>
           </MDBCol>
@@ -198,7 +227,7 @@ export default class OperatorCalculationValuesPage extends React.Component {
               getValue={this.getDate}
               format="YYYY-MM-DD"
               locale={moment.locale("ru")}
-              okLabel="ОК"
+              okLabel="Применить"
               name="documentDate"
               keyboard={true}
               outline
@@ -208,7 +237,6 @@ export default class OperatorCalculationValuesPage extends React.Component {
             />
           </MDBCol>
         </MDBRow>
-
         <MDBRow>
           <MDBCol md="12" className="mb-3">
             <div className="form-group">

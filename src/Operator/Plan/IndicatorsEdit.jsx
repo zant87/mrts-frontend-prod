@@ -3,6 +3,7 @@ import {MDBBtn, MDBCol, MDBInput, MDBRow, toast, MDBScrollbar, MDBContainer, MDB
 import appAxios from "../../_services/appAxios";
 import "../../scrollbar.css";
 
+
 export default class OperatorPlanIndicatorsEditPage extends React.Component {
 
     state = {

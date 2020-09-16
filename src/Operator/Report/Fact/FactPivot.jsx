@@ -44,7 +44,7 @@ export default class OperatorReportFactPivotPage extends React.Component {
         this.state = {
                     fields: [{
                             dataField: 'id',
-                            visible: false
+                            visible: false,
                         }, {
                             dataField: 'dataProviderName',
                             visible: false
@@ -127,25 +127,29 @@ export default class OperatorReportFactPivotPage extends React.Component {
                             caption: 'Вид транспорта',
                             width: 120,
                             dataField: 'transportTypeName',
-                            area: 'row'
+                            area: 'row',
+                            expanded: true,
                         },
                         {
                             caption: 'Источник данных',
                             width: 120,
                             dataField: 'dataProviderName',
-                            area: 'row'
+                            area: 'row',
+                            expanded: true,
                         },
                         {
                             caption: 'ОКУД',
                             width: 120,
                             dataField: 'okudName',
-                            area: 'row'
+                            area: 'row',
+                            expanded: true,
                         },
                         {
                             caption: 'Показатель',
                             dataField: 'parameterName',
                             width: 150,
-                            area: 'row'
+                            area: 'row',
+                            expanded: true,
                         },
 
                         {
