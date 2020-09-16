@@ -66,14 +66,12 @@ export default class TableContainer extends React.Component {
                   }
 
                   if (query.filters.length > 0) {
-                    debugger;
                     query.filters.forEach((element) => {
                       console.log("element.value =", element.value);
                       console.log("element.value.length =", String(element.value).length);
 
                       if (String(element.value).length >= filterMinimalLength) {
                         if (filtersList && filtersList[element.column.field]) {
-                          debugger;
                           console.log(element.column.field, "filter is", filtersList[element.column.field]);
 
                           if (filtersList[element.column.field] === "numeric") {
