@@ -103,8 +103,14 @@ function setRole(role) {
     console.log('Switching Role to ', role);
     let data;
 
-    cookie.remove('UserInfo');
-    cookie.remove('UserRole');
+    // cookie.remove('UserInfo');
+    // cookie.remove('UserRole');
+
+    document.cookie.split(";").forEach((c) => {
+        document.cookie = c
+            .replace(/^ +/, "")
+            .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+    });
 
     switch (role) {
         case Role.Admin:
