@@ -1,6 +1,6 @@
 import React from "react";
-import * as moment from 'moment';
-import 'moment/locale/ru';
+import moment from "moment";
+import "moment/locale/ru";
 import ru from "date-fns/locale/ru";
 //import {ru} from "date-fns/locale";
 //import 'moment/locale/fr';
@@ -13,6 +13,7 @@ export default class OperatorCalculationValuesPage extends React.Component {
   state = {
     date: "2018-12-31",
     algorithmList: [],
+    indsList: [],
     algorithmCode: "",
     providerList: [],
     providerCode: "",
@@ -21,9 +22,11 @@ export default class OperatorCalculationValuesPage extends React.Component {
     username: "",
   };
 
+  algorithmList = [];
+
   componentDidMount() {
-  
-    
+    moment.locale("ru");
+    this.getIndsList();
     this.getAlgorithmList();
     this.getProviderList();
     authenticationService.currentUser.subscribe((x) =>
@@ -37,9 +40,20 @@ export default class OperatorCalculationValuesPage extends React.Component {
     this.setState({ isLoading: true });
     appAxios.get(`/algorithms`).then((res) => {
       const data = res.data.map((item) => {
-        return { value: item.code, text: item.name, checked: false };
+        //return { value: item.code, text: item.name, checked: false };
+        return { code: item.code, name: item.name, indicatorId: item.indicatorId };
       });
       this.setState({ algorithmList: data, isLoading: false });
+    });
+  };
+
+  getIndsList = () => {
+    this.setState({ isLoading: true });
+    appAxios.get(`/indicators?isCalc.equals=1`).then((res) => {
+      const data = res.data.map((item) => {
+        return { id: item.id, name: item.name, isCalc: item.isCalc };
+      });
+      this.setState({ indsList: data, isLoading: false });
     });
   };
 
@@ -166,8 +180,16 @@ export default class OperatorCalculationValuesPage extends React.Component {
   };
 
   render() {
-    moment.locale('ru');
-    
+    if (this.state.algorithmList && this.state.indsList) {
+      this.state.indsList.forEach((ind) => {
+        this.state.algorithmList.forEach((alg) => {
+          if (ind.id == alg.indicatorId) {
+            this.algorithmList.push({ value: alg.code, text: `${alg.name} (${alg.code.split("ALG_FOR_IND_")[1]})`, checked: false });
+          }
+        });
+      });
+      this.algorithmList.sort((a, b) => (a.value > b.value ? 1 : -1));
+    }
     return (
       <MDBCol md="8" className="mx-auto my-3">
         <h2 className="text-center my-3">Расчет значений индикаторов за отчетный период</h2>
@@ -179,7 +201,8 @@ export default class OperatorCalculationValuesPage extends React.Component {
               search={true}
               searchLabel={"Поиск"}
               outline
-              options={this.state.algorithmList}
+              //options={this.state.algorithmList}
+              options={this.algorithmList ? this.algorithmList : ""}
               getValue={this.setAlgorithm}
             ></MDBSelect>
           </MDBCol>
@@ -205,7 +228,7 @@ export default class OperatorCalculationValuesPage extends React.Component {
             <MDBDatePicker
               getValue={this.getDate}
               format="YYYY-MM-DD"
-               locale={moment.locale('ru')}
+              locale={moment.locale("ru")}
               //locale={ru}
               okLabel="ОК"
               name="documentDate"
@@ -215,7 +238,6 @@ export default class OperatorCalculationValuesPage extends React.Component {
               valueDefault={new Date(this.state.date)}
               cancelLabel="Отмена"
             />
-          
           </MDBCol>
         </MDBRow>
 
