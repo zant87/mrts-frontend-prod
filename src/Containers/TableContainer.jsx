@@ -5,7 +5,6 @@ import MaterialTable, { MTableFilterRow } from "material-table";
 import { ruLocalization } from "../_components";
 import moment from "moment";
 import "moment/locale/ru";
-//import ru from "date-fns/locale/ru";
 
 export default class TableContainer extends React.Component {
   render() {
@@ -27,7 +26,6 @@ export default class TableContainer extends React.Component {
     const modifiedBaseUrl = this.props.modifiedBaseUrl ? this.props.modifiedBaseUrl : false;
     const editable = this.props.editable ? this.props.editable : null;
 
-    //console.log(ruLocalization);
     console.log(tableRef);
 
     return (
