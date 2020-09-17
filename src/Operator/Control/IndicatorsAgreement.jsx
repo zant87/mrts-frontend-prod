@@ -6,6 +6,7 @@ import Axios from "axios";
 import {MDBContainer, MDBIcon, MDBModal, MDBModalBody, MDBModalHeader, toast} from "mdbreact";
 import moment from "moment";
 import AgreementHistoryPage from "./IndicatorsAgreement/AgreementHistory";
+import AgreementComment from "./IndicatorsAgreement/AgreementComment";
 
 export default class OperatorControlIndicatorsAgreementPage extends React.Component {
 
@@ -14,7 +15,9 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
         currentUserOnly: false,
         initialized: false,
         icon: 'check_circle_outline',
-        showHistory: false
+        showHistory: false,
+        cancelModal: false,
+        rowToCancel: {}
     };
 
     getUser = (id) => appAxios.get(`users?username.equals=${id}`).catch(err => null);
@@ -52,54 +55,69 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
         });
     }
 
+    toggleCancel = () => {
+        console.log('Toggle cancel clicked and state =', this.state);
+        this.setState({
+            cancelModal: !this.state.cancelModal
+        });
+    }
+
     cancelAgreement = (rowData) => {
-
-        const date = moment().format('YYYY-MM-DD');
-        console.log(rowData);
-
-        if (rowData.agreeIdList && rowData.agreeIdList.includes(this.state.user.username)) {
-            appAxios({
-                url: `document-agreements?documentId.equals=${rowData.documentId}&executorId.equals=${this.state.user.id}&endDate.equals=2099-12-31`,
-                method: 'GET',
-            }).then((response) => {
-
-                const data = {...response.data[0], endDate: date};
-                console.log('Data to PUT into document-agreements =', data);
-
-                appAxios({
-                    url: `document-agreements`,
-                    method: 'PUT',
-                    data: data
-                }).then((response) => {
-                    toast.success(`Согласование успешно отозвано`, {closeButton: false});
-                    this.tableRef.current.onQueryChange();
-                })
-            })
-        }
-
-        if (rowData.approveIdList && rowData.approveIdList.includes(this.state.user.username)) {
-
-            appAxios({
-                url: `document-agreements?documentId.equals=${rowData.documentId}&executorId.equals=${this.state.user.id}&endDate.equals=2099-12-31`,
-                method: 'GET',
-            }).then((response) => {
-
-                console.log('document-agreements GET response =', response.data);
-
-                const data = {...response.data[0], endDate: date};
-                console.log('Data to PUT into document-agreements =', data);
-
-                appAxios({
-                    url: `document-agreements`,
-                    method: 'PUT',
-                    data: data
-                }).then((response) => {
-                    toast.success(`Утверждение успешно отозвано`, {closeButton: false});
-                    this.tableRef.current.onQueryChange();
-                })
-            })
-        }
-    };
+        this.setState({
+            rowToCancel: rowData,
+            cancelModal: !this.state.cancelModal
+        });
+    }
+    //
+    // cancelAgreement = (rowData) => {
+    //
+    //     //
+    //     // const date = moment().format('YYYY-MM-DD');
+    //     // console.log(rowData);
+    //     //
+    //     // if (rowData.agreeIdList && rowData.agreeIdList.includes(this.state.user.username)) {
+    //     //     appAxios({
+    //     //         url: `document-agreements?documentId.equals=${rowData.documentId}&executorId.equals=${this.state.user.id}&endDate.equals=2099-12-31`,
+    //     //         method: 'GET',
+    //     //     }).then((response) => {
+    //     //
+    //     //         const data = {...response.data[0], endDate: date};
+    //     //         console.log('Data to PUT into document-agreements =', data);
+    //     //
+    //     //         appAxios({
+    //     //             url: `document-agreements`,
+    //     //             method: 'PUT',
+    //     //             data: data
+    //     //         }).then((response) => {
+    //     //             toast.success(`Согласование успешно отозвано`, {closeButton: false});
+    //     //             this.tableRef.current.onQueryChange();
+    //     //         })
+    //     //     })
+    //     // }
+    //     //
+    //     // if (rowData.approveIdList && rowData.approveIdList.includes(this.state.user.username)) {
+    //     //
+    //     //     appAxios({
+    //     //         url: `document-agreements?documentId.equals=${rowData.documentId}&executorId.equals=${this.state.user.id}&endDate.equals=2099-12-31`,
+    //     //         method: 'GET',
+    //     //     }).then((response) => {
+    //     //
+    //     //         console.log('document-agreements GET response =', response.data);
+    //     //
+    //     //         const data = {...response.data[0], endDate: date};
+    //     //         console.log('Data to PUT into document-agreements =', data);
+    //     //
+    //     //         appAxios({
+    //     //             url: `document-agreements`,
+    //     //             method: 'PUT',
+    //     //             data: data
+    //     //         }).then((response) => {
+    //     //             toast.success(`Утверждение успешно отозвано`, {closeButton: false});
+    //     //             this.tableRef.current.onQueryChange();
+    //     //         })
+    //     //     })
+    //     // }
+    // };
 
     approveAgreement = (rowData) => {
 
@@ -249,6 +267,13 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
                             <MDBModalBody>
                                 <AgreementHistoryPage document={this.state.document}
                                                       username={this.state.currentUser.id}/>
+                            </MDBModalBody>
+                        </MDBModal>
+                        <MDBModal isOpen={this.state.cancelModal} toggle={this.toggleCancel} backdrop={true} size="lg">
+                            <MDBModalHeader toggle={this.toggleCancel}>Отзыв согласования</MDBModalHeader>
+                            <MDBModalBody>
+                                <AgreementComment close={this.toggleCancel} data={this.state.rowToCancel}
+                                                  user={this.state.user} tableRef={this.tableRef}/>
                             </MDBModalBody>
                         </MDBModal>
                     </React.Fragment>
