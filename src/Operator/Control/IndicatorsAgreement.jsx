@@ -155,7 +155,6 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
         }
     };
 
-
     tableRef = React.createRef();
 
     checkAgreement = (rowData) => {
@@ -179,7 +178,12 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
                 render: rowData => (this.checkAgreement(rowData) &&
                     <MDBIcon icon="thumbs-up" size="2x" className="green-text pr-3"/>), filtering: false
             },
-            {field: 'approved', title: 'Утвержден', lookup: {0: 'Нет', 1: 'Да'}}
+            {
+                field: 'approved', title: 'Утвержден', lookup: {0: 'Нет', 1: 'Да'},
+                render: rowData => (rowData.approved === 1 ?
+                    <MDBIcon icon="thumbs-up" size="2x" className="green-text pr-3"/> :
+                    <MDBIcon icon="thumbs-down" size="2x" className="red-text pr-3"/>)
+            }
         ];
 
         const filtersList = {
