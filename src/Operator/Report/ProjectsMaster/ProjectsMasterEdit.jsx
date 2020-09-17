@@ -154,14 +154,14 @@ export default class OperatorReportProjectsMasterEditPage extends React.Componen
                         </MDBRow>
                         <MDBRow>
                             <MDBCol className="mb-3">
-                                <MDBInput outline label="Плановая стоимость, млрд. руб."
+                                <MDBInput outline label="Плановая стоимость, сумма в млн. руб."
                                           name='planCost'
                                           disabled={true}
                                           value={this.state.planCost}
                                           type="number"/>
                             </MDBCol>
                             <MDBCol className="mb-3">
-                                <MDBInput outline label="Фактическая стоимость, млрд."
+                                <MDBInput outline label="Фактическая стоимость, сумма в млн. руб."
                                           name='fact'
                                           disabled={true}
                                           value={this.state.fact}

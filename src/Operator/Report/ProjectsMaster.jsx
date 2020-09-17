@@ -113,8 +113,8 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
             {field: 'planBeginYear', title: 'Сроки реализации плановые'},
             {field: 'factStarted', title: 'Начало фактической реализации'},
             {field: 'factFinished', title: 'Конец фактической реализации'},
-            {field: 'realPlanCost', title: 'Общие затраты (плановые)'},
-            {field: 'fact', title: 'Общие затраты (факт)'},
+            {field: 'realPlanCost', title: 'Общие затраты (плановые), млн. руб.'},
+            {field: 'fact', title: 'Общие затраты (факт), млн. руб'},
             {
                 field: 'description', title: 'Фактические результаты',
                 render: (row) => {
