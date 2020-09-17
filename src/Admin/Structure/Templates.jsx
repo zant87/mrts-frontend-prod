@@ -59,8 +59,8 @@ export default class AdminStructureTemplatesPage extends React.Component {
             {field: 'code', title: 'Код', filtering: true},
             {field: 'name', title: 'Наименование', filtering: true},
             {field: 'description', title: 'Описание', filtering: true},
-            {field: 'beginDate', title: 'Начало', type: 'date', filtering: false},
-            {field: 'endDate', title: 'Конец', type: 'date', filtering: false},
+            // {field: 'beginDate', title: 'Начало', type: 'date', filtering: false},
+            // {field: 'endDate', title: 'Конец', type: 'date', filtering: false},
         ];
 
         const actions = [
