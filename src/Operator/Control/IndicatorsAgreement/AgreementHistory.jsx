@@ -21,6 +21,7 @@ export default class AgreementHistoryPage extends React.Component {
             {field: 'fullname', title: 'Пользователь'},
             {field: 'beginDate', title: 'Дата начала действия согласования', type: 'date'},
             {field: 'endDate', title: 'Дата окончания действия согласования', type: 'date'},
+            {field: 'userComment', title: 'Комментарий'},
             {field: 'state', title: 'Состояние'},
         ];
 
@@ -35,7 +36,7 @@ export default class AgreementHistoryPage extends React.Component {
                 title={''}
                 filtersList={filtersList}
                 filterMinimalLength={1}
-                baseUrl={`views/agreement-histories?document.equals=${this.props.document}&user=${this.props.username}`}
+                baseUrl={`views/agreement-histories?idDoc.equals=${this.props.document}&user=${this.props.username}`}
                 modifiedBaseUrl={true}
                 loadAll={true}
             />

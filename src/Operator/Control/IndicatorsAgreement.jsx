@@ -47,12 +47,11 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
     };
 
     toggleHistory = (rowData) => {
-        console.log(rowData);
-        console.log(this.state);
-        this.setState({
-            document: rowData.documentId,
-            showHistory: !this.state.showHistory
-        });
+        this.setState({document: rowData.documentId, showHistory: !this.state.showHistory});
+    }
+
+    toggleHistoryModal = () => {
+        this.setState({showHistory: !this.state.showHistory});
     }
 
     toggleCancel = () => {
@@ -68,63 +67,19 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
             cancelModal: !this.state.cancelModal
         });
     }
-    //
-    // cancelAgreement = (rowData) => {
-    //
-    //     //
-    //     // const date = moment().format('YYYY-MM-DD');
-    //     // console.log(rowData);
-    //     //
-    //     // if (rowData.agreeIdList && rowData.agreeIdList.includes(this.state.user.username)) {
-    //     //     appAxios({
-    //     //         url: `document-agreements?documentId.equals=${rowData.documentId}&executorId.equals=${this.state.user.id}&endDate.equals=2099-12-31`,
-    //     //         method: 'GET',
-    //     //     }).then((response) => {
-    //     //
-    //     //         const data = {...response.data[0], endDate: date};
-    //     //         console.log('Data to PUT into document-agreements =', data);
-    //     //
-    //     //         appAxios({
-    //     //             url: `document-agreements`,
-    //     //             method: 'PUT',
-    //     //             data: data
-    //     //         }).then((response) => {
-    //     //             toast.success(`Согласование успешно отозвано`, {closeButton: false});
-    //     //             this.tableRef.current.onQueryChange();
-    //     //         })
-    //     //     })
-    //     // }
-    //     //
-    //     // if (rowData.approveIdList && rowData.approveIdList.includes(this.state.user.username)) {
-    //     //
-    //     //     appAxios({
-    //     //         url: `document-agreements?documentId.equals=${rowData.documentId}&executorId.equals=${this.state.user.id}&endDate.equals=2099-12-31`,
-    //     //         method: 'GET',
-    //     //     }).then((response) => {
-    //     //
-    //     //         console.log('document-agreements GET response =', response.data);
-    //     //
-    //     //         const data = {...response.data[0], endDate: date};
-    //     //         console.log('Data to PUT into document-agreements =', data);
-    //     //
-    //     //         appAxios({
-    //     //             url: `document-agreements`,
-    //     //             method: 'PUT',
-    //     //             data: data
-    //     //         }).then((response) => {
-    //     //             toast.success(`Утверждение успешно отозвано`, {closeButton: false});
-    //     //             this.tableRef.current.onQueryChange();
-    //     //         })
-    //     //     })
-    //     // }
-    // };
+
+    checkDone = (rowData) => {
+        if (rowData.agreeIdDone === null) return false;
+        return rowData.agreeIdDone.includes(this.state.user.username);
+    }
 
     approveAgreement = (rowData) => {
 
         const date = moment().format('YYYY-MM-DD');
         let role = null;
 
-        if (rowData.agreeIdList && rowData.agreeIdList.includes(this.state.user.username)) {
+        if (rowData.agreeIdList && rowData.agreeIdList.includes(this.state.user.username)
+            && (!this.checkDone(rowData))) {
             role = 'AGREE';
 
             const data = {
@@ -146,6 +101,8 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
                 toast.success(`Согласование успешно создано для ID ${message}`, {closeButton: false});
                 this.tableRef.current.onQueryChange();
             });
+        } else {
+            toast.warning(`Уже согласовано`, {closeButton: false});
         }
 
         if (rowData.approveIdList && rowData.approveIdList.includes(this.state.user.username)) {
@@ -171,12 +128,17 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
                 this.tableRef.current.onQueryChange();
             });
         }
+
     };
 
     tableRef = React.createRef();
 
     checkAgreement = (rowData) => {
         return rowData.agreeIdList && rowData.agreeIdList.includes(this.state.user.username) || rowData.approveIdList && rowData.approveIdList.includes(this.state.user.username);
+    }
+
+    agreeDone = (rowData) => {
+        return rowData.agreeIdDone && rowData.agreeIdDone.includes(this.state.user.username);
     }
 
     render() {
@@ -193,8 +155,11 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
             {field: 'indicatorValue', title: 'Значение индикатора'},
             {
                 field: 'check', title: 'Согласован',
-                render: rowData => (this.checkAgreement(rowData) &&
-                    <MDBIcon icon="thumbs-up" size="2x" className="green-text pr-3"/>), filtering: false
+                render: rowData => (this.agreeDone(rowData) ?
+                        <MDBIcon icon="thumbs-up" size="2x" className="green-text pr-3"/> :
+                        <MDBIcon icon="thumbs-down" size="2x" className="red-text pr-3"/>
+
+                ), filtering: false
             },
             {
                 field: 'approved', title: 'Утвержден', lookup: {0: 'Нет', 1: 'Да'},
@@ -262,8 +227,9 @@ export default class OperatorControlIndicatorsAgreementPage extends React.Compon
                             modifiedBaseUrl={true}
                             loadAll={true}
                         />
-                        <MDBModal isOpen={this.state.showHistory} toggle={this.toggleHistory} backdrop={true} size="lg">
-                            <MDBModalHeader toggle={this.toggleHistory}>История согласований</MDBModalHeader>
+                        <MDBModal isOpen={this.state.showHistory} toggle={this.toggleHistoryModal} backdrop={true}
+                                  size="fluid">
+                            <MDBModalHeader toggle={this.toggleHistoryModal}>История согласований</MDBModalHeader>
                             <MDBModalBody>
                                 <AgreementHistoryPage document={this.state.document}
                                                       username={this.state.currentUser.id}/>
