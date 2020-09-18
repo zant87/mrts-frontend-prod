@@ -3,6 +3,7 @@ import {toast} from "mdbreact";
 import appAxios from "../../_services/appAxios";
 import {ruLocalization} from "../../_components";
 import MaterialTable from "material-table";
+import NumericFilter from "../../Common/Filters/NumericFilter";
 
 export default class AdminStructureTransportStrategiesPage extends React.Component {
 
@@ -10,7 +11,14 @@ export default class AdminStructureTransportStrategiesPage extends React.Compone
         page: 0,
         count: 0,
         data: [],
-        isLoading: false
+        isLoading: false,
+        filtersList: {
+            id: {
+                type: "numeric",
+                operator: "=",
+                value: null
+            },
+        }
     };
 
     componentDidMount() {
@@ -27,13 +35,38 @@ export default class AdminStructureTransportStrategiesPage extends React.Compone
             });
     };
 
+    updateFilter = (e) => {
+
+        console.log('Update Filter received =', e);
+
+        let newFilter = this.state.filtersList;
+        newFilter[e.id] = {value: e.value, operator: e.operator, type: e.type};
+
+        console.log('New Filter =', newFilter);
+
+        this.setState({filtersList: newFilter});
+
+    }
+
     render() {
+
+        console.log(this.state);
 
         const tableRef = React.createRef();
         const {data, page, count, isLoading} = this.state;
 
         const columns = [
-            {field: 'id', title: '#', filtering: false, editable: 'never'},
+            {
+                field: 'id', title: '#', editable: 'never',
+                defaultFilter: this.state.filtersList['id'].value,
+                filterComponent: props => {
+                    console.log(`Column ${props.columnDef.field} props =`, props);
+                    return <NumericFilter id={props.columnDef.field}
+                                          filter={this.state.filtersList[props.columnDef.field]}
+                                          changed={this.updateFilter}
+                    />;
+                }
+            },
             {field: 'code', title: 'Код', filtering: true, editable: 'never'},
             {field: 'name', title: 'Наименование', filtering: true, editable: 'never'},
             {field: 'description', title: 'Описание', filtering: true, editable: 'never'},
