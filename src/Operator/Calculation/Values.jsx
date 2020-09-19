@@ -181,6 +181,7 @@ export default class OperatorCalculationValuesPage extends React.Component {
       this.state.indsList.forEach((ind) => {
         this.state.algorithmList.forEach((alg) => {
           if (ind.id == alg.indicatorId) {
+            //this.algorithmList = [];
             this.algorithmList.push({ value: alg.code, text: `${alg.name} (${alg.code.split("ALG_FOR_IND_")[1]})`, checked: false });
           }
         });
