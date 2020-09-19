@@ -4,12 +4,11 @@ import appAxios from "../../_services/appAxios";
 import {ruLocalization} from "../../_components";
 import MaterialTable from "material-table";
 import NumericFilter from "../../Common/Filters/NumericFilter";
+import StringFilter from "../../Common/Filters/StringFilter";
 
 export default class AdminStructureTransportStrategiesPage extends React.Component {
 
     state = {
-        page: 0,
-        count: 0,
         data: [],
         isLoading: false,
         filtersList: {
@@ -18,8 +17,30 @@ export default class AdminStructureTransportStrategiesPage extends React.Compone
                 operator: "=",
                 value: null
             },
+            code: {
+                type: "text",
+                operator: "=",
+                value: null
+            },
+            name: {
+                type: "text",
+                operator: "=",
+                value: null
+            },
+            description: {
+                type: "text",
+                operator: "=",
+                value: null
+            },
+            documentBase: {
+                type: "text",
+                operator: "=",
+                value: null
+            },
         }
     };
+
+    tableRef = React.createRef();
 
     componentDidMount() {
         this.getData();
@@ -35,42 +56,76 @@ export default class AdminStructureTransportStrategiesPage extends React.Compone
             });
     };
 
+
     updateFilter = (e) => {
-
         console.log('Update Filter received =', e);
-
         let newFilter = this.state.filtersList;
         newFilter[e.id] = {value: e.value, operator: e.operator, type: e.type};
-
         console.log('New Filter =', newFilter);
-
         this.setState({filtersList: newFilter});
-
+        console.log('Table Ref = ', this.tableRef);
+        this.tableRef.current.onQueryChange(null);
     }
 
     render() {
 
-        console.log(this.state);
+        console.log('[TransportStrategies.jsx] filtersList =', this.state.filtersList);
 
-        const tableRef = React.createRef();
-        const {data, page, count, isLoading} = this.state;
+        const {data, isLoading} = this.state;
 
         const columns = [
             {
-                field: 'id', title: '#', editable: 'never',
-                defaultFilter: this.state.filtersList['id'].value,
+                field: 'id', title: '#', editable: 'never', filtering: true,
                 filterComponent: props => {
                     console.log(`Column ${props.columnDef.field} props =`, props);
                     return <NumericFilter id={props.columnDef.field}
+                                          columnId={props.columnDef.tableData.id}
                                           filter={this.state.filtersList[props.columnDef.field]}
+                                          filterChanged={props.onFilterChanged}
                                           changed={this.updateFilter}
                     />;
                 }
             },
-            {field: 'code', title: 'Код', filtering: true, editable: 'never'},
-            {field: 'name', title: 'Наименование', filtering: true, editable: 'never'},
-            {field: 'description', title: 'Описание', filtering: true, editable: 'never'},
-            {field: 'documentBase', title: 'Основание', filtering: true, editable: 'never'},
+            {
+                field: 'code', title: 'Код', filtering: true, editable: 'never',
+                filterComponent: props => {
+                    console.log(`Column ${props.columnDef.field} props =`, props);
+                    return <StringFilter id={props.columnDef.field}
+                                         filter={this.state.filtersList[props.columnDef.field]}
+                                         changed={this.updateFilter}
+                    />;
+                }
+            },
+            {
+                field: 'name', title: 'Наименование', filtering: true, editable: 'never',
+                filterComponent: props => {
+                    console.log(`Column ${props.columnDef.field} props =`, props);
+                    return <StringFilter id={props.columnDef.field}
+                                         filter={this.state.filtersList[props.columnDef.field]}
+                                         changed={this.updateFilter}
+                    />;
+                }
+            },
+            {
+                field: 'description', title: 'Описание', filtering: true, editable: 'never',
+                filterComponent: props => {
+                    console.log(`Column ${props.columnDef.field} props =`, props);
+                    return <StringFilter id={props.columnDef.field}
+                                         filter={this.state.filtersList[props.columnDef.field]}
+                                         changed={this.updateFilter}
+                    />;
+                }
+            },
+            {
+                field: 'documentBase', title: 'Основание', filtering: true, editable: 'never',
+                filterComponent: props => {
+                    console.log(`Column ${props.columnDef.field} props =`, props);
+                    return <StringFilter id={props.columnDef.field}
+                                         filter={this.state.filtersList[props.columnDef.field]}
+                                         changed={this.updateFilter}
+                    />;
+                }
+            },
             {
                 field: 'actual',
                 title: 'Актуальность',
@@ -85,7 +140,7 @@ export default class AdminStructureTransportStrategiesPage extends React.Compone
                 <MaterialTable
                     title="Версии транспортной стратегии"
                     columns={columns}
-                    tableRef={tableRef}
+                    tableRef={this.tableRef}
                     isLoading={isLoading}
                     localization={ruLocalization}
                     data={data}

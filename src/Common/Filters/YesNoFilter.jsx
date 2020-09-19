@@ -3,7 +3,6 @@ import TextField from "@material-ui/core/TextField";
 import {
     MDBBtn,
     MDBContainer,
-    MDBIcon,
     MDBModal,
     MDBModalBody,
     MDBModalHeader,
@@ -13,15 +12,18 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
+import FilterListIcon from '@material-ui/icons/FilterList';
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Switch from "@material-ui/core/Switch";
 
-const NumericFilter = props => {
+const YesNoFilter = props => {
 
     const [operator, setOperator] = useState(props.filter.operator);
     const [value, setValue] = useState(props.filter.value);
     const [modal, setModal] = useState(false);
 
     const onIconClick = () => {
-        console.log(`NumericFilter on column ${props.id} with props =`, props);
+        console.log(`YesNoFilter on column ${props.id} with props =`, props);
         setModal(!modal);
     }
 
@@ -55,36 +57,38 @@ const NumericFilter = props => {
         <React.Fragment>
             <TextField
                 id={props.id}
-                type='number'
+                type='text'
                 defaultValue={value}
                 disabled
-                InputProps={{startAdornment: <MDBIcon icon='calculator' className='mr-3' onClick={onIconClick}/>}}/>
+                InputProps={{startAdornment: <FilterListIcon className='mr-3' onClick={onIconClick}/>}}/>
             <MDBModal isOpen={modal} toggle={toggleFilterModal} backdrop={true} size='sm'>
                 <MDBModalHeader toggle={toggleFilterModal}>Выберите фильтр</MDBModalHeader>
                 <MDBModalBody>
                     <MDBContainer>
                         <MDBRow center>
                             <FormControl fullWidth={true} className='mx-3'>
-                                <InputLabel id={"numeric-conditionals" + props.id + "_modal"}>Тип отношения</InputLabel>
+                                <InputLabel id={"yes-no-conditionals" + props.id + "_modal"}>Тип отношения</InputLabel>
                                 <Select className={'my-3'}
-                                        labelId={"numeric-conditionals" + props.id + "_modal"}
+                                        labelId={"yes-no-conditionals" + props.id + "_modal"}
                                         id={props.id + "_select_modal"}
                                         value={operator}
                                         onChange={onChangeOperator}>
+                                    <MenuItem value={'~'}>Содержит</MenuItem>
+                                    <MenuItem value={'!~'}>Не содержит</MenuItem>
                                     <MenuItem value={'='}>Равно</MenuItem>
                                     <MenuItem value={'!='}>Не равно</MenuItem>
-                                    <MenuItem value={'>'}>Больше</MenuItem>
-                                    <MenuItem value={'<'}>Меньше</MenuItem>
-                                    <MenuItem value={'>='}>Больше или равно</MenuItem>
-                                    <MenuItem value={'<='}>Меньше или равно</MenuItem>
+                                    <MenuItem value={'!0'}>"Не нулевое</MenuItem>
                                 </Select>
-                                <TextField
-                                    id={props.id + '_value_modal'}
-                                    type='number'
-                                    label="Значение"
-                                    defaultValue={value}
-                                    onChange={onChangeValue}
-                                />
+                                <FormControlLabel
+                                    control={<Switch checked={value} onChange={onChangeValue} name="yes-no"/>}
+                                    label="Secondary"/>
+                                {/*<TextField*/}
+                                {/*    id={props.id + '_value_modal'}*/}
+                                {/*    type='text'*/}
+                                {/*    label="Значение"*/}
+                                {/*    defaultValue={value}*/}
+                                {/*    onChange={onChangeValue}*/}
+                                {/*/>*/}
                             </FormControl>
                         </MDBRow>
                         <MDBRow center className='my-4' color='indigo'>
@@ -97,4 +101,4 @@ const NumericFilter = props => {
     );
 };
 
-export default NumericFilter;
+export default YesNoFilter;

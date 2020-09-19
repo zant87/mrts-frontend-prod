@@ -8,7 +8,8 @@ import "moment/locale/ru";
 
 export default class TableContainer extends React.Component {
   render() {
-    const options = this.props.options
+
+      const options = this.props.options
       ? this.props.options
       : {
           pageSize: 20,
