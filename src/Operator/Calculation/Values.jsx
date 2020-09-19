@@ -7,30 +7,63 @@ import { authenticationService } from "../../_services";
 import Preloader from "@/Common/Preloader/Preloader";
 
 export default class OperatorCalculationValuesPage extends React.Component {
-  state = {
-    date: "2018-12-31",
-    algorithmList: [],
-    indsList: [],
-    algorithmCode: "",
-    providerList: [],
-    providerCode: "",
-    isLoading: false,
-    result: "",
-    username: "",
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      date: "2018-12-31",
+      algorithmList: [],
+      algorithmListIsCalc: [],
+      indsList: [],
+      algorithmCode: "",
+      providerList: [],
+      providerCode: "",
+      isLoading: false,
+      result: "",
+      username: "",
+    };
+  }
+  // state = {
+  //   date: "2018-12-31",
+  //   algorithmList: [],
+  //   algorithmListIsCalc: [],
+  //   indsList: [],
+  //   algorithmCode: "",
+  //   providerList: [],
+  //   providerCode: "",
+  //   isLoading: false,
+  //   result: "",
+  //   username: "",
+  // };
 
-  algorithmList = [];
+  //algorithmLists = [];
 
   componentDidMount() {
-    //console.log(moment.locale("ru"));
     this.getIndsList();
     this.getAlgorithmList();
     this.getProviderList();
+
     authenticationService.currentUser.subscribe((x) =>
       this.setState({
         username: x.id,
       })
     );
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.state.algorithmList !== prevState.algorithmList || this.state.indsList !== prevState.indsList) {
+      let algorithmLists = [];
+      if (this.state.algorithmList.length > 0 && this.state.indsList.length > 0) {
+        this.state.indsList.forEach((ind) => {
+          this.state.algorithmList.forEach((alg) => {
+            if (ind.id == alg.indicatorId) {
+              algorithmLists.push({ value: alg.code, text: `${alg.name} (${alg.code.split("ALG_FOR_IND_")[1]})`, checked: false });
+            }
+          });
+        });
+        algorithmLists.sort((a, b) => (a.value > b.value ? 1 : -1));
+        this.setState({ algorithmListIsCalc: algorithmLists });
+      }
+    }
   }
 
   getAlgorithmList = () => {
@@ -177,18 +210,6 @@ export default class OperatorCalculationValuesPage extends React.Component {
   };
 
   render() {
-    if (this.state.algorithmList && this.state.indsList) {
-      this.state.indsList.forEach((ind) => {
-        this.state.algorithmList.forEach((alg) => {
-          if (ind.id == alg.indicatorId) {
-            //this.algorithmList = [];
-            this.algorithmList.push({ value: alg.code, text: `${alg.name} (${alg.code.split("ALG_FOR_IND_")[1]})`, checked: false });
-          }
-        });
-      });
-      this.algorithmList.sort((a, b) => (a.value > b.value ? 1 : -1));
-    }
-
     return (
       <MDBCol md="8" className="mx-auto my-3">
         <h2 className="text-center my-3">Расчет значений индикаторов за отчетный период</h2>
@@ -200,10 +221,10 @@ export default class OperatorCalculationValuesPage extends React.Component {
               search={true}
               searchLabel={"Поиск"}
               outline
-              //options={this.state.algorithmList}
-              options={this.algorithmList ? this.algorithmList : ""}
+              // options={this.state.algorithmList}
+              options={this.state.algorithmListIsCalc.length > 0 ? this.state.algorithmListIsCalc : ""}
               getValue={this.setAlgorithm}
-            ></MDBSelect>
+            />
           </MDBCol>
         </MDBRow>
 
@@ -217,7 +238,7 @@ export default class OperatorCalculationValuesPage extends React.Component {
               searchLabel={"Поиск"}
               options={this.state.providerList}
               getValue={this.setProvider}
-            ></MDBSelect>
+            />
           </MDBCol>
         </MDBRow>
 
@@ -226,7 +247,8 @@ export default class OperatorCalculationValuesPage extends React.Component {
             <label htmlFor="datepicker">Дата документа</label>
             <MDBDatePicker
               getValue={this.getDate}
-              format="YYYY-MM-DD"
+              //format="YYYY-MM-DD"
+              format="DD.MM.YYYY"
               locale={moment.locale("ru")}
               okLabel="Применить"
               name="documentDate"
