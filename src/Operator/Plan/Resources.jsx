@@ -31,7 +31,7 @@ export default class OperatorPlanResourcesPage extends React.Component {
     const columns = [
       { field: "id", title: "#", filtering: false },
       // {field: 'transportStrategyCode', title: 'Редакция ТС'},
-      { field: "transportStrategyVersionId", title: "Редакция ТС" },
+      { field: "transportStrategyName", title: "Редакция ТС" },
       { field: "scenarioName", title: "Вариант реализации стратегии" },
       { field: "costTypeName", title: "Вид вложений" },
       { field: "directionName", title: "Направление вложений" },
