@@ -14,6 +14,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FilterListIcon from '@material-ui/icons/FilterList';
+import {IconButton} from "@material-ui/core";
+import ClearIcon from "@material-ui/icons/Clear";
 
 const StringFilter = props => {
 
@@ -52,6 +54,17 @@ const StringFilter = props => {
         setValue(event.target.value);
     }
 
+    const onClearIconClicked = (event) => {
+        const filter = {
+            id: props.id,
+            value: event,
+            operator: operator,
+            type: props.filter.type
+        };
+        props.changed(filter);
+        props.filterChanged(props.columnId, value);
+    }
+
     return (
         <React.Fragment>
             <TextField
@@ -59,7 +72,13 @@ const StringFilter = props => {
                 type='text'
                 defaultValue={value}
                 disabled
-                InputProps={{startAdornment: <FilterListIcon className='mr-3' onClick={onIconClick}/>}}/>
+                InputProps={
+                    {
+                        startAdornment: (<FilterListIcon className='mr-3' onClick={onIconClick}/>),
+                        endAdornment: (<IconButton size='small' onClick={() => onClearIconClicked(null)}><ClearIcon
+                            fontSize='small'/></IconButton>)
+                    }
+                }/>
             <MDBModal isOpen={modal} toggle={toggleFilterModal} backdrop={true} size='sm'>
                 <MDBModalHeader toggle={toggleFilterModal}>Выберите фильтр</MDBModalHeader>
                 <MDBModalBody>
@@ -72,11 +91,11 @@ const StringFilter = props => {
                                         id={props.id + "_select_modal"}
                                         value={operator}
                                         onChange={onChangeOperator}>
-                                    <MenuItem value={'~'}>Содержит</MenuItem>
-                                    <MenuItem value={'!~'}>Не содержит</MenuItem>
-                                    <MenuItem value={'='}>Равно</MenuItem>
-                                    <MenuItem value={'!='}>Не равно</MenuItem>
-                                    <MenuItem value={'!0'}>"Не нулевое</MenuItem>
+                                    <MenuItem value={'contains'}>Содержит</MenuItem>
+                                    <MenuItem value={'doesNotContain'}>Не содержит</MenuItem>
+                                    <MenuItem value={'equals'}>Равно</MenuItem>
+                                    <MenuItem value={'notEquals'}>Не равно</MenuItem>
+                                    <MenuItem value={'specified'}>"Не нулевое</MenuItem>
                                 </Select>
                                 <TextField
                                     id={props.id + '_value_modal'}

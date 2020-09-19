@@ -13,6 +13,8 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
+import ClearIcon from "@material-ui/icons/Clear";
+import {IconButton} from "@material-ui/core";
 
 const NumericFilter = props => {
 
@@ -42,13 +44,24 @@ const NumericFilter = props => {
     }
 
     const onChangeOperator = (event) => {
-        console.log(`Changing Conditional on column ${props.id} =`, event.target.value);
         setOperator(event.target.value);
+        console.log(`Changing Conditional on column ${props.id} =`, event.target.value);
     };
 
     const onChangeValue = (event) => {
-        console.log(`Changing Value on column ${props.id} =`, event.target.value);
-        setValue(event.target.value);
+        event === null ? setValue(null) : setValue(event.target.value);
+        console.log(`Changing Value on column ${props.id} =`, event);
+    }
+
+    const onClearIconClicked = (event) => {
+        const filter = {
+            id: props.id,
+            value: event,
+            operator: operator,
+            type: props.filter.type
+        };
+        props.changed(filter);
+        props.filterChanged(props.columnId, value);
     }
 
     return (
@@ -58,7 +71,13 @@ const NumericFilter = props => {
                 type='number'
                 defaultValue={value}
                 disabled
-                InputProps={{startAdornment: <MDBIcon icon='calculator' className='mr-3' onClick={onIconClick}/>}}/>
+                InputProps={
+                    {
+                        startAdornment: (<MDBIcon icon='calculator' className='mr-3' onClick={onIconClick}/>),
+                        endAdornment: (<IconButton size='small' onClick={() => onClearIconClicked(null)}><ClearIcon
+                            fontSize='small'/></IconButton>)
+                    }
+                }/>
             <MDBModal isOpen={modal} toggle={toggleFilterModal} backdrop={true} size='sm'>
                 <MDBModalHeader toggle={toggleFilterModal}>Выберите фильтр</MDBModalHeader>
                 <MDBModalBody>
@@ -71,12 +90,12 @@ const NumericFilter = props => {
                                         id={props.id + "_select_modal"}
                                         value={operator}
                                         onChange={onChangeOperator}>
-                                    <MenuItem value={'='}>Равно</MenuItem>
-                                    <MenuItem value={'!='}>Не равно</MenuItem>
-                                    <MenuItem value={'>'}>Больше</MenuItem>
-                                    <MenuItem value={'<'}>Меньше</MenuItem>
-                                    <MenuItem value={'>='}>Больше или равно</MenuItem>
-                                    <MenuItem value={'<='}>Меньше или равно</MenuItem>
+                                    <MenuItem value={'equals'}>Равно</MenuItem>
+                                    <MenuItem value={'notEquals'}>Не равно</MenuItem>
+                                    <MenuItem value={'greaterThan'}>Больше</MenuItem>
+                                    <MenuItem value={'lessThan'}>Меньше</MenuItem>
+                                    <MenuItem value={'greaterThanOrEqual'}>Больше или равно</MenuItem>
+                                    <MenuItem value={'lessThanOrEqual'}>Меньше или равно</MenuItem>
                                 </Select>
                                 <TextField
                                     id={props.id + '_value_modal'}

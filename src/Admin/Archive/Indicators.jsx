@@ -13,22 +13,52 @@ export default class AdminArchiveIndicatorsPage extends React.Component {
         filtersList: {
             id: {
                 type: "numeric",
-                operator: "=",
+                operator: "equals",
                 value: null
             },
             year: {
                 type: "numeric",
-                operator: "=",
+                operator: "equals",
                 value: null
             },
             quarterName: {
                 type: "text",
-                operator: "~",
+                operator: "contains",
+                value: null
+            },
+            indicatorName: {
+                type: "text",
+                operator: "contains",
+                value: null
+            },
+            scenarioName: {
+                type: "text",
+                operator: "contains",
+                value: null
+            },
+            okeiCode: {
+                type: "text",
+                operator: "contains",
+                value: null
+            },
+            transportTypeName: {
+                type: "text",
+                operator: "contains",
+                value: null
+            },
+            beginDate: {
+                type: "date",
+                operator: "equals",
+                value: null
+            },
+            endDate: {
+                type: "date",
+                operator: "equals",
                 value: null
             },
             value: {
                 type: "numeric",
-                operator: "=",
+                operator: "equals",
                 value: null
             }
         }
@@ -42,7 +72,6 @@ export default class AdminArchiveIndicatorsPage extends React.Component {
         newFilter[e.id] = {value: e.value, operator: e.operator, type: e.type};
         console.log('New Filter =', newFilter);
         this.setState({filtersList: newFilter});
-        console.log('Table Ref = ', this.tableRef);
     }
 
     render() {
@@ -51,84 +80,96 @@ export default class AdminArchiveIndicatorsPage extends React.Component {
                 field: "id", title: "#",
                 filterComponent: props => {
                     console.log(`Column ${props.columnDef.field} props =`, props);
-                    return <NumericFilter id={props.columnDef.field}
-                                          columnId={props.columnDef.tableData.id}
+                    return <NumericFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
                                           filter={this.state.filtersList[props.columnDef.field]}
-                                          filterChanged={props.onFilterChanged}
-                                          changed={this.updateFilter}
-                    />;
+                                          filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
                 }
             },
             {
                 field: "year", title: "Отчетный год",
                 filterComponent: props => {
                     console.log(`Column ${props.columnDef.field} props =`, props);
-                    return <NumericFilter id={props.columnDef.field}
-                                          columnId={props.columnDef.tableData.id}
+                    return <NumericFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
                                           filter={this.state.filtersList[props.columnDef.field]}
-                                          filterChanged={props.onFilterChanged}
-                                          changed={this.updateFilter}
-                    />;
+                                          filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
                 }
             },
             {
                 field: "quarterName", title: "Отчетный квартал", filtering: true,
                 filterComponent: props => {
                     console.log(`Column ${props.columnDef.field} props =`, props);
-                    return <StringFilter id={props.columnDef.field}
-                                         columnId={props.columnDef.tableData.id}
+                    return <StringFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
                                          filter={this.state.filtersList[props.columnDef.field]}
-                                         filterChanged={props.onFilterChanged}
-                                         changed={this.updateFilter}
-                    />;
+                                         filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
                 }
             },
-            {field: "indicatorName", title: "Индикатор", filtering: true},
-            {field: "scenarioName", title: "Сценарий", filtering: true},
-            {field: "okeiCode", title: "ОКЕИ", filtering: true, editable: "never"},
-            {field: "transportTypeName", title: "Вид транспорта", filtering: true},
+            {
+                field: "indicatorName", title: "Индикатор", filtering: true,
+                filterComponent: props => {
+                    console.log(`Column ${props.columnDef.field} props =`, props);
+                    return <StringFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                         filter={this.state.filtersList[props.columnDef.field]}
+                                         filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+                }
+            },
+            {
+                field: "scenarioName", title: "Сценарий", filtering: true,
+                filterComponent: props => {
+                    console.log(`Column ${props.columnDef.field} props =`, props);
+                    return <StringFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                         filter={this.state.filtersList[props.columnDef.field]}
+                                         filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+                }
+            },
+            {
+                field: "okeiCode", title: "ОКЕИ", filtering: true,
+                filterComponent: props => {
+                    console.log(`Column ${props.columnDef.field} props =`, props);
+                    return <StringFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                         filter={this.state.filtersList[props.columnDef.field]}
+                                         filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+                }
+            },
+            {
+                field: "transportTypeName", title: "Вид транспорта", filtering: true,
+                filterComponent: props => {
+                    console.log(`Column ${props.columnDef.field} props =`, props);
+                    return <StringFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                         filter={this.state.filtersList[props.columnDef.field]}
+                                         filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+                }
+            },
             {
                 field: "beginDate",
                 title: "Дата расчета (изменения) значения",
                 filtering: true,
                 type: "date",
-                filterComponent: props => <DateFilter/>
+                filterComponent: props => {
+                    console.log(`Column ${props.columnDef.field} props =`, props);
+                    return <DateFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                       filter={this.state.filtersList[props.columnDef.field]}
+                                       filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+                }
             },
             {
                 field: "endDate",
                 title: "Дата окончания действия значения",
                 filtering: true,
                 type: "date",
-                filterComponent: (props) => {
-                    return (
-                        <MDBDatePicker
-                            clearable={true}
-                            invalidDateMessage="Неверный формат"
-                            clearLabel="Очистить"
-                            emptyLabel=""
-                            keyboard={true}
-                            okLabel="Применить"
-                            locale={moment.locale("ru")}
-                            valueDefault={null}
-                            getValue={(event) => {
-                                props.onFilterChanged(props.columnDef.tableData.id, event);
-                            }}
-                            format="DD.MM.YYYY"
-                            cancelLabel="Отмена"
-                        />
-                    );
-                },
+                filterComponent: props => {
+                    console.log(`Column ${props.columnDef.field} props =`, props);
+                    return <DateFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                       filter={this.state.filtersList[props.columnDef.field]}
+                                       filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+                }
             },
             {
                 field: "value", title: "Значение индикатора",
                 filterComponent: props => {
                     console.log(`Column ${props.columnDef.field} props =`, props);
-                    return <NumericFilter id={props.columnDef.field}
-                                          columnId={props.columnDef.tableData.id}
+                    return <NumericFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
                                           filter={this.state.filtersList[props.columnDef.field]}
-                                          filterChanged={props.onFilterChanged}
-                                          changed={this.updateFilter}
-                    />;
+                                          filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
                 }
             },
         ];
