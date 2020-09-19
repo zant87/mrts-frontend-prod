@@ -56,7 +56,8 @@ export default class OperatorCalculationLevelsPage extends React.Component {
             <label htmlFor="datepicker">Дата документа</label>
             <MDBDatePicker
               getValue={this.getDate}
-              format="YYYY-MM-DD"
+              //format="YYYY-MM-DD"
+              format="DD.MM.YYYY"
               locale={moment.locale("ru")}
               okLabel="ОК"
               name="documentDate"
