@@ -9,12 +9,12 @@ export default class AdminArchiveIndicatorsPage extends React.Component {
     state = {
         filtersList: {
             id: {
-                type: "numeric",
+                type: "integer",
                 operator: "equals",
                 value: null
             },
             year: {
-                type: "numeric",
+                type: "integer",
                 operator: "equals",
                 value: null
             },
@@ -76,7 +76,6 @@ export default class AdminArchiveIndicatorsPage extends React.Component {
             {
                 field: "id", title: "#",
                 filterComponent: props => {
-                    console.log(`Column ${props.columnDef.field} props =`, props);
                     return <NumericFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
                                           filter={this.state.filtersList[props.columnDef.field]}
                                           filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
@@ -85,7 +84,6 @@ export default class AdminArchiveIndicatorsPage extends React.Component {
             {
                 field: "year", title: "Отчетный год",
                 filterComponent: props => {
-                    console.log(`Column ${props.columnDef.field} props =`, props);
                     return <NumericFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
                                           filter={this.state.filtersList[props.columnDef.field]}
                                           filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
@@ -94,7 +92,6 @@ export default class AdminArchiveIndicatorsPage extends React.Component {
             {
                 field: "quarterName", title: "Отчетный квартал", filtering: true,
                 filterComponent: props => {
-                    console.log(`Column ${props.columnDef.field} props =`, props);
                     return <StringFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
                                          filter={this.state.filtersList[props.columnDef.field]}
                                          filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
@@ -103,7 +100,6 @@ export default class AdminArchiveIndicatorsPage extends React.Component {
             {
                 field: "indicatorName", title: "Индикатор", filtering: true,
                 filterComponent: props => {
-                    console.log(`Column ${props.columnDef.field} props =`, props);
                     return <StringFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
                                          filter={this.state.filtersList[props.columnDef.field]}
                                          filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
@@ -112,7 +108,6 @@ export default class AdminArchiveIndicatorsPage extends React.Component {
             {
                 field: "scenarioName", title: "Сценарий", filtering: true,
                 filterComponent: props => {
-                    console.log(`Column ${props.columnDef.field} props =`, props);
                     return <StringFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
                                          filter={this.state.filtersList[props.columnDef.field]}
                                          filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
@@ -121,7 +116,6 @@ export default class AdminArchiveIndicatorsPage extends React.Component {
             {
                 field: "okeiCode", title: "ОКЕИ", filtering: true,
                 filterComponent: props => {
-                    console.log(`Column ${props.columnDef.field} props =`, props);
                     return <StringFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
                                          filter={this.state.filtersList[props.columnDef.field]}
                                          filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
@@ -130,7 +124,6 @@ export default class AdminArchiveIndicatorsPage extends React.Component {
             {
                 field: "transportTypeName", title: "Вид транспорта", filtering: true,
                 filterComponent: props => {
-                    console.log(`Column ${props.columnDef.field} props =`, props);
                     return <StringFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
                                          filter={this.state.filtersList[props.columnDef.field]}
                                          filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
@@ -142,7 +135,6 @@ export default class AdminArchiveIndicatorsPage extends React.Component {
                 filtering: true,
                 type: "date",
                 filterComponent: props => {
-                    console.log(`Column ${props.columnDef.field} props =`, props);
                     return <DateFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
                                        filter={this.state.filtersList[props.columnDef.field]}
                                        filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
@@ -154,7 +146,6 @@ export default class AdminArchiveIndicatorsPage extends React.Component {
                 filtering: true,
                 type: "date",
                 filterComponent: props => {
-                    console.log(`Column ${props.columnDef.field} props =`, props);
                     return <DateFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
                                        filter={this.state.filtersList[props.columnDef.field]}
                                        filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
@@ -163,7 +154,6 @@ export default class AdminArchiveIndicatorsPage extends React.Component {
             {
                 field: "value", title: "Значение индикатора",
                 filterComponent: props => {
-                    console.log(`Column ${props.columnDef.field} props =`, props);
                     return <NumericFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
                                           filter={this.state.filtersList[props.columnDef.field]}
                                           filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
