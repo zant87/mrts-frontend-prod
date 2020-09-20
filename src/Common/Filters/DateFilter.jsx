@@ -8,24 +8,42 @@ import IconButton from "@material-ui/core/IconButton";
 import ClearIcon from "@material-ui/icons/Clear";
 import MomentUtils from '@date-io/moment';
 import TodayIcon from '@material-ui/icons/Today';
-
+import moment from "moment";
 
 const DateFilter = props => {
 
     const [date, setDate] = useState(props.filter.value);
 
     const onDateChange = (date) => {
+
+        if (!moment(date).isValid())
+            return;
+
         const filter = {
             id: props.id,
-            value: date,
+            value: moment(date).format('yyyy-MM-DD'),
             operator: props.filter.operator,
             type: props.filter.type
         };
-        setDate(date());
+
+        setDate(moment(date).format('yyyy-MM-DD'));
         props.changed(filter);
-        props.filterChanged(props.columnId, date);
-        console.log(`Changing Value on column ${props.id} =`, date);
+        props.filterChanged(props.columnId, moment(date).format('yyyy-MM-DD'));
+        console.log(`Changing Value on column ${props.id} =`, moment(date).format('yyyy-MM-DD'));
     }
+
+    const onDateClear = () => {
+        const filter = {
+            id: props.id,
+            value: null,
+            operator: props.filter.operator,
+            type: props.filter.type
+        };
+        setDate(null);
+        props.changed(filter);
+        props.filterChanged(props.columnId, null);
+        console.log(`Changing Value on column ${props.id} =`, null);
+    };
 
     return (
         <MuiPickersUtilsProvider utils={MomentUtils}>
@@ -34,7 +52,7 @@ const DateFilter = props => {
                 value={date}
                 InputProps={{
                     endAdornment: (
-                        <IconButton size='small' onClick={() => setDate(null)}>
+                        <IconButton size='small' onClick={onDateClear}>
                             <ClearIcon fontSize='small'/>
                         </IconButton>
                     )

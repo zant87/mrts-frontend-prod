@@ -56,9 +56,9 @@ const NumericFilter = props => {
     const onClearIconClicked = (event) => {
         const filter = {
             id: props.id,
-            value: event,
+            type: props.filter.type,
             operator: operator,
-            type: props.filter.type
+            value: event,
         };
         props.changed(filter);
         props.filterChanged(props.columnId, value);
@@ -73,7 +73,12 @@ const NumericFilter = props => {
                 disabled
                 InputProps={
                     {
-                        startAdornment: (<MDBIcon icon='calculator' className='mr-3' onClick={onIconClick}/>),
+                        startAdornment: (
+                            // <MDBIcon icon='calculator' className='mr-3' onClick={onIconClick}/>
+                            <IconButton size='small' className='mr-3' onClick={onIconClick}>
+                                <MDBIcon icon='calculator'/>
+                            </IconButton>
+                        ),
                         endAdornment: (<IconButton size='small' onClick={() => onClearIconClicked(null)}><ClearIcon
                             fontSize='small'/></IconButton>)
                     }

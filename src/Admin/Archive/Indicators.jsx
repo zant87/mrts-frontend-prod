@@ -1,7 +1,4 @@
 import React from "react";
-import moment from "mdbreact/node_modules/moment";
-import "moment/locale/ru";
-import {MDBDatePicker} from "mdbreact";
 import DateFilter from "../../Common/Filters/DateFilter";
 import TableContainerWithFilters from "../../Containers/TableContainerWithFilters";
 import NumericFilter from "../../Common/Filters/NumericFilter";

@@ -36,9 +36,9 @@ const StringFilter = props => {
         setModal(!modal);
         const filter = {
             id: props.id,
-            value: value,
+            type: props.filter.type,
             operator: operator,
-            type: props.filter.type
+            value: value,
         };
         props.changed(filter);
         props.filterChanged(props.columnId, value);

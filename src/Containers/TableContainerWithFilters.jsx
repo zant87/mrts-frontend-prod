@@ -58,7 +58,10 @@ export default class TableContainerWithFilters extends React.Component {
                                         console.log('Filters List = ', filtersList);
                                         const filters = Object.keys(filtersList);
                                         filters.forEach((filter) => {
-                                            console.log(filtersList[filter]);
+                                            if (filtersList[filter].value) {
+                                                console.log(filtersList[filter]);
+                                                url += `&${filter}.${filtersList[filter].operator}=${filtersList[filter].value}`;
+                                            }
                                         });
 
                                         // console.log(Object.keys(filtersList));
