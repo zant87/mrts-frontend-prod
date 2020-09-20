@@ -74,7 +74,6 @@ const StringFilter = props => {
                 InputProps={
                     {
                         startAdornment: (
-                            // <FilterListIcon className='mr-3' onClick={onIconClick}/>
                             <IconButton size='small' className='mr-3' onClick={onIconClick}>
                                 <FilterListIcon/>
                             </IconButton>
@@ -111,7 +110,7 @@ const StringFilter = props => {
                             </FormControl>
                         </MDBRow>
                         <MDBRow center className='my-4' color='indigo'>
-                            <MDBBtn onClick={onApplyFilterClick}>Применить</MDBBtn>
+                            <MDBBtn color="indigo" size="sm" onClick={onApplyFilterClick}>Применить</MDBBtn>
                         </MDBRow>
                     </MDBContainer>
                 </MDBModalBody>
