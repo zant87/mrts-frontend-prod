@@ -2,8 +2,7 @@ import React, {useState} from "react";
 import TextField from "@material-ui/core/TextField";
 import {
     MDBBtn,
-    MDBContainer,
-    MDBIcon,
+    MDBContainer, MDBIcon,
     MDBModal,
     MDBModalBody,
     MDBModalHeader,
@@ -74,7 +73,12 @@ const StringFilter = props => {
                 disabled
                 InputProps={
                     {
-                        startAdornment: (<FilterListIcon className='mr-3' onClick={onIconClick}/>),
+                        startAdornment: (
+                            // <FilterListIcon className='mr-3' onClick={onIconClick}/>
+                            <IconButton size='small' className='mr-3' onClick={onIconClick}>
+                                <FilterListIcon/>
+                            </IconButton>
+                        ),
                         endAdornment: (<IconButton size='small' onClick={() => onClearIconClicked(null)}><ClearIcon
                             fontSize='small'/></IconButton>)
                     }

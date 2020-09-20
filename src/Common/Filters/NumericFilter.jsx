@@ -74,7 +74,6 @@ const NumericFilter = props => {
                 InputProps={
                     {
                         startAdornment: (
-                            // <MDBIcon icon='calculator' className='mr-3' onClick={onIconClick}/>
                             <IconButton size='small' className='mr-3' onClick={onIconClick}>
                                 <MDBIcon icon='calculator'/>
                             </IconButton>

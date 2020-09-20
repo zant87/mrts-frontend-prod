@@ -1,9 +1,8 @@
 import React from "react";
 import {MDBContainer, MDBRow, MDBCol, toast} from "mdbreact";
 import appAxios from "../_services/appAxios";
-import MaterialTable, {MTableFilterRow} from "material-table";
+import MaterialTable from "material-table";
 import {ruLocalization} from "../_components";
-import moment from "moment";
 import "moment/locale/ru";
 
 export default class TableContainerWithFilters extends React.Component {
@@ -44,7 +43,6 @@ export default class TableContainerWithFilters extends React.Component {
                             data={(query) =>
                                 new Promise((resolve, reject) => {
                                     console.log("Параметры запроса", query);
-                                    console.log("Фильтры", filtersList);
 
                                     let url = `/${this.props.baseUrl}?page=${query.page}&size=${query.pageSize}`;
                                     if (modifiedBaseUrl) url = `/${this.props.baseUrl}&page=${query.page}&size=${query.pageSize}`;
@@ -55,7 +53,7 @@ export default class TableContainerWithFilters extends React.Component {
                                     }
 
                                     if (filtersList) {
-                                        console.log('Filters List = ', filtersList);
+                                        console.log('Фильтры = ', filtersList);
                                         const filters = Object.keys(filtersList);
                                         filters.forEach((filter) => {
                                             if (filtersList[filter].value) {
@@ -63,56 +61,7 @@ export default class TableContainerWithFilters extends React.Component {
                                                 url += `&${filter}.${filtersList[filter].operator}=${filtersList[filter].value}`;
                                             }
                                         });
-
-                                        // console.log(Object.keys(filtersList));
-
                                     }
-                                    //
-                                    // if (query.filters.length > 0) {
-                                    //   query.filters.forEach((element) => {
-                                    //     console.log("element.value =", element.value);
-                                    //     console.log("element.value.length =", String(element.value).length);
-                                    //
-                                    //     if (String(element.value).length >= filterMinimalLength) {
-                                    //       if (filtersList && filtersList[element.column.field]) {
-                                    //         console.log(element.column.field, "filter is", filtersList[element.column.field]);
-                                    //
-                                    //         if (filtersList[element.column.field] === "numeric") {
-                                    //           if (element.value.includes(">=")) {
-                                    //             url += `&${element.column.field}.greaterThanOrEqual=${element.value.slice(2, element.value.length)}`;
-                                    //           }
-                                    //           if (element.value.includes("=>")) {
-                                    //             url += `&${element.column.field}.greaterThanOrEqual=${element.value.slice(2, element.value.length)}`;
-                                    //           }
-                                    //           if (element.value.includes("<=")) {
-                                    //             url += `&${element.column.field}.lessThanOrEqual=${element.value.slice(2, element.value.length)}`;
-                                    //           }
-                                    //           if (element.value.includes("=<")) {
-                                    //             url += `&${element.column.field}.lessThanOrEqual=${element.value.slice(2, element.value.length)}`;
-                                    //           }
-                                    //           if (element.value.includes("<") && !element.value.includes("=")) {
-                                    //             url += `&${element.column.field}.lessThan=${element.value.slice(1, element.value.length)}`;
-                                    //           }
-                                    //           if (element.value.includes(">") && !element.value.includes("=")) {
-                                    //             url += `&${element.column.field}.greaterThan=${element.value.slice(1, element.value.length)}`;
-                                    //           }
-                                    //           if (element.value.includes("=") && !element.value.includes(">") && !element.value.includes("<")) {
-                                    //             url += `&${element.column.field}.equals=${element.value.slice(1, element.value.length)}`;
-                                    //           }
-                                    //         } else if (filtersList[element.column.field] === "date") {
-                                    //           const date = moment(element.value).format("YYYY-MM-DD");
-                                    //           console.log(`${filtersList[element.column.field]} = ${date}`);
-                                    //           url += `&${element.column.field}.equals=${date}`;
-                                    //         } else {
-                                    //           url += `&${element.column.field}.${filtersList[element.column.field]}=${element.value}`;
-                                    //         }
-                                    //       } else {
-                                    //         url += `&${element.column.field}.contains=${element.value}`;
-                                    //       }
-                                    //       filtersEnabled = true;
-                                    //     }
-                                    //   });
-                                    // }
 
                                     console.log("Запрос", url);
 
