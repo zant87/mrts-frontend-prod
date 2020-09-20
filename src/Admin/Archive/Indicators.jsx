@@ -61,8 +61,6 @@ export default class AdminArchiveIndicatorsPage extends React.Component {
         }
     };
 
-    tableRef = React.createRef();
-
     updateFilter = (e) => {
         console.log('Update Filter received =', e);
         let newFilter = this.state.filtersList;
@@ -165,7 +163,6 @@ export default class AdminArchiveIndicatorsPage extends React.Component {
             <React.Fragment>
                 <TableContainerWithFilters
                     columns={columns}
-                    tableRef={this.tableRef}
                     title={"Архив результатов расчета индикаторов ТС"}
                     baseUrl={"views/i-2-s"}
                     filtersList={this.state.filtersList}
