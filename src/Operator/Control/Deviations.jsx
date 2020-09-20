@@ -1,66 +1,289 @@
-import React from 'react';
-import TableContainer from "../../Containers/TableContainer";
-import {MDBDatePicker} from "mdbreact";
-import moment from "mdbreact/node_modules/moment";
+import React from "react";
 import "moment/locale/ru";
+import TableContainerWithFilters from "../../Containers/TableContainerWithFilters";
+import StringFilter from "../../Common/Filters/StringFilter";
+import DateFilter from "../../Common/Filters/DateFilter";
+import NumericFilter from "../../Common/Filters/NumericFilter";
 
 export default class OperatorControlDeviationsPage extends React.Component {
+  state = {
+    filtersList: {
+      id: {
+        type: "integer",
+        operator: "equals",
+        value: null,
+      },
+      parameterCode: {
+        type: "text",
+        operator: "contains",
+        value: null,
+      },
+      parameterName: {
+        type: "text",
+        operator: "contains",
+        value: null,
+      },
+      okeiName: {
+        type: "text",
+        operator: "contains",
+        value: null,
+      },
+      frequencyName: {
+        type: "text",
+        operator: "contains",
+        value: null,
+      },
+      parameterDate: {
+        type: "date",
+        operator: "equals",
+        value: null,
+      },
+      year: {
+        type: "integer",
+        operator: "equals",
+        value: null,
+      },
+      value: {
+        type: "numeric",
+        operator: "equals",
+        value: null,
+      },
 
-    render() {
+      previousValue: {
+        type: "numeric",
+        operator: "equals",
+        value: null,
+      },
 
-        const columns = [
-            {field: 'id', title: '#', filtering: false},
-            {field: 'parameterCode', title: 'Код показателя'},
-            {field: 'parameterName', title: 'Наименование показателя'},
-            {field: 'okeiName', title: 'Единица измерений'},
-            {field: 'frequencyName', title: 'Частота обновления'},
-            {
-                field: 'parameterDate', title: 'Отчетная дата', type: 'date',
-                filterComponent: (props) => {
-                    return (
-                        <MDBDatePicker
-                            clearable={true}
-                            invalidDateMessage="Неверный формат"
-                            clearLabel="Очистить"
-                            emptyLabel=""
-                            keyboard={true}
-                            okLabel="Применить"
-                            locale={moment.locale("ru")}
-                            valueDefault={null}
-                            getValue={(event) => {
-                                props.onFilterChanged(props.columnDef.tableData.id, event);
-                            }}
-                            format="DD.MM.YYYY"
-                            cancelLabel="Отмена"
-                        />
-                    );
-                }
-            },
-            {field: 'year', title: 'Отчетный год'},
-            {field: 'value', title: 'Значение', type: 'number', filtering: false},
-            {field: 'previousValue', title: 'Значение в предшествующем году', type: 'number', filtering: false},
-            {field: 'yty', title: 'Изменение г/г, %', type: 'number', filtering: false},
-            {field: 'coefficient', title: 'Коэффициент вариации ряда', type: 'number', filtering: false},
-        ];
+      yty: {
+        type: "numeric",
+        operator: "equals",
+        value: null,
+      },
 
-        const filtersList = {
-            'year': 'equals',
-            'parameterDate': 'date'
-        };
+      coefficient: {
+        type: "numeric",
+        operator: "equals",
+        value: null,
+      },
+    },
+  };
 
-        const filterMinimalLength = 1;
+  tableRef = React.createRef();
 
-        return (
-            <React.Fragment>
-                <TableContainer
-                    columns={columns}
-                    title={'Анализ отклонений'}
-                    baseUrl={'views/control-parameter-y-2-ies'}
-                    filtersList={filtersList}
-                    filterMinimalLength={filterMinimalLength}
-                    loadAll={true}
-                />
-            </React.Fragment>
-        )
-    }
-};
+  updateFilter = (e) => {
+    console.log("Update Filter received =", e);
+    let newFilter = this.state.filtersList;
+    newFilter[e.id] = { value: e.value, operator: e.operator, type: e.type };
+    console.log("New Filter =", newFilter);
+    this.setState({ filtersList: newFilter });
+  };
+
+  render() {
+    const columns = [
+      {
+        field: "id",
+        title: "#",
+        filtering: false,
+        filterComponent: (props) => {
+          console.log(`Column ${props.columnDef.field} props =`, props);
+          return (
+            <NumericFilter
+              id={props.columnDef.field}
+              columnId={props.columnDef.tableData.id}
+              filter={this.state.filtersList[props.columnDef.field]}
+              filterChanged={props.onFilterChanged}
+              changed={this.updateFilter}
+            />
+          );
+        },
+      },
+
+      {
+        field: "parameterCode",
+        title: "Код показателя",
+        filtering: true,
+        filterComponent: (props) => {
+          console.log(`Column ${props.columnDef.field} props =`, props);
+          return (
+            <StringFilter
+              id={props.columnDef.field}
+              columnId={props.columnDef.tableData.id}
+              filter={this.state.filtersList[props.columnDef.field]}
+              filterChanged={props.onFilterChanged}
+              changed={this.updateFilter}
+            />
+          );
+        },
+      },
+      {
+        field: "parameterName",
+        title: "Наименование показателя",
+        filtering: true,
+        filterComponent: (props) => {
+          console.log(`Column ${props.columnDef.field} props =`, props);
+          return (
+            <StringFilter
+              id={props.columnDef.field}
+              columnId={props.columnDef.tableData.id}
+              filter={this.state.filtersList[props.columnDef.field]}
+              filterChanged={props.onFilterChanged}
+              changed={this.updateFilter}
+            />
+          );
+        },
+      },
+      {
+        field: "okeiName",
+        title: "Единица измерений",
+        filtering: true,
+        filterComponent: (props) => {
+          console.log(`Column ${props.columnDef.field} props =`, props);
+          return (
+            <StringFilter
+              id={props.columnDef.field}
+              columnId={props.columnDef.tableData.id}
+              filter={this.state.filtersList[props.columnDef.field]}
+              filterChanged={props.onFilterChanged}
+              changed={this.updateFilter}
+            />
+          );
+        },
+      },
+      {
+        field: "frequencyName",
+        title: "Частота обновления",
+        filtering: true,
+        filterComponent: (props) => {
+          console.log(`Column ${props.columnDef.field} props =`, props);
+          return (
+            <StringFilter
+              id={props.columnDef.field}
+              columnId={props.columnDef.tableData.id}
+              filter={this.state.filtersList[props.columnDef.field]}
+              filterChanged={props.onFilterChanged}
+              changed={this.updateFilter}
+            />
+          );
+        },
+      },
+      {
+        field: "parameterDate",
+        title: "Отчетная дата",
+        filtering: true,
+        type: "date",
+        filterComponent: (props) => {
+          console.log(`Column ${props.columnDef.field} props =`, props);
+          return (
+            <DateFilter
+              id={props.columnDef.field}
+              columnId={props.columnDef.tableData.id}
+              filter={this.state.filtersList[props.columnDef.field]}
+              filterChanged={props.onFilterChanged}
+              changed={this.updateFilter}
+            />
+          );
+        },
+      },
+
+      {
+        field: "year",
+        title: "Отчетный год",
+        filtering: true,
+        filterComponent: (props) => {
+          console.log(`Column ${props.columnDef.field} props =`, props);
+          return (
+            <NumericFilter
+              id={props.columnDef.field}
+              columnId={props.columnDef.tableData.id}
+              filter={this.state.filtersList[props.columnDef.field]}
+              filterChanged={props.onFilterChanged}
+              changed={this.updateFilter}
+            />
+          );
+        },
+      },
+      {
+        field: "value",
+        title: "Значение",
+        filtering: false,
+        filterComponent: (props) => {
+          console.log(`Column ${props.columnDef.field} props =`, props);
+          return (
+            <NumericFilter
+              id={props.columnDef.field}
+              columnId={props.columnDef.tableData.id}
+              filter={this.state.filtersList[props.columnDef.field]}
+              filterChanged={props.onFilterChanged}
+              changed={this.updateFilter}
+            />
+          );
+        },
+      },
+      {
+        field: "previousValue",
+        title: "Значение в предшествующем году",
+        filtering: false,
+        filterComponent: (props) => {
+          console.log(`Column ${props.columnDef.field} props =`, props);
+          return (
+            <NumericFilter
+              id={props.columnDef.field}
+              columnId={props.columnDef.tableData.id}
+              filter={this.state.filtersList[props.columnDef.field]}
+              filterChanged={props.onFilterChanged}
+              changed={this.updateFilter}
+            />
+          );
+        },
+      },
+      {
+        field: "yty",
+        title: "Изменение г/г, %",
+        filtering: false,
+        filterComponent: (props) => {
+          console.log(`Column ${props.columnDef.field} props =`, props);
+          return (
+            <NumericFilter
+              id={props.columnDef.field}
+              columnId={props.columnDef.tableData.id}
+              filter={this.state.filtersList[props.columnDef.field]}
+              filterChanged={props.onFilterChanged}
+              changed={this.updateFilter}
+            />
+          );
+        },
+      },
+      {
+        field: "coefficient",
+        title: "Коэффициент вариации ряда",
+        filtering: false,
+        filterComponent: (props) => {
+          console.log(`Column ${props.columnDef.field} props =`, props);
+          return (
+            <NumericFilter
+              id={props.columnDef.field}
+              columnId={props.columnDef.tableData.id}
+              filter={this.state.filtersList[props.columnDef.field]}
+              filterChanged={props.onFilterChanged}
+              changed={this.updateFilter}
+            />
+          );
+        },
+      },
+    ];
+
+    return (
+      <React.Fragment>
+        <TableContainerWithFilters
+          columns={columns}
+          tableRef={this.tableRef}
+          title={"Анализ отклонений"}
+          baseUrl={"views/control-parameter-y-2-ies"}
+          filtersList={this.state.filtersList}
+          loadAll={true}
+        />
+      </React.Fragment>
+    );
+  }
+}

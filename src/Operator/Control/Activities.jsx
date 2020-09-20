@@ -1,40 +1,193 @@
-import React from 'react';
-import TableContainer from "../../Containers/TableContainer";
+import React from "react";
+import NumericFilter from "../../Common/Filters/NumericFilter";
+import StringFilter from "../../Common/Filters/StringFilter";
+import TableContainerWithFilters from "../../Containers/TableContainerWithFilters";
 
 export default class OperatorControlActivitiesPage extends React.Component {
+  state = {
+    filtersList: {
+      id: {
+        type: "integer",
+        operator: "equals",
+        value: null,
+      },
+      activityCode: {
+        type: "text",
+        operator: "contains",
+        value: null,
+      },
+      activityName: {
+        type: "text",
+        operator: "contains",
+        value: null,
+      },
+      year: {
+        type: "integer",
+        operator: "equals",
+        value: null,
+      },
+      beginYear: {
+        type: "integer",
+        operator: "equals",
+        value: null,
+      },
+      endYear: {
+        type: "integer",
+        operator: "equals",
+        value: null,
+      },
+      control: {
+        type: "integer",
+        operator: "equals",
+        value: null,
+      },
+    },
+  };
 
-    render() {
+  tableRef = React.createRef();
 
-        const columns = [
-            {field: 'id', title: '#', filtering: false},
-            {field: 'activityCode', title: 'Код мероприятия'},
-            {field: 'activityName', title: 'Наименование мероприятия'},
-            {field: 'year', title: 'Отчетный год'},
-            {field: 'beginYear', title: 'Начало выполнения мероприятия'},
-            {field: 'endYear', title: 'Окончание выполнения мероприятия'},
-            {field: 'control', title: 'Наличие отчета по мероприятию', type: 'number'},
-        ];
+  updateFilter = (e) => {
+    console.log("Update Filter received =", e);
+    let newFilter = this.state.filtersList;
+    newFilter[e.id] = { value: e.value, operator: e.operator, type: e.type };
+    console.log("New Filter =", newFilter);
+    this.setState({ filtersList: newFilter });
+  };
 
-        const filtersList = {
-            'year': 'equals',
-            'beginYear': 'equals',
-            'endYear': 'equals',
-            'control': 'equals'
-        };
+  render() {
+    const columns = [
+      {
+        field: "id",
+        title: "#",
+        filterComponent: (props) => {
+          console.log(`Column ${props.columnDef.field} props =`, props);
+          return (
+            <NumericFilter
+              id={props.columnDef.field}
+              columnId={props.columnDef.tableData.id}
+              filter={this.state.filtersList[props.columnDef.field]}
+              filterChanged={props.onFilterChanged}
+              changed={this.updateFilter}
+            />
+          );
+        },
+      },
 
-        const filterMinimalLength = 1;
+      {
+        field: "activityCode",
+        title: "Код мероприятия",
+        filtering: true,
+        filterComponent: (props) => {
+          console.log(`Column ${props.columnDef.field} props =`, props);
+          return (
+            <StringFilter
+              id={props.columnDef.field}
+              columnId={props.columnDef.tableData.id}
+              filter={this.state.filtersList[props.columnDef.field]}
+              filterChanged={props.onFilterChanged}
+              changed={this.updateFilter}
+            />
+          );
+        },
+      },
+      {
+        field: "activityName",
+        title: "Наименование мероприятия",
+        filtering: true,
+        filterComponent: (props) => {
+          console.log(`Column ${props.columnDef.field} props =`, props);
+          return (
+            <StringFilter
+              id={props.columnDef.field}
+              columnId={props.columnDef.tableData.id}
+              filter={this.state.filtersList[props.columnDef.field]}
+              filterChanged={props.onFilterChanged}
+              changed={this.updateFilter}
+            />
+          );
+        },
+      },
+      {
+        field: "year",
+        title: "Отчетный год",
+        filtering: true,
+        filterComponent: (props) => {
+          console.log(`Column ${props.columnDef.field} props =`, props);
+          return (
+            <NumericFilter
+              id={props.columnDef.field}
+              columnId={props.columnDef.tableData.id}
+              filter={this.state.filtersList[props.columnDef.field]}
+              filterChanged={props.onFilterChanged}
+              changed={this.updateFilter}
+            />
+          );
+        },
+      },
+      {
+        field: "beginYear",
+        title: "Начало выполнения мероприятия",
+        filtering: true,
+        filterComponent: (props) => {
+          console.log(`Column ${props.columnDef.field} props =`, props);
+          return (
+            <NumericFilter
+              id={props.columnDef.field}
+              columnId={props.columnDef.tableData.id}
+              filter={this.state.filtersList[props.columnDef.field]}
+              filterChanged={props.onFilterChanged}
+              changed={this.updateFilter}
+            />
+          );
+        },
+      },
+      {
+        field: "endYear",
+        title: "Окончание выполнения мероприятия",
+        filtering: true,
+        filterComponent: (props) => {
+          console.log(`Column ${props.columnDef.field} props =`, props);
+          return (
+            <NumericFilter
+              id={props.columnDef.field}
+              columnId={props.columnDef.tableData.id}
+              filter={this.state.filtersList[props.columnDef.field]}
+              filterChanged={props.onFilterChanged}
+              changed={this.updateFilter}
+            />
+          );
+        },
+      },
+      {
+        field: "control",
+        title: "Наличие отчета по мероприятию",
+        filtering: true,
+        filterComponent: (props) => {
+          console.log(`Column ${props.columnDef.field} props =`, props);
+          return (
+            <NumericFilter
+              id={props.columnDef.field}
+              columnId={props.columnDef.tableData.id}
+              filter={this.state.filtersList[props.columnDef.field]}
+              filterChanged={props.onFilterChanged}
+              changed={this.updateFilter}
+            />
+          );
+        },
+      },
+    ];
 
-        return (
-            <React.Fragment>
-                <TableContainer
-                    columns={columns}
-                    title={'Контроль поступления и согласования данных по выполнению мероприятий по реализации ТС'}
-                    baseUrl={'views/control-activity-reports'}
-                    filtersList={filtersList}
-                    filterMinimalLength={filterMinimalLength}
-                    loadAll={true}
-                />
-            </React.Fragment>
-        )
-    }
-};
+    return (
+      <React.Fragment>
+        <TableContainerWithFilters
+          columns={columns}
+          tableRef={this.tableRef}
+          title={"Контроль поступления и согласования данных по выполнению мероприятий по реализации ТС"}
+          baseUrl={"views/control-activity-reports"}
+          filtersList={this.state.filtersList}
+          loadAll={true}
+        />
+      </React.Fragment>
+    );
+  }
+}
