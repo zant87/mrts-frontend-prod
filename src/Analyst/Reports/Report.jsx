@@ -144,9 +144,9 @@ class AnalystReportPage extends React.Component {
     const filter = this.state.reports.filter((report) => report.value === event.toString())[0];
     if (filter) {
       console.log("Report = ", filter);
-      this.setState({ report: filter });
+      this.setState({report: filter, labeling: false,});
     } else {
-      this.setState({ report: null });
+      this.setState({report: null, labeling: false,});
     }
   };
 
