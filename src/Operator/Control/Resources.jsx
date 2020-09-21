@@ -1,51 +1,173 @@
-import React from 'react';
-import TableContainer from "../../Containers/TableContainer";
+import React from "react";
+import NumericFilter from "../../Common/Filters/NumericFilter";
+import StringFilter from "../../Common/Filters/StringFilter";
+import TableContainerWithFilters from "../../Containers/TableContainerWithFilters";
 
 export default class OperatorControlResourcesPage extends React.Component {
+  state = {
+    filtersList: {
+      id: {
+        type: "integer",
+        operator: "equals",
+        value: null,
+      },
+      directionName: {
+        type: "text",
+        operator: "contains",
+        value: null,
+      },
+      year: {
+        type: "integer",
+        operator: "equals",
+        value: null,
+      },
+      controlFederation: {
+        type: "integer",
+        operator: "equals",
+        value: null,
+      },
+      controlRegional: {
+        type: "integer",
+        operator: "equals",
+        value: null,
+      },
+      controlOther: {
+        type: "integer",
+        operator: "equals",
+        value: null,
+      },
+    },
+  };
 
-    render() {
+  tableRef = React.createRef();
 
-        const columns = [
-            {field: 'id', title: '#', filtering: false},
-            {field: 'directionName', title: 'Направление расхода'},
-            {field: 'year', title: 'Отчетный год'},
-            {
-                field: 'controlFederation',
-                title: 'Наличие отчета по финансированию из Федерального бюджета',
-                type: 'number'
-            },
-            {
-                field: 'controlRegional',
-                title: 'Наличие отчета по финансированию из бюджетов субъектов России',
-                type: 'number'
-            },
-            {
-                field: 'controlOther',
-                title: 'Наличие отчета по финансированию из внебюджетных источников',
-                type: 'number'
-            },
-        ];
+  updateFilter = (e) => {
+    console.log("Update Filter received =", e);
+    let newFilter = this.state.filtersList;
+    newFilter[e.id] = { value: e.value, operator: e.operator, type: e.type };
+    console.log("New Filter =", newFilter);
+    this.setState({ filtersList: newFilter });
+  };
 
-        const filtersList = {
-            'year': 'equals',
-            'controlFederation': 'equals',
-            'controlRegional': 'equals',
-            'controlOther': 'equals'
-        };
+  render() {
+    const columns = [
+      {
+        field: "id",
+        title: "#",
+        filtering: false,
+        filterComponent: (props) => {
+          console.log(`Column ${props.columnDef.field} props =`, props);
+          return (
+            <NumericFilter
+              id={props.columnDef.field}
+              columnId={props.columnDef.tableData.id}
+              filter={this.state.filtersList[props.columnDef.field]}
+              filterChanged={props.onFilterChanged}
+              changed={this.updateFilter}
+            />
+          );
+        },
+      },
 
-        const filterMinimalLength = 1;
+      {
+        field: "directionName",
+        title: "Направление расхода",
+        filtering: true,
+        filterComponent: (props) => {
+          console.log(`Column ${props.columnDef.field} props =`, props);
+          return (
+            <StringFilter
+              id={props.columnDef.field}
+              columnId={props.columnDef.tableData.id}
+              filter={this.state.filtersList[props.columnDef.field]}
+              filterChanged={props.onFilterChanged}
+              changed={this.updateFilter}
+            />
+          );
+        },
+      },
 
-        return (
-            <React.Fragment>
-                <TableContainer
-                    columns={columns}
-                    title={'Контроль поступления и согласования данных по выполнению ресурсного обеспечения'}
-                    baseUrl={'views/control-budget-reports'}
-                    filtersList={filtersList}
-                    filterMinimalLength={filterMinimalLength}
-                    loadAll={true}
-                />
-            </React.Fragment>
-        )
-    }
-};
+      {
+        field: "year",
+        title: "Отчетный год",
+        filtering: true,
+        filterComponent: (props) => {
+          console.log(`Column ${props.columnDef.field} props =`, props);
+          return (
+            <NumericFilter
+              id={props.columnDef.field}
+              columnId={props.columnDef.tableData.id}
+              filter={this.state.filtersList[props.columnDef.field]}
+              filterChanged={props.onFilterChanged}
+              changed={this.updateFilter}
+            />
+          );
+        },
+      },
+      {
+        field: "controlFederation",
+        title: "Наличие отчета по финансированию из Федерального бюджета",
+        filtering: true,
+        filterComponent: (props) => {
+          console.log(`Column ${props.columnDef.field} props =`, props);
+          return (
+            <NumericFilter
+              id={props.columnDef.field}
+              columnId={props.columnDef.tableData.id}
+              filter={this.state.filtersList[props.columnDef.field]}
+              filterChanged={props.onFilterChanged}
+              changed={this.updateFilter}
+            />
+          );
+        },
+      },
+      {
+        field: "controlRegional",
+        title: "Наличие отчета по финансированию из бюджетов субъектов России",
+        filtering: true,
+        filterComponent: (props) => {
+          console.log(`Column ${props.columnDef.field} props =`, props);
+          return (
+            <NumericFilter
+              id={props.columnDef.field}
+              columnId={props.columnDef.tableData.id}
+              filter={this.state.filtersList[props.columnDef.field]}
+              filterChanged={props.onFilterChanged}
+              changed={this.updateFilter}
+            />
+          );
+        },
+      },
+      {
+        field: "controlOther",
+        title: "Наличие отчета по финансированию из внебюджетных источников",
+        filtering: true,
+        filterComponent: (props) => {
+          console.log(`Column ${props.columnDef.field} props =`, props);
+          return (
+            <NumericFilter
+              id={props.columnDef.field}
+              columnId={props.columnDef.tableData.id}
+              filter={this.state.filtersList[props.columnDef.field]}
+              filterChanged={props.onFilterChanged}
+              changed={this.updateFilter}
+            />
+          );
+        },
+      },
+    ];
+
+    return (
+      <React.Fragment>
+        <TableContainerWithFilters
+          columns={columns}
+          tableRef={this.tableRef}
+          title={"Контроль поступления и согласования данных по выполнению ресурсного обеспечения"}
+          baseUrl={"views/control-budget-reports"}
+          filtersList={this.state.filtersList}
+          loadAll={true}
+        />
+      </React.Fragment>
+    );
+  }
+}

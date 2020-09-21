@@ -82,17 +82,10 @@ const YesNoFilter = props => {
                                 <FormControlLabel
                                     control={<Switch checked={value} onChange={onChangeValue} name="yes-no"/>}
                                     label="Secondary"/>
-                                {/*<TextField*/}
-                                {/*    id={props.id + '_value_modal'}*/}
-                                {/*    type='text'*/}
-                                {/*    label="Значение"*/}
-                                {/*    defaultValue={value}*/}
-                                {/*    onChange={onChangeValue}*/}
-                                {/*/>*/}
                             </FormControl>
                         </MDBRow>
-                        <MDBRow center className='my-4' color='indigo'>
-                            <MDBBtn onClick={onApplyFilterClick}>Применить</MDBBtn>
+                        <MDBRow center className='my-4'>
+                            <MDBBtn color="indigo" size="sm" onClick={onApplyFilterClick}>Применить</MDBBtn>
                         </MDBRow>
                     </MDBContainer>
                 </MDBModalBody>
