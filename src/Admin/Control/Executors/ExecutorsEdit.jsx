@@ -1,45 +1,11 @@
 import React from "react";
-import {MDBBtn, MDBCol, MDBContainer, MDBInput, MDBRow, toast} from "mdbreact";
+import {MDBBtn, MDBContainer, MDBRow, toast} from "mdbreact";
 import appAxios from "../../../_services/appAxios";
-import Axios from "axios";
 import {useForm, Controller} from "react-hook-form";
 import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
 
 const AdminControlExecutorsEditPage = props => {
-
-    console.log('AdministratorControlExecutorsEditPage got props =', props);
-
-    // const doSave = (close) => {
-    //
-    //     const responseData = {
-    //         id: this.state.id,
-    //         documentId: this.state.documentId,
-    //         projectId: this.state.projectId,
-    //         description: this.state.description,
-    //         factFinished: this.state.factFinished,
-    //         factStarted: this.state.factStarted,
-    //         done: this.state.done
-    //     };
-    //
-    //     appAxios({
-    //         url: `users`,
-    //         method: 'PUT',
-    //         data: responseData
-    //     }).then((response) => {
-    //         const message = response.headers["x-mrts-backend-params"];
-    //         toast.success(`Успешно обновлена запись с ID ${message}`, {
-    //             closeButton: false
-    //         });
-    //         this.props.tableRef.current.onQueryChange();
-    //         if (close) {
-    //             this.props.toggleModal();
-    //         }
-    //     });
-    // }
 
     const {handleSubmit, errors, control} = useForm();
 
