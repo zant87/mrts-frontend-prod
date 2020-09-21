@@ -1,12 +1,9 @@
 import React from 'react';
 import {MDBContainer, MDBModal, MDBModalBody, MDBModalHeader, toast} from "mdbreact";
 import appAxios from "../../_services/appAxios";
-import {ruLocalization} from "../../_components";
-import MaterialTable from "material-table";
 import TableContainerWithFilters from "../../Containers/TableContainerWithFilters";
 import StringFilter from "../../Common/Filters/StringFilter";
 import NumericFilter from "../../Common/Filters/NumericFilter";
-import AdminControlExecutorsEditPage from "./Executors/ExecutorsEdit";
 import AdminControlEmissEditPage from "./Emiss/EmissEdit";
 
 export default class AdminControlEmissPage extends React.Component {
