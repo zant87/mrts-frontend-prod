@@ -4,6 +4,9 @@ import {MDBContainer, MDBModal, MDBModalBody, MDBModalHeader} from "mdbreact";
 import ActivitiyEdit from "./Activities/ActivitiyEdit";
 import HighlighModal from "./HighlighModal";
 import Highlighter from "react-highlight-words";
+import NumericFilter from "../../Common/Filters/NumericFilter";
+import StringFilter from "../../Common/Filters/StringFilter";
+import TableContainerWithFilters from "../../Containers/TableContainerWithFilters";
 
 export default class OperatorReportActivitiesPage extends React.Component {
 
@@ -14,19 +17,79 @@ export default class OperatorReportActivitiesPage extends React.Component {
         initialized: true,
         highlightModal: false,
         highlight: '',
-        textToHighlight: ['']
+        textToHighlight: [''],
+        filtersList: {
+            activityReportId: {
+                type: "integer",
+                operator: "equals",
+                value: null
+            },
+            activityCode: {
+                type: "text",
+                operator: "contains",
+                value: null
+            },
+            executor: {
+                type: "text",
+                operator: "contains",
+                value: null
+            },
+            documentType: {
+                type: "text",
+                operator: "contains",
+                value: null
+            },
+            activityDescription: {
+                type: "text",
+                operator: "contains",
+                value: null
+            },
+            yearNumber: {
+                type: "integer",
+                operator: "equals",
+                value: null
+            },
+            quarterName: {
+                type: "text",
+                operator: "contains",
+                value: null
+            },
+            beginYear: {
+                type: "integer",
+                operator: "equals",
+                value: null
+            },
+            endYear: {
+                type: "integer",
+                operator: "equals",
+                value: null
+            },
+            reportDescription: {
+                type: "text",
+                operator: "contains",
+                value: null
+            },
+        }
     };
+
+    updateFilter = (e) => {
+        console.log('Update Filter received =', e);
+        let newFilter = this.state.filtersList;
+        newFilter[e.id] = {value: e.value, operator: e.operator, type: e.type};
+        console.log('New Filter =', newFilter);
+        this.setState({filtersList: newFilter});
+    }
 
     tableRef = React.createRef();
 
     toggleModal = (rowData, action) => {
         console.log(rowData);
         if (rowData && action) {
-        this.setState({
-            modal: !this.state.modal,
-            row: rowData,
-            action: action
-        });
+            this.setState({
+                modal: !this.state.modal,
+                row: rowData,
+                action: action
+            });
         } else {
             this.setState({
                 modal: !this.state.modal,
@@ -54,13 +117,25 @@ export default class OperatorReportActivitiesPage extends React.Component {
         })
     }
 
-    
+
     render() {
 
         const columns = [
-            {field: 'activityReportId', title: '#', filtering: false},
             {
-                field: 'activityCode', title: 'Код мероприятия', filtering: false,
+                field: 'activityReportId', title: '#', filtering: true,
+                filterComponent: props => {
+                    return <NumericFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                          filter={this.state.filtersList[props.columnDef.field]}
+                                          filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+                }
+            },
+            {
+                field: 'activityCode', title: 'Код мероприятия', filtering: true,
+                filterComponent: props => {
+                    return <StringFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                         filter={this.state.filtersList[props.columnDef.field]}
+                                         filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+                },
                 render: (row) => {
                     return <Highlighter highlightClassName="Highlight"
                                         searchWords={this.state.textToHighlight}
@@ -68,7 +143,13 @@ export default class OperatorReportActivitiesPage extends React.Component {
                 }
             },
             {
-                field: 'executor', title: 'Исполнитель',
+                field: 'executor', title: 'Исполнитель', filtering: true,
+                filterComponent: props => {
+                    return <StringFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                         filter={this.state.filtersList[props.columnDef.field]}
+                                         filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+
+                },
                 render: (row) => {
                     return <Highlighter highlightClassName="Highlight"
                                         searchWords={this.state.textToHighlight}
@@ -76,7 +157,12 @@ export default class OperatorReportActivitiesPage extends React.Component {
                 }
             },
             {
-                field: 'documentType', title: 'Вид документа',
+                field: 'documentType', title: 'Вид документа', filtering: true,
+                filterComponent: props => {
+                    return <StringFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                         filter={this.state.filtersList[props.columnDef.field]}
+                                         filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+                },
                 render: (row) => {
                     return <Highlighter highlightClassName="Highlight"
                                         searchWords={this.state.textToHighlight}
@@ -84,19 +170,57 @@ export default class OperatorReportActivitiesPage extends React.Component {
                 }
             },
             {
-                field: 'activityDescription', title: 'Содержание мероприятия',
+                field: 'activityDescription', title: 'Содержание мероприятия', filtering: true,
+                filterComponent: props => {
+                    return <StringFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                         filter={this.state.filtersList[props.columnDef.field]}
+                                         filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+                },
                 render: (row) => {
                     return <Highlighter highlightClassName="Highlight"
                                         searchWords={this.state.textToHighlight}
                                         textToHighlight={row.activityDescription}/>
                 }
             },
-            {field: 'yearNumber', title: 'Отчетный год'},
-            {field: 'quarterName', title: 'Отчетный квартал'},
-            {field: 'beginYear', title: 'Плановое начало'},
-            {field: 'endYear', title: 'Плановое окончание'},
             {
-                field: 'reportDescription', title: 'Описание',
+                field: 'yearNumber', title: 'Отчетный год', filtering: true,
+                filterComponent: props => {
+                    return <NumericFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                          filter={this.state.filtersList[props.columnDef.field]}
+                                          filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+                }
+            },
+            {
+                field: 'quarterName', title: 'Отчетный квартал', filtering: true,
+                filterComponent: props => {
+                    return <StringFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                         filter={this.state.filtersList[props.columnDef.field]}
+                                         filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+                }
+            },
+            {
+                field: 'beginYear', title: 'Плановое начало', filtering: true,
+                filterComponent: props => {
+                    return <NumericFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                          filter={this.state.filtersList[props.columnDef.field]}
+                                          filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+                }
+            },
+            {
+                field: 'endYear', title: 'Плановое окончание', filtering: true,
+                filterComponent: props => {
+                    return <NumericFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                          filter={this.state.filtersList[props.columnDef.field]}
+                                          filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+                }
+            },
+            {
+                field: 'reportDescription', title: 'Описание', filtering: true,
+                filterComponent: props => {
+                    return <StringFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                         filter={this.state.filtersList[props.columnDef.field]}
+                                         filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+                },
                 render: (row) => {
                     return <Highlighter highlightClassName="Highlight"
                                         searchWords={this.state.textToHighlight}
@@ -124,20 +248,14 @@ export default class OperatorReportActivitiesPage extends React.Component {
             }
         ];
 
-        const filtersList = {
-            'yearNumber': 'numeric',
-            'beginYear': 'numeric',
-            'endYear': 'numeric',
-        };
-
         return (
             <React.Fragment>
-                <TableContainer
+                <TableContainerWithFilters
                     columns={columns}
                     title={'Отчеты о выполнении мероприятий по реализации Транспортной  стратегии'}
                     baseUrl={'views/k-6-s'}
                     actions={actions}
-                    filtersList={filtersList}
+                    filtersList={this.state.filtersList}
                     tableRef={this.tableRef}
                     loadAll={true}
                 />
