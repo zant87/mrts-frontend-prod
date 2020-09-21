@@ -11,15 +11,16 @@ import FormControl from "@material-ui/core/FormControl";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 
-const OpeatorPlanActivitiesEditPage = props => {
+const OpeatorPlanProjectsEditPage = props => {
 
     const {handleSubmit, errors, control} = useForm();
 
     const onSubmit = data => {
+
         if (props.action === 'add') {
             console.log('Posting Data =', data, props.action);
             appAxios({
-                url: `activities`,
+                url: `projects`,
                 method: 'POST',
                 data: data
             }).then((response) => {
@@ -32,7 +33,7 @@ const OpeatorPlanActivitiesEditPage = props => {
         } else {
             console.log('Putting Data =', data, props.action);
             appAxios({
-                url: `activities`,
+                url: `projects`,
                 method: 'PUT',
                 data: data
             }).then((response) => {
@@ -56,7 +57,7 @@ const OpeatorPlanActivitiesEditPage = props => {
                                             name="id"
                                             label="#"
                                             control={control}
-                                            defaultValue={props.data ? props.data.activityId : ''}/>
+                                            defaultValue={props.data ? props.data.id : ''}/>
                                 <Controller
                                     control={control}
                                     rules={{required: true}}
@@ -74,37 +75,48 @@ const OpeatorPlanActivitiesEditPage = props => {
                                     defaultValue={props.data ? props.data.transportStrategyVersionId : ''}/>
                                 <Controller as={<MDBInput type="textarea" rows="2" className='my-3'/>}
                                             name="code"
-                                            label="Обозначение мероприятия"
+                                            label="Обозначение проекта"
                                             control={control}
-                                            defaultValue={props.data ? props.data.activityCode : ''}/>
+                                            defaultValue={props.data ? props.data.projectCode : ''}/>
                                 <Controller as={<MDBInput type="textarea" rows="2" className='my-3'/>}
-                                            name="description"
-                                            label="Содержание мероприятия"
+                                            name="name"
+                                            label="Проект"
                                             control={control}
-                                            defaultValue={props.data ? props.data.activityDescription : ''}/>
+                                            defaultValue={props.data ? props.data.projectName : ''}/>
+                                <Controller
+                                    control={control}
+                                    rules={{required: true}}
+                                    name="scenarioId"
+                                    as={<TextField
+                                        id="scenarioId"
+                                        select
+                                        label="Редакция ТС">
+                                        {props.scenariosList.map((option) => (
+                                            <MenuItem key={option.id} value={option.id}>
+                                                {option.name}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>}
+                                    defaultValue={props.data ? props.data.scenarioId : ''}/>
                                 <Controller as={<MDBInput type="textarea" rows="2" className='my-3'/>}
-                                            name="documentType"
-                                            label="Вид документа"
+                                            name="workStage"
+                                            label="Стадия работ"
                                             control={control}
-                                            defaultValue={props.data ? props.data.documentType : ''}/>
-                                <Controller rules={{pattern: /(^\d+$| )/i}}
+                                            defaultValue={props.data ? props.data.workStage : ''}/>
+                                <Controller as={<MDBInput type="textarea" rows="2" className='my-3'/>}
+                                            name="geolink"
+                                            label="Географическая привязка"
+                                            control={control}
+                                            defaultValue={props.data ? props.data.geolink : ''}/>
+                                <Controller rules={{pattern: /(?<=^| )\d+(\.\d+)?(?=$| )/i}}
                                             as={<TextField
-                                                error={!!errors.beginYear}
-                                                helperText={errors.beginYear ? 'Введите допустимое значение' : null}
+                                                error={!!errors.cost}
+                                                helperText={errors.cost ? 'Введите допустимое значение' : null}
                                                 className='mb-3'/>}
-                                            name="beginYear"
-                                            label="Начало реализации"
+                                            name="cost"
+                                            label="Общие затраты млрд. руб"
                                             control={control}
-                                            defaultValue={props.data ? props.data.yearBegin : ''}/>
-                                <Controller rules={{pattern: /(^\d+$| )/i}}
-                                            as={<TextField
-                                                error={!!errors.endYear}
-                                                helperText={errors.endYear ? 'Введите допустимое значение' : null}
-                                                className='mb-3'/>}
-                                            name="endYear"
-                                            label="Конец реализации"
-                                            control={control}
-                                            defaultValue={props.data ? props.data.yearEnd : ''}/>
+                                            defaultValue={props.data ? props.data.cost : ''}/>
                             </FormControl>
                         </MDBRow>
                         <MDBRow center className='my-3'>
@@ -117,4 +129,4 @@ const OpeatorPlanActivitiesEditPage = props => {
     );
 }
 
-export default OpeatorPlanActivitiesEditPage;
+export default OpeatorPlanProjectsEditPage;

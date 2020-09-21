@@ -60,26 +60,16 @@ export default class OperatorPlanActivitiesPage extends React.Component {
     }
 
     tableRef = React.createRef();
-
     getTransportStrategy = () => appAxios.get(`transport-strategy-versions`).catch(err => null);
 
     async componentDidMount() {
         try {
+
             const [rTransportStrategies] = await Axios.all([this.getTransportStrategy()]);
-
-            const rTransportStrategiesList = rTransportStrategies.data.map(item => {
-                return {id: item.id, name: item.name};
-            });
-
-            const rTransportStrategiesListMod = rTransportStrategiesList.reduce(function (acc, cur, i) {
-                acc[cur.id] = cur.name;
-                return acc;
-            }, {});
 
             this.setState(
                 {
                     transportStrategies: rTransportStrategies.data,
-                    transportStrategiesList: rTransportStrategiesListMod,
                     initialized: true
                 }
             );
