@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  MDBCol,
-  MDBCard,
-  MDBCardHeader,
-  MDBCardBody,
-  MDBCardTitle,
-  MDBCardText,
-} from "mdbreact";
+import { MDBCol, MDBCard, MDBCardHeader, MDBCardBody, MDBCardTitle, MDBCardText } from "mdbreact";
 import Preloader from "@/Common/Preloader/Preloader";
 
 let IndsInfo = (props) => {
@@ -47,8 +40,7 @@ let IndsInfo = (props) => {
         strategyversion = item.transportStrategyVersionName;
       }
     });
-    okeiName = props.indVals.find(x => x.okeiName != null).okeiName;
-    debugger;
+    okeiName = props.indVals.find((x) => x.okeiName != null).okeiName;
   }
 
   return (
@@ -66,32 +58,32 @@ let IndsInfo = (props) => {
                     <div>
                       <span>
                         <strong>Наименование индикатора: </strong>
-                        <div>
-                          {props.indVals[0].indicatorCode.replace("IND_", "") +
-                            " " +
-                            props.indVals[0].indicatorName}
-                        </div>
+                        <div>{props.indVals[0].indicatorCode.replace("IND_", "") + " " + props.indVals[0].indicatorName}</div>
                       </span>
                     </div>
                     <hr />
-                    {okeiName ? 
-                    <div>
-                      <span>
-                        <strong>Единица измерения: </strong>
-                        {/* {props.indVals[0].okeiName} */}
-                        {okeiName}
-                      </span>
-                    </div>
-                    : ""}
+                    {okeiName ? (
+                      <div>
+                        <span>
+                          <strong>Единица измерения: </strong>
+                          {/* {props.indVals[0].okeiName} */}
+                          {okeiName}
+                        </span>
+                      </div>
+                    ) : (
+                      ""
+                    )}
                     <hr />
-                    {transportName ? 
-                    <div>
-                      <span>
-                        <strong>Вид транспорта: </strong>
-                        {transportName}
-                      </span>
-                    </div>
-                    : ""}
+                    {transportName ? (
+                      <div>
+                        <span>
+                          <strong>Вид транспорта: </strong>
+                          {transportName}
+                        </span>
+                      </div>
+                    ) : (
+                      ""
+                    )}
                     <hr />
                     <div>
                       <span>
@@ -110,14 +102,7 @@ let IndsInfo = (props) => {
                     <div>
                       <span>
                         <strong>Методика расчета: </strong>
-                        {formula ? (
-                          <div
-                            style={{ marginTop: "15px" }}
-                            dangerouslySetInnerHTML={{ __html: formula }}
-                          />
-                        ) : (
-                          <span> - </span>
-                        )}
+                        {formula ? <div style={{ marginTop: "15px" }} dangerouslySetInnerHTML={{ __html: formula }} /> : <span> - </span>}
                       </span>
                     </div>
                     <hr />
@@ -140,11 +125,7 @@ let IndsInfo = (props) => {
                     <div>
                       <span>
                         <strong>Наименование индикатора: </strong>
-                        <div>
-                          {indCode
-                            ? indCode.replace("IND_", "") + " " + indName
-                            : indName}
-                        </div>
+                        <div>{indCode ? indCode.replace("IND_", "") + " " + indName : indName}</div>
                       </span>
                     </div>
                     <hr />
@@ -165,10 +146,7 @@ let IndsInfo = (props) => {
                     <div>
                       <span>
                         <strong>Методика расчета: </strong>
-                        <div
-                          style={{ marginTop: "15px" }}
-                          dangerouslySetInnerHTML={{ __html: formula }}
-                        />
+                        <div style={{ marginTop: "15px" }} dangerouslySetInnerHTML={{ __html: formula }} />
                       </span>
                     </div>
                   </div>

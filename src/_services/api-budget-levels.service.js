@@ -6,10 +6,9 @@ const instance = axios.create({
   baseURL: "/api/",
 });
 
-
 export const BudgetLevelsAPI = {
   getInds() {
-    return instance.get(`indicators?isCalc.equals=1`).then((response) => {
+    return instance.get(`indicators?isCalc.equals=1&actual.equals=true`).then((response) => {
       return response.data;
     });
   },
