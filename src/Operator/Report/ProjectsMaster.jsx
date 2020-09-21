@@ -10,6 +10,9 @@ import TableContainer from "../../Containers/TableContainer";
 import ProjectsMasterEdit from "./ProjectsMaster/ProjectsMasterEdit";
 import HighlighModal from "./HighlighModal";
 import Highlighter from "react-highlight-words";
+import NumericFilter from "../../Common/Filters/NumericFilter";
+import StringFilter from "../../Common/Filters/StringFilter";
+import TableContainerWithFilters from "../../Containers/TableContainerWithFilters";
 
 
 export default class OperatorReportProjectsMasterPage extends React.Component {
@@ -21,16 +24,73 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
         initialized: true,
         highlightModal: false,
         highlight: '',
-        textToHighlight: ['']
+        textToHighlight: [''],
+        filtersList: {
+            yearNumber: {
+                type: "integer",
+                operator: "equals",
+                value: null
+            },
+            projectCode: {
+                type: "text",
+                operator: "contains",
+                value: null
+            },
+            projectName: {
+                type: "text",
+                operator: "contains",
+                value: null
+            },
+            directionName: {
+                type: "text",
+                operator: "contains",
+                value: null
+            },
+            done: {
+                type: "integer",
+                operator: "equals",
+                value: null
+            },
+            planBeginYear: {
+                type: "integer",
+                operator: "equals",
+                value: null
+            },
+            factStarted: {
+                type: "integer",
+                operator: "equals",
+                value: null
+            },
+            factFinished: {
+                type: "integer",
+                operator: "equals",
+                value: null
+            },
+            realPlanCost: {
+                type: "numeric",
+                operator: "equals",
+                value: null
+            },
+            fact: {
+                type: "numeric",
+                operator: "equals",
+                value: null
+            },
+            description: {
+                type: "text",
+                operator: "contains",
+                value: null
+            },
+        }
     }
 
     toggleModal = (rowData, action) => {
         if (rowData && action) {
-        this.setState({
-            modal: !this.state.modal,
-            row: rowData,
-            action: action
-        });
+            this.setState({
+                modal: !this.state.modal,
+                row: rowData,
+                action: action
+            });
         } else {
             this.setState({
                 modal: !this.state.modal,
@@ -60,6 +120,14 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
         })
     }
 
+    updateFilter = (e) => {
+        console.log('Update Filter received =', e);
+        let newFilter = this.state.filtersList;
+        newFilter[e.id] = {value: e.value, operator: e.operator, type: e.type};
+        console.log('New Filter =', newFilter);
+        this.setState({filtersList: newFilter});
+    }
+
     render() {
 
         const actions = [
@@ -83,9 +151,21 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
         ];
 
         const columns = [
-            {field: 'yearNumber', title: 'Отчетный год'},
             {
-                field: 'projectCode', title: 'Обозначение проекта',
+                field: 'yearNumber', title: 'Отчетный год', filtering: true,
+                filterComponent: props => {
+                    return <NumericFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                          filter={this.state.filtersList[props.columnDef.field]}
+                                          filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+                }
+            },
+            {
+                field: 'projectCode', title: 'Обозначение проекта', filtering: true,
+                filterComponent: props => {
+                    return <StringFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                         filter={this.state.filtersList[props.columnDef.field]}
+                                         filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+                },
                 render: (row) => {
                     return <Highlighter highlightClassName="Highlight"
                                         searchWords={this.state.textToHighlight}
@@ -93,7 +173,12 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
                 }
             },
             {
-                field: 'projectName', title: 'Содержание проекта',
+                field: 'projectName', title: 'Содержание проекта', filtering: true,
+                filterComponent: props => {
+                    return <StringFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                         filter={this.state.filtersList[props.columnDef.field]}
+                                         filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+                },
                 render: (row) => {
                     return <Highlighter highlightClassName="Highlight"
                                         searchWords={this.state.textToHighlight}
@@ -101,21 +186,73 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
                 }
             },
             {
-                field: 'directionName', title: 'Вид транспорта',
+                field: 'directionName', title: 'Вид транспорта', filtering: true,
+                filterComponent: props => {
+                    return <StringFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                         filter={this.state.filtersList[props.columnDef.field]}
+                                         filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+                },
                 render: (row) => {
                     return <Highlighter highlightClassName="Highlight"
                                         searchWords={this.state.textToHighlight}
                                         textToHighlight={row.directionName}/>
                 }
             },
-            {field: 'done', title: 'Уровень технической готовности, %'},
-            {field: 'planBeginYear', title: 'Сроки реализации плановые'},
-            {field: 'factStarted', title: 'Начало фактической реализации'},
-            {field: 'factFinished', title: 'Конец фактической реализации'},
-            {field: 'realPlanCost', title: 'Общие затраты (плановые), млн. руб.'},
-            {field: 'fact', title: 'Общие затраты (факт), млн. руб'},
             {
-                field: 'description', title: 'Фактические результаты',
+                field: 'done', title: 'Уровень технической готовности, %', filtering: true,
+                filterComponent: props => {
+                    return <NumericFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                          filter={this.state.filtersList[props.columnDef.field]}
+                                          filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+                }
+            },
+            {
+                field: 'planBeginYear', title: 'Сроки реализации плановые', filtering: true,
+                filterComponent: props => {
+                    return <NumericFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                          filter={this.state.filtersList[props.columnDef.field]}
+                                          filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+                }
+            },
+            {
+                field: 'factStarted', title: 'Начало фактической реализации', filtering: true,
+                filterComponent: props => {
+                    return <NumericFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                          filter={this.state.filtersList[props.columnDef.field]}
+                                          filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+                }
+            },
+            {
+                field: 'factFinished', title: 'Конец фактической реализации', filtering: true,
+                filterComponent: props => {
+                    return <NumericFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                          filter={this.state.filtersList[props.columnDef.field]}
+                                          filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+                }
+            },
+            {
+                field: 'realPlanCost', title: 'Общие затраты (плановые), млн. руб.', filtering: true,
+                filterComponent: props => {
+                    return <NumericFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                          filter={this.state.filtersList[props.columnDef.field]}
+                                          filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+                }
+            },
+            {
+                field: 'fact', title: 'Общие затраты (факт), млн. руб', filtering: true,
+                filterComponent: props => {
+                    return <NumericFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                          filter={this.state.filtersList[props.columnDef.field]}
+                                          filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+                }
+            },
+            {
+                field: 'description', title: 'Фактические результаты', filtering: true,
+                filterComponent: props => {
+                    return <StringFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                         filter={this.state.filtersList[props.columnDef.field]}
+                                         filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+                },
                 render: (row) => {
                     return <Highlighter highlightClassName="Highlight"
                                         searchWords={this.state.textToHighlight}
@@ -124,25 +261,14 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
             },
         ];
 
-        const filtersList = {
-            'yearNumber': 'equals',
-            'done': 'numeric',
-            'planBeginYear': 'numeric',
-            'factStarted': 'numeric',
-            'factFinished': 'numeric',
-            'realPlanCost': 'numeric',
-            'fact': 'numeric',
-        };
-
         return (
             <React.Fragment>
-                <TableContainer
+                <TableContainerWithFilters
                     columns={columns}
                     title={'Отчет о выполнении крупных инвестиционных проектов'}
-                    filtersList={filtersList}
+                    filtersList={this.state.filtersList}
                     baseUrl={'views/k-7-masters'}
                     actions={actions}
-                    filterMinimalLength={2}
                     tableRef={this.tableRef}
                     loadAll={true}
                 />
@@ -161,7 +287,7 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
                     </MDBModal>
                     <MDBModal isOpen={this.state.highlightModal} toggle={this.toggleHighlight} backdrop={true}>
                         <MDBModalHeader toggle={this.toggleHighlight}>Подсветка</MDBModalHeader>
-                        
+
                         <MDBModalBody>
                             <HighlighModal
                                 highlight={this.state.highlight}

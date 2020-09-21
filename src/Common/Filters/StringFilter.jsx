@@ -98,7 +98,7 @@ const StringFilter = props => {
                                     <MenuItem value={'doesNotContain'}>Не содержит</MenuItem>
                                     <MenuItem value={'equals'}>Равно</MenuItem>
                                     <MenuItem value={'notEquals'}>Не равно</MenuItem>
-                                    <MenuItem value={'specified'}>Не нулевое</MenuItem>
+                                    {/*<MenuItem value={'specified'}>Не нулевое</MenuItem>*/}
                                 </Select>
                                 <TextField
                                     id={props.id + '_value_modal'}
