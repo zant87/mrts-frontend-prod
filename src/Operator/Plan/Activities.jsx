@@ -2,21 +2,14 @@ import React from 'react';
 import appAxios from "../../_services/appAxios";
 import Axios from "axios";
 import {
-    MDBBtn,
-    MDBCol,
-    MDBInput,
-    MDBRow,
     toast,
-    MDBScrollbar,
     MDBContainer,
-    MDBSelect,
     MDBModal,
     MDBModalHeader, MDBModalBody
 } from "mdbreact";
 import NumericFilter from "../../Common/Filters/NumericFilter";
 import TableContainerWithFilters from "../../Containers/TableContainerWithFilters";
 import StringFilter from "../../Common/Filters/StringFilter";
-import AdminControlEmissEditPage from "../../Admin/Control/Emiss/EmissEdit";
 import OpeatorPlanActivitiesEditPage from "./Activities/ActivitiesEdit";
 
 export default class OperatorPlanActivitiesPage extends React.Component {
