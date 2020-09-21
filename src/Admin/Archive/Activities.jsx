@@ -1,5 +1,4 @@
 import React from "react";
-import TableContainer from "../../Containers/TableContainer";
 import "moment/locale/ru";
 import NumericFilter from "../../Common/Filters/NumericFilter";
 import StringFilter from "../../Common/Filters/StringFilter";
