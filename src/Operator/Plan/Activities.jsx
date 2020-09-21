@@ -1,8 +1,23 @@
 import React from 'react';
-import TableContainer from "../../Containers/TableContainer";
 import appAxios from "../../_services/appAxios";
 import Axios from "axios";
-import {MDBBtn, MDBCol, MDBInput, MDBRow, toast, MDBScrollbar, MDBContainer, MDBSelect} from "mdbreact";
+import {
+    MDBBtn,
+    MDBCol,
+    MDBInput,
+    MDBRow,
+    toast,
+    MDBScrollbar,
+    MDBContainer,
+    MDBSelect,
+    MDBModal,
+    MDBModalHeader, MDBModalBody
+} from "mdbreact";
+import NumericFilter from "../../Common/Filters/NumericFilter";
+import TableContainerWithFilters from "../../Containers/TableContainerWithFilters";
+import StringFilter from "../../Common/Filters/StringFilter";
+import AdminControlEmissEditPage from "../../Admin/Control/Emiss/EmissEdit";
+import OpeatorPlanActivitiesEditPage from "./Activities/ActivitiesEdit";
 
 export default class OperatorPlanActivitiesPage extends React.Component {
 
@@ -11,8 +26,46 @@ export default class OperatorPlanActivitiesPage extends React.Component {
         action: '',
         transportStrategies: [],
         transportStrategiesList: [],
-        initialized: false
+        initialized: false,
+        filtersList: {
+            activityId: {
+                type: "integer",
+                operator: "equals",
+                value: null
+            },
+            transportStrategyName: {
+                type: "text",
+                operator: "contains",
+                value: null
+            },
+            activityCode: {
+                type: "text",
+                operator: "contains",
+                value: null
+            },
+            activityDescription: {
+                type: "text",
+                operator: "contains",
+                value: null
+            },
+            documentType: {
+                type: "text",
+                operator: "contains",
+                value: null
+            },
+            yearBegin: {
+                type: "integer",
+                operator: "equals",
+                value: null
+            },
+            yearEnd: {
+                type: "integer",
+                operator: "equals",
+                value: null
+            },
+        },
     }
+
     tableRef = React.createRef();
 
     getTransportStrategy = () => appAxios.get(`transport-strategy-versions`).catch(err => null);
@@ -43,17 +96,101 @@ export default class OperatorPlanActivitiesPage extends React.Component {
         }
     }
 
+    updateFilter = (e) => {
+        console.log('Update Filter received =', e);
+        let newFilter = this.state.filtersList;
+        newFilter[e.id] = {value: e.value, operator: e.operator, type: e.type};
+        console.log('New Filter =', newFilter);
+        this.setState({filtersList: newFilter});
+    }
+
+    toggleModal = (rowData, action) => {
+        this.setState({
+            row: rowData,
+            modal: !this.state.modal,
+            action: action
+        });
+    }
+
     render() {
 
         const columns = [
-            {field: 'activityId', title: '#', filtering: false},
-            {field: 'transportStrategyVersionId', title: 'Редакция ТС', lookup: this.state.transportStrategiesList},
-            // {field: 'transportStrategyName', title: 'Редакция ТС'},
-            {field: 'activityCode', title: 'Обозначение мероприятия'},
-            {field: 'activityDescription', title: 'Содержание мероприятия'},
-            {field: 'documentType', title: 'Вид документа'},
-            {field: 'yearBegin', title: 'Начало реализации', filtering: false},
-            {field: 'yearEnd', title: 'Конец реализации', filtering: false},
+            {
+                field: 'activityId', title: '#', filtering: true,
+                filterComponent: props => {
+                    return <NumericFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                          filter={this.state.filtersList[props.columnDef.field]}
+                                          filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+                }
+            },
+            {
+                field: 'transportStrategyName', title: 'Редакция ТС', filtering: true,
+                filterComponent: props => {
+                    return <StringFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                         filter={this.state.filtersList[props.columnDef.field]}
+                                         filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+                }
+            },
+            {
+                field: 'activityCode', title: 'Обозначение мероприятия', filtering: true,
+                filterComponent: props => {
+                    return <StringFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                         filter={this.state.filtersList[props.columnDef.field]}
+                                         filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+                }
+            },
+            {
+                field: 'activityDescription', title: 'Содержание мероприятия', filtering: true,
+                filterComponent: props => {
+                    return <StringFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                         filter={this.state.filtersList[props.columnDef.field]}
+                                         filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+                }
+            },
+            {
+                field: 'documentType', title: 'Вид документа', filtering: true,
+                filterComponent: props => {
+                    return <StringFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                         filter={this.state.filtersList[props.columnDef.field]}
+                                         filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+                }
+            },
+            {
+                field: 'yearBegin', title: 'Начало реализации', filtering: true,
+                filterComponent: props => {
+                    return <NumericFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                          filter={this.state.filtersList[props.columnDef.field]}
+                                          filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+                }
+            },
+            {
+                field: 'yearEnd', title: 'Конец реализации', filtering: true,
+                filterComponent: props => {
+                    return <NumericFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                          filter={this.state.filtersList[props.columnDef.field]}
+                                          filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+                }
+            },
+        ];
+
+        const actions = [
+            {
+                icon: 'edit',
+                tooltip: 'Редактировать',
+                onClick: (event, rowData) => {
+                    console.log('Editing row =', rowData);
+                    this.toggleModal(rowData, 'edit');
+                }
+            },
+            {
+                icon: 'add',
+                tooltip: 'Добавить',
+                onClick: (event, rowData) => {
+                    console.log('Adding row =', rowData);
+                    this.toggleModal(rowData, 'add');
+                },
+                isFreeAction: true
+            },
         ];
 
         const editable = {
@@ -115,9 +252,9 @@ export default class OperatorPlanActivitiesPage extends React.Component {
                             toast.success(`Успешно добавлена запись с ID ${message}`, {
                                 closeButton: false
                             });
-                        });
+                            this.tableRef.current.onQueryChange();
 
-                        this.tableRef.current.onQueryChange();
+                        });
 
                         resolve();
                     }, 1000)
@@ -127,14 +264,28 @@ export default class OperatorPlanActivitiesPage extends React.Component {
 
         return (
             <React.Fragment>
-                <TableContainer
+                <TableContainerWithFilters
                     columns={columns}
                     tableRef={this.tableRef}
                     title={'Мероприятия по реализации ТС'}
                     baseUrl={'views/k-2-s'}
                     loadAll={true}
-                    editable={editable}
+                    filtersList={this.state.filtersList}
+                    actions={actions}
                 />
+                <MDBContainer>
+                    <MDBModal isOpen={this.state.modal} toggle={this.toggleModal} backdrop={true} size={'lg'}>
+                        <MDBModalHeader toggle={this.toggleModal}>Редактирование</MDBModalHeader>
+                        <MDBModalBody>
+                            <OpeatorPlanActivitiesEditPage
+                                action={this.state.action}
+                                data={this.state.row}
+                                tableRef={this.tableRef}
+                                transportStrategiesList={this.state.transportStrategies}
+                                toggleModal={this.toggleModal}/>
+                        </MDBModalBody>
+                    </MDBModal>
+                </MDBContainer>
             </React.Fragment>
         )
     }
