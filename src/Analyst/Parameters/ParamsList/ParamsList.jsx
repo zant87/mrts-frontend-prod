@@ -98,35 +98,33 @@ class ParamsList extends React.Component {
     params = this.props.params.sort((a, b) => (a.parameterName > b.parameterName ? 1 : -1));
 
     if (this.props.forms) {
-      forms = this.props.forms.sort((a, b) => (a.okudName > b.okudName ? 1 : -1)).map((item) => {
-        let emissCode = "";
-        if (checkedForms != null) {
-          checked=false;
-          checkedForms.forEach(cform => {
-            if (cform.toString() == item.id.toString()) {
-              checked = true;
-            }
-          })
-        }
-        else {
-          checked = true;
-        }
-        if (item.okudName != null) {
-          if (item.okudName == "ЕМИСС" && item.code != "") {
-            if (item.code.split('FORM_EMISS_')[1]) { 
-            emissCode = "ИД:" + item.code.split('FORM_EMISS_')[1].split('HANDMADE')[0];
-            }
+      forms = this.props.forms
+        .sort((a, b) => (a.okudName > b.okudName ? 1 : -1))
+        .map((item) => {
+          let emissCode = "";
+          if (checkedForms != null) {
+            checked = false;
+            checkedForms.forEach((cform) => {
+              if (cform.toString() == item.id.toString()) {
+                checked = true;
+              }
+            });
+          } else {
+            checked = true;
           }
-          return {
-            text: item.okudName + ` (${item.dataProviderName}, ${emissCode})`,
-            value: item.id,
-            checked: checked,
-          };
-        }
-
-
-
-      });
+          if (item.okudName != null) {
+            if (item.okudName == "ЕМИСС" && item.code != "") {
+              if (item.code.split("FORM_EMISS_")[1]) {
+                emissCode = "ИД:" + item.code.split("FORM_EMISS_")[1].split("HANDMADE")[0];
+              }
+            }
+            return {
+              text: item.okudName + ` (${item.dataProviderName}, ${emissCode})`,
+              value: item.id,
+              checked: checked,
+            };
+          }
+        });
     }
 
     if (this.props.transportTypeId != "0") {
@@ -141,7 +139,7 @@ class ParamsList extends React.Component {
         }
       });
     }
-
+    console.log(params);
 
     return (
       <MDBCol lg="3" className="list h-100" style={{ marginBottom: "10px" }}>
@@ -235,12 +233,7 @@ class ParamsList extends React.Component {
                 <label htmlFor="freqform">
                   <strong>Начало периода</strong>
                 </label>
-                <select
-                  ref={this.setYearStart}
-                  className="form-control"
-                  id="yearStart"
-                  className="browser-default custom-select custom-select-sm"
-                >
+                <select ref={this.setYearStart} className="form-control" id="yearStart" className="browser-default custom-select custom-select-sm">
                   {this.props.years
                     ? this.props.years.map((item) =>
                         this.props.paramYearStart == item.year ? (
@@ -257,12 +250,7 @@ class ParamsList extends React.Component {
                 <label htmlFor="freqform">
                   <strong>Конец периода</strong>
                 </label>
-                <select
-                  ref={this.setYearEnd}
-                  className="form-control"
-                  id="yearEnd"
-                  className="browser-default custom-select custom-select-sm"
-                >
+                <select ref={this.setYearEnd} className="form-control" id="yearEnd" className="browser-default custom-select custom-select-sm">
                   {this.props.years
                     ? this.props.years.map((item) =>
                         this.props.paramYearEnd == item.year ? (
@@ -313,7 +301,7 @@ class ParamsList extends React.Component {
             <MDBCardText>
               {this.props.isFetchingParams ? (
                 <Preloader />
-              ) : params != null && params.length > 0 ? (
+              ) : params.length > 0 ? (
                 <div className={paramsstyle.paramslist}>
                   <div className="list-group">
                     {params.map((param) => (

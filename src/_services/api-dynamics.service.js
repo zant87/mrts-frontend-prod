@@ -6,10 +6,9 @@ const instance = axios.create({
   baseURL: "/api/",
 });
 
-
 export const DynamicsAPI = {
   getInds() {
-    return instance.get(`indicators?isCalc.equals=1`).then((response) => {
+    return instance.get(`indicators?isCalc.equals=1&actual.equals=true`).then((response) => {
       return response.data;
     });
   },
@@ -25,14 +24,7 @@ export const DynamicsAPI = {
     });
     //let quarter = quarter;
     if (quarter == null) {
-      url =
-        "views/actual-indicator-dynamics?frequencyId.equals=" +
-        frequencyId +
-        "&scenarioId.equals=" +
-        scenario +
-        "&year.equals=" +
-        year +
-        indsUrl;
+      url = "views/actual-indicator-dynamics?frequencyId.equals=" + frequencyId + "&scenarioId.equals=" + scenario + "&year.equals=" + year + indsUrl;
     } else {
       url =
         "views/actual-indicator-dynamics?frequencyId.equals=" +

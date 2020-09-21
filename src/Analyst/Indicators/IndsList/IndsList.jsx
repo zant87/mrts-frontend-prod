@@ -55,7 +55,6 @@ class IndsList extends React.Component {
     });
   };
 
-  
   onSaveFilters = () => {
     let quarterId = null;
     let freq = this.setFrequency.current.value;
@@ -78,44 +77,35 @@ class IndsList extends React.Component {
 
     if (this.props.goalId !== null) {
       inds = inds.filter((x) => x.goalId == this.props.goalId);
-     // debugger;
-    }
-    else {
+      // debugger;
+    } else {
       inds = null;
       if (this.props.goals) {
         //debugger;
         if (this.props.goals.length > 0) {
-      let goalId = this.props.goals.sort((a, b) => (a.code > b.code ? 1 : -1))[0].id;
-      //debugger;
-      this.props.setGoalId(goalId);
+          let goalId = this.props.goals.sort((a, b) => (a.code > b.code ? 1 : -1))[0].id;
+          //debugger;
+          this.props.setGoalId(goalId);
         }
       }
     }
 
     if (this.props.transportTypeId != "0") {
-      inds = inds.filter(
-        (x) => x.transportTypeId == this.props.transportTypeId
-      );
+      inds = inds.filter((x) => x.transportTypeId == this.props.transportTypeId);
     }
 
     if (this.props.searchQuery != null) {
-      inds = inds.filter((x) =>
-        (x.name
-          .trim()
-          .toLowerCase()
-          .includes(this.props.searchQuery.trim().toLowerCase()) || (x.code
-            .trim()
-            .toLowerCase()
-            .includes(this.props.searchQuery.trim().toLowerCase())))
+      inds = inds.filter(
+        (x) =>
+          x.name.trim().toLowerCase().includes(this.props.searchQuery.trim().toLowerCase()) ||
+          x.code.trim().toLowerCase().includes(this.props.searchQuery.trim().toLowerCase())
       );
     }
 
     return (
       <MDBCol lg="3" className="list h-100" style={{ marginBottom: "10px" }}>
         <MDBModal isOpen={this.state.modal} toggle={this.toggle} centered>
-          <MDBModalHeader toggle={this.toggle}>
-            Настройка отображения данных
-          </MDBModalHeader>
+          <MDBModalHeader toggle={this.toggle}>Настройка отображения данных</MDBModalHeader>
           <MDBModalBody>
             <MDBContainer className="mt-2">
               <div className="form-group">
@@ -174,12 +164,7 @@ class IndsList extends React.Component {
                 <label htmlFor="freqform">
                   <strong>Начало периода</strong>
                 </label>
-                <select
-                  ref={this.setYearStart}
-                  className="form-control"
-                  id="yearStart"
-                  className="browser-default custom-select custom-select-sm"
-                >
+                <select ref={this.setYearStart} className="form-control" id="yearStart" className="browser-default custom-select custom-select-sm">
                   {this.props.years
                     ? this.props.years.map((item) =>
                         this.props.indsYearStart == item.year ? (
@@ -196,12 +181,7 @@ class IndsList extends React.Component {
                 <label htmlFor="freqform">
                   <strong>Конец периода</strong>
                 </label>
-                <select
-                  ref={this.setYearEnd}
-                  className="form-control"
-                  id="yearEnd"
-                  className="browser-default custom-select custom-select-sm"
-                >
+                <select ref={this.setYearEnd} className="form-control" id="yearEnd" className="browser-default custom-select custom-select-sm">
                   {this.props.years
                     ? this.props.years.map((item) =>
                         this.props.indsYearEnd == item.year ? (
@@ -254,9 +234,7 @@ class IndsList extends React.Component {
             <MDBCardText>
               {this.props.isFetchingInds ? (
                 <Preloader />
-              ) : 
-
-                inds!= null && inds.length>0 ? (
+              ) : inds != null && inds.length > 0 ? (
                 <div className={indsstyle.indsliste}>
                   <div className="list-group">
                     {inds.map((ind) => (
@@ -272,8 +250,9 @@ class IndsList extends React.Component {
                     ))}
                   </div>
                 </div>
-                ) : "Нет данных"
-              }
+              ) : (
+                "Нет данных"
+              )}
             </MDBCardText>
           </MDBCardBody>
         </MDBCard>
