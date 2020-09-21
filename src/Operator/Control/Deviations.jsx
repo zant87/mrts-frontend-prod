@@ -206,7 +206,7 @@ export default class OperatorControlDeviationsPage extends React.Component {
       {
         field: "value",
         title: "Значение",
-        filtering: false,
+        filtering: true,
         filterComponent: (props) => {
           console.log(`Column ${props.columnDef.field} props =`, props);
           return (
@@ -223,7 +223,7 @@ export default class OperatorControlDeviationsPage extends React.Component {
       {
         field: "previousValue",
         title: "Значение в предшествующем году",
-        filtering: false,
+        filtering: true,
         filterComponent: (props) => {
           console.log(`Column ${props.columnDef.field} props =`, props);
           return (
@@ -240,7 +240,7 @@ export default class OperatorControlDeviationsPage extends React.Component {
       {
         field: "yty",
         title: "Изменение г/г, %",
-        filtering: false,
+        filtering: true,
         filterComponent: (props) => {
           console.log(`Column ${props.columnDef.field} props =`, props);
           return (
@@ -257,7 +257,7 @@ export default class OperatorControlDeviationsPage extends React.Component {
       {
         field: "coefficient",
         title: "Коэффициент вариации ряда",
-        filtering: false,
+        filtering: true,
         filterComponent: (props) => {
           console.log(`Column ${props.columnDef.field} props =`, props);
           return (

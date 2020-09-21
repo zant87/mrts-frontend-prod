@@ -121,7 +121,7 @@ export default class OperatorControlProjectsPage extends React.Component {
       {
         field: "projectNum",
         title: "Номер проекта",
-        filtering: false,
+        filtering: true,
         filterComponent: (props) => {
           console.log(`Column ${props.columnDef.field} props =`, props);
           return (
