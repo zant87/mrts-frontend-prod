@@ -3,6 +3,7 @@ import TextField from "@material-ui/core/TextField";
 import {
     MDBBtn,
     MDBContainer,
+    MDBIcon,
     MDBModal,
     MDBModalBody,
     MDBModalHeader,
@@ -10,16 +11,14 @@ import {
 } from "mdbreact";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-import InputLabel from "@material-ui/core/InputLabel";
+import ClearIcon from "@material-ui/icons/Clear";
+import {IconButton} from "@material-ui/core";
+import {useForm, Controller} from "react-hook-form";
 import FormControl from "@material-ui/core/FormControl";
-import FilterListIcon from '@material-ui/icons/FilterList';
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
+import InputLabel from "@material-ui/core/InputLabel";
 
 const YesNoFilter = props => {
 
-    const [operator, setOperator] = useState(props.filter.operator);
-    const [value, setValue] = useState(props.filter.value);
     const [modal, setModal] = useState(false);
 
     const onIconClick = () => {
@@ -31,65 +30,56 @@ const YesNoFilter = props => {
         setModal(!modal);
     }
 
-    const onApplyFilterClick = () => {
-        setModal(!modal);
+    const onClearIconClicked = (event) => {
+
+        console.log('Resetting Data');
+
         const filter = {
             id: props.id,
-            value: value,
-            operator: operator,
-            type: props.filter.type
+            type: props.filter.type,
+            operator: props.filter.operator,
+            value: event,
         };
+
         props.changed(filter);
-        props.filterChanged(props.columnId, value);
+        props.filterChanged(props.columnId, event);
     }
 
-    const onChangeOperator = (event) => {
-        console.log(`Changing Conditional on column ${props.id} =`, event.target.value);
-        setOperator(event.target.value);
-    };
+    const {handleSubmit, errors, control} = useForm();
 
-    const onChangeValue = (event) => {
-        console.log(`Changing Value on column ${props.id} =`, event.target.value);
-        setValue(event.target.value);
+    const onSubmit = data => {
+        console.log('Submitting Data =', data);
+        setModal(!modal);
+
+        const filter = {
+            id: props.id,
+            value: data.value,
+            operator: data.operator,
+            type: props.filter.type
+        };
+
+        props.changed(filter);
+        props.filterChanged(props.columnId, data.value);
     }
 
     return (
         <React.Fragment>
-            <TextField
-                id={props.id}
-                type='text'
-                defaultValue={value}
-                disabled
-                InputProps={{startAdornment: <FilterListIcon className='mr-3' onClick={onIconClick}/>}}/>
-            <MDBModal isOpen={modal} toggle={toggleFilterModal} backdrop={true} size='sm'>
-                <MDBModalHeader toggle={toggleFilterModal}>Выберите фильтр</MDBModalHeader>
-                <MDBModalBody>
-                    <MDBContainer>
-                        <MDBRow center>
-                            <FormControl fullWidth={true} className='mx-3'>
-                                <InputLabel id={"yes-no-conditionals" + props.id + "_modal"}>Тип отношения</InputLabel>
-                                <Select className={'my-3'}
-                                        labelId={"yes-no-conditionals" + props.id + "_modal"}
-                                        id={props.id + "_select_modal"}
-                                        value={operator}
-                                        onChange={onChangeOperator}>
-                                    <MenuItem value={'~'}>Содержит</MenuItem>
-                                    <MenuItem value={'!~'}>Не содержит</MenuItem>
-                                    <MenuItem value={'='}>Равно</MenuItem>
-                                    <MenuItem value={'!='}>Не равно</MenuItem>
-                                    <MenuItem value={'!0'}>"Не нулевое</MenuItem>
-                                </Select>
-                                <FormControlLabel
-                                    control={<Switch checked={value} onChange={onChangeValue} name="yes-no"/>}
-                                    label="Secondary"/>
-                            </FormControl>
-                        </MDBRow>
-                        <MDBRow center className='my-4'>
-                            <MDBBtn color="indigo" size="sm" onClick={onApplyFilterClick}>Применить</MDBBtn>
-                        </MDBRow>
-                    </MDBContainer>
-                </MDBModalBody>
-            </MDBModal>
+            {/*<TextField*/}
+            {/*    id={props.id}*/}
+            {/*    defaultValue={props.filter.value ? props.filter.value : ''}*/}
+            {/*    disabled*/}
+            {/*    type='checkbox'*/}
+            {/*    InputProps={*/}
+            {/*        {*/}
+            {/*            startAdornment: (*/}
+            {/*                <IconButton size='small' className='mr-3' onClick={onIconClick}>*/}
+            {/*                    <MDBIcon far icon="check-square" />*/}
+            {/*                </IconButton>*/}
+            {/*            ),*/}
+            {/*            endAdornment: (<IconButton size='small' onClick={() => onClearIconClicked(null)}><ClearIcon*/}
+            {/*                fontSize='small'/></IconButton>)*/}
+            {/*        }*/}
+            {/*    }/>*/}
         </React.Fragment>
     );
 };

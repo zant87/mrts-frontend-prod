@@ -12,10 +12,8 @@ const AgreementComment = (props) => {
 
     const onSubmit = formData => {
 
-        // const newData = {...props.data, userComment: data.comment}
-        // console.log('Submit data =', newData);
-
-        const date = moment().format('YYYY-MM-DD');
+        const date = moment().format('YYYY-MM-DDTHH:MM:SS');
+        console.log(`Пользователь ${props.user.username} пытается отозвать утверждение с такими props =`, props.data);
 
         if (props.data.agreeIdList && props.data.agreeIdList.includes(props.user.username)) {
 
@@ -27,8 +25,8 @@ const AgreementComment = (props) => {
             }).then((response) => {
 
                 if (response.data.length !== 0) {
-                    const data = {...response.data[0], endDate: date, userComment: formData.comment};
 
+                    const data = {...response.data[0], endDate: date, userComment: formData.comment, stateId: 2};
                     console.log('Data to PUT into document-agreements =', data);
 
                     appAxios({
@@ -38,7 +36,7 @@ const AgreementComment = (props) => {
                     }).then((response) => {
                         toast.success(`Согласование успешно отозвано`, {closeButton: false});
                         props.tableRef.current.onQueryChange();
-                    })
+                    });
 
                 } else {
                     toast.warning(`Согласование уже отозвано`, {closeButton: false});
@@ -56,9 +54,8 @@ const AgreementComment = (props) => {
             }).then((response) => {
 
                 if (response.data.length !== 0) {
-                    console.log('document-agreements GET response =', response.data);
 
-                    const data = {...response.data[0], endDate: date, userComment: formData.comment};
+                    const data = {...response.data[0], endDate: date, userComment: formData.comment, stateId: 4};
                     console.log('Data to PUT into document-agreements =', data);
 
                     appAxios({

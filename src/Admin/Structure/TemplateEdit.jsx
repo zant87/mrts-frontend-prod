@@ -66,7 +66,7 @@ export default class AdminStructureTemplateEditPage extends React.Component {
                     this.props.toggleModal();
                 }
             });
-            
+
         } else {
             const responseData = {
                 code: this.state.code,
@@ -119,63 +119,30 @@ export default class AdminStructureTemplateEditPage extends React.Component {
             <MDBContainer>
                 <div className="scrollbar my-1 mx-auto" style={{minHeight: '600px', maxHeight: '600px'}}>
                     <MDBInput label="#" value={this.props.data.id} disabled={true} outline={true} type="number"/>
-
                     <MDBSelect label="Проект"
                                search={true}
                                searchLabel={'Поиск'}
                                options={this.state.projects}
                                outline={true}
-                               getValue={this.setProject}
-                    />
-
+                               getValue={this.setProject}/>
                     <MDBInput label="Код"
                               value={this.state.code}
                               outline={true}
                               onChange={e => this.onChangeHandler(e)}
                               name="code"
-                              type="textarea" rows={2}
-                    />
-
+                              type="textarea" rows={2}/>
                     <MDBInput label="Наименование"
                               value={this.state.name}
                               outline={true}
                               name="name"
                               onChange={e => this.onChangeHandler(e)}
-                              type="textarea" rows={2}
-                    />
-
+                              type="textarea" rows={2}/>
                     <MDBInput label="Описание"
                               value={this.state.description}
                               outline={true}
                               name="description"
                               onChange={e => this.onChangeHandler(e)}
-                              type="textarea" rows={3}
-                    />
-
-                    <label htmlFor='beginDate'>Начало действия</label>
-                    <MDBDatePicker getValue={this.getBeginDate}
-                                   format='YYYY-MM-DD'
-                                   locale={moment.locale('ru')}
-                                   okLabel='ОК'
-                                   name='beginDate'
-                                   keyboard={true}
-                                   outline
-                                   invalidDateMessage='Неправильный формат даты'
-                                   valueDefault={new Date(this.state.beginDate)}
-                                   cancelLabel='Отмена'/>
-
-                    <label htmlFor='endDate'>Конец действия</label>
-                    <MDBDatePicker getValue={this.getEndDate}
-                                   format='YYYY-MM-DD'
-                                   locale={moment.locale('ru')}
-                                   okLabel='ОК'
-                                   name='endDate'
-                                   keyboard={true}
-                                   outline
-                                   invalidDateMessage='Неправильный формат даты'
-                                   valueDefault={new Date(this.state.endDate)}
-                                   cancelLabel='Отмена'/>
-
+                              type="textarea" rows={3}/>
                     <MDBBtn color="primary" type="none" onClick={e => this.doSave(e)}>
                         Сохранить
                     </MDBBtn>
