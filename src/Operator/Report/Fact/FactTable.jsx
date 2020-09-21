@@ -1,5 +1,4 @@
 import React from 'react';
-import TableContainer from "../../../Containers/TableContainer"
 import {MDBContainer, MDBModal, MDBModalBody, MDBModalHeader} from "mdbreact";
 import FactEdit from "./FactEdit";
 import NumericFilter from "../../../Common/Filters/NumericFilter";
