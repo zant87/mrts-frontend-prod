@@ -4,14 +4,50 @@ import appAxios from "../../_services/appAxios";
 import {MDBContainer, MDBModal, MDBModalBody, MDBModalHeader, toast} from "mdbreact";
 import moment from "moment";
 import Axios from "axios";
-import ExecutorsByIndicatorEdit from "./ExecutorsByIndicatorEdit";
+import ExecutorsByIndicatorEdit from "./ExecutorsByIndicators/ExecutorsByIndicatorEdit";
+import TableContainerWithFilters from "../../Containers/TableContainerWithFilters";
+import NumericFilter from "../../Common/Filters/NumericFilter";
+import StringFilter from "../../Common/Filters/StringFilter";
+import DateFilter from "../../Common/Filters/DateFilter";
 
 export default class AdminExecutorsByIndicatorPage extends React.Component {
 
     state = {
         modal: false,
         row: {},
-        initialized: false
+        initialized: false,
+        filtersList: {
+            id: {
+                type: "integer",
+                operator: "equals",
+                value: null
+            },
+            indicatorName: {
+                type: "text",
+                operator: "contains",
+                value: null
+            },
+            rusRole: {
+                type: "text",
+                operator: "contains",
+                value: null
+            },
+            fullname: {
+                type: "text",
+                operator: "contains",
+                value: null
+            },
+            beginDate: {
+                type: "date",
+                operator: "equals",
+                value: null
+            },
+            endDate: {
+                type: "date",
+                operator: "equals",
+                value: null
+            },
+        }
     }
 
     getUsers = () => appAxios.get(`users`).catch(err => null);
@@ -26,9 +62,21 @@ export default class AdminExecutorsByIndicatorPage extends React.Component {
                 this.getIndicators(),
             ]);
 
+            const usersList = rUsers.data.map(item => {
+                    return {value: item.id, text: item.fullname, checked: false};
+                }
+            );
+
+            const indicatorsList = rIndicators.data.map(item => {
+                    return {value: item.id, text: item.name, checked: false};
+                }
+            );
+
             this.setState(
                 {
                     users: rUsers.data,
+                    usersList: usersList,
+                    indicatorsList: indicatorsList,
                     indicators: rIndicators.data,
                     initialized: true
                 }
@@ -47,6 +95,14 @@ export default class AdminExecutorsByIndicatorPage extends React.Component {
             row: rowData,
             action: action
         });
+    }
+
+    updateFilter = (e) => {
+        console.log('Update Filter received =', e);
+        let newFilter = this.state.filtersList;
+        newFilter[e.id] = {value: e.value, operator: e.operator, type: e.type};
+        console.log('New Filter =', newFilter);
+        this.setState({filtersList: newFilter});
     }
 
     cancelAgreement = (rowData) => {
@@ -96,22 +152,66 @@ export default class AdminExecutorsByIndicatorPage extends React.Component {
         ];
 
         const columns = [
-            {field: 'id', title: '#', filtering: false},
-            {field: 'indicatorName', title: 'Индикатор'},
-            {field: 'rusRole', title: 'Роль'},
-            {field: 'fullname', title: 'Пользователь'},
-            {field: 'beginDate', title: 'Начало действия', type: 'date', filtering: false},
-            {field: 'endDate', title: 'Конец действия', type: 'date', filtering: false},
+            {
+                field: 'id', title: '#', filtering: true,
+                filterComponent: props => {
+                    return <NumericFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                          filter={this.state.filtersList[props.columnDef.field]}
+                                          filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+                }
+            },
+            {
+                field: 'indicatorName', title: 'Индикатор', filtering: true,
+                filterComponent: props => {
+                    return <StringFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                         filter={this.state.filtersList[props.columnDef.field]}
+                                         filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+                }
+            },
+            {
+                field: 'rusRole', title: 'Роль', filtering: true,
+                filterComponent: props => {
+                    return <StringFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                         filter={this.state.filtersList[props.columnDef.field]}
+                                         filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+                }
+            },
+            {
+                field: 'fullname', title: 'Пользователь', filtering: true,
+                filterComponent: props => {
+                    return <StringFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                         filter={this.state.filtersList[props.columnDef.field]}
+                                         filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+                }
+            },
+            {
+                field: 'beginDate', title: 'Начало действия', type: 'date', filtering: true,
+                filterComponent: props => {
+                    return <DateFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                       filter={this.state.filtersList[props.columnDef.field]}
+                                       filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+                }
+            },
+            {
+                field: 'endDate', title: 'Конец действия', type: 'date', filtering: true,
+                filterComponent: props => {
+                    return <DateFilter id={props.columnDef.field} columnId={props.columnDef.tableData.id}
+                                       filter={this.state.filtersList[props.columnDef.field]}
+                                       filterChanged={props.onFilterChanged} changed={this.updateFilter}/>;
+                }
+            },
         ];
 
         return (
             <React.Fragment>
-                <TableContainer
+
+                <TableContainerWithFilters
                     columns={columns}
-                    title={'Исполнители по индикаторам'}
+                    title={"Исполнители по индикаторам"}
+                    baseUrl={"views/indicator-agree-settings"}
                     tableRef={this.tableRef}
                     actions={actions}
-                    baseUrl={'views/indicator-agree-settings'}
+                    filtersList={this.state.filtersList}
                     loadAll={true}
                 />
                 <MDBContainer>

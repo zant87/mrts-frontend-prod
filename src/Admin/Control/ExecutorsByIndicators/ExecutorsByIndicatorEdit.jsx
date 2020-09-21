@@ -1,8 +1,8 @@
 import React from "react";
 import {MDBBtn, MDBCol, MDBContainer, MDBDatePicker, MDBInput, MDBRow, MDBSelect, toast} from "mdbreact";
-import appAxios from "../../_services/appAxios";
+import appAxios from "../../../_services/appAxios";
 import moment from "moment";
-import {signingData} from "../../_helpers";
+import {signingData} from "../../../_helpers";
 
 export default class AdminExecutorsByIndicatorEditPage extends React.Component {
 

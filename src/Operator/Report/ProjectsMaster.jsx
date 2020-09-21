@@ -40,7 +40,6 @@ export default class OperatorReportProjectsMasterPage extends React.Component {
 
     tableRef = React.createRef();
 
-
     toggleHighlight = () => {
         this.setState({
             highlightModal: !this.state.highlightModal,
