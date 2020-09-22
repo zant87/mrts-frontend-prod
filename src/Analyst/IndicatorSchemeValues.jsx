@@ -95,27 +95,35 @@ class IndicatorSchemeValues extends React.Component {
     }
   };
 
-  componentDidMount() {
-    IndsAPI.getInds().then((res) => {
-      this.getIndicators(res);
-    });
-    IndsAPI.getGoals().then((res) => {
-      this.getGoals(res);
-    });
-    IndsAPI.getYears().then((res) => {
-      this.getYears(res);
-    });
-    IndsAPI.getIndDataScheme(this.state.year).then((res) => {
+ componentDidMount() {
+   IndsAPI.getInds().then((res) => {
+     this.getIndicators(res);
+   });
+   IndsAPI.getGoals().then((res) => {
+     this.getGoals(res);
+   });
+   IndsAPI.getYears().then((res) => {
+     this.getYears(res);
+   });
+   IndsAPI.getIndDataScheme(this.state.year).then((res) => {
       this.getIndValues(res);
     });
   }
 
   render() {
+
     let orgdata = [];
 
-    if (this.state.indvals) {
-      let indval = this.state.indvals;
-      let inds = this.state.inds_;
+    if (this.state.indvals !== null
+        && this.state.inds_
+        && this.state.goals !== null
+        && this.state.goals_ !== null
+        && this.state.years !== null) {
+
+      console.log('State after conditionals in render =', this.state);
+
+      let indval = this.state.indvals.map(item => item);
+      let inds = this.state.inds_.map(item => item);
       let indsval = [];
       inds.forEach((item) => {
         let i = indval.find((val) => val.indicatorCode.replace("IND_", "") == item.code);
@@ -145,21 +153,24 @@ class IndicatorSchemeValues extends React.Component {
       //console.log(inds);
       //console.log(indsval);
 
+      const _goals = this.state.goals_.map(item => item);
+      console.log('_goals in render =', _goals);
+
       orgdata = {
         id: 0,
         label: "Транспортная стратегия Российской Федерации на период до 2030 года",
         expand: true,
-        children: this.state.goals_
-          .sort((a, b) => (a.name > b.name ? 1 : -1))
-          .map((goal) => ({
-            id: goal.id,
-            label: goal.name,
-            children: [...new Set(this.state.inds_.filter((item) => goal.id == item.goalId).map((tran) => tran.transport))]
-              .sort(function (a, b) {
-                if (a > b) {
-                  return 1;
-                }
-                if (a < b) {
+        children: _goals
+            .sort((a, b) => (a.name > b.name ? 1 : -1))
+            .map((goal) => ({
+              id: goal.id,
+              label: goal.name,
+              children: [...new Set(this.state.inds_.filter((item) => goal.id == item.goalId).map((tran) => tran.transport))]
+                  .sort(function (a, b) {
+                    if (a > b) {
+                      return 1;
+                    }
+                    if (a < b) {
                   return -1;
                 }
                 // if (a == "") {
@@ -260,15 +271,16 @@ class IndicatorSchemeValues extends React.Component {
                     {this.state.isFetchingvals ? (
                       <Preloader />
                     ) : this.state.indvals ? (
-                      <div ref={this.zoomRef} style={{ zoom: "1.0" }}>
-                        <OrgTree
-                          data={orgdata}
-                          horizontal={horizontal}
-                          collapsable={collapsable}
-                          expandAll={expandAll}
-                          labelWidth={"150px"}
-                        ></OrgTree>
-                      </div>
+                        <div ref={this.zoomRef} style={{zoom: "1.0"}}>
+                          {console.log('Orgdata =', orgdata)}
+                          {orgdata && (<OrgTree
+                              data={orgdata}
+                              horizontal={horizontal}
+                              collapsable={collapsable}
+                              expandAll={expandAll}
+                              labelWidth={"150px"}
+                          ></OrgTree>)}
+                        </div>
                     ) : (
                       "Нет данных"
                     )}
